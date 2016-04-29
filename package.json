@@ -1,0 +1,25 @@
+{
+  "name": "tempest-mutual",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/akersh-s/tempest-mutual.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/akersh-s/tempest-mutual/issues"
+  },
+  "homepage": "https://github.com/akersh-s/tempest-mutual#readme",
+  "dependencies": {
+    "async": "^2.0.0-rc.3",
+    "sentiment": "^1.0.6",
+    "twitter": "^1.2.5",
+    "yargs": "^4.6.0"
+  }
+}
