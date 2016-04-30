@@ -69,7 +69,7 @@ function get100(day, cb, prevStatuses, maxId) {
             statuses.forEach(function(status) {
                 var date = new Date(status.created_at);
                 if (date.getDate() === day.getDate()) {
-                    var s = sentiment(status.text).comparative;
+                    var s = sentiment(status.text).score;
                     if (s !== 0) {
                         var multiplier = 1;
                         if (status.user && status.user.followers_count) {
@@ -197,13 +197,11 @@ async.series(seriesFuncs, function() {
     var math = calculateMeanVarianceAndDeviation(previousAverages);
     var buyPrice = math.mean + math.deviation;
     var sellPrice = math.mean - math.deviation;
-    console.log('todays sentiment', todaysSentiment);
-    console.log('buy price', buyPrice);
-    console.log('sell price', sellPrice);
+    var change = calcIncreasePercent(todaysSentiment, math.mean);
     if (todaysSentiment > buyPrice) {
-        console.log('Buy ' + tag + '. Increased AVG: ' + (todaysSentiment - buyPrice));
+        console.log('Buy ' + tag + '. Change: ' + change);
     } else if (todaysSentiment < sellPrice) {
-        console.log('Sell ' + tag + '. Decreased AVG: ' + (sellPrice - todaysSentiment));
+        console.log('Sell ' + tag + '. Change: ' + change);
     } else {
         console.log('Do nothing');
     }
@@ -216,4 +214,10 @@ function getSentimentFileName() {
 
 function writeFile() {
     fs.writeFileSync(getSentimentFileName(), JSON.stringify(sentiments), 'utf-8');
+}
+
+function calcIncreasePercent(today, previous) {
+    var diff = today - previous;
+    var div = diff / previous;
+    return (div * 100).toFixed(2) + '%';
 }
