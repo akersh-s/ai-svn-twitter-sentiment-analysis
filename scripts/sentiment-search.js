@@ -37,8 +37,7 @@ function getTweets(day, cb) {
             count: 0
         };
         get100(day, cb);
-    }
-    else {
+    } else {
         cb();
     }
 
@@ -168,7 +167,7 @@ last3Days.forEach(function(day) {
 async.series(seriesFuncs, function() {
     var day;
     var formattedToday = formatDate(new Date());
-    
+
 
     for (day in sentiments) {
         var daySentiment = sentiments[day];
@@ -176,13 +175,13 @@ async.series(seriesFuncs, function() {
             daySentiment.average = daySentiment.totalSentiment / daySentiment.numTweets;
         }
     }
-    
+
     debug(JSON.stringify(sentiments, null, 4));
     writeFile();
 
     var todaysSentiment = sentiments[formattedToday].average;
     var previousAverages = [];
-    last3Days.forEach(function(day)  {
+    last3Days.forEach(function(day) {
         var formattedDate = formatDate(day);
         var daySentiment = sentiments[formattedDate];
         if (formattedDate !== formattedToday && daySentiment.average) {
@@ -191,7 +190,7 @@ async.series(seriesFuncs, function() {
     });
     if (previousAverages.length < 3 || !todaysSentiment) {
         console.log('Not enough tweets: ' + tag);
-        
+
         return;
     }
     var math = calculateMeanVarianceAndDeviation(previousAverages);
@@ -199,9 +198,9 @@ async.series(seriesFuncs, function() {
     var sellPrice = math.mean - math.deviation;
     var change = calcIncreasePercent(todaysSentiment, math.mean);
     if (todaysSentiment > buyPrice) {
-        console.log('Buy ' + tag + '. Change: ' + change);
+        console.log('Buy ' + tag + '. Change: ' + change + ' - Count: ' + createCount());
     } else if (todaysSentiment < sellPrice) {
-        console.log('Sell ' + tag + '. Change: ' + change);
+        console.log('Sell ' + tag + '. Change: ' + change + ' - Count: ' + createCount());
     } else {
         console.log('Do nothing');
     }
@@ -220,4 +219,14 @@ function calcIncreasePercent(today, previous) {
     var diff = today - previous;
     var div = diff / previous;
     return (div * 100).toFixed(2) + '%';
+}
+
+function createCount() {
+    var counts = [];
+    last3Days.forEach(function(day) {
+        var formattedDate = formatDate(day);
+        var daySentiment = sentiments[formattedDate];
+        counts.push(formattedDate + ' (' + daySentiment.count + ' tweets)');
+    });
+    return counts.join(',')
 }
