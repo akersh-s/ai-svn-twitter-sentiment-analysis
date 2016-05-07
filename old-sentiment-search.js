@@ -196,6 +196,7 @@ async.series(seriesFuncs, function() {
     var math = calculateMeanVarianceAndDeviation(previousAverages);
     var buyPrice = math.mean + math.deviation;
     var sellPrice = math.mean - math.deviation;
+    console.log(todaysSentiment, math.mean, math.deviation);
     var change = calcIncreasePercent(todaysSentiment, math.mean);
     if (todaysSentiment > buyPrice) {
         console.log('Buy ' + tag + '. Change: ' + change + ' - Count: ' + createCount());
