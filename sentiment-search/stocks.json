@@ -1,6 +1,6728 @@
 [
     {
         "symbol": "$DDD",
-        "keywords": ["3D Systems"]
+        "keywords": [
+            "3D Systems"
+        ]
+    },
+    {
+        "symbol": "$WBAI",
+        "keywords": [
+            "500.com"
+        ]
+    },
+    {
+        "symbol": "$ATEN",
+        "keywords": [
+            "A10 Networks"
+        ]
+    },
+    {
+        "symbol": "$AAC",
+        "keywords": [
+            "AAC Holdings"
+        ]
+    },
+    {
+        "symbol": "$ABB",
+        "keywords": [
+            "ABB"
+        ]
+    },
+    {
+        "symbol": "$GCH",
+        "keywords": [
+            "Aberdeen Greater China Fund"
+        ]
+    },
+    {
+        "symbol": "$JEQ",
+        "keywords": [
+            "Aberdeen Japan Equity Fund"
+        ]
+    },
+    {
+        "symbol": "$SGF",
+        "keywords": [
+            "Aberdeen Singapore Fund"
+        ]
+    },
+    {
+        "symbol": "$ACCO",
+        "keywords": [
+            "Acco Brands Corporation"
+        ]
+    },
+    {
+        "symbol": "$ADX",
+        "keywords": [
+            "Adams Diversified Equity Fund"
+        ]
+    },
+    {
+        "symbol": "$PEO",
+        "keywords": [
+            "Adams Natural Resources Fund"
+        ]
+    },
+    {
+        "symbol": "$AGRO",
+        "keywords": [
+            "Adecoagro SA"
+        ]
+    },
+    {
+        "symbol": "$ASX",
+        "keywords": [
+            "Advanced Semiconductor Engineering"
+        ]
+    },
+    {
+        "symbol": "$AAV",
+        "keywords": [
+            "Advantage Oil & Gas Ltd"
+        ]
+    },
+    {
+        "symbol": "$ATE",
+        "keywords": [
+            "Advantest Corporation (Kabushiki Kaisha Advantest) ADS"
+        ]
+    },
+    {
+        "symbol": "$AVK",
+        "keywords": [
+            "Advent Claymore Convertible Securities andome Fund"
+        ]
+    },
+    {
+        "symbol": "$AGC",
+        "keywords": [
+            "Advent Claymore Convertible Securities andome Fund II"
+        ]
+    },
+    {
+        "symbol": "$LCM",
+        "keywords": [
+            "Advent/Claymore Enhanced Growth &ome Fund"
+        ]
+    },
+    {
+        "symbol": "$ANW",
+        "keywords": [
+            "Aegean Marine Petroleum Network"
+        ]
+    },
+    {
+        "symbol": "$AEG",
+        "keywords": [
+            "Aegon NV"
+        ]
+    },
+    {
+        "symbol": "$HIVE",
+        "keywords": [
+            "Aerohive Networks"
+        ]
+    },
+    {
+        "symbol": "$AJRD",
+        "keywords": [
+            "Aerojet Rocketdyne Holdings"
+        ]
+    },
+    {
+        "symbol": "$MITT",
+        "keywords": [
+            "AG Mortgage Investment Trust"
+        ]
+    },
+    {
+        "symbol": "$AGI",
+        "keywords": [
+            "Alamos Gold"
+        ]
+    },
+    {
+        "symbol": "$AA",
+        "keywords": [
+            "Alcoa"
+        ]
+    },
+    {
+        "symbol": "$ATI",
+        "keywords": [
+            "Allegheny Technologiesorporated"
+        ]
+    },
+    {
+        "symbol": "$AKP",
+        "keywords": [
+            "Alliance California Municipalome Fund"
+        ]
+    },
+    {
+        "symbol": "$AFB",
+        "keywords": [
+            "Alliance National Municipalome Fund"
+        ]
+    },
+    {
+        "symbol": "$AWF",
+        "keywords": [
+            "Alliance World Dollar Government Fund II"
+        ]
+    },
+    {
+        "symbol": "$ACG",
+        "keywords": [
+            "ALLIANCEBERNSTEINOME FUND"
+        ]
+    },
+    {
+        "symbol": "$NCV",
+        "keywords": [
+            "AllianzGI Convertible &ome Fund"
+        ]
+    },
+    {
+        "symbol": "$ACV",
+        "keywords": [
+            "AllianzGI Diversifiedome & Convertible Fund"
+        ]
+    },
+    {
+        "symbol": "$NIE",
+        "keywords": [
+            "AllianzGI Equity & Convertibleome Fund"
+        ]
+    },
+    {
+        "symbol": "$NFJ",
+        "keywords": [
+            "AllianzGI NFJ Dividend, Interest & Premium Strategy Fund"
+        ]
+    },
+    {
+        "symbol": "$ALLY",
+        "keywords": [
+            "Ally Financial"
+        ]
+    },
+    {
+        "symbol": "$ALJ",
+        "keywords": [
+            "Alon USA Energy"
+        ]
+    },
+    {
+        "symbol": "$ALDW",
+        "keywords": [
+            "Alon USA Partners"
+        ]
+    },
+    {
+        "symbol": "$AGD",
+        "keywords": [
+            "Alpine Global Dynamic Dividend Fund"
+        ]
+    },
+    {
+        "symbol": "$AWP",
+        "keywords": [
+            "Alpine Global Premier Properties Fund"
+        ]
+    },
+    {
+        "symbol": "$AOD",
+        "keywords": [
+            "Alpine Total Dynamic Dividend Fund"
+        ]
+    },
+    {
+        "symbol": "$RESI",
+        "keywords": [
+            "Altisource Residential Corporation"
+        ]
+    },
+    {
+        "symbol": "$ACH",
+        "keywords": [
+            "Aluminum Corporation of China Limited"
+        ]
+    },
+    {
+        "symbol": "$AMBR",
+        "keywords": [
+            "Amber Road"
+        ]
+    },
+    {
+        "symbol": "$ABEV",
+        "keywords": [
+            "Ambev SA"
+        ]
+    },
+    {
+        "symbol": "$AMFW",
+        "keywords": [
+            "Amec Plc Ord"
+        ]
+    },
+    {
+        "symbol": "$AMX",
+        "keywords": [
+            "America Movil, SAB de CV"
+        ]
+    },
+    {
+        "symbol": "$AXL",
+        "keywords": [
+            "American Axle & Manufacturing Holdings"
+        ]
+    },
+    {
+        "symbol": "$AEO",
+        "keywords": [
+            "American Eagle Outfitters"
+        ]
+    },
+    {
+        "symbol": "$AEL",
+        "keywords": [
+            "American Equity Investment Life Holding Company"
+        ]
+    },
+    {
+        "symbol": "$AMH",
+        "keywords": [
+            "American Homes 4 Rent"
+        ]
+    },
+    {
+        "symbol": "$AMID",
+        "keywords": [
+            "American Midstream Partners"
+        ]
+    },
+    {
+        "symbol": "$ARL",
+        "keywords": [
+            "American Realty Investors"
+        ]
+    },
+    {
+        "symbol": "$AVD",
+        "keywords": [
+            "American Vanguard Corporation"
+        ]
+    },
+    {
+        "symbol": "$ANFI",
+        "keywords": [
+            "Amira Nature Foods Ltd"
+        ]
+    },
+    {
+        "symbol": "$AP",
+        "keywords": [
+            "Ampco-Pittsburgh Corporation"
+        ]
+    },
+    {
+        "symbol": "$BETR",
+        "keywords": [
+            "Amplify Snack Brands"
+        ]
+    },
+    {
+        "symbol": "$AU",
+        "keywords": [
+            "AngloGold Ashanti Limited"
+        ]
+    },
+    {
+        "symbol": "$NLY",
+        "keywords": [
+            "Annaly Capital Management"
+        ]
+    },
+    {
+        "symbol": "$ARI",
+        "keywords": [
+            "Apollo Commercial Real Estate Finance"
+        ]
+    },
+    {
+        "symbol": "$APO",
+        "keywords": [
+            "Apollo Global Management"
+        ]
+    },
+    {
+        "symbol": "$AMTG",
+        "keywords": [
+            "Apollo Residential Mortgage"
+        ]
+    },
+    {
+        "symbol": "$AFT",
+        "keywords": [
+            "Apollo Senior Floating Rate Fund"
+        ]
+    },
+    {
+        "symbol": "$AIF",
+        "keywords": [
+            "Apollo Tacticalome Fund"
+        ]
+    },
+    {
+        "symbol": "$APLE",
+        "keywords": [
+            "Apple Hospitality REIT"
+        ]
+    },
+    {
+        "symbol": "$ABR",
+        "keywords": [
+            "Arbor Realty Trust"
+        ]
+    },
+    {
+        "symbol": "$ARCX",
+        "keywords": [
+            "Arc Logistic Partners LP"
+        ]
+    },
+    {
+        "symbol": "$MT",
+        "keywords": [
+            "ArcelorMittal"
+        ]
+    },
+    {
+        "symbol": "$AROC",
+        "keywords": [
+            "Archrock"
+        ]
+    },
+    {
+        "symbol": "$ASC",
+        "keywords": [
+            "Ardmore Shipping Corporation"
+        ]
+    },
+    {
+        "symbol": "$ACRE",
+        "keywords": [
+            "Ares Commercial Real Estate Corporation"
+        ]
+    },
+    {
+        "symbol": "$ARDC",
+        "keywords": [
+            "Ares Dynamic Credit Allocation Fund"
+        ]
+    },
+    {
+        "symbol": "$ARES",
+        "keywords": [
+            "Ares Management LP"
+        ]
+    },
+    {
+        "symbol": "$AI",
+        "keywords": [
+            "Arlington Asset Investment Corp"
+        ]
+    },
+    {
+        "symbol": "$AIC",
+        "keywords": [
+            "Arlington Asset Investment Corp"
+        ]
+    },
+    {
+        "symbol": "$AHH",
+        "keywords": [
+            "Armada Hoffler Properties"
+        ]
+    },
+    {
+        "symbol": "$AFI",
+        "keywords": [
+            "Armstrong Flooring"
+        ]
+    },
+    {
+        "symbol": "$ASA",
+        "keywords": [
+            "ASA Gold and Precious Metals Limited"
+        ]
+    },
+    {
+        "symbol": "$AHP",
+        "keywords": [
+            "Ashford Hospitality Prime"
+        ]
+    },
+    {
+        "symbol": "$AHT",
+        "keywords": [
+            "Ashford Hospitality Trust"
+        ]
+    },
+    {
+        "symbol": "$APB",
+        "keywords": [
+            "Asia Pacific Fund (The)"
+        ]
+    },
+    {
+        "symbol": "$GRR",
+        "keywords": [
+            "Asia Tigers Fund (The)"
+        ]
+    },
+    {
+        "symbol": "$ASB",
+        "keywords": [
+            "Associated Banc-Corp"
+        ]
+    },
+    {
+        "symbol": "$AF",
+        "keywords": [
+            "Astoria Financial Corporation"
+        ]
+    },
+    {
+        "symbol": "$ATTO",
+        "keywords": [
+            "Atento SA"
+        ]
+    },
+    {
+        "symbol": "$ATW",
+        "keywords": [
+            "Atwood Oceanics"
+        ]
+    },
+    {
+        "symbol": "$ACP",
+        "keywords": [
+            "Avenueome Credit Strategies Fund"
+        ]
+    },
+    {
+        "symbol": "$AVG",
+        "keywords": [
+            "AVG Technologies NV"
+        ]
+    },
+    {
+        "symbol": "$AVH",
+        "keywords": [
+            "Avianca Holdings SA"
+        ]
+    },
+    {
+        "symbol": "$AV",
+        "keywords": [
+            "Aviva plc"
+        ]
+    },
+    {
+        "symbol": "$AVP",
+        "keywords": [
+            "Avon Products"
+        ]
+    },
+    {
+        "symbol": "$AVX",
+        "keywords": [
+            "AVX Corporation"
+        ]
+    },
+    {
+        "symbol": "$MCI",
+        "keywords": [
+            "Babson Capital Corporate Investors"
+        ]
+    },
+    {
+        "symbol": "$BGH",
+        "keywords": [
+            "Babson Capital Global Short Duration High Yield Fund"
+        ]
+    },
+    {
+        "symbol": "$MPV",
+        "keywords": [
+            "Babson Capital Participation Investors"
+        ]
+    },
+    {
+        "symbol": "$BANC",
+        "keywords": [
+            "Banc of California"
+        ]
+    },
+    {
+        "symbol": "$BBVA",
+        "keywords": [
+            "Banco Bilbao Viscaya Argentaria SA"
+        ]
+    },
+    {
+        "symbol": "$BBD",
+        "keywords": [
+            "Banco Bradesco Sa"
+        ]
+    },
+    {
+        "symbol": "$BBDO",
+        "keywords": [
+            "Banco Bradesco Sa"
+        ]
+    },
+    {
+        "symbol": "$BSAC",
+        "keywords": [
+            "Banco Santander Chile"
+        ]
+    },
+    {
+        "symbol": "$BAC",
+        "keywords": [
+            "Bank of America Corporation"
+        ]
+    },
+    {
+        "symbol": "$RATE",
+        "keywords": [
+            "Bankrate"
+        ]
+    },
+    {
+        "symbol": "$BCS",
+        "keywords": [
+            "Barclays PLC"
+        ]
+    },
+    {
+        "symbol": "$BNED",
+        "keywords": [
+            "Barnes & Noble Education"
+        ]
+    },
+    {
+        "symbol": "$BKS",
+        "keywords": [
+            "Barnes & Noble"
+        ]
+    },
+    {
+        "symbol": "$CUDA",
+        "keywords": [
+            "Barracuda Networks"
+        ]
+    },
+    {
+        "symbol": "$ABX",
+        "keywords": [
+            "Barrick Gold Corporation"
+        ]
+    },
+    {
+        "symbol": "$BFR",
+        "keywords": [
+            "BBVA Banco Frances SA"
+        ]
+    },
+    {
+        "symbol": "$BBX",
+        "keywords": [
+            "BBX Capital Corporation"
+        ]
+    },
+    {
+        "symbol": "$BZH",
+        "keywords": [
+            "Beazer Homes USA"
+        ]
+    },
+    {
+        "symbol": "$BEL",
+        "keywords": [
+            "Belmond Ltd"
+        ]
+    },
+    {
+        "symbol": "$BBG",
+        "keywords": [
+            "Bill Barrett Corporation"
+        ]
+    },
+    {
+        "symbol": "$BSM",
+        "keywords": [
+            "Black Stone Minerals"
+        ]
+    },
+    {
+        "symbol": "$BJZ",
+        "keywords": [
+            "Blackrock California Municipal 2018 Term Trust"
+        ]
+    },
+    {
+        "symbol": "$BFZ",
+        "keywords": [
+            "BlackRock California Municipalome Trust"
+        ]
+    },
+    {
+        "symbol": "$CII",
+        "keywords": [
+            "Blackrock Capital andome Strategies Fund"
+        ]
+    },
+    {
+        "symbol": "$BHK",
+        "keywords": [
+            "Blackrock Core Bond Trust"
+        ]
+    },
+    {
+        "symbol": "$HYT",
+        "keywords": [
+            "Blackrock Corporate High Yield Fund"
+        ]
+    },
+    {
+        "symbol": "$BTZ",
+        "keywords": [
+            "BlackRock Credit Allocationome Trust"
+        ]
+    },
+    {
+        "symbol": "$BHL",
+        "keywords": [
+            "Blackrock Defined Opportunity Credit Trust"
+        ]
+    },
+    {
+        "symbol": "$BGR",
+        "keywords": [
+            "BlackRock Energy and Resources Trust"
+        ]
+    },
+    {
+        "symbol": "$BDJ",
+        "keywords": [
+            "Blackrock Enhanced Equity Dividend Trust"
+        ]
+    },
+    {
+        "symbol": "$EGF",
+        "keywords": [
+            "Blackrock Enhanced Government Fund"
+        ]
+    },
+    {
+        "symbol": "$FRA",
+        "keywords": [
+            "Blackrock Floating Rateome Strategies Fund"
+        ]
+    },
+    {
+        "symbol": "$BFO",
+        "keywords": [
+            "Blackrock Florida Municipal 2020 Term Trust"
+        ]
+    },
+    {
+        "symbol": "$BGT",
+        "keywords": [
+            "Blackrock Global"
+        ]
+    },
+    {
+        "symbol": "$BOE",
+        "keywords": [
+            "Blackrock Global"
+        ]
+    },
+    {
+        "symbol": "$BAF",
+        "keywords": [
+            "BlackRockome Investment Quality Trust"
+        ]
+    },
+    {
+        "symbol": "$BKT",
+        "keywords": [
+            "BlackRockome Trust (The)"
+        ]
+    },
+    {
+        "symbol": "$BGY",
+        "keywords": [
+            "BLACKROCK INTERNATIONAL"
+        ]
+    },
+    {
+        "symbol": "$BKN",
+        "keywords": [
+            "BlackRock Investment Quality Municipal Trust (The)"
+        ]
+    },
+    {
+        "symbol": "$BTA",
+        "keywords": [
+            "BlackRock Long-Term Municipal Advantage Trust"
+        ]
+    },
+    {
+        "symbol": "$BIT",
+        "keywords": [
+            "BlackRock Multi-Sectorome Trust"
+        ]
+    },
+    {
+        "symbol": "$MUI",
+        "keywords": [
+            "Blackrock Muni Intermediate Duration Fund"
+        ]
+    },
+    {
+        "symbol": "$MNE",
+        "keywords": [
+            "Blackrock Muni New York Intermediate Duration Fund"
+        ]
+    },
+    {
+        "symbol": "$MUA",
+        "keywords": [
+            "Blackrock MuniAssets Fund"
+        ]
+    },
+    {
+        "symbol": "$BPK",
+        "keywords": [
+            "Blackrock Municipal 2018 Term Trust"
+        ]
+    },
+    {
+        "symbol": "$BKK",
+        "keywords": [
+            "Blackrock Municipal 2020 Term Trust"
+        ]
+    },
+    {
+        "symbol": "$BIE",
+        "keywords": [
+            "Blackrock Municipal Bond Investment Trust"
+        ]
+    },
+    {
+        "symbol": "$BBK",
+        "keywords": [
+            "Blackrock Municipal Bond Trust"
+        ]
+    },
+    {
+        "symbol": "$BBF",
+        "keywords": [
+            "BlackRock Municipalome Investment Trust"
+        ]
+    },
+    {
+        "symbol": "$BYM",
+        "keywords": [
+            "Blackrock Municipalome Quality Trust"
+        ]
+    },
+    {
+        "symbol": "$BFK",
+        "keywords": [
+            "BlackRock Municipalome Trust"
+        ]
+    },
+    {
+        "symbol": "$MEN",
+        "keywords": [
+            "Blackrock MuniEnhanced Fund"
+        ]
+    },
+    {
+        "symbol": "$MUC",
+        "keywords": [
+            "Blackrock MuniHoldings California Quality Fund"
+        ]
+    },
+    {
+        "symbol": "$MUH",
+        "keywords": [
+            "Blackrock MuniHoldings Fund II"
+        ]
+    },
+    {
+        "symbol": "$MHD",
+        "keywords": [
+            "Blackrock MuniHoldings Fund"
+        ]
+    },
+    {
+        "symbol": "$MFL",
+        "keywords": [
+            "Blackrock MuniHoldings Investment Quality Fund"
+        ]
+    },
+    {
+        "symbol": "$MUJ",
+        "keywords": [
+            "Blackrock MuniHoldings New Jersey Insured Fund"
+        ]
+    },
+    {
+        "symbol": "$MHN",
+        "keywords": [
+            "Blackrock MuniHoldings New York Quality Fund"
+        ]
+    },
+    {
+        "symbol": "$MUE",
+        "keywords": [
+            "Blackrock MuniHoldings Quality Fund II"
+        ]
+    },
+    {
+        "symbol": "$MUS",
+        "keywords": [
+            "Blackrock MuniHoldings Quality Fund"
+        ]
+    },
+    {
+        "symbol": "$MVT",
+        "keywords": [
+            "Blackrock MuniVest Fund II"
+        ]
+    },
+    {
+        "symbol": "$MYC",
+        "keywords": [
+            "Blackrock MuniYield California Fund"
+        ]
+    },
+    {
+        "symbol": "$MCA",
+        "keywords": [
+            "Blackrock MuniYield California Insured Fund"
+        ]
+    },
+    {
+        "symbol": "$MYD",
+        "keywords": [
+            "Blackrock MuniYield Fund"
+        ]
+    },
+    {
+        "symbol": "$MYF",
+        "keywords": [
+            "Blackrock MuniYield Investment Fund"
+        ]
+    },
+    {
+        "symbol": "$MFT",
+        "keywords": [
+            "Blackrock MuniYield Investment QualityFund"
+        ]
+    },
+    {
+        "symbol": "$MIY",
+        "keywords": [
+            "Blackrock MuniYield Michigan Quality Fund"
+        ]
+    },
+    {
+        "symbol": "$MYJ",
+        "keywords": [
+            "Blackrock MuniYield New Jersey Fund"
+        ]
+    },
+    {
+        "symbol": "$MYN",
+        "keywords": [
+            "Blackrock MuniYield New York Quality Fund"
+        ]
+    },
+    {
+        "symbol": "$MPA",
+        "keywords": [
+            "Blackrock MuniYield Pennsylvania Quality Fund"
+        ]
+    },
+    {
+        "symbol": "$MQT",
+        "keywords": [
+            "Blackrock MuniYield Quality Fund II"
+        ]
+    },
+    {
+        "symbol": "$MYI",
+        "keywords": [
+            "Blackrock MuniYield Quality Fund III"
+        ]
+    },
+    {
+        "symbol": "$MQY",
+        "keywords": [
+            "Blackrock MuniYield Quality Fund"
+        ]
+    },
+    {
+        "symbol": "$BNJ",
+        "keywords": [
+            "BlackRock New Jersey Municipalome Trust"
+        ]
+    },
+    {
+        "symbol": "$BNY",
+        "keywords": [
+            "BlackRock New York Investment Quality Municipal Trust (Th"
+        ]
+    },
+    {
+        "symbol": "$BLH",
+        "keywords": [
+            "Blackrock New York Municipal 2018 Term Trust"
+        ]
+    },
+    {
+        "symbol": "$BQH",
+        "keywords": [
+            "Blackrock New York Municipal Bond Trust"
+        ]
+    },
+    {
+        "symbol": "$BSE",
+        "keywords": [
+            "Blackrock New York Municipalome Quality Trust"
+        ]
+    },
+    {
+        "symbol": "$BCX",
+        "keywords": [
+            "BlackRock Resources"
+        ]
+    },
+    {
+        "symbol": "$BST",
+        "keywords": [
+            "BlackRock Science and Technology Trust"
+        ]
+    },
+    {
+        "symbol": "$BSD",
+        "keywords": [
+            "BlackRock Strategic Municipal Trust (The)"
+        ]
+    },
+    {
+        "symbol": "$BUI",
+        "keywords": [
+            "BlackRock Utility and Infrastructure Trust"
+        ]
+    },
+    {
+        "symbol": "$BGB",
+        "keywords": [
+            "Blackstone / GSO Strategic Credit Fund"
+        ]
+    },
+    {
+        "symbol": "$BGX",
+        "keywords": [
+            "Blackstone GSO Long Short Creditome Fund"
+        ]
+    },
+    {
+        "symbol": "$BSL",
+        "keywords": [
+            "Blackstone GSO Senior Floating Rate Term Fund"
+        ]
+    },
+    {
+        "symbol": "$BCRH",
+        "keywords": [
+            "Blue Capital Reinsurance Holdings Ltd"
+        ]
+    },
+    {
+        "symbol": "$BWP",
+        "keywords": [
+            "Boardwalk Pipeline Partners LP"
+        ]
+    },
+    {
+        "symbol": "$BOOT",
+        "keywords": [
+            "Boot Barn Holdings"
+        ]
+    },
+    {
+        "symbol": "$BSX",
+        "keywords": [
+            "Boston Scientific Corporation"
+        ]
+    },
+    {
+        "symbol": "$BOX",
+        "keywords": [
+            "box.com"
+        ]
+    },
+    {
+        "symbol": "$BPT",
+        "keywords": [
+            "BP Prudhoe Bay Royalty Trust"
+        ]
+    },
+    {
+        "symbol": "$BDN",
+        "keywords": [
+            "Brandywine Realty Trust"
+        ]
+    },
+    {
+        "symbol": "$BAK",
+        "keywords": [
+            "Braskem SA"
+        ]
+    },
+    {
+        "symbol": "$BRFS",
+        "keywords": [
+            "BRF SA"
+        ]
+    },
+    {
+        "symbol": "$BPI",
+        "keywords": [
+            "Bridgepoint Education"
+        ]
+    },
+    {
+        "symbol": "$BKD",
+        "keywords": [
+            "Brookdale Senior Living"
+        ]
+    },
+    {
+        "symbol": "$INF",
+        "keywords": [
+            "Brookfield Global Listed Infrastructureome Fund"
+        ]
+    },
+    {
+        "symbol": "$HHY",
+        "keywords": [
+            "Brookfield Highome Fund"
+        ]
+    },
+    {
+        "symbol": "$BOI",
+        "keywords": [
+            "Brookfield Mortgage Opportunityome Fund"
+        ]
+    },
+    {
+        "symbol": "$BRT",
+        "keywords": [
+            "BRT Realty Trust"
+        ]
+    },
+    {
+        "symbol": "$BVN",
+        "keywords": [
+            "Buenaventura Mining Company"
+        ]
+    },
+    {
+        "symbol": "$BBW",
+        "keywords": [
+            "Build-A-Bear Workshop"
+        ]
+    },
+    {
+        "symbol": "$GYB",
+        "keywords": [
+            "CABCO Series 2004-101 Trust"
+        ]
+    },
+    {
+        "symbol": "$PFH",
+        "keywords": [
+            "CABCO Series 2004-101 Trust"
+        ]
+    },
+    {
+        "symbol": "$CAE",
+        "keywords": [
+            "CAE"
+        ]
+    },
+    {
+        "symbol": "$CAI",
+        "keywords": [
+            "CAI International"
+        ]
+    },
+    {
+        "symbol": "$CCC",
+        "keywords": [
+            "Calgon Carbon Corporation"
+        ]
+    },
+    {
+        "symbol": "$CALX",
+        "keywords": [
+            "Calix"
+        ]
+    },
+    {
+        "symbol": "$ELY",
+        "keywords": [
+            "Callaway Golf Company"
+        ]
+    },
+    {
+        "symbol": "$CPE",
+        "keywords": [
+            "Callon Petroleum Company"
+        ]
+    },
+    {
+        "symbol": "$CPN",
+        "keywords": [
+            "Calpine Corporation"
+        ]
+    },
+    {
+        "symbol": "$CCJ",
+        "keywords": [
+            "Cameco Corporation"
+        ]
+    },
+    {
+        "symbol": "$CSU",
+        "keywords": [
+            "Capital Senior Living Corporation"
+        ]
+    },
+    {
+        "symbol": "$CMO",
+        "keywords": [
+            "Capstead Mortgage Corporation"
+        ]
+    },
+    {
+        "symbol": "$CRR",
+        "keywords": [
+            "Carbo Ceramics"
+        ]
+    },
+    {
+        "symbol": "$CRCM",
+        "keywords": [
+            "Carecom"
+        ]
+    },
+    {
+        "symbol": "$CTT",
+        "keywords": [
+            "CatchMark Timber Trust"
+        ]
+    },
+    {
+        "symbol": "$CBZ",
+        "keywords": [
+            "CBIZ"
+        ]
+    },
+    {
+        "symbol": "$CBL",
+        "keywords": [
+            "CBL & Associates Properties"
+        ]
+    },
+    {
+        "symbol": "$IGR",
+        "keywords": [
+            "CBRE Clarion Global Real Estateome Fund"
+        ]
+    },
+    {
+        "symbol": "$CDI",
+        "keywords": [
+            "CDI Corporation"
+        ]
+    },
+    {
+        "symbol": "$CDR",
+        "keywords": [
+            "Cedar Realty Trust"
+        ]
+    },
+    {
+        "symbol": "$CGI",
+        "keywords": [
+            "Celadon Group"
+        ]
+    },
+    {
+        "symbol": "$CLS",
+        "keywords": [
+            "Celestica"
+        ]
+    },
+    {
+        "symbol": "$CEL",
+        "keywords": [
+            "Cellcom Israel"
+        ]
+    },
+    {
+        "symbol": "$CPAC",
+        "keywords": [
+            "Cementos Pacasmayo SAA"
+        ]
+    },
+    {
+        "symbol": "$CX",
+        "keywords": [
+            "Cemex SAB de CV"
+        ]
+    },
+    {
+        "symbol": "$CNCO",
+        "keywords": [
+            "Cencosud SA"
+        ]
+    },
+    {
+        "symbol": "$CVE",
+        "keywords": [
+            "Cenovus Energy"
+        ]
+    },
+    {
+        "symbol": "$CEN",
+        "keywords": [
+            "Center Coast MLP & Infrastructure Fund"
+        ]
+    },
+    {
+        "symbol": "$CEE",
+        "keywords": [
+            "Central Europe, Russia and Turkey Fund (The)"
+        ]
+    },
+    {
+        "symbol": "$CCS",
+        "keywords": [
+            "Century Communities"
+        ]
+    },
+    {
+        "symbol": "$ECOM",
+        "keywords": [
+            "ChannelAdvisor Corporation"
+        ]
+    },
+    {
+        "symbol": "$CKP",
+        "keywords": [
+            "Checkpoint Systms"
+        ]
+    },
+    {
+        "symbol": "$CMCM",
+        "keywords": [
+            "Cheetah Mobile"
+        ]
+    },
+    {
+        "symbol": "$CC",
+        "keywords": [
+            "Chemours Company (The)"
+        ]
+    },
+    {
+        "symbol": "$CHMI",
+        "keywords": [
+            "Cherry Hill Mortgage Investment Corporation"
+        ]
+    },
+    {
+        "symbol": "$CHK",
+        "keywords": [
+            "Chesapeake Energy Corporation"
+        ]
+    },
+    {
+        "symbol": "$CHS",
+        "keywords": [
+            "Chico&#39;s FAS"
+        ]
+    },
+    {
+        "symbol": "$CIM",
+        "keywords": [
+            "Chimera Investment Corporation"
+        ]
+    },
+    {
+        "symbol": "$CO",
+        "keywords": [
+            "China Cord Blood Corporation"
+        ]
+    },
+    {
+        "symbol": "$DL",
+        "keywords": [
+            "China Distance Education Holdings Limited"
+        ]
+    },
+    {
+        "symbol": "$CHN",
+        "keywords": [
+            "China Fund (The)"
+        ]
+    },
+    {
+        "symbol": "$LFC",
+        "keywords": [
+            "China Life Insurance Company Limited"
+        ]
+    },
+    {
+        "symbol": "$CHU",
+        "keywords": [
+            "China Unicom (Hong Kong) Ltd"
+        ]
+    },
+    {
+        "symbol": "$CYD",
+        "keywords": [
+            "China Yuchai International Limited"
+        ]
+    },
+    {
+        "symbol": "$CIEN",
+        "keywords": [
+            "Ciena Corporation"
+        ]
+    },
+    {
+        "symbol": "$BLW",
+        "keywords": [
+            "Citigroup"
+        ]
+    },
+    {
+        "symbol": "$CIA",
+        "keywords": [
+            "Citizens"
+        ]
+    },
+    {
+        "symbol": "$CIO",
+        "keywords": [
+            "City Office REIT"
+        ]
+    },
+    {
+        "symbol": "$CIVI",
+        "keywords": [
+            "Civitas Solutions"
+        ]
+    },
+    {
+        "symbol": "$CWEI",
+        "keywords": [
+            "Clayton Williams Energy"
+        ]
+    },
+    {
+        "symbol": "$CBA",
+        "keywords": [
+            "ClearBridge American Energy MLP Fund"
+        ]
+    },
+    {
+        "symbol": "$CEM",
+        "keywords": [
+            "ClearBridge Energy MLP Fund"
+        ]
+    },
+    {
+        "symbol": "$EMO",
+        "keywords": [
+            "ClearBridge Energy MLP Opportunity Fund"
+        ]
+    },
+    {
+        "symbol": "$CTR",
+        "keywords": [
+            "ClearBridge Energy MLP Total Return Fund"
+        ]
+    },
+    {
+        "symbol": "$MYCC",
+        "keywords": [
+            "ClubCorp Holdings"
+        ]
+    },
+    {
+        "symbol": "$CNHI",
+        "keywords": [
+            "CNH Industrial NV"
+        ]
+    },
+    {
+        "symbol": "$CNO",
+        "keywords": [
+            "CNO Financial Group"
+        ]
+    },
+    {
+        "symbol": "$CNXC",
+        "keywords": [
+            "CNX Coal Resources LP"
+        ]
+    },
+    {
+        "symbol": "$CDE",
+        "keywords": [
+            "Coeur Mining"
+        ]
+    },
+    {
+        "symbol": "$FOF",
+        "keywords": [
+            "Cohen & Steers Closed-End Opportunity Fund"
+        ]
+    },
+    {
+        "symbol": "$INB",
+        "keywords": [
+            "Cohen & Steers Globalome Builder"
+        ]
+    },
+    {
+        "symbol": "$UTF",
+        "keywords": [
+            "Cohen & Steers Infrastructure Fund"
+        ]
+    },
+    {
+        "symbol": "$MIE",
+        "keywords": [
+            "Cohen & Steers MLPome and Energy Opportunity Fund"
+        ]
+    },
+    {
+        "symbol": "$RQI",
+        "keywords": [
+            "Cohen & Steers Qualityome Realty Fund"
+        ]
+    },
+    {
+        "symbol": "$RNP",
+        "keywords": [
+            "Cohen & Steers Reit and Preferredome Fund"
+        ]
+    },
+    {
+        "symbol": "$RFI",
+        "keywords": [
+            "Cohen & Steers Total Return Realty Fund"
+        ]
+    },
+    {
+        "symbol": "$CXE",
+        "keywords": [
+            "Colonial Highome Municipal Trust"
+        ]
+    },
+    {
+        "symbol": "$CXH",
+        "keywords": [
+            "Colonial Investment Grade Municipal Trust"
+        ]
+    },
+    {
+        "symbol": "$CLNY",
+        "keywords": [
+            "Colony Capital"
+        ]
+    },
+    {
+        "symbol": "$CPPL",
+        "keywords": [
+            "Columbia Pipeline Partners LP"
+        ]
+    },
+    {
+        "symbol": "$STK",
+        "keywords": [
+            "Columbia Seligman Premium Technology Growth Fund"
+        ]
+    },
+    {
+        "symbol": "$CMC",
+        "keywords": [
+            "Commercial Metals Company"
+        ]
+    },
+    {
+        "symbol": "$CYH",
+        "keywords": [
+            "Community Health Systems"
+        ]
+    },
+    {
+        "symbol": "$CHCT",
+        "keywords": [
+            "Community Healthcare Trustorporated"
+        ]
+    },
+    {
+        "symbol": "$CBD",
+        "keywords": [
+            "Companhia Brasileira de Distribuicao"
+        ]
+    },
+    {
+        "symbol": "$SBS",
+        "keywords": [
+            "Companhia de saneamento Basico Do Estado De Sao Paulo - Sabesp"
+        ]
+    },
+    {
+        "symbol": "$ELP",
+        "keywords": [
+            "Companhia Paranaense de Energia (COPEL)"
+        ]
+    },
+    {
+        "symbol": "$CODI",
+        "keywords": [
+            "Compass Diversified Holdings"
+        ]
+    },
+    {
+        "symbol": "$CNNX",
+        "keywords": [
+            "Cone Midstream Partners LP"
+        ]
+    },
+    {
+        "symbol": "$CNX",
+        "keywords": [
+            "CONSOL Energy"
+        ]
+    },
+    {
+        "symbol": "$CSTM",
+        "keywords": [
+            "Constellium NV"
+        ]
+    },
+    {
+        "symbol": "$TCS",
+        "keywords": [
+            "Container Store (The)"
+        ]
+    },
+    {
+        "symbol": "$CBPX",
+        "keywords": [
+            "Continental Building Products"
+        ]
+    },
+    {
+        "symbol": "$CZZ",
+        "keywords": [
+            "Cosan Limited"
+        ]
+    },
+    {
+        "symbol": "$CMRE",
+        "keywords": [
+            "Costamare"
+        ]
+    },
+    {
+        "symbol": "$COT",
+        "keywords": [
+            "Cott Corporation"
+        ]
+    },
+    {
+        "symbol": "$CCSC",
+        "keywords": [
+            "Country Style Cooking Restaurant Chain Co"
+        ]
+    },
+    {
+        "symbol": "$CUZ",
+        "keywords": [
+            "Cousins Propertiesorporated"
+        ]
+    },
+    {
+        "symbol": "$CVA",
+        "keywords": [
+            "Covanta Holding Corporation"
+        ]
+    },
+    {
+        "symbol": "$CPL",
+        "keywords": [
+            "CPFL Energia SA"
+        ]
+    },
+    {
+        "symbol": "$CS",
+        "keywords": [
+            "Credit Suisse Group"
+        ]
+    },
+    {
+        "symbol": "$CPG",
+        "keywords": [
+            "Crescent Point Energy Corporation"
+        ]
+    },
+    {
+        "symbol": "$CEQP",
+        "keywords": [
+            "Crestwood Equity Partners LP"
+        ]
+    },
+    {
+        "symbol": "$CRT",
+        "keywords": [
+            "Cross Timbers Royalty Trust"
+        ]
+    },
+    {
+        "symbol": "$CRY",
+        "keywords": [
+            "CryoLife"
+        ]
+    },
+    {
+        "symbol": "$CTS",
+        "keywords": [
+            "CTS Corporation"
+        ]
+    },
+    {
+        "symbol": "$SRF",
+        "keywords": [
+            "Cushing Energyome Fund (The)"
+        ]
+    },
+    {
+        "symbol": "$SZC",
+        "keywords": [
+            "Cushing Renaissance Fund (The)"
+        ]
+    },
+    {
+        "symbol": "$CSI",
+        "keywords": [
+            "Cutwater Selectome Fund"
+        ]
+    },
+    {
+        "symbol": "$UAN",
+        "keywords": [
+            "CVR Partners"
+        ]
+    },
+    {
+        "symbol": "$CVRR",
+        "keywords": [
+            "CVR Refining"
+        ]
+    },
+    {
+        "symbol": "$CELP",
+        "keywords": [
+            "Cypress Energy Partners"
+        ]
+    },
+    {
+        "symbol": "$CYS",
+        "keywords": [
+            "CYS Investments"
+        ]
+    },
+    {
+        "symbol": "$DAN",
+        "keywords": [
+            "Dana Holding Corporation"
+        ]
+    },
+    {
+        "symbol": "$DQ",
+        "keywords": [
+            "DAQO New Energy Corp"
+        ]
+    },
+    {
+        "symbol": "$DAR",
+        "keywords": [
+            "Darling Ingredients"
+        ]
+    },
+    {
+        "symbol": "$DDR",
+        "keywords": [
+            "DDR Corp"
+        ]
+    },
+    {
+        "symbol": "$DF",
+        "keywords": [
+            "Dean Foods Company"
+        ]
+    },
+    {
+        "symbol": "$DEX",
+        "keywords": [
+            "Delaware Enhanced Global Dividend"
+        ]
+    },
+    {
+        "symbol": "$DDF",
+        "keywords": [
+            "Delaware Investments Dividend &ome Fund"
+        ]
+    },
+    {
+        "symbol": "$DK",
+        "keywords": [
+            "Delek US Holdings"
+        ]
+    },
+    {
+        "symbol": "$DMD",
+        "keywords": [
+            "Demand Media"
+        ]
+    },
+    {
+        "symbol": "$DB",
+        "keywords": [
+            "Deutsche Bank AG"
+        ]
+    },
+    {
+        "symbol": "$DV",
+        "keywords": [
+            "DeVry Education Group"
+        ]
+    },
+    {
+        "symbol": "$DHX",
+        "keywords": [
+            "DHI Group"
+        ]
+    },
+    {
+        "symbol": "$DHT",
+        "keywords": [
+            "DHT Holdings"
+        ]
+    },
+    {
+        "symbol": "$DRH",
+        "keywords": [
+            "Diamondrock Hospitality Company"
+        ]
+    },
+    {
+        "symbol": "$DGI",
+        "keywords": [
+            "DigitalGlobe"
+        ]
+    },
+    {
+        "symbol": "$DRA",
+        "keywords": [
+            "Diversified Real Assetome Fund"
+        ]
+    },
+    {
+        "symbol": "$DNI",
+        "keywords": [
+            "Dividend andome Fund"
+        ]
+    },
+    {
+        "symbol": "$DDC",
+        "keywords": [
+            "Dominion Diamond Corporation"
+        ]
+    },
+    {
+        "symbol": "$LPG",
+        "keywords": [
+            "Dorian LPG Ltd"
+        ]
+    },
+    {
+        "symbol": "$DSL",
+        "keywords": [
+            "DoubleLineome Solutions Fund"
+        ]
+    },
+    {
+        "symbol": "$DMB",
+        "keywords": [
+            "Dreyfus Municipal Bond Infrastructure Fund"
+        ]
+    },
+    {
+        "symbol": "$DSM",
+        "keywords": [
+            "Dreyfus Strategic Municipal Bond Fund"
+        ]
+    },
+    {
+        "symbol": "$LEO",
+        "keywords": [
+            "Dreyfus Strategic Municipals"
+        ]
+    },
+    {
+        "symbol": "$DCO",
+        "keywords": [
+            "Ducommunorporated"
+        ]
+    },
+    {
+        "symbol": "$DPG",
+        "keywords": [
+            "Duff & Phelps Global Utilityome Fund"
+        ]
+    },
+    {
+        "symbol": "$DSE",
+        "keywords": [
+            "Duff & Phelps Select Energy MLP Fund"
+        ]
+    },
+    {
+        "symbol": "$DNP",
+        "keywords": [
+            "Duff & Phelps Utilitiesome"
+        ]
+    },
+    {
+        "symbol": "$DTF",
+        "keywords": [
+            "Duff & Phelps Utilities Tax-Freeome"
+        ]
+    },
+    {
+        "symbol": "$DUC",
+        "keywords": [
+            "Duff & Phelps Utility & Corporate Bond Trust"
+        ]
+    },
+    {
+        "symbol": "$DHG",
+        "keywords": [
+            "DWS Highome Opportunities Fund"
+        ]
+    },
+    {
+        "symbol": "$DLNG",
+        "keywords": [
+            "Dynagas LNG Partners LP"
+        ]
+    },
+    {
+        "symbol": "$DYN",
+        "keywords": [
+            "Dynegy"
+        ]
+    },
+    {
+        "symbol": "$DX",
+        "keywords": [
+            "Dynex Capital"
+        ]
+    },
+    {
+        "symbol": "$SSP",
+        "keywords": [
+            "EW Scripps Company (The)"
+        ]
+    },
+    {
+        "symbol": "$EGIF",
+        "keywords": [
+            "Eagle Growth andome Opportunities Fund"
+        ]
+    },
+    {
+        "symbol": "$ECC",
+        "keywords": [
+            "Eagle Point Credit Company"
+        ]
+    },
+    {
+        "symbol": "$DEA",
+        "keywords": [
+            "Easterly Government Properties"
+        ]
+    },
+    {
+        "symbol": "$KODK",
+        "keywords": [
+            "Eastman Kodak Company"
+        ]
+    },
+    {
+        "symbol": "$ETV",
+        "keywords": [
+            "Eaton Vance Corporation"
+        ]
+    },
+    {
+        "symbol": "$ETW",
+        "keywords": [
+            "Eaton Vance Corporation"
+        ]
+    },
+    {
+        "symbol": "$EOI",
+        "keywords": [
+            "Eaton Vance Enhance Equityome Fund"
+        ]
+    },
+    {
+        "symbol": "$EOS",
+        "keywords": [
+            "Eaton Vance Enhanced Equityome Fund II"
+        ]
+    },
+    {
+        "symbol": "$EFT",
+        "keywords": [
+            "Eaton Vance Floating Rateome Trust"
+        ]
+    },
+    {
+        "symbol": "$EFF",
+        "keywords": [
+            "Eaton vance Floating-Rateome Plus Fund"
+        ]
+    },
+    {
+        "symbol": "$EVN",
+        "keywords": [
+            "Eaton Vance Municipalome Trust"
+        ]
+    },
+    {
+        "symbol": "$ETJ",
+        "keywords": [
+            "Eaton Vance Risk-Managed Diversified Equityome Fund"
+        ]
+    },
+    {
+        "symbol": "$EFR",
+        "keywords": [
+            "Eaton Vance Senior Floating-Rate Fund"
+        ]
+    },
+    {
+        "symbol": "$EVF",
+        "keywords": [
+            "Eaton Vance Seniorome Trust"
+        ]
+    },
+    {
+        "symbol": "$EVG",
+        "keywords": [
+            "Eaton Vance Short Diversifiedome Fund"
+        ]
+    },
+    {
+        "symbol": "$EVT",
+        "keywords": [
+            "Eaton Vance Tax Advantaged Dividendome Fund"
+        ]
+    },
+    {
+        "symbol": "$EXD",
+        "keywords": [
+            "Eaton Vance Tax-Advantaged Bond"
+        ]
+    },
+    {
+        "symbol": "$ETG",
+        "keywords": [
+            "Eaton Vance Tax-Advantaged Global Dividendome Fund"
+        ]
+    },
+    {
+        "symbol": "$ETB",
+        "keywords": [
+            "Eaton Vance Tax-Managed Buy-Writeome Fund"
+        ]
+    },
+    {
+        "symbol": "$ETY",
+        "keywords": [
+            "Eaton Vance Tax-Managed Diversified Equityome Fund"
+        ]
+    },
+    {
+        "symbol": "$EXG",
+        "keywords": [
+            "Eaton Vance Tax-Managed Global Diversified Equityome Fund"
+        ]
+    },
+    {
+        "symbol": "$DANG",
+        "keywords": [
+            "E-Commerce China Dangdang"
+        ]
+    },
+    {
+        "symbol": "$EC",
+        "keywords": [
+            "Ecopetrol SA"
+        ]
+    },
+    {
+        "symbol": "$EHIC",
+        "keywords": [
+            "eHi Car Services Limited"
+        ]
+    },
+    {
+        "symbol": "$EJ",
+        "keywords": [
+            "E-House (China) Holdings Limited"
+        ]
+    },
+    {
+        "symbol": "$EFC",
+        "keywords": [
+            "Ellington Financial LLC"
+        ]
+    },
+    {
+        "symbol": "$EARN",
+        "keywords": [
+            "Ellington Residential Mortgage REIT"
+        ]
+    },
+    {
+        "symbol": "$EMES",
+        "keywords": [
+            "Emerge Energy Services LP"
+        ]
+    },
+    {
+        "symbol": "$ESRT",
+        "keywords": [
+            "Empire State Realty Trust"
+        ]
+    },
+    {
+        "symbol": "$EDN",
+        "keywords": [
+            "Empresa Distribuidora Y Comercializadora Norte SA (Edenor)"
+        ]
+    },
+    {
+        "symbol": "$ENBL",
+        "keywords": [
+            "Enable Midstream Partners"
+        ]
+    },
+    {
+        "symbol": "$EEQ",
+        "keywords": [
+            "Enbridge Energy Management LLC"
+        ]
+    },
+    {
+        "symbol": "$EEP",
+        "keywords": [
+            "Enbridge Energy"
+        ]
+    },
+    {
+        "symbol": "$ECA",
+        "keywords": [
+            "Encana Corporation"
+        ]
+    },
+    {
+        "symbol": "$ETE",
+        "keywords": [
+            "Energy Transfer Equity"
+        ]
+    },
+    {
+        "symbol": "$ENI",
+        "keywords": [
+            "Enersis Americas SA"
+        ]
+    },
+    {
+        "symbol": "$EGL",
+        "keywords": [
+            "Engility Holdings"
+        ]
+    },
+    {
+        "symbol": "$ENLK",
+        "keywords": [
+            "EnLink Midstream Partners"
+        ]
+    },
+    {
+        "symbol": "$ENLC",
+        "keywords": [
+            "EnLink Midstream"
+        ]
+    },
+    {
+        "symbol": "$ENVA",
+        "keywords": [
+            "Enova International"
+        ]
+    },
+    {
+        "symbol": "$ESV",
+        "keywords": [
+            "ENSCO plc"
+        ]
+    },
+    {
+        "symbol": "$ETM",
+        "keywords": [
+            "Entercom Communications Corporation"
+        ]
+    },
+    {
+        "symbol": "$EVC",
+        "keywords": [
+            "Entravision Communications Corporation"
+        ]
+    },
+    {
+        "symbol": "$ERA",
+        "keywords": [
+            "Era Group"
+        ]
+    },
+    {
+        "symbol": "$EROS",
+        "keywords": [
+            "Eros International PLC"
+        ]
+    },
+    {
+        "symbol": "$ESNT",
+        "keywords": [
+            "Essent Group Ltd"
+        ]
+    },
+    {
+        "symbol": "$EURN",
+        "keywords": [
+            "Euronav NV"
+        ]
+    },
+    {
+        "symbol": "$EEA",
+        "keywords": [
+            "European Equity Fund (The)"
+        ]
+    },
+    {
+        "symbol": "$EVER",
+        "keywords": [
+            "EverBank Financial Corp"
+        ]
+    },
+    {
+        "symbol": "$EVTC",
+        "keywords": [
+            "Evertec"
+        ]
+    },
+    {
+        "symbol": "$EVDY",
+        "keywords": [
+            "Everyday Health"
+        ]
+    },
+    {
+        "symbol": "$EVGN",
+        "keywords": [
+            "Evogene Ltd"
+        ]
+    },
+    {
+        "symbol": "$EVH",
+        "keywords": [
+            "Evolent Health"
+        ]
+    },
+    {
+        "symbol": "$EXAR",
+        "keywords": [
+            "Exar Corporation"
+        ]
+    },
+    {
+        "symbol": "$EXPR",
+        "keywords": [
+            "Express"
+        ]
+    },
+    {
+        "symbol": "$STAY",
+        "keywords": [
+            "Extended Stay America"
+        ]
+    },
+    {
+        "symbol": "$EXTN",
+        "keywords": [
+            "Exterran Corporation"
+        ]
+    },
+    {
+        "symbol": "$FNB",
+        "keywords": [
+            "FNB Corporation"
+        ]
+    },
+    {
+        "symbol": "$FPI",
+        "keywords": [
+            "Farmland Partners"
+        ]
+    },
+    {
+        "symbol": "$FSS",
+        "keywords": [
+            "Federal Signal Corporation"
+        ]
+    },
+    {
+        "symbol": "$FPT",
+        "keywords": [
+            "Federated Premier Intermediate Municipalome Fund"
+        ]
+    },
+    {
+        "symbol": "$FMN",
+        "keywords": [
+            "Federated Premier Municipalome Fund"
+        ]
+    },
+    {
+        "symbol": "$FCH",
+        "keywords": [
+            "FelCor Lodging Trustorporated"
+        ]
+    },
+    {
+        "symbol": "$FGP",
+        "keywords": [
+            "Ferrellgas Partners"
+        ]
+    },
+    {
+        "symbol": "$FOE",
+        "keywords": [
+            "Ferro Corporation"
+        ]
+    },
+    {
+        "symbol": "$FCAU",
+        "keywords": [
+            "Fiat Chrysler Automobiles NV"
+        ]
+    },
+    {
+        "symbol": "$FBR",
+        "keywords": [
+            "Fibria Celulose SA"
+        ]
+    },
+    {
+        "symbol": "$FNFV",
+        "keywords": [
+            "Fidelity National Financial"
+        ]
+    },
+    {
+        "symbol": "$FMO",
+        "keywords": [
+            "Fiduciary/Claymore MLP Opportunity Fund"
+        ]
+    },
+    {
+        "symbol": "$FCF",
+        "keywords": [
+            "First Commonwealth Financial Corporation"
+        ]
+    },
+    {
+        "symbol": "$FDC",
+        "keywords": [
+            "First Data Corporation"
+        ]
+    },
+    {
+        "symbol": "$FHN",
+        "keywords": [
+            "First Horizon National Corporation"
+        ]
+    },
+    {
+        "symbol": "$AG",
+        "keywords": [
+            "First Majestic Silver Corp"
+        ]
+    },
+    {
+        "symbol": "$FPO",
+        "keywords": [
+            "First Potomac Realty Trust"
+        ]
+    },
+    {
+        "symbol": "$FFA",
+        "keywords": [
+            "First Trust"
+        ]
+    },
+    {
+        "symbol": "$FMY",
+        "keywords": [
+            "First Trust"
+        ]
+    },
+    {
+        "symbol": "$FAV",
+        "keywords": [
+            "First Trust Dividend andome Fund"
+        ]
+    },
+    {
+        "symbol": "$FDEU",
+        "keywords": [
+            "First Trust Dynamic Europe Equityome Fund"
+        ]
+    },
+    {
+        "symbol": "$FIF",
+        "keywords": [
+            "First Trust Energy Infrastructure Fund"
+        ]
+    },
+    {
+        "symbol": "$FSD",
+        "keywords": [
+            "First Trust Highome Long Short Fund"
+        ]
+    },
+    {
+        "symbol": "$FEI",
+        "keywords": [
+            "First Trust MLP and Energyome Fund"
+        ]
+    },
+    {
+        "symbol": "$FPL",
+        "keywords": [
+            "First Trust New Opportunities MLP & Energy Fund"
+        ]
+    },
+    {
+        "symbol": "$FCT",
+        "keywords": [
+            "First Trust Senior Floating Rateome Fund II"
+        ]
+    },
+    {
+        "symbol": "$FGB",
+        "keywords": [
+            "First Trust Specialty Finance and Financial Opportunities Fund"
+        ]
+    },
+    {
+        "symbol": "$FHY",
+        "keywords": [
+            "First Trust Strategic Highome Fund II"
+        ]
+    },
+    {
+        "symbol": "$FEO",
+        "keywords": [
+            "First Trust/Aberdeen Emerging Opportunity Fund"
+        ]
+    },
+    {
+        "symbol": "$FAM",
+        "keywords": [
+            "First Trust/Aberdeen Global Opportunityome Fund"
+        ]
+    },
+    {
+        "symbol": "$FIT",
+        "keywords": [
+            "Fitbit"
+        ]
+    },
+    {
+        "symbol": "$OAKS",
+        "keywords": [
+            "Five Oaks Investment Corp"
+        ]
+    },
+    {
+        "symbol": "$PFD",
+        "keywords": [
+            "Flaherty & Crumrine Preferredome Fundorporated"
+        ]
+    },
+    {
+        "symbol": "$PFO",
+        "keywords": [
+            "Flaherty & Crumrine Preferredome Opportunity Fund"
+        ]
+    },
+    {
+        "symbol": "$FTK",
+        "keywords": [
+            "Flotek Industries"
+        ]
+    },
+    {
+        "symbol": "$FLO",
+        "keywords": [
+            "Flowers Foods"
+        ]
+    },
+    {
+        "symbol": "$FLY",
+        "keywords": [
+            "Fly Leasing Limited"
+        ]
+    },
+    {
+        "symbol": "$F",
+        "keywords": [
+            "Ford Motor Company"
+        ]
+    },
+    {
+        "symbol": "$FOR",
+        "keywords": [
+            "Forestar Group"
+        ]
+    },
+    {
+        "symbol": "$FDI",
+        "keywords": [
+            "Fort Dearbornome Securities"
+        ]
+    },
+    {
+        "symbol": "$FTAI",
+        "keywords": [
+            "Fortress Transportation and Infrastructure Investors LLC"
+        ]
+    },
+    {
+        "symbol": "$FET",
+        "keywords": [
+            "Forum Energy Technologies"
+        ]
+    },
+    {
+        "symbol": "$FCPT",
+        "keywords": [
+            "Four Corners Property Trust"
+        ]
+    },
+    {
+        "symbol": "$FC",
+        "keywords": [
+            "Franklin Covey Company"
+        ]
+    },
+    {
+        "symbol": "$FT",
+        "keywords": [
+            "Franklin Universal Trust"
+        ]
+    },
+    {
+        "symbol": "$FI",
+        "keywords": [
+            "Frank&#39;s International NV"
+        ]
+    },
+    {
+        "symbol": "$FCX",
+        "keywords": [
+            "Freeport-McMoran"
+        ]
+    },
+    {
+        "symbol": "$FRO",
+        "keywords": [
+            "Frontline Ltd"
+        ]
+    },
+    {
+        "symbol": "$FSIC",
+        "keywords": [
+            "FS Investment Corporation"
+        ]
+    },
+    {
+        "symbol": "$FF",
+        "keywords": [
+            "FutureFuel Corp"
+        ]
+    },
+    {
+        "symbol": "$FXCM",
+        "keywords": [
+            "FXCM"
+        ]
+    },
+    {
+        "symbol": "$GDV",
+        "keywords": [
+            "Gabelli Dividend"
+        ]
+    },
+    {
+        "symbol": "$GAB",
+        "keywords": [
+            "Gabelli Equity Trust (The)"
+        ]
+    },
+    {
+        "symbol": "$GGZ",
+        "keywords": [
+            "Gabelli Global Small and Mid Cap Value Trust (The)"
+        ]
+    },
+    {
+        "symbol": "$GGT",
+        "keywords": [
+            "Gabelli Multi-Media Trust (The)"
+        ]
+    },
+    {
+        "symbol": "$GUT",
+        "keywords": [
+            "Gabelli Utility Trust (The)"
+        ]
+    },
+    {
+        "symbol": "$GCAP",
+        "keywords": [
+            "GAIN Capital Holdings"
+        ]
+    },
+    {
+        "symbol": "$GNT",
+        "keywords": [
+            "GAMCO Natural Resources, Gold &ome Tust"
+        ]
+    },
+    {
+        "symbol": "$GLOG",
+        "keywords": [
+            "GasLog LP"
+        ]
+    },
+    {
+        "symbol": "$GLOP",
+        "keywords": [
+            "GasLog Partners LP"
+        ]
+    },
+    {
+        "symbol": "$GZT",
+        "keywords": [
+            "Gazit-Globe Ltd"
+        ]
+    },
+    {
+        "symbol": "$GNRT",
+        "keywords": [
+            "Gener8 Maritime"
+        ]
+    },
+    {
+        "symbol": "$BGC",
+        "keywords": [
+            "General Cable Corporation"
+        ]
+    },
+    {
+        "symbol": "$GNE",
+        "keywords": [
+            "Genie Energy Ltd"
+        ]
+    },
+    {
+        "symbol": "$GKOS",
+        "keywords": [
+            "Glaukos Corporation"
+        ]
+    },
+    {
+        "symbol": "$GNL",
+        "keywords": [
+            "Global Net Lease"
+        ]
+    },
+    {
+        "symbol": "$GLP",
+        "keywords": [
+            "Global Partners LP"
+        ]
+    },
+    {
+        "symbol": "$GOL",
+        "keywords": [
+            "Gol Linhas Aereas Inteligentes SA"
+        ]
+    },
+    {
+        "symbol": "$GG",
+        "keywords": [
+            "Goldcorp"
+        ]
+    },
+    {
+        "symbol": "$GSBD",
+        "keywords": [
+            "Goldman Sachs BDC"
+        ]
+    },
+    {
+        "symbol": "$GER",
+        "keywords": [
+            "Goldman Sachs MLP Energy Renaissance Fund"
+        ]
+    },
+    {
+        "symbol": "$GMZ",
+        "keywords": [
+            "Goldman Sachs MLPome Opportunities Fund"
+        ]
+    },
+    {
+        "symbol": "$GOV",
+        "keywords": [
+            "Government Propertiesome Trust"
+        ]
+    },
+    {
+        "symbol": "$GHM",
+        "keywords": [
+            "Graham Corporation"
+        ]
+    },
+    {
+        "symbol": "$GPT",
+        "keywords": [
+            "Gramercy Property Trust"
+        ]
+    },
+    {
+        "symbol": "$GRAM",
+        "keywords": [
+            "Grana y Montero SAA"
+        ]
+    },
+    {
+        "symbol": "$GPK",
+        "keywords": [
+            "Graphic Packaging Holding Company"
+        ]
+    },
+    {
+        "symbol": "$GTN",
+        "keywords": [
+            "Gray Television"
+        ]
+    },
+    {
+        "symbol": "$AJX",
+        "keywords": [
+            "Great Ajax Corp"
+        ]
+    },
+    {
+        "symbol": "$GHL",
+        "keywords": [
+            "Greenhill & Co"
+        ]
+    },
+    {
+        "symbol": "$GFF",
+        "keywords": [
+            "Griffon Corporation"
+        ]
+    },
+    {
+        "symbol": "$AVAL",
+        "keywords": [
+            "Grupo Aval Acciones y Valores SA"
+        ]
+    },
+    {
+        "symbol": "$BSMX",
+        "keywords": [
+            "Grupo Financiero Santander Mexico SA B de CV"
+        ]
+    },
+    {
+        "symbol": "$GTT",
+        "keywords": [
+            "GTT Communications"
+        ]
+    },
+    {
+        "symbol": "$GES",
+        "keywords": [
+            "Guess?"
+        ]
+    },
+    {
+        "symbol": "$GGM",
+        "keywords": [
+            "Guggenheim Credit Allocation Fund"
+        ]
+    },
+    {
+        "symbol": "$GPM",
+        "keywords": [
+            "Guggenheim Enhanced Equityome Fund"
+        ]
+    },
+    {
+        "symbol": "$GGE",
+        "keywords": [
+            "Guggenheim Enhanced Equity Strategy Fund"
+        ]
+    },
+    {
+        "symbol": "$GEQ",
+        "keywords": [
+            "Guggenheim Equal Weight Enhanced Equityome Fund"
+        ]
+    },
+    {
+        "symbol": "$GOF",
+        "keywords": [
+            "Guggenheim Strategic Opportunities Fund"
+        ]
+    },
+    {
+        "symbol": "$GLF",
+        "keywords": [
+            "GulfMark Offshore"
+        ]
+    },
+    {
+        "symbol": "$HASI",
+        "keywords": [
+            "Hannon Armstrong Sustainable Infrastructure Capital"
+        ]
+    },
+    {
+        "symbol": "$HSC",
+        "keywords": [
+            "Harsco Corporation"
+        ]
+    },
+    {
+        "symbol": "$HTS",
+        "keywords": [
+            "Hatteras Financial Corp"
+        ]
+    },
+    {
+        "symbol": "$HVT",
+        "keywords": [
+            "Haverty Furniture Companies"
+        ]
+    },
+    {
+        "symbol": "$HW",
+        "keywords": [
+            "Headwatersorporated"
+        ]
+    },
+    {
+        "symbol": "$HLX",
+        "keywords": [
+            "Helix Energy Solutions Group"
+        ]
+    },
+    {
+        "symbol": "$HTGC",
+        "keywords": [
+            "Hercules Capital"
+        ]
+    },
+    {
+        "symbol": "$HRTG",
+        "keywords": [
+            "Heritage Insurance Holdings"
+        ]
+    },
+    {
+        "symbol": "$HTZ",
+        "keywords": [
+            "Hertz Global Holdings"
+        ]
+    },
+    {
+        "symbol": "$HPE",
+        "keywords": [
+            "Hewlett Packard Enterprise Company"
+        ]
+    },
+    {
+        "symbol": "$HCLP",
+        "keywords": [
+            "Hi-Crush Partners LP"
+        ]
+    },
+    {
+        "symbol": "$HTH",
+        "keywords": [
+            "Hilltop Holdings"
+        ]
+    },
+    {
+        "symbol": "$HMLP",
+        "keywords": [
+            "Hoegh LNG Partners LP"
+        ]
+    },
+    {
+        "symbol": "$HZN",
+        "keywords": [
+            "Horizon Global Corporation"
+        ]
+    },
+    {
+        "symbol": "$HOS",
+        "keywords": [
+            "Hornbeck Offshore Services"
+        ]
+    },
+    {
+        "symbol": "$HST",
+        "keywords": [
+            "Host Hotels & Resorts"
+        ]
+    },
+    {
+        "symbol": "$HPQ",
+        "keywords": [
+            "HP"
+        ]
+    },
+    {
+        "symbol": "$HRG",
+        "keywords": [
+            "HRG Group"
+        ]
+    },
+    {
+        "symbol": "$HUN",
+        "keywords": [
+            "Huntsman Corporation"
+        ]
+    },
+    {
+        "symbol": "$IBN",
+        "keywords": [
+            "ICICI Bank Limited"
+        ]
+    },
+    {
+        "symbol": "$IDT",
+        "keywords": [
+            "IDT Corporation"
+        ]
+    },
+    {
+        "symbol": "$IMPR",
+        "keywords": [
+            "Imprivata"
+        ]
+    },
+    {
+        "symbol": "$IHC",
+        "keywords": [
+            "Independence Holding Company"
+        ]
+    },
+    {
+        "symbol": "$BLOX",
+        "keywords": [
+            "Infoblox"
+        ]
+    },
+    {
+        "symbol": "$INFY",
+        "keywords": [
+            "Infosys Limited"
+        ]
+    },
+    {
+        "symbol": "$HIFR",
+        "keywords": [
+            "InfraREIT"
+        ]
+    },
+    {
+        "symbol": "$ING",
+        "keywords": [
+            "ING Group, NV"
+        ]
+    },
+    {
+        "symbol": "$INST",
+        "keywords": [
+            "Instructure"
+        ]
+    },
+    {
+        "symbol": "$IGT",
+        "keywords": [
+            "International Game Technology"
+        ]
+    },
+    {
+        "symbol": "$IL",
+        "keywords": [
+            "IntraLinks Holdings"
+        ]
+    },
+    {
+        "symbol": "$SNOW",
+        "keywords": [
+            "Intrawest Resorts Holdings"
+        ]
+    },
+    {
+        "symbol": "$IVC",
+        "keywords": [
+            "Invacare Corporation"
+        ]
+    },
+    {
+        "symbol": "$INVN",
+        "keywords": [
+            "InvenSense"
+        ]
+    },
+    {
+        "symbol": "$VBF",
+        "keywords": [
+            "Invesco Bond Fund"
+        ]
+    },
+    {
+        "symbol": "$VCV",
+        "keywords": [
+            "Invesco California Value Municipalome Trust"
+        ]
+    },
+    {
+        "symbol": "$VTA",
+        "keywords": [
+            "Invesco Credit Opportunities Fund"
+        ]
+    },
+    {
+        "symbol": "$VLT",
+        "keywords": [
+            "Invesco Highome Trust II"
+        ]
+    },
+    {
+        "symbol": "$IVR",
+        "keywords": [
+            "INVESCO MORTGAGE CAPITAL"
+        ]
+    },
+    {
+        "symbol": "$OIA",
+        "keywords": [
+            "Invesco Municipalome Opportunities Trust"
+        ]
+    },
+    {
+        "symbol": "$VMO",
+        "keywords": [
+            "Invesco Municipal Opportunity Trust"
+        ]
+    },
+    {
+        "symbol": "$VKQ",
+        "keywords": [
+            "Invesco Municipal Trust"
+        ]
+    },
+    {
+        "symbol": "$VPV",
+        "keywords": [
+            "Invesco Pennsylvania Value Municipalome Trust"
+        ]
+    },
+    {
+        "symbol": "$IQI",
+        "keywords": [
+            "Invesco Quality Municipalome Trust"
+        ]
+    },
+    {
+        "symbol": "$VTN",
+        "keywords": [
+            "Invesco Trust  for Investment Grade New York Municipal"
+        ]
+    },
+    {
+        "symbol": "$VGM",
+        "keywords": [
+            "Invesco Trust for Investment Grade Municipals"
+        ]
+    },
+    {
+        "symbol": "$IIM",
+        "keywords": [
+            "Invesco Value Municipalome Trust"
+        ]
+    },
+    {
+        "symbol": "$ITG",
+        "keywords": [
+            "Investment Technology Group"
+        ]
+    },
+    {
+        "symbol": "$IRET",
+        "keywords": [
+            "Investors Real Estate Trust"
+        ]
+    },
+    {
+        "symbol": "$NVTA",
+        "keywords": [
+            "Invitae Corporation"
+        ]
+    },
+    {
+        "symbol": "$IO",
+        "keywords": [
+            "Ion Geophysical Corporation"
+        ]
+    },
+    {
+        "symbol": "$IRS",
+        "keywords": [
+            "IRSA Inversiones Y Representaciones SA"
+        ]
+    },
+    {
+        "symbol": "$STAR",
+        "keywords": [
+            "iStar Financial"
+        ]
+    },
+    {
+        "symbol": "$ITCB",
+        "keywords": [
+            "Ita? CorpBanca"
+        ]
+    },
+    {
+        "symbol": "$ITUB",
+        "keywords": [
+            "Itau Unibanco Banco Holding SA"
+        ]
+    },
+    {
+        "symbol": "$IVH",
+        "keywords": [
+            "Ivy Highome Opportunities Fund"
+        ]
+    },
+    {
+        "symbol": "$JAX",
+        "keywords": [
+            "J Alexander&#39;s Holdings"
+        ]
+    },
+    {
+        "symbol": "$JCP",
+        "keywords": [
+            "JC Penney Company Holding Company"
+        ]
+    },
+    {
+        "symbol": "$JBL",
+        "keywords": [
+            "Jabil Circuit"
+        ]
+    },
+    {
+        "symbol": "$JHX",
+        "keywords": [
+            "James Hardie Industries plc"
+        ]
+    },
+    {
+        "symbol": "$JNS",
+        "keywords": [
+            "Janus Capital Group"
+        ]
+    },
+    {
+        "symbol": "$JOF",
+        "keywords": [
+            "Japan Smaller Capitalization Fund"
+        ]
+    },
+    {
+        "symbol": "$JCAP",
+        "keywords": [
+            "Jernigan Capital"
+        ]
+    },
+    {
+        "symbol": "$JMP",
+        "keywords": [
+            "JMP Group LLC"
+        ]
+    },
+    {
+        "symbol": "$HEQ",
+        "keywords": [
+            "John Hancock Hedged Equity &ome Fund"
+        ]
+    },
+    {
+        "symbol": "$JHS",
+        "keywords": [
+            "John Hancockome Securities Trust"
+        ]
+    },
+    {
+        "symbol": "$JHI",
+        "keywords": [
+            "John Hancock Investors Trust"
+        ]
+    },
+    {
+        "symbol": "$HPS",
+        "keywords": [
+            "John Hancock Preferredome Fund III"
+        ]
+    },
+    {
+        "symbol": "$PDT",
+        "keywords": [
+            "John Hancock Premium Dividend Fund"
+        ]
+    },
+    {
+        "symbol": "$HTY",
+        "keywords": [
+            "John Hancock Tax-Advantaged Global Shareholder Yield Fund"
+        ]
+    },
+    {
+        "symbol": "$JOY",
+        "keywords": [
+            "Joy Global"
+        ]
+    },
+    {
+        "symbol": "$JPEP",
+        "keywords": [
+            "JP Energy Partners LP"
+        ]
+    },
+    {
+        "symbol": "$JFC",
+        "keywords": [
+            "JPMorgan China Region Fund"
+        ]
+    },
+    {
+        "symbol": "$JMEI",
+        "keywords": [
+            "Jumei International Holding Limited"
+        ]
+    },
+    {
+        "symbol": "$JP",
+        "keywords": [
+            "Jupai Holdings Limited"
+        ]
+    },
+    {
+        "symbol": "$JE",
+        "keywords": [
+            "Just Energy Group"
+        ]
+    },
+    {
+        "symbol": "$LRN",
+        "keywords": [
+            "K12"
+        ]
+    },
+    {
+        "symbol": "$KS",
+        "keywords": [
+            "KapStone Paper and Packaging Corporation"
+        ]
+    },
+    {
+        "symbol": "$KED",
+        "keywords": [
+            "Kayne Anderson Energy Development Company"
+        ]
+    },
+    {
+        "symbol": "$KYE",
+        "keywords": [
+            "Kayne Anderson Energy Total Return Fund"
+        ]
+    },
+    {
+        "symbol": "$KMF",
+        "keywords": [
+            "Kayne Anderson Midstream Energy Fund"
+        ]
+    },
+    {
+        "symbol": "$KYN",
+        "keywords": [
+            "Kayne Anderson MLP Investment Company"
+        ]
+    },
+    {
+        "symbol": "$KBH",
+        "keywords": [
+            "KB Home"
+        ]
+    },
+    {
+        "symbol": "$KBR",
+        "keywords": [
+            "KBR"
+        ]
+    },
+    {
+        "symbol": "$KCG",
+        "keywords": [
+            "KCG Holdings"
+        ]
+    },
+    {
+        "symbol": "$KEN",
+        "keywords": [
+            "Kenon Holdings Ltd"
+        ]
+    },
+    {
+        "symbol": "$KEY",
+        "keywords": [
+            "KeyCorp"
+        ]
+    },
+    {
+        "symbol": "$KMI",
+        "keywords": [
+            "Kinder Morgan"
+        ]
+    },
+    {
+        "symbol": "$KND",
+        "keywords": [
+            "Kindred Healthcare"
+        ]
+    },
+    {
+        "symbol": "$KKR",
+        "keywords": [
+            "KKR & Co LP"
+        ]
+    },
+    {
+        "symbol": "$KIO",
+        "keywords": [
+            "KKRome Opportunities Fund"
+        ]
+    },
+    {
+        "symbol": "$KNOP",
+        "keywords": [
+            "KNOT Offshore Partners LP"
+        ]
+    },
+    {
+        "symbol": "$KN",
+        "keywords": [
+            "Knowles Corporation"
+        ]
+    },
+    {
+        "symbol": "$KEF",
+        "keywords": [
+            "Korea Equity Fund"
+        ]
+    },
+    {
+        "symbol": "$KOS",
+        "keywords": [
+            "Kosmos Energy Ltd"
+        ]
+    },
+    {
+        "symbol": "$KRA",
+        "keywords": [
+            "Kraton Performance Polymers"
+        ]
+    },
+    {
+        "symbol": "$KKD",
+        "keywords": [
+            "Krispy Kreme Doughnuts"
+        ]
+    },
+    {
+        "symbol": "$KRO",
+        "keywords": [
+            "Kronos Worldwide"
+        ]
+    },
+    {
+        "symbol": "$KT",
+        "keywords": [
+            "KT Corporation"
+        ]
+    },
+    {
+        "symbol": "$SCX",
+        "keywords": [
+            "LS Starrett Company (The)"
+        ]
+    },
+    {
+        "symbol": "$LQ",
+        "keywords": [
+            "La Quinta Holdings"
+        ]
+    },
+    {
+        "symbol": "$LADR",
+        "keywords": [
+            "Ladder Capital Corp"
+        ]
+    },
+    {
+        "symbol": "$LCI",
+        "keywords": [
+            "Lannett Co"
+        ]
+    },
+    {
+        "symbol": "$LPI",
+        "keywords": [
+            "Laredo Petroleum"
+        ]
+    },
+    {
+        "symbol": "$LFL",
+        "keywords": [
+            "LATAM Airlines Group SA"
+        ]
+    },
+    {
+        "symbol": "$LDF",
+        "keywords": [
+            "Latin American Discovery Fund (The)"
+        ]
+    },
+    {
+        "symbol": "$LGI",
+        "keywords": [
+            "Lazard Global Total Return andome Fund"
+        ]
+    },
+    {
+        "symbol": "$LOR",
+        "keywords": [
+            "Lazard World Dividend &ome Fund"
+        ]
+    },
+    {
+        "symbol": "$BWG",
+        "keywords": [
+            "Legg Mason BW Globalome Opportunities Fund"
+        ]
+    },
+    {
+        "symbol": "$CVB",
+        "keywords": [
+            "Lehman ABS Corporation"
+        ]
+    },
+    {
+        "symbol": "$KTP",
+        "keywords": [
+            "Lehman ABS Corporation"
+        ]
+    },
+    {
+        "symbol": "$XKE",
+        "keywords": [
+            "Lehman ABS Corporation"
+        ]
+    },
+    {
+        "symbol": "$LEJU",
+        "keywords": [
+            "Leju Holdings Limited"
+        ]
+    },
+    {
+        "symbol": "$LC",
+        "keywords": [
+            "LendingClub Corporation"
+        ]
+    },
+    {
+        "symbol": "$LUK",
+        "keywords": [
+            "Leucadia National Corporation"
+        ]
+    },
+    {
+        "symbol": "$LXP",
+        "keywords": [
+            "Lexington Realty Trust"
+        ]
+    },
+    {
+        "symbol": "$LPL",
+        "keywords": [
+            "LG Display Co"
+        ]
+    },
+    {
+        "symbol": "$USA",
+        "keywords": [
+            "Liberty All-Star Equity Fund"
+        ]
+    },
+    {
+        "symbol": "$LOCK",
+        "keywords": [
+            "LifeLock"
+        ]
+    },
+    {
+        "symbol": "$LGF",
+        "keywords": [
+            "Lions Gate Entertainment Corporation"
+        ]
+    },
+    {
+        "symbol": "$SCD",
+        "keywords": [
+            "LMP Capital andome Fund"
+        ]
+    },
+    {
+        "symbol": "$RIT",
+        "keywords": [
+            "LMP Real Estateome Fund"
+        ]
+    },
+    {
+        "symbol": "$LPX",
+        "keywords": [
+            "Louisiana-Pacific Corporation"
+        ]
+    },
+    {
+        "symbol": "$LXU",
+        "keywords": [
+            "Lsb Industries"
+        ]
+    },
+    {
+        "symbol": "$LL",
+        "keywords": [
+            "Lumber Liquidators Holdings"
+        ]
+    },
+    {
+        "symbol": "$LXFR",
+        "keywords": [
+            "Luxfer Holdings PLC"
+        ]
+    },
+    {
+        "symbol": "$WLH",
+        "keywords": [
+            "Lyon William Homes"
+        ]
+    },
+    {
+        "symbol": "$MHO",
+        "keywords": [
+            "M/I Homes"
+        ]
+    },
+    {
+        "symbol": "$MFD",
+        "keywords": [
+            "Macquarie/First Trust Global"
+        ]
+    },
+    {
+        "symbol": "$MCN",
+        "keywords": [
+            "Madison Covered Call & Equity Strategy Fund"
+        ]
+    },
+    {
+        "symbol": "$MSP",
+        "keywords": [
+            "Madison Strategic Sector Premium Fund"
+        ]
+    },
+    {
+        "symbol": "$MX",
+        "keywords": [
+            "MagnaChip Semiconductor Corporation"
+        ]
+    },
+    {
+        "symbol": "$MMD",
+        "keywords": [
+            "MainStay DefinedTerm Municipal Opportunities Fund"
+        ]
+    },
+    {
+        "symbol": "$MZF",
+        "keywords": [
+            "Managed Duration Investment Grade Municipal Fund"
+        ]
+    },
+    {
+        "symbol": "$MANU",
+        "keywords": [
+            "Manchester United Ltd"
+        ]
+    },
+    {
+        "symbol": "$MFS",
+        "keywords": [
+            "Manitowoc Food Service"
+        ]
+    },
+    {
+        "symbol": "$MN",
+        "keywords": [
+            "Manning & Napier"
+        ]
+    },
+    {
+        "symbol": "$MFC",
+        "keywords": [
+            "Manulife Financial Corp"
+        ]
+    },
+    {
+        "symbol": "$MRO",
+        "keywords": [
+            "Marathon Oil Corporation"
+        ]
+    },
+    {
+        "symbol": "$MCS",
+        "keywords": [
+            "Marcus Corporation (The)"
+        ]
+    },
+    {
+        "symbol": "$MHG",
+        "keywords": [
+            "Marine Harvest ASA"
+        ]
+    },
+    {
+        "symbol": "$MPX",
+        "keywords": [
+            "Marine Products Corporation"
+        ]
+    },
+    {
+        "symbol": "$HZO",
+        "keywords": [
+            "MarineMax"
+        ]
+    },
+    {
+        "symbol": "$MLP",
+        "keywords": [
+            "Maui Land & Pineapple Company"
+        ]
+    },
+    {
+        "symbol": "$MXL",
+        "keywords": [
+            "MaxLinear"
+        ]
+    },
+    {
+        "symbol": "$MBI",
+        "keywords": [
+            "MBIA"
+        ]
+    },
+    {
+        "symbol": "$MDU",
+        "keywords": [
+            "MDU Resources Group"
+        ]
+    },
+    {
+        "symbol": "$MEG",
+        "keywords": [
+            "Media General"
+        ]
+    },
+    {
+        "symbol": "$MPW",
+        "keywords": [
+            "Medical Properties Trust"
+        ]
+    },
+    {
+        "symbol": "$MCC",
+        "keywords": [
+            "Medley Capital Corporation"
+        ]
+    },
+    {
+        "symbol": "$MDLY",
+        "keywords": [
+            "Medley Management"
+        ]
+    },
+    {
+        "symbol": "$MTOR",
+        "keywords": [
+            "Meritor"
+        ]
+    },
+    {
+        "symbol": "$MTR",
+        "keywords": [
+            "Mesa Royalty Trust"
+        ]
+    },
+    {
+        "symbol": "$MSB",
+        "keywords": [
+            "Mesabi Trust"
+        ]
+    },
+    {
+        "symbol": "$MPG",
+        "keywords": [
+            "Metaldyne Performance Group"
+        ]
+    },
+    {
+        "symbol": "$MXE",
+        "keywords": [
+            "Mexico Equity andome Fund (The)"
+        ]
+    },
+    {
+        "symbol": "$MXF",
+        "keywords": [
+            "Mexico Fund (The)"
+        ]
+    },
+    {
+        "symbol": "$MFA",
+        "keywords": [
+            "MFA Financial"
+        ]
+    },
+    {
+        "symbol": "$MCR",
+        "keywords": [
+            "MFS Charterome Trust"
+        ]
+    },
+    {
+        "symbol": "$MGF",
+        "keywords": [
+            "MFS Government Marketsome Trust"
+        ]
+    },
+    {
+        "symbol": "$MMT",
+        "keywords": [
+            "MFS Multimarketome Trust"
+        ]
+    },
+    {
+        "symbol": "$MFM",
+        "keywords": [
+            "MFS Municipalome Trust"
+        ]
+    },
+    {
+        "symbol": "$MFV",
+        "keywords": [
+            "MFS Special Value Trust"
+        ]
+    },
+    {
+        "symbol": "$MTG",
+        "keywords": [
+            "MGIC Investment Corporation"
+        ]
+    },
+    {
+        "symbol": "$MEP",
+        "keywords": [
+            "Midcoast Energy Partners"
+        ]
+    },
+    {
+        "symbol": "$MSL",
+        "keywords": [
+            "MidSouth Bancorp"
+        ]
+    },
+    {
+        "symbol": "$MCRN",
+        "keywords": [
+            "Milacron Holdings Corp"
+        ]
+    },
+    {
+        "symbol": "$HIE",
+        "keywords": [
+            "Miller/Howard Highome Equity Fund"
+        ]
+    },
+    {
+        "symbol": "$MBT",
+        "keywords": [
+            "Mobile TeleSystems OJSC"
+        ]
+    },
+    {
+        "symbol": "$MODN",
+        "keywords": [
+            "Model N"
+        ]
+    },
+    {
+        "symbol": "$MOD",
+        "keywords": [
+            "Modine Manufacturing Company"
+        ]
+    },
+    {
+        "symbol": "$MNR",
+        "keywords": [
+            "Monmouth Real Estate Investment Corporation"
+        ]
+    },
+    {
+        "symbol": "$MORE",
+        "keywords": [
+            "Monogram Residential Trust"
+        ]
+    },
+    {
+        "symbol": "$APF",
+        "keywords": [
+            "Morgan Stanley Asia-Pacific Fund"
+        ]
+    },
+    {
+        "symbol": "$CAF",
+        "keywords": [
+            "Morgan Stanley China A Share Fund"
+        ]
+    },
+    {
+        "symbol": "$MSD",
+        "keywords": [
+            "Morgan Stanley Emerging Markets Debt Fund"
+        ]
+    },
+    {
+        "symbol": "$EDD",
+        "keywords": [
+            "Morgan Stanley Emerging Markets Domestic Debt Fund"
+        ]
+    },
+    {
+        "symbol": "$MSF",
+        "keywords": [
+            "Morgan Stanley Emerging Markets Fund"
+        ]
+    },
+    {
+        "symbol": "$MRC",
+        "keywords": [
+            "MRC Global"
+        ]
+    },
+    {
+        "symbol": "$ICB",
+        "keywords": [
+            "MSome Securities"
+        ]
+    },
+    {
+        "symbol": "$HJV",
+        "keywords": [
+            "MS Structured Asset Corp Saturns GE Cap Corp Series 2002-14"
+        ]
+    },
+    {
+        "symbol": "$MSGN",
+        "keywords": [
+            "MSG Networks"
+        ]
+    },
+    {
+        "symbol": "$MWA",
+        "keywords": [
+            "MUELLER WATER PRODUCTS"
+        ]
+    },
+    {
+        "symbol": "$MPSX",
+        "keywords": [
+            "Multi Packaging Solutions International Limited"
+        ]
+    },
+    {
+        "symbol": "$MVC",
+        "keywords": [
+            "MVC Capital"
+        ]
+    },
+    {
+        "symbol": "$MYE",
+        "keywords": [
+            "Myers Industries"
+        ]
+    },
+    {
+        "symbol": "$NBR",
+        "keywords": [
+            "Nabors Industries Ltd"
+        ]
+    },
+    {
+        "symbol": "$NTP",
+        "keywords": [
+            "Nam Tai Property"
+        ]
+    },
+    {
+        "symbol": "$NSM",
+        "keywords": [
+            "Nationstar Mortgage Holdings"
+        ]
+    },
+    {
+        "symbol": "$NGVC",
+        "keywords": [
+            "Natural Grocers by Vitamin Cottage"
+        ]
+    },
+    {
+        "symbol": "$NRP",
+        "keywords": [
+            "Natural Resource Partners LP"
+        ]
+    },
+    {
+        "symbol": "$NLS",
+        "keywords": [
+            "Nautilus Group (The)"
+        ]
+    },
+    {
+        "symbol": "$NCI",
+        "keywords": [
+            "Navigant Consulting"
+        ]
+    },
+    {
+        "symbol": "$NVGS",
+        "keywords": [
+            "Navigator Holdings Ltd"
+        ]
+    },
+    {
+        "symbol": "$NAP",
+        "keywords": [
+            "Navios Maritime Midstream Partners LP"
+        ]
+    },
+    {
+        "symbol": "$NAV",
+        "keywords": [
+            "Navistar International Corporation"
+        ]
+    },
+    {
+        "symbol": "$NCS",
+        "keywords": [
+            "NCI Building Systems"
+        ]
+    },
+    {
+        "symbol": "$NEFF",
+        "keywords": [
+            "Neff Corporation"
+        ]
+    },
+    {
+        "symbol": "$NPTN",
+        "keywords": [
+            "NeoPhotonics Corporation"
+        ]
+    },
+    {
+        "symbol": "$HYB",
+        "keywords": [
+            "New America Highome Fund (The)"
+        ]
+    },
+    {
+        "symbol": "$GF",
+        "keywords": [
+            "New Germany Fund (The)"
+        ]
+    },
+    {
+        "symbol": "$NWHM",
+        "keywords": [
+            "New Home Company (The)"
+        ]
+    },
+    {
+        "symbol": "$IRL",
+        "keywords": [
+            "New Ireland Fund (The)"
+        ]
+    },
+    {
+        "symbol": "$NEWM",
+        "keywords": [
+            "New Media Investment Group"
+        ]
+    },
+    {
+        "symbol": "$NMFC",
+        "keywords": [
+            "New Mountain Finance Corporation"
+        ]
+    },
+    {
+        "symbol": "$NRZ",
+        "keywords": [
+            "New Residential Investment Corp"
+        ]
+    },
+    {
+        "symbol": "$SNR",
+        "keywords": [
+            "New Senior Investment Group"
+        ]
+    },
+    {
+        "symbol": "$NYCB",
+        "keywords": [
+            "New York Community Bancorp"
+        ]
+    },
+    {
+        "symbol": "$NYRT",
+        "keywords": [
+            "New York REIT"
+        ]
+    },
+    {
+        "symbol": "$NYT",
+        "keywords": [
+            "New York Times Company (The)"
+        ]
+    },
+    {
+        "symbol": "$NHF",
+        "keywords": [
+            "NexPoint Credit Stategies Fund"
+        ]
+    },
+    {
+        "symbol": "$NXRT",
+        "keywords": [
+            "NexPoint Residential Trust"
+        ]
+    },
+    {
+        "symbol": "$NGL",
+        "keywords": [
+            "NGL ENERGY PARTNERS LP"
+        ]
+    },
+    {
+        "symbol": "$NJ",
+        "keywords": [
+            "Nidec Corporation (Nihon Densan Kabushiki Kaisha)"
+        ]
+    },
+    {
+        "symbol": "$NMBL",
+        "keywords": [
+            "Nimble Storage"
+        ]
+    },
+    {
+        "symbol": "$NE",
+        "keywords": [
+            "Noble Corporation"
+        ]
+    },
+    {
+        "symbol": "$NOK",
+        "keywords": [
+            "Nokia Corporation"
+        ]
+    },
+    {
+        "symbol": "$NOMD",
+        "keywords": [
+            "Nomad Foods Limited"
+        ]
+    },
+    {
+        "symbol": "$NAT",
+        "keywords": [
+            "Nordic American Tankers Limited"
+        ]
+    },
+    {
+        "symbol": "$NTL",
+        "keywords": [
+            "Nortel Inversora SA"
+        ]
+    },
+    {
+        "symbol": "$NRT",
+        "keywords": [
+            "North European Oil Royality Trust"
+        ]
+    },
+    {
+        "symbol": "$NSAM",
+        "keywords": [
+            "NorthStar Asset Management Group"
+        ]
+    },
+    {
+        "symbol": "$NRE",
+        "keywords": [
+            "NorthStar Realty Europe Corp"
+        ]
+    },
+    {
+        "symbol": "$NRF",
+        "keywords": [
+            "Northstar Realty Finance Corp"
+        ]
+    },
+    {
+        "symbol": "$DNOW",
+        "keywords": [
+            "NOW"
+        ]
+    },
+    {
+        "symbol": "$NRG",
+        "keywords": [
+            "NRG Energy"
+        ]
+    },
+    {
+        "symbol": "$NYLD",
+        "keywords": [
+            "NRG Yield"
+        ]
+    },
+    {
+        "symbol": "$JMLP",
+        "keywords": [
+            "Nuveen All Cap Energy MLP Opportunities Fund"
+        ]
+    },
+    {
+        "symbol": "$NEA",
+        "keywords": [
+            "Nuveen AMT-Free Municipalome Fund"
+        ]
+    },
+    {
+        "symbol": "$NUV",
+        "keywords": [
+            "Nuveen AMT-Free Municipal Value Fund"
+        ]
+    },
+    {
+        "symbol": "$NUW",
+        "keywords": [
+            "Nuveen AMT-Free Municipal Value Fund"
+        ]
+    },
+    {
+        "symbol": "$NAZ",
+        "keywords": [
+            "Nuveen Arizona Premiumome Municipal Fund"
+        ]
+    },
+    {
+        "symbol": "$NKX",
+        "keywords": [
+            "Nuveen California AMT-Free Municipalome Fund"
+        ]
+    },
+    {
+        "symbol": "$NAC",
+        "keywords": [
+            "Nuveen California Dividend Advantage Municipal Fund"
+        ]
+    },
+    {
+        "symbol": "$NCA",
+        "keywords": [
+            "Nuveen California Municipal Value Fund"
+        ]
+    },
+    {
+        "symbol": "$NTC",
+        "keywords": [
+            "Nuveen Connecticut Premiumome Municipal Fund"
+        ]
+    },
+    {
+        "symbol": "$JCE",
+        "keywords": [
+            "Nuveen Core Equity Alpha Fund"
+        ]
+    },
+    {
+        "symbol": "$JQC",
+        "keywords": [
+            "Nuveen Credit Strategiesome Fund"
+        ]
+    },
+    {
+        "symbol": "$JDD",
+        "keywords": [
+            "Nuveen Diversified Dividend andome Fund"
+        ]
+    },
+    {
+        "symbol": "$NAD",
+        "keywords": [
+            "Nuveen Dividend Advantage Municipal Fund"
+        ]
+    },
+    {
+        "symbol": "$NVG",
+        "keywords": [
+            "Nuveen Dividend Advantage Municipalome Fund"
+        ]
+    },
+    {
+        "symbol": "$DIAX",
+        "keywords": [
+            "Nuveen Dow 30SM Dynamic Overwrite Fund"
+        ]
+    },
+    {
+        "symbol": "$JMF",
+        "keywords": [
+            "Nuveen Energy MLP Total Return Fund"
+        ]
+    },
+    {
+        "symbol": "$NZF",
+        "keywords": [
+            "Nuveen Enhanced Municipal Credit Opportunities Fun"
+        ]
+    },
+    {
+        "symbol": "$NEV",
+        "keywords": [
+            "Nuveen Enhanced Municipal Value Fund"
+        ]
+    },
+    {
+        "symbol": "$JPW",
+        "keywords": [
+            "Nuveen Flexible Investmentome Fund"
+        ]
+    },
+    {
+        "symbol": "$JFR",
+        "keywords": [
+            "Nuveen Floating Rateome Fund"
+        ]
+    },
+    {
+        "symbol": "$JRO",
+        "keywords": [
+            "Nuveen Floating Rateome Opportuntiy Fund"
+        ]
+    },
+    {
+        "symbol": "$NKG",
+        "keywords": [
+            "Nuveen Georgia Dividend Advantage Municipal Fund 2"
+        ]
+    },
+    {
+        "symbol": "$JGV",
+        "keywords": [
+            "Nuveen Global Equityome Fund"
+        ]
+    },
+    {
+        "symbol": "$JGH",
+        "keywords": [
+            "Nuveen Global Highome Fund"
+        ]
+    },
+    {
+        "symbol": "$JHA",
+        "keywords": [
+            "Nuveen Highome 2020 Target Term Fund"
+        ]
+    },
+    {
+        "symbol": "$JHY",
+        "keywords": [
+            "Nuveen Highome 2020 Target Term Fund"
+        ]
+    },
+    {
+        "symbol": "$NXC",
+        "keywords": [
+            "Nuveen Insured California Select Tax-Freeome Portfolio"
+        ]
+    },
+    {
+        "symbol": "$NXN",
+        "keywords": [
+            "Nuveen Insured New York Select Tax-Freeome Portfolio"
+        ]
+    },
+    {
+        "symbol": "$NID",
+        "keywords": [
+            "Nuveen Intermediate Duration Municipal Term Fund"
+        ]
+    },
+    {
+        "symbol": "$NQM",
+        "keywords": [
+            "Nuveen Investment Quality Municipal Fund"
+        ]
+    },
+    {
+        "symbol": "$NMY",
+        "keywords": [
+            "Nuveen Maryland Premiumome Municipal Fund"
+        ]
+    },
+    {
+        "symbol": "$NMT",
+        "keywords": [
+            "Nuveen Massachusetts Premiumome Municipal Fund"
+        ]
+    },
+    {
+        "symbol": "$NUM",
+        "keywords": [
+            "Nuveen Michigan Qualityome Municipal Fund"
+        ]
+    },
+    {
+        "symbol": "$NMS",
+        "keywords": [
+            "Nuveen Minnesota Municipalome Fund"
+        ]
+    },
+    {
+        "symbol": "$JMM",
+        "keywords": [
+            "Nuveen Multi-Marketome Fund"
+        ]
+    },
+    {
+        "symbol": "$NHA",
+        "keywords": [
+            "Nuveen Municipal 2021 Target Term Fund"
+        ]
+    },
+    {
+        "symbol": "$NMI",
+        "keywords": [
+            "Nuveen Municipalome Fund"
+        ]
+    },
+    {
+        "symbol": "$NMO",
+        "keywords": [
+            "Nuveen Municipal Market Opportunity Fund"
+        ]
+    },
+    {
+        "symbol": "$NXJ",
+        "keywords": [
+            "Nuveen New Jersey Dividend Advantage Municipal Fund"
+        ]
+    },
+    {
+        "symbol": "$NRK",
+        "keywords": [
+            "Nuveen New York AMT-Free Municipalome Fund"
+        ]
+    },
+    {
+        "symbol": "$NAN",
+        "keywords": [
+            "Nuveen New York Dividend Advantage Municipal Fund"
+        ]
+    },
+    {
+        "symbol": "$NNY",
+        "keywords": [
+            "Nuveen New York Municipal Value Fund"
+        ]
+    },
+    {
+        "symbol": "$NNC",
+        "keywords": [
+            "Nuveen North Carolina Premiumome Municipal Fund"
+        ]
+    },
+    {
+        "symbol": "$NUO",
+        "keywords": [
+            "Nuveen Ohio Qualityome Municipal Fund"
+        ]
+    },
+    {
+        "symbol": "$NQP",
+        "keywords": [
+            "Nuveen Pennsylvania Investment Quality Municipal Fund"
+        ]
+    },
+    {
+        "symbol": "$NPP",
+        "keywords": [
+            "Nuveen Performance Plus Municipal Fund"
+        ]
+    },
+    {
+        "symbol": "$JPC",
+        "keywords": [
+            "Nuveen Preferredome Opportunites Fund"
+        ]
+    },
+    {
+        "symbol": "$NPF",
+        "keywords": [
+            "Nuveen Premier Municipalome Fund"
+        ]
+    },
+    {
+        "symbol": "$NPM",
+        "keywords": [
+            "Nuveen Premiumome Municipal Fund II"
+        ]
+    },
+    {
+        "symbol": "$NPI",
+        "keywords": [
+            "Nuveen Premiumome Municipal Fund"
+        ]
+    },
+    {
+        "symbol": "$JTP",
+        "keywords": [
+            "Nuveen Quality Preferredome Fund"
+        ]
+    },
+    {
+        "symbol": "$JPS",
+        "keywords": [
+            "Nuveen Quality Preferredome Fund 2"
+        ]
+    },
+    {
+        "symbol": "$JHP",
+        "keywords": [
+            "Nuveen Quality Preferredome Fund 3"
+        ]
+    },
+    {
+        "symbol": "$JRI",
+        "keywords": [
+            "Nuveen Real Assetome and Growth Fund"
+        ]
+    },
+    {
+        "symbol": "$BXMX",
+        "keywords": [
+            "Nuveen S&P 500 Buy-Writeome Fund"
+        ]
+    },
+    {
+        "symbol": "$SPXX",
+        "keywords": [
+            "Nuveen S&P 500 Dynamic Overwrite Fund"
+        ]
+    },
+    {
+        "symbol": "$NIM",
+        "keywords": [
+            "Nuveen Select Maturities Municipal Fund"
+        ]
+    },
+    {
+        "symbol": "$NQS",
+        "keywords": [
+            "Nuveen Select Quality Municipal Fund"
+        ]
+    },
+    {
+        "symbol": "$NXP",
+        "keywords": [
+            "Nuveen Select Tax Freeome Portfolio"
+        ]
+    },
+    {
+        "symbol": "$NXQ",
+        "keywords": [
+            "Nuveen Select Tax Freeome Portfolio II"
+        ]
+    },
+    {
+        "symbol": "$NXR",
+        "keywords": [
+            "Nuveen Select Tax Freeome Portfolio III"
+        ]
+    },
+    {
+        "symbol": "$NSL",
+        "keywords": [
+            "Nuveen Seniorome Fund"
+        ]
+    },
+    {
+        "symbol": "$JSD",
+        "keywords": [
+            "Nuveen Short Duration Credit Opportunities Fund"
+        ]
+    },
+    {
+        "symbol": "$JTD",
+        "keywords": [
+            "Nuveen Tax-Advantaged Dividend Growth Fund"
+        ]
+    },
+    {
+        "symbol": "$JTA",
+        "keywords": [
+            "Nuveen Tax-Advantaged Total Return Strategy Fund"
+        ]
+    },
+    {
+        "symbol": "$NTX",
+        "keywords": [
+            "Nuveen Texas Qualityome Municipal Fund"
+        ]
+    },
+    {
+        "symbol": "$NPV",
+        "keywords": [
+            "Nuveen Virginia Premiumome Municipal Fund"
+        ]
+    },
+    {
+        "symbol": "$NIQ",
+        "keywords": [
+            "Nuveenn Intermediate Duration Quality Municipal Term Fund"
+        ]
+    },
+    {
+        "symbol": "$OAS",
+        "keywords": [
+            "Oasis Petroleum"
+        ]
+    },
+    {
+        "symbol": "$OCIP",
+        "keywords": [
+            "OCI Partners LP"
+        ]
+    },
+    {
+        "symbol": "$OFG",
+        "keywords": [
+            "OFG Bancorp"
+        ]
+    },
+    {
+        "symbol": "$ORI",
+        "keywords": [
+            "Old Republic International Corporation"
+        ]
+    },
+    {
+        "symbol": "$OLN",
+        "keywords": [
+            "Olin Corporation"
+        ]
+    },
+    {
+        "symbol": "$OMAM",
+        "keywords": [
+            "OM Asset Management plc"
+        ]
+    },
+    {
+        "symbol": "$OME",
+        "keywords": [
+            "Omega Protein Corporation"
+        ]
+    },
+    {
+        "symbol": "$OMN",
+        "keywords": [
+            "OMNOVA Solutions"
+        ]
+    },
+    {
+        "symbol": "$ONDK",
+        "keywords": [
+            "On Deck Capital"
+        ]
+    },
+    {
+        "symbol": "$OB",
+        "keywords": [
+            "OneBeacon Insurance Group"
+        ]
+    },
+    {
+        "symbol": "$OOMA",
+        "keywords": [
+            "Ooma"
+        ]
+    },
+    {
+        "symbol": "$OPK",
+        "keywords": [
+            "Opko Health"
+        ]
+    },
+    {
+        "symbol": "$OPWR",
+        "keywords": [
+            "Opower"
+        ]
+    },
+    {
+        "symbol": "$OPY",
+        "keywords": [
+            "Oppenheimer Holdings"
+        ]
+    },
+    {
+        "symbol": "$ORAN",
+        "keywords": [
+            "Orange"
+        ]
+    },
+    {
+        "symbol": "$ORC",
+        "keywords": [
+            "Orchid Island Capital"
+        ]
+    },
+    {
+        "symbol": "$OEC",
+        "keywords": [
+            "Orion Engineered Carbons SA"
+        ]
+    },
+    {
+        "symbol": "$ORN",
+        "keywords": [
+            "Orion Marine Group"
+        ]
+    },
+    {
+        "symbol": "$OI",
+        "keywords": [
+            "Owens-Illinois"
+        ]
+    },
+    {
+        "symbol": "$PAI",
+        "keywords": [
+            "Pacific Americanome Shares"
+        ]
+    },
+    {
+        "symbol": "$P",
+        "keywords": [
+            "Pandora Media"
+        ]
+    },
+    {
+        "symbol": "$PHX",
+        "keywords": [
+            "Panhandle Royalty Company"
+        ]
+    },
+    {
+        "symbol": "$PAR",
+        "keywords": [
+            "PAR Technology Corporation"
+        ]
+    },
+    {
+        "symbol": "$PGRE",
+        "keywords": [
+            "Paramount Group"
+        ]
+    },
+    {
+        "symbol": "$PKE",
+        "keywords": [
+            "Park Electrochemical Corporation"
+        ]
+    },
+    {
+        "symbol": "$PKY",
+        "keywords": [
+            "Parkway Properties"
+        ]
+    },
+    {
+        "symbol": "$PRTY",
+        "keywords": [
+            "Party City Holdco"
+        ]
+    },
+    {
+        "symbol": "$PN",
+        "keywords": [
+            "Patriot National"
+        ]
+    },
+    {
+        "symbol": "$PBFX",
+        "keywords": [
+            "PBF Logistics LP"
+        ]
+    },
+    {
+        "symbol": "$PSO",
+        "keywords": [
+            "Pearson, Plc"
+        ]
+    },
+    {
+        "symbol": "$PFSI",
+        "keywords": [
+            "PennyMac Financial Services"
+        ]
+    },
+    {
+        "symbol": "$PMT",
+        "keywords": [
+            "PennyMac Mortgage Investment Trust"
+        ]
+    },
+    {
+        "symbol": "$PBT",
+        "keywords": [
+            "Permian Basin Royalty Trust"
+        ]
+    },
+    {
+        "symbol": "$PZE",
+        "keywords": [
+            "Petrobras Argentina SA"
+        ]
+    },
+    {
+        "symbol": "$PBR",
+        "keywords": [
+            "Petroleo Brasileiro SA- Petrobras"
+        ]
+    },
+    {
+        "symbol": "$PHH",
+        "keywords": [
+            "PHH Corp"
+        ]
+    },
+    {
+        "symbol": "$PFX",
+        "keywords": [
+            "Phoenix Companies (The)"
+        ]
+    },
+    {
+        "symbol": "$DOC",
+        "keywords": [
+            "Physicians Realty Trust"
+        ]
+    },
+    {
+        "symbol": "$PIR",
+        "keywords": [
+            "Pier 1 Imports"
+        ]
+    },
+    {
+        "symbol": "$PCQ",
+        "keywords": [
+            "PIMCO California Municipalome Fund"
+        ]
+    },
+    {
+        "symbol": "$PCK",
+        "keywords": [
+            "Pimco California Municipalome Fund II"
+        ]
+    },
+    {
+        "symbol": "$PZC",
+        "keywords": [
+            "PIMCO California Municipalome Fund III"
+        ]
+    },
+    {
+        "symbol": "$PCM",
+        "keywords": [
+            "PIMCO Commercial Mortgage Securities Trust"
+        ]
+    },
+    {
+        "symbol": "$PTY",
+        "keywords": [
+            "Pimco Corporate &ome Opportunity Fund"
+        ]
+    },
+    {
+        "symbol": "$PCN",
+        "keywords": [
+            "Pimco Corporate &ome Stategy Fund"
+        ]
+    },
+    {
+        "symbol": "$PCI",
+        "keywords": [
+            "PIMCO Dynamic Creditome Fund"
+        ]
+    },
+    {
+        "symbol": "$PGP",
+        "keywords": [
+            "Pimco Global Stocksplus &ome Fund"
+        ]
+    },
+    {
+        "symbol": "$PHK",
+        "keywords": [
+            "Pimco Highome Fund"
+        ]
+    },
+    {
+        "symbol": "$PFL",
+        "keywords": [
+            "PIMCOome Strategy Fund"
+        ]
+    },
+    {
+        "symbol": "$PFN",
+        "keywords": [
+            "PIMCOome Strategy Fund II"
+        ]
+    },
+    {
+        "symbol": "$PMF",
+        "keywords": [
+            "PIMCO Municipalome Fund"
+        ]
+    },
+    {
+        "symbol": "$PML",
+        "keywords": [
+            "Pimco Municipalome Fund II"
+        ]
+    },
+    {
+        "symbol": "$PMX",
+        "keywords": [
+            "PIMCO Municipalome Fund III"
+        ]
+    },
+    {
+        "symbol": "$PNF",
+        "keywords": [
+            "PIMCO New York Municipalome Fund"
+        ]
+    },
+    {
+        "symbol": "$PNI",
+        "keywords": [
+            "Pimco New York Municipalome Fund II"
+        ]
+    },
+    {
+        "symbol": "$PYN",
+        "keywords": [
+            "PIMCO New York Municipalome Fund III"
+        ]
+    },
+    {
+        "symbol": "$RCS",
+        "keywords": [
+            "PIMCO Strategicome Fund"
+        ]
+    },
+    {
+        "symbol": "$PHD",
+        "keywords": [
+            "Pioneer Floating Rate Trust"
+        ]
+    },
+    {
+        "symbol": "$PHT",
+        "keywords": [
+            "Pioneer Highome Trust"
+        ]
+    },
+    {
+        "symbol": "$MAV",
+        "keywords": [
+            "Pioneer Municipal Highome Advantage Trust"
+        ]
+    },
+    {
+        "symbol": "$MHI",
+        "keywords": [
+            "Pioneer Municipal Highome Trust"
+        ]
+    },
+    {
+        "symbol": "$PAGP",
+        "keywords": [
+            "Plains Group Holdings"
+        ]
+    },
+    {
+        "symbol": "$PLNT",
+        "keywords": [
+            "Planet Fitness"
+        ]
+    },
+    {
+        "symbol": "$PAH",
+        "keywords": [
+            "Platform Specialty Products Corporation"
+        ]
+    },
+    {
+        "symbol": "$PGEM",
+        "keywords": [
+            "Ply Gem Holdings"
+        ]
+    },
+    {
+        "symbol": "$POT",
+        "keywords": [
+            "Potash Corporation of Saskatchewan"
+        ]
+    },
+    {
+        "symbol": "$POWR",
+        "keywords": [
+            "PowerSecure International"
+        ]
+    },
+    {
+        "symbol": "$PYT",
+        "keywords": [
+            "PPlus Trust"
+        ]
+    },
+    {
+        "symbol": "$APTS",
+        "keywords": [
+            "Preferred Apartment Communities"
+        ]
+    },
+    {
+        "symbol": "$PVG",
+        "keywords": [
+            "Pretium Resources"
+        ]
+    },
+    {
+        "symbol": "$PGZ",
+        "keywords": [
+            "Principal Real Estateome Fund"
+        ]
+    },
+    {
+        "symbol": "$PRO",
+        "keywords": [
+            "PROS Holdings"
+        ]
+    },
+    {
+        "symbol": "$PSTG",
+        "keywords": [
+            "PROTOSTAR I LTD"
+        ]
+    },
+    {
+        "symbol": "$PFS",
+        "keywords": [
+            "Provident Financial Services"
+        ]
+    },
+    {
+        "symbol": "$GHY",
+        "keywords": [
+            "Prudential Global Short Duration High Yield Fund"
+        ]
+    },
+    {
+        "symbol": "$ISD",
+        "keywords": [
+            "Prudential Short Duration High Yield Fund"
+        ]
+    },
+    {
+        "symbol": "$PHM",
+        "keywords": [
+            "PulteGroup"
+        ]
+    },
+    {
+        "symbol": "$PCF",
+        "keywords": [
+            "Putnam Highome Bond Fund"
+        ]
+    },
+    {
+        "symbol": "$PMM",
+        "keywords": [
+            "Putnam Managed Municipalome Trust"
+        ]
+    },
+    {
+        "symbol": "$PMO",
+        "keywords": [
+            "Putnam Municipal Opportunities Trust"
+        ]
+    },
+    {
+        "symbol": "$PZN",
+        "keywords": [
+            "Pzena Investment Management"
+        ]
+    },
+    {
+        "symbol": "$QEP",
+        "keywords": [
+            "QEP Resources"
+        ]
+    },
+    {
+        "symbol": "$QUAD",
+        "keywords": [
+            "Quad Graphics"
+        ]
+    },
+    {
+        "symbol": "$NX",
+        "keywords": [
+            "Quanex Building Products Corporation"
+        ]
+    },
+    {
+        "symbol": "$QUOT",
+        "keywords": [
+            "Quotient Technology"
+        ]
+    },
+    {
+        "symbol": "$RDN",
+        "keywords": [
+            "Radian Group"
+        ]
+    },
+    {
+        "symbol": "$RFT",
+        "keywords": [
+            "RAIT Financial Trust"
+        ]
+    },
+    {
+        "symbol": "$RPT",
+        "keywords": [
+            "Ramco-Gershenson Properties Trust"
+        ]
+    },
+    {
+        "symbol": "$RYAM",
+        "keywords": [
+            "Rayonier Advanced Materials"
+        ]
+    },
+    {
+        "symbol": "$RLH",
+        "keywords": [
+            "Red Lion Hotels Corporation"
+        ]
+    },
+    {
+        "symbol": "$RWT",
+        "keywords": [
+            "Redwood Trust"
+        ]
+    },
+    {
+        "symbol": "$RGC",
+        "keywords": [
+            "Regal Entertainment Group"
+        ]
+    },
+    {
+        "symbol": "$RM",
+        "keywords": [
+            "Regional Management Corp"
+        ]
+    },
+    {
+        "symbol": "$RF",
+        "keywords": [
+            "Regions Financial Corporation"
+        ]
+    },
+    {
+        "symbol": "$RGS",
+        "keywords": [
+            "Regis Corporation"
+        ]
+    },
+    {
+        "symbol": "$RENX",
+        "keywords": [
+            "RELX NV"
+        ]
+    },
+    {
+        "symbol": "$RELX",
+        "keywords": [
+            "RELX PLC"
+        ]
+    },
+    {
+        "symbol": "$RFP",
+        "keywords": [
+            "Resolute Forest Products"
+        ]
+    },
+    {
+        "symbol": "$RSO",
+        "keywords": [
+            "Resource Capital Corp"
+        ]
+    },
+    {
+        "symbol": "$RPAI",
+        "keywords": [
+            "Retail Properties of America"
+        ]
+    },
+    {
+        "symbol": "$REXR",
+        "keywords": [
+            "Rexford Industrial Realty"
+        ]
+    },
+    {
+        "symbol": "$RICE",
+        "keywords": [
+            "Rice Energy"
+        ]
+    },
+    {
+        "symbol": "$RMP",
+        "keywords": [
+            "Rice Midstream Partners LP"
+        ]
+    },
+    {
+        "symbol": "$RNG",
+        "keywords": [
+            "Ringcentral"
+        ]
+    },
+    {
+        "symbol": "$RAD",
+        "keywords": [
+            "Rite Aid Corporation"
+        ]
+    },
+    {
+        "symbol": "$RIV",
+        "keywords": [
+            "RiverNorth Opportunities Fund"
+        ]
+    },
+    {
+        "symbol": "$RRTS",
+        "keywords": [
+            "Roadrunner Transportation Systems"
+        ]
+    },
+    {
+        "symbol": "$RRMS",
+        "keywords": [
+            "Rose Rock Midstream"
+        ]
+    },
+    {
+        "symbol": "$RST",
+        "keywords": [
+            "Rosetta Stone"
+        ]
+    },
+    {
+        "symbol": "$RSE",
+        "keywords": [
+            "Rouse Properties"
+        ]
+    },
+    {
+        "symbol": "$RDC",
+        "keywords": [
+            "Rowan Companies plc"
+        ]
+    },
+    {
+        "symbol": "$RBS",
+        "keywords": [
+            "Royal Bank Scotland plc (The)"
+        ]
+    },
+    {
+        "symbol": "$RGT",
+        "keywords": [
+            "Royce Global Value Trust"
+        ]
+    },
+    {
+        "symbol": "$RMT",
+        "keywords": [
+            "Royce Micro-Cap Trust"
+        ]
+    },
+    {
+        "symbol": "$RVT",
+        "keywords": [
+            "Royce Value Trust"
+        ]
+    },
+    {
+        "symbol": "$RES",
+        "keywords": [
+            "RPC"
+        ]
+    },
+    {
+        "symbol": "$RKUS",
+        "keywords": [
+            "Ruckus Wireless"
+        ]
+    },
+    {
+        "symbol": "$RTEC",
+        "keywords": [
+            "Rudolph Technologies"
+        ]
+    },
+    {
+        "symbol": "$RYI",
+        "keywords": [
+            "Ryerson Holding Corporation"
+        ]
+    },
+    {
+        "symbol": "$SFE",
+        "keywords": [
+            "Safeguard Scientifics"
+        ]
+    },
+    {
+        "symbol": "$SMM",
+        "keywords": [
+            "Salient Midstream & MLP Fund"
+        ]
+    },
+    {
+        "symbol": "$SJT",
+        "keywords": [
+            "San Juan Basin Royalty Trust"
+        ]
+    },
+    {
+        "symbol": "$SN",
+        "keywords": [
+            "Sanchez Energy Corporation"
+        ]
+    },
+    {
+        "symbol": "$SC",
+        "keywords": [
+            "Santander Consumer USA Holdings"
+        ]
+    },
+    {
+        "symbol": "$SAR",
+        "keywords": [
+            "Saratoga Investment Corp"
+        ]
+    },
+    {
+        "symbol": "$SLTB",
+        "keywords": [
+            "Scorpio Bulkers"
+        ]
+    },
+    {
+        "symbol": "$STNG",
+        "keywords": [
+            "Scorpio Tankers"
+        ]
+    },
+    {
+        "symbol": "$LBF",
+        "keywords": [
+            "Scudder Global Highome Fund"
+        ]
+    },
+    {
+        "symbol": "$KHI",
+        "keywords": [
+            "Scudder Highome Trust"
+        ]
+    },
+    {
+        "symbol": "$KMM",
+        "keywords": [
+            "Scudder Multi-Marketome Trust"
+        ]
+    },
+    {
+        "symbol": "$KTF",
+        "keywords": [
+            "Scudder Municipleome Trust"
+        ]
+    },
+    {
+        "symbol": "$KST",
+        "keywords": [
+            "Scudder Strategicome Trust"
+        ]
+    },
+    {
+        "symbol": "$KSM",
+        "keywords": [
+            "Scudder Strategic Municipleome Trust"
+        ]
+    },
+    {
+        "symbol": "$SA",
+        "keywords": [
+            "Seabridge Gold"
+        ]
+    },
+    {
+        "symbol": "$SSW",
+        "keywords": [
+            "Seaspan Corporation"
+        ]
+    },
+    {
+        "symbol": "$JBN",
+        "keywords": [
+            "Select Asset"
+        ]
+    },
+    {
+        "symbol": "$JBR",
+        "keywords": [
+            "Select Asset"
+        ]
+    },
+    {
+        "symbol": "$SEM",
+        "keywords": [
+            "Select Medical Holdings Corporation"
+        ]
+    },
+    {
+        "symbol": "$SNH",
+        "keywords": [
+            "Senior Housing Properties Trust"
+        ]
+    },
+    {
+        "symbol": "$SJR",
+        "keywords": [
+            "Shaw Communications"
+        ]
+    },
+    {
+        "symbol": "$SFL",
+        "keywords": [
+            "Ship Finance International Limited"
+        ]
+    },
+    {
+        "symbol": "$SBGL",
+        "keywords": [
+            "Sibanye Gold Limited"
+        ]
+    },
+    {
+        "symbol": "$SBY",
+        "keywords": [
+            "Silver Bay Realty Trust Corp"
+        ]
+    },
+    {
+        "symbol": "$SSNI",
+        "keywords": [
+            "Silver Spring Networks"
+        ]
+    },
+    {
+        "symbol": "$SLW",
+        "keywords": [
+            "Silver Wheaton Corp"
+        ]
+    },
+    {
+        "symbol": "$SKM",
+        "keywords": [
+            "SK Telecom Co"
+        ]
+    },
+    {
+        "symbol": "$SFS",
+        "keywords": [
+            "Smart"
+        ]
+    },
+    {
+        "symbol": "$SAH",
+        "keywords": [
+            "Sonic Automotive"
+        ]
+    },
+    {
+        "symbol": "$SFUN",
+        "keywords": [
+            "SouFun Holdings Limited"
+        ]
+    },
+    {
+        "symbol": "$SWN",
+        "keywords": [
+            "Southwestern Energy Company"
+        ]
+    },
+    {
+        "symbol": "$SPA",
+        "keywords": [
+            "Sparton Corporation"
+        ]
+    },
+    {
+        "symbol": "$SPE",
+        "keywords": [
+            "Special Opportunities Fund"
+        ]
+    },
+    {
+        "symbol": "$TRK",
+        "keywords": [
+            "Speedway Motorsports"
+        ]
+    },
+    {
+        "symbol": "$SRC",
+        "keywords": [
+            "Spirit Realty Capital"
+        ]
+    },
+    {
+        "symbol": "$SRLP",
+        "keywords": [
+            "Sprague Resources LP"
+        ]
+    },
+    {
+        "symbol": "$SQ",
+        "keywords": [
+            "Square"
+        ]
+    },
+    {
+        "symbol": "$JOE",
+        "keywords": [
+            "St Joe Company (The)"
+        ]
+    },
+    {
+        "symbol": "$SSI",
+        "keywords": [
+            "Stage Stores"
+        ]
+    },
+    {
+        "symbol": "$SGU",
+        "keywords": [
+            "Star Gas Partners"
+        ]
+    },
+    {
+        "symbol": "$STWD",
+        "keywords": [
+            "STARWOOD PROPERTY TRUST"
+        ]
+    },
+    {
+        "symbol": "$STO",
+        "keywords": [
+            "Statoil ASA"
+        ]
+    },
+    {
+        "symbol": "$SPLP",
+        "keywords": [
+            "Steel Partners Holdings LP"
+        ]
+    },
+    {
+        "symbol": "$SCS",
+        "keywords": [
+            "Steelcase"
+        ]
+    },
+    {
+        "symbol": "$SCM",
+        "keywords": [
+            "Stellus Capital Investment Corporation"
+        ]
+    },
+    {
+        "symbol": "$STL",
+        "keywords": [
+            "Sterling Bancorp"
+        ]
+    },
+    {
+        "symbol": "$SWC",
+        "keywords": [
+            "Stillwater Mining Company"
+        ]
+    },
+    {
+        "symbol": "$STM",
+        "keywords": [
+            "STMicroelectronics NV"
+        ]
+    },
+    {
+        "symbol": "$EDF",
+        "keywords": [
+            "Stone Harbor Emerging Marketsome Fund"
+        ]
+    },
+    {
+        "symbol": "$EDI",
+        "keywords": [
+            "Stone Harbor Emerging Markets Totalome Fund"
+        ]
+    },
+    {
+        "symbol": "$SGM",
+        "keywords": [
+            "Stonegate Mortgage Corporation"
+        ]
+    },
+    {
+        "symbol": "$SRI",
+        "keywords": [
+            "Stoneridge"
+        ]
+    },
+    {
+        "symbol": "$SGL",
+        "keywords": [
+            "Strategic Globalome Fund"
+        ]
+    },
+    {
+        "symbol": "$GJH",
+        "keywords": [
+            "STRATS Trust"
+        ]
+    },
+    {
+        "symbol": "$GJS",
+        "keywords": [
+            "STRATS Trust"
+        ]
+    },
+    {
+        "symbol": "$SMFG",
+        "keywords": [
+            "Sumitomo Mitsui Financial Group"
+        ]
+    },
+    {
+        "symbol": "$INN",
+        "keywords": [
+            "Summit Hotel Properties"
+        ]
+    },
+    {
+        "symbol": "$SMLP",
+        "keywords": [
+            "Summit Midstream Partners"
+        ]
+    },
+    {
+        "symbol": "$SXCP",
+        "keywords": [
+            "SunCoke Energy Partners"
+        ]
+    },
+    {
+        "symbol": "$SXC",
+        "keywords": [
+            "SunCoke Energy"
+        ]
+    },
+    {
+        "symbol": "$SHO",
+        "keywords": [
+            "Sunstone Hotel Investors"
+        ]
+    },
+    {
+        "symbol": "$SPN",
+        "keywords": [
+            "Superior Energy Services"
+        ]
+    },
+    {
+        "symbol": "$SVU",
+        "keywords": [
+            "SuperValu"
+        ]
+    },
+    {
+        "symbol": "$SWFT",
+        "keywords": [
+            "Swift Transportation Company"
+        ]
+    },
+    {
+        "symbol": "$SWZ",
+        "keywords": [
+            "Swiss Helvetia Fund (The)"
+        ]
+    },
+    {
+        "symbol": "$GJR",
+        "keywords": [
+            "Synthetic Fixed-Income Securities"
+        ]
+    },
+    {
+        "symbol": "$GJT",
+        "keywords": [
+            "Synthetic Fixed-Income Securities"
+        ]
+    },
+    {
+        "symbol": "$SYX",
+        "keywords": [
+            "Systemax"
+        ]
+    },
+    {
+        "symbol": "$TAHO",
+        "keywords": [
+            "Tahoe Resources"
+        ]
+    },
+    {
+        "symbol": "$TLRD",
+        "keywords": [
+            "Tailored Brands"
+        ]
+    },
+    {
+        "symbol": "$TWN",
+        "keywords": [
+            "Taiwan Fund (The)"
+        ]
+    },
+    {
+        "symbol": "$TAL",
+        "keywords": [
+            "TAL International Group"
+        ]
+    },
+    {
+        "symbol": "$TLN",
+        "keywords": [
+            "Talen Energy Corporation"
+        ]
+    },
+    {
+        "symbol": "$TEGP",
+        "keywords": [
+            "Tallgrass Energy GP"
+        ]
+    },
+    {
+        "symbol": "$TMHC",
+        "keywords": [
+            "Taylor Morrison Home Corporation"
+        ]
+    },
+    {
+        "symbol": "$TCB",
+        "keywords": [
+            "TCF Financial Corporation"
+        ]
+    },
+    {
+        "symbol": "$TSI",
+        "keywords": [
+            "TCW Strategicome Fund"
+        ]
+    },
+    {
+        "symbol": "$TCK",
+        "keywords": [
+            "Teck Resources Ltd"
+        ]
+    },
+    {
+        "symbol": "$TK",
+        "keywords": [
+            "Teekay Corporation"
+        ]
+    },
+    {
+        "symbol": "$TGP",
+        "keywords": [
+            "Teekay LNG Partners LP"
+        ]
+    },
+    {
+        "symbol": "$TOO",
+        "keywords": [
+            "Teekay Offshore Partners LP"
+        ]
+    },
+    {
+        "symbol": "$GCI",
+        "keywords": [
+            "TEGNA"
+        ]
+    },
+    {
+        "symbol": "$THQ",
+        "keywords": [
+            "Tekla Healthcare Opportunies Fund"
+        ]
+    },
+    {
+        "symbol": "$HQL",
+        "keywords": [
+            "Tekla Life Sciences Investors"
+        ]
+    },
+    {
+        "symbol": "$THW",
+        "keywords": [
+            "Tekla World Healthcare Fund"
+        ]
+    },
+    {
+        "symbol": "$TDOC",
+        "keywords": [
+            "Teladoc"
+        ]
+    },
+    {
+        "symbol": "$TEO",
+        "keywords": [
+            "Telecom Argentina Stet - France Telecom SA"
+        ]
+    },
+    {
+        "symbol": "$TI",
+        "keywords": [
+            "Telecom Italia SPA"
+        ]
+    },
+    {
+        "symbol": "$VIV",
+        "keywords": [
+            "Telefonica Brasil SA"
+        ]
+    },
+    {
+        "symbol": "$TEF",
+        "keywords": [
+            "Telefonica SA"
+        ]
+    },
+    {
+        "symbol": "$TDF",
+        "keywords": [
+            "Templeton Dragon Fund"
+        ]
+    },
+    {
+        "symbol": "$EMF",
+        "keywords": [
+            "Templeton Emerging Markets Fund"
+        ]
+    },
+    {
+        "symbol": "$TEI",
+        "keywords": [
+            "Templeton Emerging Marketsome Fund"
+        ]
+    },
+    {
+        "symbol": "$GIM",
+        "keywords": [
+            "Templeton Globalome Fund"
+        ]
+    },
+    {
+        "symbol": "$TX",
+        "keywords": [
+            "Ternium SA"
+        ]
+    },
+    {
+        "symbol": "$TTI",
+        "keywords": [
+            "Tetra Technologies"
+        ]
+    },
+    {
+        "symbol": "$TGH",
+        "keywords": [
+            "Textainer Group Holdings Limited"
+        ]
+    },
+    {
+        "symbol": "$TXTR",
+        "keywords": [
+            "Textura Corporation"
+        ]
+    },
+    {
+        "symbol": "$TTF",
+        "keywords": [
+            "Thai Fund (The)"
+        ]
+    },
+    {
+        "symbol": "$AES",
+        "keywords": [
+            "The AES Corporation"
+        ]
+    },
+    {
+        "symbol": "$SRV",
+        "keywords": [
+            "The Cushing MLP Total Return Fund"
+        ]
+    },
+    {
+        "symbol": "$GRX",
+        "keywords": [
+            "The Gabelli Healthcare & Wellness Trust"
+        ]
+    },
+    {
+        "symbol": "$GDL",
+        "keywords": [
+            "The GDL Fund"
+        ]
+    },
+    {
+        "symbol": "$RUBI",
+        "keywords": [
+            "The Rubicon Project"
+        ]
+    },
+    {
+        "symbol": "$THR",
+        "keywords": [
+            "Thermon Group Holdings"
+        ]
+    },
+    {
+        "symbol": "$TPRE",
+        "keywords": [
+            "Third Point Reinsurance Ltd"
+        ]
+    },
+    {
+        "symbol": "$TSLF",
+        "keywords": [
+            "THL Credit Senior Loan Fund"
+        ]
+    },
+    {
+        "symbol": "$TDW",
+        "keywords": [
+            "Tidewater"
+        ]
+    },
+    {
+        "symbol": "$TIER",
+        "keywords": [
+            "TIER REIT"
+        ]
+    },
+    {
+        "symbol": "$TLYS",
+        "keywords": [
+            "Tilly&#39;s"
+        ]
+    },
+    {
+        "symbol": "$TSU",
+        "keywords": [
+            "TIM Participacoes SA"
+        ]
+    },
+    {
+        "symbol": "$TIME",
+        "keywords": [
+            "Time"
+        ]
+    },
+    {
+        "symbol": "$TMST",
+        "keywords": [
+            "Timken Steel Corporation"
+        ]
+    },
+    {
+        "symbol": "$TWI",
+        "keywords": [
+            "Titan International"
+        ]
+    },
+    {
+        "symbol": "$NDP",
+        "keywords": [
+            "Tortoise Energy Independence Fund"
+        ]
+    },
+    {
+        "symbol": "$NTG",
+        "keywords": [
+            "Tortoise MLP Fund"
+        ]
+    },
+    {
+        "symbol": "$TTP",
+        "keywords": [
+            "Tortoise Pipeline & Energy Fund"
+        ]
+    },
+    {
+        "symbol": "$TPZ",
+        "keywords": [
+            "Tortoise Power and Energy Infrastructure Fund"
+        ]
+    },
+    {
+        "symbol": "$TSQ",
+        "keywords": [
+            "Townsquare Media"
+        ]
+    },
+    {
+        "symbol": "$TSLX",
+        "keywords": [
+            "TPG Specialty Lending"
+        ]
+    },
+    {
+        "symbol": "$TCI",
+        "keywords": [
+            "Transcontinental Realty Investors"
+        ]
+    },
+    {
+        "symbol": "$RIG",
+        "keywords": [
+            "Transocean Ltd"
+        ]
+    },
+    {
+        "symbol": "$RIGP",
+        "keywords": [
+            "Transocean Partners LLC"
+        ]
+    },
+    {
+        "symbol": "$TGS",
+        "keywords": [
+            "Transportadora De Gas Sa Ord B"
+        ]
+    },
+    {
+        "symbol": "$TA",
+        "keywords": [
+            "TravelCenters of America LLC"
+        ]
+    },
+    {
+        "symbol": "$TVPT",
+        "keywords": [
+            "Travelport Worldwide Limited"
+        ]
+    },
+    {
+        "symbol": "$TRR",
+        "keywords": [
+            "TRC Companies"
+        ]
+    },
+    {
+        "symbol": "$TREC",
+        "keywords": [
+            "Trecora Resources"
+        ]
+    },
+    {
+        "symbol": "$TG",
+        "keywords": [
+            "Tredegar Corporation"
+        ]
+    },
+    {
+        "symbol": "$TY",
+        "keywords": [
+            "Tri Continental Corporation"
+        ]
+    },
+    {
+        "symbol": "$TPH",
+        "keywords": [
+            "TRI Pointe Group"
+        ]
+    },
+    {
+        "symbol": "$TPUB",
+        "keywords": [
+            "Tribune Publishing Company"
+        ]
+    },
+    {
+        "symbol": "$TSL",
+        "keywords": [
+            "Trina Solar Limited"
+        ]
+    },
+    {
+        "symbol": "$TNET",
+        "keywords": [
+            "TriNet Group"
+        ]
+    },
+    {
+        "symbol": "$TRN",
+        "keywords": [
+            "Trinity Industries"
+        ]
+    },
+    {
+        "symbol": "$TPVG",
+        "keywords": [
+            "TriplePoint Venture Growth BDC Corp"
+        ]
+    },
+    {
+        "symbol": "$TROX",
+        "keywords": [
+            "Tronox Limited"
+        ]
+    },
+    {
+        "symbol": "$TRUP",
+        "keywords": [
+            "Trupanion"
+        ]
+    },
+    {
+        "symbol": "$TNP",
+        "keywords": [
+            "Tsakos Energy Navigation Ltd"
+        ]
+    },
+    {
+        "symbol": "$TKC",
+        "keywords": [
+            "Turkcell Iletisim Hizmetleri AS"
+        ]
+    },
+    {
+        "symbol": "$TKF",
+        "keywords": [
+            "Turkish Investment Fund (The)"
+        ]
+    },
+    {
+        "symbol": "$TPC",
+        "keywords": [
+            "Tutor Perini Corporation"
+        ]
+    },
+    {
+        "symbol": "$TWTR",
+        "keywords": [
+            "Twitter"
+        ]
+    },
+    {
+        "symbol": "$TWO",
+        "keywords": [
+            "Two Harbors Investments Corp"
+        ]
+    },
+    {
+        "symbol": "$UBS",
+        "keywords": [
+            "UBS AG"
+        ]
+    },
+    {
+        "symbol": "$UCP",
+        "keywords": [
+            "UCP"
+        ]
+    },
+    {
+        "symbol": "$UMH",
+        "keywords": [
+            "UMH Properties"
+        ]
+    },
+    {
+        "symbol": "$UIS",
+        "keywords": [
+            "Unisys Corporation"
+        ]
+    },
+    {
+        "symbol": "$UNT",
+        "keywords": [
+            "Unit Corporation"
+        ]
+    },
+    {
+        "symbol": "$X",
+        "keywords": [
+            "United States Steel Corporation"
+        ]
+    },
+    {
+        "symbol": "$UNVR",
+        "keywords": [
+            "Univar"
+        ]
+    },
+    {
+        "symbol": "$UAM",
+        "keywords": [
+            "Universal American Corp"
+        ]
+    },
+    {
+        "symbol": "$UVE",
+        "keywords": [
+            "UNIVERSAL INSURANCE HOLDINGS"
+        ]
+    },
+    {
+        "symbol": "$UBP",
+        "keywords": [
+            "Urstadt Biddle Properties"
+        ]
+    },
+    {
+        "symbol": "$USAC",
+        "keywords": [
+            "USA Compression Partners"
+        ]
+    },
+    {
+        "symbol": "$USDP",
+        "keywords": [
+            "USD Partners LP"
+        ]
+    },
+    {
+        "symbol": "$BIF",
+        "keywords": [
+            "USLIFEome Fund"
+        ]
+    },
+    {
+        "symbol": "$VALE",
+        "keywords": [
+            "VALE SA"
+        ]
+    },
+    {
+        "symbol": "$VLY",
+        "keywords": [
+            "Valley National Bancorp"
+        ]
+    },
+    {
+        "symbol": "$VEDL",
+        "keywords": [
+            "Vedanta  Limited"
+        ]
+    },
+    {
+        "symbol": "$VER",
+        "keywords": [
+            "VEREIT"
+        ]
+    },
+    {
+        "symbol": "$VNCE",
+        "keywords": [
+            "Vince Holding Corp"
+        ]
+    },
+    {
+        "symbol": "$VIPS",
+        "keywords": [
+            "Vipshop Holdings Limited"
+        ]
+    },
+    {
+        "symbol": "$VGI",
+        "keywords": [
+            "Virtus Global Multi-Sectorome Fund"
+        ]
+    },
+    {
+        "symbol": "$VSH",
+        "keywords": [
+            "Vishay Intertechnology"
+        ]
+    },
+    {
+        "symbol": "$VPG",
+        "keywords": [
+            "Vishay Precision Group"
+        ]
+    },
+    {
+        "symbol": "$VCRA",
+        "keywords": [
+            "Vocera Communications"
+        ]
+    },
+    {
+        "symbol": "$VJET",
+        "keywords": [
+            "voxeljet AG"
+        ]
+    },
+    {
+        "symbol": "$IAE",
+        "keywords": [
+            "Voya Asia Pacific High Dividend Equityome Fund"
+        ]
+    },
+    {
+        "symbol": "$IHD",
+        "keywords": [
+            "Voya Emerging Markets Highome Dividend Equity Fund"
+        ]
+    },
+    {
+        "symbol": "$IGA",
+        "keywords": [
+            "Voya Global Advantage and Premium Opportunity Fund"
+        ]
+    },
+    {
+        "symbol": "$IGD",
+        "keywords": [
+            "Voya Global Equity Dividend and Premium Opportunity Fund"
+        ]
+    },
+    {
+        "symbol": "$IDE",
+        "keywords": [
+            "Voya Infrastructure, Industrials and Materials Fund"
+        ]
+    },
+    {
+        "symbol": "$IID",
+        "keywords": [
+            "Voya International High Dividend Equityome Fund"
+        ]
+    },
+    {
+        "symbol": "$IRR",
+        "keywords": [
+            "Voya Natural Resources Equityome Fund"
+        ]
+    },
+    {
+        "symbol": "$PPR",
+        "keywords": [
+            "Voya Prime Rate Trust"
+        ]
+    },
+    {
+        "symbol": "$VTTI",
+        "keywords": [
+            "VTTI Energy Partners LP"
+        ]
+    },
+    {
+        "symbol": "$WNC",
+        "keywords": [
+            "Wabash National Corporation"
+        ]
+    },
+    {
+        "symbol": "$WAC",
+        "keywords": [
+            "Walter Investment Management Corp"
+        ]
+    },
+    {
+        "symbol": "$WCIC",
+        "keywords": [
+            "WCI Communities"
+        ]
+    },
+    {
+        "symbol": "$WFT",
+        "keywords": [
+            "Weatherford International plc"
+        ]
+    },
+    {
+        "symbol": "$WTW",
+        "keywords": [
+            "Weight Watchers International"
+        ]
+    },
+    {
+        "symbol": "$EOD",
+        "keywords": [
+            "Wells Fargo Global Dividend Opportunity Fund"
+        ]
+    },
+    {
+        "symbol": "$WAIR",
+        "keywords": [
+            "Wesco Aircraft Holdings"
+        ]
+    },
+    {
+        "symbol": "$WEA",
+        "keywords": [
+            "Western Asset Bond Fund"
+        ]
+    },
+    {
+        "symbol": "$TLI",
+        "keywords": [
+            "Western Asset Corporate Loan Fund"
+        ]
+    },
+    {
+        "symbol": "$ESD",
+        "keywords": [
+            "Western Asset Emerging Markets Debt Fund"
+        ]
+    },
+    {
+        "symbol": "$EMD",
+        "keywords": [
+            "Western Asset Emerging Marketsome Fund"
+        ]
+    },
+    {
+        "symbol": "$GDO",
+        "keywords": [
+            "Western Asset Global Corporate Defined Opportunity Fund"
+        ]
+    },
+    {
+        "symbol": "$EHI",
+        "keywords": [
+            "Western Asset Global Highome Fund"
+        ]
+    },
+    {
+        "symbol": "$GDF",
+        "keywords": [
+            "Western Asset Global Partnersome Fund"
+        ]
+    },
+    {
+        "symbol": "$HIX",
+        "keywords": [
+            "Western Asset Highome Fund II"
+        ]
+    },
+    {
+        "symbol": "$HYI",
+        "keywords": [
+            "Western Asset High Yield Defined Opportunity Fund"
+        ]
+    },
+    {
+        "symbol": "$MMU",
+        "keywords": [
+            "Western Asset Managed Municipals Fund"
+        ]
+    },
+    {
+        "symbol": "$WMC",
+        "keywords": [
+            "Western Asset Mortgage Capital Corporation"
+        ]
+    },
+    {
+        "symbol": "$MHF",
+        "keywords": [
+            "Western Asset Municipal Highome Fund"
+        ]
+    },
+    {
+        "symbol": "$MNP",
+        "keywords": [
+            "Western Asset Municipal Partners Fund"
+        ]
+    },
+    {
+        "symbol": "$GFY",
+        "keywords": [
+            "Western Asset Variable Rate Strategic Fund"
+        ]
+    },
+    {
+        "symbol": "$SBW",
+        "keywords": [
+            "Western Asset Worldwideome Fund"
+        ]
+    },
+    {
+        "symbol": "$WIW",
+        "keywords": [
+            "Western Asset/Claymore US Treasury Inflation Prot Secs Fd 2"
+        ]
+    },
+    {
+        "symbol": "$WIA",
+        "keywords": [
+            "Western Asset/Claymore US Treasury Inflation Prot Secs Fd"
+        ]
+    },
+    {
+        "symbol": "$WU",
+        "keywords": [
+            "Western Union"
+        ]
+    },
+    {
+        "symbol": "$WLKP",
+        "keywords": [
+            "Westlake Chemical Partners LP"
+        ]
+    },
+    {
+        "symbol": "$WMLP",
+        "keywords": [
+            "Westmoreland Resource Partners"
+        ]
+    },
+    {
+        "symbol": "$WSR",
+        "keywords": [
+            "Whitestone REIT"
+        ]
+    },
+    {
+        "symbol": "$WLL",
+        "keywords": [
+            "Whiting Petroleum Corporation"
+        ]
+    },
+    {
+        "symbol": "$WMB",
+        "keywords": [
+            "Williams Companies (The)"
+        ]
+    },
+    {
+        "symbol": "$FUR",
+        "keywords": [
+            "Winthrop Realty Trust"
+        ]
+    },
+    {
+        "symbol": "$WIT",
+        "keywords": [
+            "Wipro Limited"
+        ]
+    },
+    {
+        "symbol": "$WWW",
+        "keywords": [
+            "Wolverine World Wide"
+        ]
+    },
+    {
+        "symbol": "$WK",
+        "keywords": [
+            "Workiva"
+        ]
+    },
+    {
+        "symbol": "$WPT",
+        "keywords": [
+            "World Point Terminals"
+        ]
+    },
+    {
+        "symbol": "$WWE",
+        "keywords": [
+            "World Wrestling Entertainment"
+        ]
+    },
+    {
+        "symbol": "$WPG",
+        "keywords": [
+            "WP Glimcher"
+        ]
+    },
+    {
+        "symbol": "$WPX",
+        "keywords": [
+            "WPX Energy"
+        ]
+    },
+    {
+        "symbol": "$XTLY",
+        "keywords": [
+            "Xactly Corporation"
+        ]
+    },
+    {
+        "symbol": "$XHR",
+        "keywords": [
+            "Xenia Hotels & Resorts"
+        ]
+    },
+    {
+        "symbol": "$XRX",
+        "keywords": [
+            "Xerox Corporation"
+        ]
+    },
+    {
+        "symbol": "$XIN",
+        "keywords": [
+            "Xinyuan Real Estate Co Ltd"
+        ]
+    },
+    {
+        "symbol": "$XOXO",
+        "keywords": [
+            "XO Group"
+        ]
+    },
+    {
+        "symbol": "$XUE",
+        "keywords": [
+            "Xueda Education Group"
+        ]
+    },
+    {
+        "symbol": "$YZC",
+        "keywords": [
+            "Yanzhou Coal Mining Company Limited"
+        ]
+    },
+    {
+        "symbol": "$YELP",
+        "keywords": [
+            "Yelp"
+        ]
+    },
+    {
+        "symbol": "$YRD",
+        "keywords": [
+            "Yirendai Ltd"
+        ]
+    },
+    {
+        "symbol": "$YPF",
+        "keywords": [
+            "YPF Sociedad Anonima"
+        ]
+    },
+    {
+        "symbol": "$ZFC",
+        "keywords": [
+            "ZAIS Financial Corp"
+        ]
+    },
+    {
+        "symbol": "$ZPIN",
+        "keywords": [
+            "Zhaopin Limited"
+        ]
+    },
+    {
+        "symbol": "$ZF",
+        "keywords": [
+            "Zweig Fund (The)"
+        ]
+    },
+    {
+        "symbol": "$ZTR",
+        "keywords": [
+            "Zweig Total Return Fund (The)"
+        ]
+    },
+    {
+        "symbol": "$WYNN",
+        "keywords": [
+            "Wynn"
+        ]
     }
 ]

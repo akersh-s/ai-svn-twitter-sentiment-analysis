@@ -1,8 +1,15 @@
+import {debug} from '../util/log-util'
 export class SearchParams {
-    lang: 'en';
+    lang: string = 'en';
     count: number = 100;
     result_type: string = 'recent';
-    constructor(public q: string, public until: string, public maxId?: string) { }
+    constructor(public q: string, public until: string, public max_id?: string) {
+        debug('Search Params: ' + JSON.stringify(this));
+    }
+    
+    format():any {
+        return JSON.parse(JSON.stringify(this));
+    }
 }
 
 export interface SearchResult {

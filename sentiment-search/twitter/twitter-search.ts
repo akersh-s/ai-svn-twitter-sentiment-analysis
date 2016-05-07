@@ -1,33 +1,37 @@
-/// <reference path="sentiment.d.ts" />
-
-import {IStock} from '../stock';
+import {Stock} from '../stock.model';
 import {formatDate, getUntilDate} from '../util/date-util';
 import {debug} from '../util/log-util';
 import {SearchParams, SearchResult, Status} from './search.model';
 import {DaySentiment} from './day-sentiment';
-import sentiment from 'sentiment';
-import {Twitter} from 'twitter';
+import * as sentiment from 'sentiment';
+import {Twitter} from './twitter-api/index.js';
+import * as fs from 'fs';
 
+let config = JSON.parse(fs.readFileSync(__dirname + '/twitter-config.json', 'utf-8'));
 export class TwitterSearch {
-    constructor(private stock: IStock) {
+    twitter: Twitter;
+    constructor(private stock: Stock) {
+        this.twitter = new Twitter(config);
+
     }
 
     getTweets(date: Date, cb:Function) {
         let formattedDate = formatDate(date);
         let isToday = formattedDate === formatDate(new Date());
         
-        let daySentiment = new DaySentiment();
+        let daySentiment = new DaySentiment(date);
         this.get100(date, daySentiment, cb);
     }
 
     private get100(day: Date, daySentiment: DaySentiment, cb: Function, prevStatuses?, maxId?: string) {
-        let q = '';
+        let q = this.stock.q;
         let untilDate = getUntilDate(day);
         
-        debug('Doing search');
+        debug('Doing search with maxId ' + maxId + ' for date ' + formatDate(day));
         setTimeout(() => {
-            twitter.get('search/tweets', new SearchParams(q, untilDate, maxId), (err: Error, tweets: SearchResult) => {
+            this.twitter.get('search/tweets', new SearchParams(q, untilDate, maxId).format(), (err: Error, tweets: SearchResult) => {
                 if (err) {
+                    debug(JSON.stringify(err));
                     throw err;
                 }
                 var containsYesterdaysTweets = false;
@@ -48,14 +52,14 @@ export class TwitterSearch {
                 if (prevStatuses) {
                     statuses = prevStatuses.concat(statuses);
                 }
-                var nextId = null;
+                var nextId:string = null;
                 if (tweets.search_metadata && tweets.search_metadata.next_results) {
                     nextId = this.parseNextId(tweets.search_metadata.next_results);
                 }
-                if (statuses.length > 0 && nextId !== -1 && !containsYesterdaysTweets) {
+                if (statuses.length > 0 && nextId && !containsYesterdaysTweets) {
                     this.get100(day, daySentiment, cb, statuses, nextId);
                 } else {
-                    cb(statuses);
+                    cb(null, daySentiment);
                 }
             });
         }, 5 * 1000); //Stay in the Allowed Number of calls.

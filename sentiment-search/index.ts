@@ -1,19 +1,32 @@
-import {IStock} from './stock';
+import {Stock} from './stock.model';
 import * as fs from 'fs';
 import * as async from 'async';
 import {determineActionForStock} from './stock-sentiment-search';
-let stocks: IStock[] = JSON.parse(fs.readFileSync(__dirname + '/stocks.json', 'utf-8'));
+import {StockAction, Action} from './twitter/day-sentiment';
+let stocks: Stock[] = JSON.parse(fs.readFileSync(__dirname + '/stocks.json', 'utf-8')).map(item => new Stock(item.symbol, item.keywords));
 var asyncFuncs = [];
 
-stocks.forEach((stock: IStock) => {
+stocks.forEach((stock: Stock) => {
     asyncFuncs.push((done) => {
         determineActionForStock(stock, done);
     });
 });
 
 
-async.series(asyncFuncs, (err, data) => {
+async.series(asyncFuncs, (err, stockActions: StockAction[]) => {
     if (err) throw err;
-    
-    console.log(data);
-})
+    stockActions = stockActions.filter((a) => {
+        return a.action === Action.Buy; 
+    }).sort((a, b) => {
+        return b.percentChange - a.percentChange;
+    });
+    if (stockActions.length === 0) {
+        console.log('Do Nothing');
+        return;
+    }
+    console.log('Buy.......');
+    stockActions.forEach((stockAction) => {
+        let percentChange = (stockAction.percentChange * 100).toFixed(2);
+        console.log(`${stockAction.stock.symbol} - ${percentChange}%`)
+    });
+});

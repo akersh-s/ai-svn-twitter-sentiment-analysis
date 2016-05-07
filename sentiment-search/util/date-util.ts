@@ -1,10 +1,10 @@
 let oneDay = 1000 * 60 * 60 * 24;
-
+export let today = new Date();
 export function formatDate(date: Date): string {
     let year:string = date.getFullYear() + '';
     let month:number = date.getMonth() + 1;
     let monthStr:string = (month < 10 ? '0' : '') + month;
-    let day:string = (date.getDate() < 10 ? '0' : '') + date.getDate;
+    let day:string = (date.getDate() < 10 ? '0' : '') + date.getDate();
     
     let formatted = [year, monthStr, day].join('-');
     return formatted;

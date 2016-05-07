@@ -1,9 +1,11 @@
-import {IStock, IResult} from './stock';
+import {Stock, IResult} from './stock.model';
 import {TwitterSearch} from './twitter';
 import {getLast3Days} from './util/date-util';
+import {Status} from './twitter/search.model';
+import {DaySentiment, determineBuyOrSell, StockAction} from './twitter/day-sentiment';
 import * as async from 'async';
 
-export function determineActionForStock(stock: IStock, cb: Function) {
+export function determineActionForStock(stock: Stock, cb: Function) {
     let search = new TwitterSearch(stock);
     let days = getLast3Days();
     let asyncFuncs = [];    
@@ -13,11 +15,10 @@ export function determineActionForStock(stock: IStock, cb: Function) {
         });
     });
     
-    async.series(asyncFuncs, (err, data) => {
+    async.series(asyncFuncs, (err, daySentiments: DaySentiment[]) => {
         if (err) throw err;
-        
-        console.log(data);
-        cb(data);
+        let stockAction:StockAction = determineBuyOrSell(stock, daySentiments);
+        cb(err, stockAction);
     });
     
 }
