@@ -31,7 +31,7 @@ export class TwitterSearch {
         setTimeout(() => {
             this.twitter.get('search/tweets', new SearchParams(q, untilDate, maxId).format(), (err: Error, tweets: SearchResult) => {
                 if (err) {
-                    debug(JSON.stringify(err));
+                    console.log(JSON.stringify(err));
                     throw err;
                 }
                 var containsYesterdaysTweets = false;

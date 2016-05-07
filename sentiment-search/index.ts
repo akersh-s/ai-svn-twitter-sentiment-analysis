@@ -8,7 +8,13 @@ var asyncFuncs = [];
 
 stocks.forEach((stock: Stock) => {
     asyncFuncs.push((done) => {
-        determineActionForStock(stock, done);
+        try {
+            determineActionForStock(stock, done);
+        }
+        catch (e) {
+            console.log(e, JSON.stringify(e));
+            done(null, new StockAction(null, null, null, JSON.stringify(e)));
+        }
     });
 });
 
@@ -16,7 +22,7 @@ stocks.forEach((stock: Stock) => {
 async.series(asyncFuncs, (err, stockActions: StockAction[]) => {
     if (err) throw err;
     stockActions = stockActions.filter((a) => {
-        return a.action === Action.Buy; 
+        return a.action === Action.Buy;
     }).sort((a, b) => {
         return b.percentChange - a.percentChange;
     });
