@@ -1,11 +1,12 @@
 import {Stock} from '../stock.model';
-import {formatDate, getUntilDate} from '../util/date-util';
+import {formatDate, getUntilDate, today, yesterday} from '../util/date-util';
 import {debug} from '../util/log-util';
 import {SearchParams, SearchResult, Status} from './search.model';
 import {DaySentiment} from './day-sentiment';
 import * as sentiment from 'sentiment';
 import {Twitter} from './twitter-api/index.js';
 import * as fs from 'fs';
+import * as path from 'path';
 
 let config = JSON.parse(fs.readFileSync(__dirname + '/twitter-config.json', 'utf-8'));
 export class TwitterSearch {
@@ -16,9 +17,6 @@ export class TwitterSearch {
     }
 
     getTweets(date: Date, cb:Function) {
-        let formattedDate = formatDate(date);
-        let isToday = formattedDate === formatDate(new Date());
-        
         let daySentiment = new DaySentiment(date);
         this.get100(date, daySentiment, cb);
     }

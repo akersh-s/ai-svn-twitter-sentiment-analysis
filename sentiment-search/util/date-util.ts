@@ -1,5 +1,7 @@
 let oneDay = 1000 * 60 * 60 * 24;
 export let today = new Date();
+export let yesterday = new Date(+today - oneDay);
+
 export function formatDate(date: Date): string {
     let year:string = date.getFullYear() + '';
     let month:number = date.getMonth() + 1;
