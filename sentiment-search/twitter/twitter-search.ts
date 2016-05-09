@@ -1,5 +1,5 @@
 import {Stock} from '../stock.model';
-import {formatDate, getUntilDate, today, yesterday} from '../util/date-util';
+import {formatDate, getUntilDate} from '../util/date-util';
 import {debug} from '../util/log-util';
 import {SearchParams, SearchResult, Status} from './search.model';
 import {DaySentiment} from './day-sentiment';
