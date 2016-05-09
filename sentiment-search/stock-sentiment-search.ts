@@ -9,7 +9,7 @@ import * as async from 'async';
 import * as path from 'path';
 import * as fs from 'fs';
 let projectRoot = path.join(__dirname, '..');
-let data = path.join(projectRoot, 'data');
+let data = path.join(projectRoot, 'cache');
 if (!fs.existsSync(data)) {
     fs.mkdirSync(data);
 }
