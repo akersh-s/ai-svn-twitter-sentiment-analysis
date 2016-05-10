@@ -29,9 +29,9 @@ export class TwitterSearch {
         setTimeout(() => {
             this.twitter.get('search/tweets', new SearchParams(q, untilDate, maxId).format(), (err: Error, tweets: SearchResult) => {
                 if (err) {
-                    console.log(JSON.stringify(err));
-                    throw err;
+                    cb(err);    
                 }
+                
                 var containsYesterdaysTweets = false;
                 let statuses: Status[] = tweets.statuses || [];
                 debug('Search completed. Results: ' + statuses.length);
@@ -60,7 +60,7 @@ export class TwitterSearch {
                     cb(null, daySentiment);
                 }
             });
-        }, 5 * 1000); //Stay in the Allowed Number of calls.
+        }, 5 * 1001); //Stay in the Allowed Number of calls.
     }
 
     parseNextId(nextResults: string): string {

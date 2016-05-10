@@ -20,9 +20,11 @@ stocks.forEach((stock: Stock) => {
 
 
 async.series(asyncFuncs, (err, stockActions: StockAction[]) => {
-    if (err) throw err;
+    if (err) {
+        console.log('Error', err);
+    }
     stockActions = stockActions.filter((a) => {
-        return a.action === Action.Buy;
+        return a && a.action === Action.Buy;
     }).sort((a, b) => {
         return b.percentChange - a.percentChange;
     });

@@ -43,6 +43,9 @@ export function determineActionForStock(stock: Stock, cb: Function) {
                 return done(null, daySentiment);
             }
             search.getTweets(day, (err, daySentiment: DaySentiment) => {
+                if (err) {
+                    return done(err);
+                }
                 data[formattedDate] = daySentiment;
                 debug(`Writing ${stockCacheName}`);
                 fs.writeFileSync(stockCacheName, JSON.stringify(data, null, 4), 'utf-8');
