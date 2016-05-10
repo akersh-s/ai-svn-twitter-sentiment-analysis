@@ -38,7 +38,7 @@ export function determineActionForStock(stock: Stock, cb: Function) {
 
                 let dayData = data[formattedDate];
                 let daySentiment: DaySentiment = new DaySentiment(day);
-                daySentiment.average = dayData.average;
+                daySentiment.totalSentiment = dayData.totalSentiment;
                 daySentiment.numTweets = dayData.numTweets;
                 return done(null, daySentiment);
             }
