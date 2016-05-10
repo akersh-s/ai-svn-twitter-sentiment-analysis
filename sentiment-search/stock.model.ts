@@ -1,8 +1,8 @@
 export class Stock {
-    constructor(public symbol: string, public keywords: string[]) {}
+    constructor(public symbol: string, public keywords: string) {}
     
     get q():string {
-        let searchTerms = [this.symbol].concat(this.keywords);
+        let searchTerms = [this.symbol, this.keywords];
         let args:string = searchTerms.join(' OR ');
         return args;
     }

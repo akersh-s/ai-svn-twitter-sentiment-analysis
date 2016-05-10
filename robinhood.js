@@ -19,11 +19,11 @@ var robinhood = Robinhood({
 
     robinhood.instruments('BCS', function(err, response, body) {
         if (err) throw err;
-        console.log(body);
+        console.log('instruments', body.results[0]);
     });
     robinhood.quote_data('BCS', function(err, response, body) {
         if (err) throw err;
-        console.log(body);
+        console.log('quote data', body.results[0]);
     });
 
     robinhood.orders(function(err, response, body) {
