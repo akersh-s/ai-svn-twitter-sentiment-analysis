@@ -36,11 +36,13 @@ let robinhood = new Robinhood(username, password);
 robinhood.login(() => {
     robinhood.quote_data(stockSymbolsToBuy.join(','), (err, response, body) => {
         if (err) throw err;
-        
+        console.log(body.results);
         let results = body.results;
         let buySymbols: BuySymbol[] = [];
         results.forEach((result) => {
-            buySymbols.push(new BuySymbol(result.symbol, result.bid_price));
+            if (result && result.symbol) {
+              buySymbols.push(new BuySymbol(result.symbol, result.bid_price));  
+            }
         });
         robinhood.accounts((err, response, body) => {
             if (err) throw err;
