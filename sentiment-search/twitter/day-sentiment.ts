@@ -27,6 +27,7 @@ export class DaySentiment {
 export function determineBuyOrSell(stock: Stock, daySentiments: DaySentiment[]): StockAction {
     var todaysSentiment:number;
     var previousSentiments:number[] = [];
+    var totalTweets:number = 0;
     daySentiments.forEach((daySentiment) => {
         if (daySentiment.isForDate(today)) {
             todaysSentiment = daySentiment.average
@@ -34,15 +35,16 @@ export function determineBuyOrSell(stock: Stock, daySentiments: DaySentiment[]):
         else {
             previousSentiments.push(daySentiment.average);
         }
+        totalTweets += daySentiment.numTweets;
     });
     
     
     //Validate results
     if (!todaysSentiment) {
-        return new StockAction(null, null, null, 'No Sentiment for today.');
+        return new StockAction(null, null, null, 0, 'No Sentiment for today.');
     }
     if (previousSentiments.length === 0) {
-        return new StockAction(null, null, null, 'No previous sentiments.');
+        return new StockAction(null, null, null, 0, 'No previous sentiments.');
     }
     
     let distribution = calculateMeanVarianceAndDeviation(previousSentiments);
@@ -60,11 +62,11 @@ export function determineBuyOrSell(stock: Stock, daySentiments: DaySentiment[]):
         action = Action.DoNothing;
     }
     
-    return new StockAction(stock, action, increasePercent);
+    return new StockAction(stock, action, increasePercent, totalTweets);
 }
 
 export class StockAction {
-    constructor(public stock: Stock, public action: Action, public percentChange: number, public error?: string) {}
+    constructor(public stock: Stock, public action: Action, public percentChange: number, public numTweets:number, public error?: string) {}
 }
 export enum Action {
     Buy, Sell, DoNothing

@@ -20,6 +20,7 @@
   "homepage": "https://github.com/akersh-s/tempest-mutual#readme",
   "dependencies": {
     "async": "^2.0.0-rc.3",
+    "form-data": "^1.0.0-rc4",
     "robinhood": "^0.3.1",
     "sentiment": "^1.0.6",
     "twitter": "^1.2.5",

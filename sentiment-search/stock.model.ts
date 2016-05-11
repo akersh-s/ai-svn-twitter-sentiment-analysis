@@ -6,6 +6,10 @@ export class Stock {
         let args:string = searchTerms.join(' OR ');
         return args;
     }
+    
+    getSymbolNoDollar() {
+        return this.symbol.replace('$', '');
+    }
 }
 
 export interface IResult {

@@ -4,7 +4,7 @@ import {getLast3Days} from './util/date-util';
 import {debug} from './util/log-util';
 import {Status} from './twitter/search.model';
 import {DaySentiment, determineBuyOrSell, StockAction} from './twitter/day-sentiment';
-import {formatDate, getUntilDate, today, yesterday} from './util/date-util';
+import {formatDate, getUntilDate, today} from './util/date-util';
 import * as async from 'async';
 import * as path from 'path';
 import * as fs from 'fs';
@@ -22,7 +22,7 @@ export function determineActionForStock(stock: Stock, cb: Function) {
         asyncFuncs.push((done) => {
 
             let formattedDate = formatDate(day);
-            let isYesterdayOrToday = formattedDate === formatDate(today) || formattedDate === formatDate(yesterday);
+            let isToday = formattedDate === formatDate(today);
             let stockCacheName = getStockCacheName(stock);
             var data: any;
             if (fs.existsSync(stockCacheName)) {
@@ -34,7 +34,7 @@ export function determineActionForStock(stock: Stock, cb: Function) {
             }
 
             //See if it is cached.
-            if (!isYesterdayOrToday && data[formattedDate]) {
+            if (!isToday && data[formattedDate]) {
 
                 let dayData = data[formattedDate];
                 let daySentiment: DaySentiment = new DaySentiment(day);
