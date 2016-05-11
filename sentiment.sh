@@ -9,4 +9,4 @@ done < "sentiment-search/stocks"
 ts-node sentiment-search/process-results.ts
 
 #Read buy.json and send in requests based on buy power.
-ts-node buy/index.ts --username='tomskytwo' --password='Bigapples1!'
+ts-node buyer/index.ts --username='tomskytwo' --password='Bigapples1!'
