@@ -19,7 +19,7 @@ let results:StockAction[] = JSON.parse(fs.readFileSync(resultsFile, 'utf-8')).ma
 results = results.filter((a) => {
     
     let isBuy = a.action === Action.Buy;
-    let isMinimumTweets = a.numTweets > 20;
+    let isMinimumTweets = a.numTweets > 40;
     return isBuy && isMinimumTweets;
 }).sort((a, b) => {
    return b.percentChange - a.percentChange; 
