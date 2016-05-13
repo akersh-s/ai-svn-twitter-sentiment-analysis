@@ -14,7 +14,7 @@ export class Distribution {
 
 export function calcIncreasePercent(today: number, previous: number): number {
     let diff = today - previous;
-    let div = diff / previous;
+    let div = Math.abs(diff / previous);
     return div;
 };
 

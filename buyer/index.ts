@@ -1,29 +1,17 @@
-declare var process: any;
 import {Robinhood} from '../shared/robinhood.api';
+import {validate, isNotWeekend} from '../shared/validate';
 import {BuySymbol, determineNumToBuy} from './buy-symbol';
 import * as yargs from 'yargs';
 import * as fs from 'fs';
 import * as path from 'path';
 import * as async from 'async';
 
-var day = new Date().getDay();
-var isWeekend = (day == 6) || (day == 0);
-
-if (isWeekend) {
-    console.log('No requests on the weekend.');
-    process.exit(0);
-}
+isNotWeekend();
 let argv = yargs.argv;
 let username = validate('username', argv.username);
 let password = validate('password', argv.password);
-function validate(fieldname: string, value: string) {
-    if (!value || !value.trim()) {
-        console.log(`Field ${fieldname} is required. Exiting.`);
-        process.exit(-1);
-    }
-    return value;
-}
 let buyFile = path.join(__dirname, '..', 'buy.json');
+
 if (!fs.existsSync(buyFile)) {
     console.log(`Buy file is missing. Exiting.`);
     process.exit(-1);
@@ -31,7 +19,6 @@ if (!fs.existsSync(buyFile)) {
 let stockSymbolsToBuy: string[] = JSON.parse(fs.readFileSync(buyFile, 'utf-8'));
 
 //Start
-
 let robinhood = new Robinhood(username, password);
 robinhood.login(() => {
     robinhood.quote_data(stockSymbolsToBuy.join(','), (err, response, body) => {
@@ -41,7 +28,7 @@ robinhood.login(() => {
         let buySymbols: BuySymbol[] = [];
         results.forEach((result) => {
             if (result && result.symbol) {
-              buySymbols.push(new BuySymbol(result.symbol, result.bid_price));  
+              buySymbols.push(new BuySymbol(result.symbol, parseFloat(result.bid_price)));  
             }
         });
         robinhood.accounts((err, response, body) => {

@@ -73,7 +73,7 @@ export class Robinhood {
     return this.get(endpoints.accounts, cb);
   }
 
-  private get(uri: string, cb: (err, response, body) => any) {
+  get(uri: string, cb: (err, response, body) => any) {
     return this.request.get({
       uri: uri
     }, cb);
@@ -89,7 +89,7 @@ export class Robinhood {
     }, cb);
   }
 
-  quote_data(symbol: string, cb: (err, response, body) => any) {
+  quote_data(symbol: string, cb: (err, response, body: QuoteDataResultBody) => any) {
     return this.request.get({
       uri: endpoints.quotes,
       qs: { symbols: symbol.toUpperCase() }
@@ -160,4 +160,22 @@ export class Robinhood {
   sell(symbol: string, quantity: number, callback: (err, response, body) => any) {
     return this.placeOrder(symbol, quantity, 'sell', callback);
   }
+}
+
+export interface QuoteDataResultBody {
+  results: QuoteDataResult[];
+}
+export interface QuoteDataResult {
+  ask_price: string;
+  ask_size: number;
+  bid_price: string;
+  bid_size: number;
+  last_trade_price: string;
+  last_extended_hours_trade_price: string;
+  previous_close: string;
+  adjusted_previous_close: string;
+  previous_close_date: string;
+  symbol: string;
+  trading_halted: boolean;
+  updated_at: string;
 }
