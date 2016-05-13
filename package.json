@@ -6,6 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "sentiment": "sh sentiment.sh",
+    "buy": "sh buy.sh",
+    "sell": "sh sell.sh",
     "compile": "tsc --outDir generated sentiment-search/index.ts"
   },
   "repository": {
