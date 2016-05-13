@@ -1,6 +1,7 @@
 import {Robinhood} from '../shared/robinhood.api';
 import {validate, isNotWeekend} from '../shared/validate';
 import {BuySymbol, determineNumToBuy} from './buy-symbol';
+import {FileUtil} from '../shared/util/file-util';
 import * as yargs from 'yargs';
 import * as fs from 'fs';
 import * as path from 'path';
@@ -10,13 +11,12 @@ isNotWeekend();
 let argv = yargs.argv;
 let username = validate('username', argv.username);
 let password = validate('password', argv.password);
-let buyFile = path.join(__dirname, '..', 'buy.json');
 
-if (!fs.existsSync(buyFile)) {
+if (!fs.existsSync(FileUtil.buyFile)) {
     console.log(`Buy file is missing. Exiting.`);
     process.exit(-1);
 }
-let stockSymbolsToBuy: string[] = JSON.parse(fs.readFileSync(buyFile, 'utf-8'));
+let stockSymbolsToBuy: string[] = JSON.parse(fs.readFileSync(FileUtil.buyFile, 'utf-8'));
 
 //Start
 let robinhood = new Robinhood(username, password);

@@ -3,6 +3,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import {determineActionForStock} from './stock-sentiment-search';
 import {StockAction, Action} from './twitter/day-sentiment';
+import {FileUtil} from '../shared/util/file-util';
 import * as yargs from 'yargs';
 
 let argv = yargs.argv;
@@ -18,11 +19,11 @@ determineActionForStock(stock, (err, stockAction: StockAction) => {
     let error = err || stockAction.error;
     if (error) throw error;
     
-    let resultsFile = path.join(__dirname, '..', 'results.json');
     let results = [];
-    if (fs.existsSync(resultsFile)) {
-        results = JSON.parse(fs.readFileSync(resultsFile, 'utf-8'));
+    
+    if (fs.existsSync(FileUtil.resultsFile)) {
+        results = JSON.parse(fs.readFileSync(FileUtil.resultsFile, 'utf-8'));
     }
     results.push(stockAction);
-    fs.writeFileSync(resultsFile, JSON.stringify(results, null, 4), 'utf-8');
+    fs.writeFileSync(FileUtil.resultsFile, JSON.stringify(results, null, 4), 'utf-8');
 });

@@ -1,17 +1,16 @@
 import * as path from 'path';
 import * as fs from 'fs';
+import {FileUtil} from '../shared/util/file-util';
 
 import {StockAction, Action} from './twitter/day-sentiment';
 import {Stock} from './stock.model';
-let resultsFile = path.join(__dirname, '..', 'results.json');
-let buyFile = path.join(__dirname, '..', 'buy.json');
 
-if (!fs.existsSync(resultsFile)) {
+if (!fs.existsSync(FileUtil.resultsFile)) {
     console.log('results.json does not exist! please run ts-node sentiment-search first.');
     process.exit(-1);
 }
 
-let results:StockAction[] = JSON.parse(fs.readFileSync(resultsFile, 'utf-8')).map(result => {
+let results:StockAction[] = JSON.parse(fs.readFileSync(FileUtil.resultsFile, 'utf-8')).map(result => {
     let stock = new Stock(result.stock.symbol, result.stock.keywords);
     return new StockAction(stock, result.action, result.percentChange, result.numTweets)
 });
@@ -38,4 +37,4 @@ else {
         buys.push(stockAction.stock.getSymbolNoDollar());
     });
 }
-fs.writeFileSync(buyFile, JSON.stringify(buys, null, 4), 'utf-8');
+fs.writeFileSync(FileUtil.buyFile, JSON.stringify(buys, null, 4), 'utf-8');

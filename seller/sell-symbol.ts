@@ -1,4 +1,4 @@
-let tHours = 1000 * 60 * 60 * 36; //36 hours 
+let tHours = 1000 * 60 * 60 * 24; //24 hours 
 export class SellSymbol {
     constructor(public symbol: string, public price: number, public quantity: number, public lastUpdate: Date) {}
     
