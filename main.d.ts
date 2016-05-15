@@ -11,3 +11,7 @@ declare var sentiment: (phrase: any, inject?: any, callback?: any) => {
 declare module "sentiment" {
     export = sentiment;
 }
+
+declare module "stocktwits" {
+    export function get(path: string, params: any, cb: (err, res) => any);
+}

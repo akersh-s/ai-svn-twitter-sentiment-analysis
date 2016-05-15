@@ -16,12 +16,11 @@ export class TwitterSearch {
 
     }
 
-    getTweets(date: Date, cb:Function) {
-        let daySentiment = new DaySentiment(date);
+    getTweets(date: Date, daySentiment: DaySentiment, cb:(err, daySentiment:DaySentiment) => any) {
         this.get100(date, daySentiment, cb);
     }
 
-    private get100(day: Date, daySentiment: DaySentiment, cb: Function, prevStatuses?, maxId?: string) {
+    private get100(day: Date, daySentiment: DaySentiment, cb: (err, daySentiment:DaySentiment) => any, prevStatuses?, maxId?: string) {
         let q = this.stock.q;
         let untilDate = getUntilDate(day);
         
@@ -29,7 +28,7 @@ export class TwitterSearch {
         setTimeout(() => {
             this.twitter.get('search/tweets', new SearchParams(q, untilDate, maxId).format(), (err: Error, tweets: SearchResult) => {
                 if (err) {
-                    cb(err);    
+                    cb(err, null);    
                 }
                 
                 var containsYesterdaysTweets = false;

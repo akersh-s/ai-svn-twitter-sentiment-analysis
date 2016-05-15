@@ -5,6 +5,7 @@ import {debug} from './util/log-util';
 import {Status} from './twitter/search.model';
 import {DaySentiment, determineBuyOrSell, StockAction} from './twitter/day-sentiment';
 import {formatDate, getUntilDate, today} from './util/date-util';
+import {StockTwits} from './stocktwits';
 import * as async from 'async';
 import * as path from 'path';
 import * as fs from 'fs';
@@ -15,7 +16,9 @@ if (!fs.existsSync(data)) {
 }
 
 export function determineActionForStock(stock: Stock, cb: Function) {
-    let search = new TwitterSearch(stock);
+    let twitter = new TwitterSearch(stock);
+    let stocktwits = new StockTwits(stock);
+
     let days = getLast3Days();
     let asyncFuncs = [];
     days.forEach((day) => {
@@ -24,6 +27,7 @@ export function determineActionForStock(stock: Stock, cb: Function) {
             let formattedDate = formatDate(day);
             let isToday = formattedDate === formatDate(today);
             let stockCacheName = getStockCacheName(stock);
+            let daySentiment = new DaySentiment(day);
             var data: any;
             if (fs.existsSync(stockCacheName)) {
                 debug(`Reading ${stockCacheName}`);
@@ -32,25 +36,32 @@ export function determineActionForStock(stock: Stock, cb: Function) {
             else {
                 data = {};
             }
+            async.parallel([scrapeDone => {
+                stocktwits.processStocktwitsSentimentForDay(day, daySentiment, scrapeDone);
+            }, scrapeDone => {
+                //Twitter scraping
 
-            //See if it is cached.
-            if (!isToday && data[formattedDate]) {
+                //See if it is cached.
+                if (!isToday && data[formattedDate]) {
 
-                let dayData = data[formattedDate];
-                let daySentiment: DaySentiment = new DaySentiment(day);
-                daySentiment.totalSentiment = dayData.totalSentiment;
-                daySentiment.numTweets = dayData.numTweets;
-                return done(null, daySentiment);
-            }
-            search.getTweets(day, (err, daySentiment: DaySentiment) => {
-                if (err) {
-                    return done(err);
+                    let dayData = data[formattedDate];
+                    daySentiment.totalSentiment += dayData.totalSentiment;
+                    daySentiment.numTweets += dayData.numTweets;
+                    return scrapeDone(null, daySentiment);
                 }
-                data[formattedDate] = daySentiment;
-                debug(`Writing ${stockCacheName}`);
-                fs.writeFileSync(stockCacheName, JSON.stringify(data, null, 4), 'utf-8');
-                return done(null, daySentiment);
-            });
+                twitter.getTweets(day, daySentiment, (err, daySentiment: DaySentiment) => {
+                    if (err) {
+                        return scrapeDone(err);
+                    }
+                    data[formattedDate] = daySentiment;
+                    debug(`Writing ${stockCacheName}`);
+                    fs.writeFileSync(stockCacheName, JSON.stringify(data, null, 4), 'utf-8');
+                    return scrapeDone(null, daySentiment);
+                });
+            }], () => {
+                done(null, daySentiment);
+            })
+
         });
 
     });
