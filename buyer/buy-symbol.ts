@@ -8,7 +8,7 @@ export function determineNumToBuy(buyPower: number, buySymbols: BuySymbol[]):voi
         return;
     }
     var currentPower = buyPower * 0.95; //Robinhood only allows you spend 95%
-    let shareForEach = currentPower / buySymbols.length;
+    let shareForEach = currentPower / Math.max(buySymbols.length, 3);
     buySymbols.forEach((buySymbol) => {
          var amountToSpend = Math.max(buySymbol.price, shareForEach);
          amountToSpend = Math.min(currentPower, amountToSpend);
