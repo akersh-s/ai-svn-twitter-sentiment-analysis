@@ -24,7 +24,8 @@ let endpoints = {
   user: 'https://api.robinhood.com/user/',
   watchlists: 'https://api.robinhood.com/watchlists/',
   positions: 'https://api.robinhood.com/positions/',
-  portfolios: 'https://api.robinhood.com/portfolios/'
+  portfolios: 'https://api.robinhood.com/portfolios/',
+  fundamentals: 'https://api.robinhood.com/fundamentals/' // Need to concatenate symbol to end.
 };
 
 export class Robinhood {
@@ -118,6 +119,22 @@ export class Robinhood {
 
   portfolios(cb: (err, response, body) => any) {
     return this.get(endpoints.portfolios, cb);
+  }
+
+  watchlists(cb: (err, response, body) => any) {
+    return this.get(endpoints.watchlists, cb);
+  }
+
+  document_requests(cb: (err, response, body) => any) {
+    return this.get(endpoints.document_requests, cb);
+  }
+
+  fundamentals(symbol: string, cb: (err, response, body) => any) {
+    return this.get(`${endpoints.fundamentals}${symbol}/`, cb);
+  }
+
+  market(symbol: string, cb: (err, response, body) => any) {
+    return this.get(`${endpoints.markets}${symbol}/`, cb);
   }
 
   private placeOrder(symbol: string, quantity: number, transaction: string, cb: (err, response, body) => any) {

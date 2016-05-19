@@ -2,7 +2,7 @@
 
 import {Robinhood, QuoteDataResult} from '../shared/robinhood.api';
 import {validate, isNotWeekend} from '../shared/validate';
-import {SellSymbol} from './sell-symbol';
+import {SellSymbol, sellStats} from './sell-symbol';
 import * as yargs from 'yargs';
 import * as async from 'async';
 
@@ -39,6 +39,7 @@ robinhood.login(() => {
             let symbols: string[] = sellSymbolNoPrices.map(s => s.symbol);
             robinhood.quote_data(symbols.join(','), (err, response, body) => {
                 if (err) throw err;
+                console.log(body, symbols.join(','));
                 let quoteData = body.results;
                 let sellSymbols = [];
                 sellSymbolNoPrices.forEach((s) => {
@@ -72,6 +73,7 @@ function sellStocks(sellSymbols: SellSymbol[]) {
 
     async.series(asyncFuncs, () => {
         console.log('Completed selling.');
+        sellStats.update(sellSymbols);
     });
 }
 
