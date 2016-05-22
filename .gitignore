@@ -4,3 +4,7 @@ typings/
 results.json
 buy.json
 cache/
+prices/
+prices.zip
+data.txt
+svm/data*.json

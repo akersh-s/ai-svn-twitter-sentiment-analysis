@@ -2,13 +2,14 @@ let oneDay = 1000 * 60 * 60 * 24;
 export let today = new Date();
 export let yesterday = new Date(+today - oneDay);
 
-export function formatDate(date: Date): string {
+export function formatDate(date: Date, char?: string): string {
+    char = char || '-';
     let year:string = date.getFullYear() + '';
     let month:number = date.getMonth() + 1;
     let monthStr:string = (month < 10 ? '0' : '') + month;
     let day:string = (date.getDate() < 10 ? '0' : '') + date.getDate();
     
-    let formatted = [year, monthStr, day].join('-');
+    let formatted = [year, monthStr, day].join(char);
     return formatted;
 }
 
