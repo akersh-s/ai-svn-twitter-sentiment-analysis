@@ -23,12 +23,15 @@ export function determineNumToBuy(buyPower: number, buySymbols: BuySymbol[]): vo
 
     if (buySymbols.length > MIN_SYMBOLS) {
         //Finish remaining money off the top down
-        buySymbols.forEach((buySymbol) => {
-            while (currentPower > buySymbol.price) {
-                buySymbol.numToBuy++;
-                currentPower -= buySymbol.price;
-            }
-        });
+        var i;
+        for (i = 0; i < 3; i++) {
+            buySymbols.forEach((buySymbol) => {
+                if (currentPower > buySymbol.price) {
+                    buySymbol.numToBuy++;
+                    currentPower -= buySymbol.price;
+                }
+            });
+        }
     }
 
 }

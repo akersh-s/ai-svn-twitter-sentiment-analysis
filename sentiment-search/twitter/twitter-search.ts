@@ -74,6 +74,6 @@ export class TwitterSearch {
                 nextId = paramPieces[1];
             }
         });
-        return nextId
+        return nextId;
     }
 }
