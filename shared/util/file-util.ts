@@ -6,4 +6,5 @@ export class FileUtil {
     static resultsFile:string = path.join(userHome, 'results.json');
     static buyFile:string = path.join(userHome, 'buy.json');
     static sellStatsFile:string = path.join(userHome, 'sell-stats.json');
+    static svmFile:string = path.join(userHome, 'svm.json');
 }

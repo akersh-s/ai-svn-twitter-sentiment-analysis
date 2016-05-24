@@ -1,4 +1,5 @@
 rm -rf ~/results.json
+rm -rf ~/svm.json
 
 #Do Sentiment Analysis on each symbol from Twitter
 while read symbol keywords; do

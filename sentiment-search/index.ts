@@ -26,4 +26,9 @@ determineActionForStock(stock, (err, stockAction: StockAction) => {
     }
     results.push(stockAction);
     fs.writeFileSync(FileUtil.resultsFile, JSON.stringify(results, null, 4), 'utf-8');
+    
+    let svmData = [];
+    if (fs.existsSync(FileUtil.svmFile)) {
+        svmData = JSON.parse(fs.readFileSync(FileUtil.svmFile))
+    }
 });
