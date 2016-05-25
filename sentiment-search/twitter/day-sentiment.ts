@@ -41,10 +41,10 @@ export function determineBuyOrSell(stock: Stock, daySentiments: DaySentiment[]):
     
     //Validate results
     if (!todaysSentiment) {
-        return new StockAction(null, null, null, 0, 'No Sentiment for today.');
+        return new StockAction(null, null, null, 0, null, 'No Sentiment for today.');
     }
     if (previousSentiments.length === 0) {
-        return new StockAction(null, null, null, 0, 'No previous sentiments.');
+        return new StockAction(null, null, null, 0, null, 'No previous sentiments.');
     }
     
     let distribution = calculateMeanVarianceAndDeviation(previousSentiments);
@@ -62,11 +62,11 @@ export function determineBuyOrSell(stock: Stock, daySentiments: DaySentiment[]):
         action = Action.DoNothing;
     }
     
-    return new StockAction(stock, action, increasePercent, totalTweets);
+    return new StockAction(stock, action, increasePercent, totalTweets, daySentiments);
 }
 
 export class StockAction {
-    constructor(public stock: Stock, public action: Action, public percentChange: number, public numTweets:number, public error?: string) {}
+    constructor(public stock: Stock, public action: Action, public percentChange: number, public numTweets:number, public daySentiments: DaySentiment[], public error?: string) {}
 }
 export enum Action {
     Buy, Sell, DoNothing

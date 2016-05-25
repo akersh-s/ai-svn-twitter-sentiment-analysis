@@ -29,6 +29,6 @@ determineActionForStock(stock, (err, stockAction: StockAction) => {
     
     let svmData = [];
     if (fs.existsSync(FileUtil.svmFile)) {
-        svmData = JSON.parse(fs.readFileSync(FileUtil.svmFile))
+        svmData = JSON.parse(fs.readFileSync(FileUtil.svmFile, 'utf-8'));
     }
 });
