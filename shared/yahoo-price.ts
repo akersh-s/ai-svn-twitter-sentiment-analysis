@@ -15,7 +15,7 @@ export async function getLastNPrices(symbol: string, date: Date, n: number): Pro
                 console.log(body);
                 body = JSON.parse(body);
                 if (!body.query.results) {
-                    reject();
+                    return resolve([]);
                 }
                 let results: YahooQueryResult[] = body.query.results.quote.slice(0, n);
                 resolve(results);

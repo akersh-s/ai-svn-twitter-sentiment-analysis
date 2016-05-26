@@ -42,6 +42,9 @@ async function processStockAction(stockAction: StockAction, x: any, y: number[],
     let closePrices = results.map(result => {
         return parseFloat(result.Close);
     });
+    if (closePrices.length < 4) {
+        return;
+    }
     let todaysClose = closePrices[0];
     let previousClose = closePrices[1];
     let sentiments = stockAction.daySentiments.map(daySentiment => {
