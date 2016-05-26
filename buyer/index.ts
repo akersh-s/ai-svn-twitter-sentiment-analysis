@@ -62,7 +62,7 @@ function buyStocks(robinhood: Robinhood, buySymbols: BuySymbol[]) {
                  console.log(`Completed purchase request for ${buySymbol.numToBuy} shares of ${buySymbol.symbol}!`, body);
                  done(); 
               });
-          }, 1000); 
+          }, 10000); 
        });
     });
     
