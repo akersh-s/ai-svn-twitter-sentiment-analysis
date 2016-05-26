@@ -7,13 +7,16 @@ export async function getLastNPrices(symbol: string, date: Date, n: number): Pro
     let formattedDate = [date.getFullYear(), leftPad(date.getMonth() + 1, 2, 0), leftPad(date.getDate(), 2, 0)].join('-');
     let formattedDateAWeekAgo = [aWeekAgo.getFullYear(), leftPad(aWeekAgo.getMonth() + 1, 2, 0), leftPad(aWeekAgo.getDate(), 2, 0)].join('-');
 
-    return new Promise<YahooQueryResult[]>(resolve => {
+    return new Promise<YahooQueryResult[]>((resolve, reject) => {
         setTimeout(function () {
             let url = `https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20yahoo.finance.historicaldata%20where%20symbol%20%3D%20%22${symbol}%22%20and%20startDate%20%3D%20%222016-05-15%22%20and%20endDate%20%3D%20%22${formattedDate}%22&format=json&diagnostics=true&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys`;
-
+            console.log(url);
             req.get(url, (err, response, body) => {
                 console.log(body);
                 body = JSON.parse(body);
+                if (!body.query.results) {
+                    reject();
+                }
                 let results: YahooQueryResult[] = body.query.results.quote.slice(0, n);
                 resolve(results);
             });
