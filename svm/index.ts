@@ -3,14 +3,14 @@ import {getLastNPrices, YahooQueryResult} from '../shared/yahoo-price';
 import {today} from '../sentiment-search/util/date-util';
 import * as async from 'async';
 let ml = require('machine_learning');
-export function runSentiment(stockActions: StockAction[]) {
+export function runSentiment(stockActions: StockAction[], allowCache?: boolean) {
     let x = [];
     let y = [];
     let predictions: Prediction[] = [];
     let asyncFuncs = [];
     stockActions.forEach(stockAction => {
         asyncFuncs.push(done => {
-            processStockAction(stockAction, x, y, predictions).then(() => {
+            processStockAction(stockAction, x, y, predictions, allowCache).then(() => {
                 done();
             });
         });
@@ -36,9 +36,9 @@ export function runSentiment(stockActions: StockAction[]) {
     });
 }
 
-async function processStockAction(stockAction: StockAction, x: any, y: number[], predictions: Prediction[]) {
+async function processStockAction(stockAction: StockAction, x: any, y: number[], predictions: Prediction[], allowCache?: boolean) {
     let symbol = stockAction.stock.getSymbolNoDollar();
-    let results: YahooQueryResult[] = await getLastNPrices(symbol, today, 4);
+    let results: YahooQueryResult[] = await getLastNPrices(symbol, today, 4, allowCache);
     let closePrices = results.map(result => {
         return parseFloat(result.Close);
     });
