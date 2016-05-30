@@ -1,6 +1,10 @@
+import * as yargs from 'yargs';
+let argv = yargs.argv;
+
 let oneDay = 1000 * 60 * 60 * 24;
-export let today = new Date();
+export let today = argv.today ? new Date(argv.today) : new Date();
 export let yesterday = new Date(+today - oneDay);
+export let tomorrow = new Date(+today + oneDay);
 
 export function formatDate(date: Date, char?: string): string {
     char = char || '-';

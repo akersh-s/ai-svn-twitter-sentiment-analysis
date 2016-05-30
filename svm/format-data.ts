@@ -33,7 +33,7 @@ function addLine(symbol: string, date: Date, symbolData: any, symbolDateData: an
         return;
     }
     const increasePercent = ((tomorrowsPrice - price) / price) * 100;
-    const action = increasePercent > 3 ? 1 : -1;
+    const action = increasePercent > 3 ? 1 : 1;
     const todaysSentiment = symbolDateData.totalSentiment;
     const yesterdaysDaySentiment = getYesterdaysDaySentiment(symbolData, date);
     if (!yesterdaysDaySentiment) {
