@@ -2,16 +2,19 @@ import * as path from 'path';
 import * as yargs from 'yargs';
 let argv = yargs.argv;
 let username = argv.username;
-let userHome = process.env[(process.platform == 'win32') ? 'USERPROFILE' : 'HOME']; 
+let userHome = process.env[(process.platform == 'win32') ? 'USERPROFILE' : 'HOME'];
 
 export class FileUtil {
-    static resultsFile:string = path.join(userHome, 'results.json');
-    static buyFile:string = path.join(userHome, 'buy.json');
-    static sellStatsFile:string = path.join(userHome, `sell-stats-${hashCode(username)}.json`);
-    static svmFile:string = path.join(userHome, 'svm.json');
+    static resultsFile: string = path.join(userHome, 'results.json');
+    static buyFile: string = path.join(userHome, 'buy.json');
+    static sellStatsFile: string = path.join(userHome, `sell-stats-${hashCode(username)}.json`);
+    static svmFile: string = path.join(userHome, 'svm.json');
 }
 
 function hashCode(s) {
+    if (!s) {
+        return 0;
+    }
     var hash = 0, i, chr, len;
     if (s.length === 0) return hash;
     for (i = 0, len = s.length; i < len; i++) {
