@@ -69,7 +69,9 @@ export function determineActionForStock(stock: Stock, cb: Function) {
     async.series(asyncFuncs, (err, daySentiments: DaySentiment[]) => {
         if (err) throw err;
         let stockAction: StockAction = determineBuyOrSell(stock, daySentiments);
-        cb(err, stockAction);
+        stockAction.addPrice().then(() => {
+            cb(err, stockAction);    
+        });
     });
 }
 
