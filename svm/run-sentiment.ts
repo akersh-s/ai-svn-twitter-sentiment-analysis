@@ -1,67 +1,47 @@
-import * as JSONStream from 'JSONStream';
 import * as fs from 'fs';
-import * as path from 'path';
-import * as sentiment from 'sentiment';
-import {formatDate} from '../sentiment-search/util/date-util';
-//let file = `${__dirname}/../data/stocktwits_messages_dec_2015_8206.json`;
-let file = `${__dirname}/../data/stocktwits_messages_jan_2016_3c83.json`;
-const stream = fs.createReadStream(file, {encoding: 'utf-8'});
-const parser = JSONStream.parse();
-stream.pipe(parser);
+import * as async from 'async';
+import {StockAction, Action} from '../sentiment-search/twitter/day-sentiment';
+import {Stock} from '../sentiment-search/stock.model';
+import {runSentiment, SvmResult} from './index';
+import {tomorrow} from '../sentiment-search/util/date-util'
+import {getLastNPrices, YahooQueryResult} from '../shared/yahoo-price';
 
-class DataHolder {
-    data: any = {};
-    addValue(symbol: string, sentiment: number, date: Date) {
-        const formattedDate = formatDate(date, '/');
-        const symbolData = this.data[symbol] = this.data[symbol] || {};
-        const symbolDataForDate = symbolData[formattedDate] = symbolData[formattedDate] || { count: 0, totalSentiment: 0};
-        
-        symbolDataForDate.count += 1;
-        symbolDataForDate.totalSentiment += sentiment;
-        console.log(symbolDataForDate);
-    }
-}
+let stockActions: StockAction[] = JSON.parse(fs.readFileSync(__dirname + '/../shared/results.json', 'utf-8')).map(s => {
+    let stock = new Stock(s.stock.symbol, s.stock.keywords);
+    let stockAction = new StockAction(stock, s.action, s.percentChange, s.numTweets, s.daySentiments);
+    return stockAction;
+});
 
-const dataHolder = new DataHolder();
+runSentiment(stockActions, true).then((svmResults: SvmResult[]) => {
+    calculateIncreasePercent(svmResults);
+});
 
-parser.on('data', (obj:Twit) => {
-    let symbols = [];
-    obj.entities.symbols.forEach(twitSymbol => {
-        if (twitSymbol && twitSymbol.symbol) {
-            symbols.push(twitSymbol.symbol);   
+function calculateIncreasePercent(svmResults: SvmResult[]) {
+    let asyncFuncs = [];
+
+    svmResults.forEach(svmResult => {
+        if (svmResult.value === 1) {
+            console.log('Buy ' + svmResult.prediction.symbol);
+            asyncFuncs.push(done => {
+                let symbol = svmResult.prediction.symbol.replace(/\$/, '');
+
+                getLastNPrices(symbol, tomorrow, 1, true).then((results: YahooQueryResult[]) => {
+                    let tomorrowsPrice = parseFloat(results[0].Close);
+                    let todaysPrice = parseFloat(svmResult.prediction.results[0].Close);
+                    let increase = tomorrowsPrice - todaysPrice;
+                    let increasePercent = (increase / todaysPrice) * 100;
+                    done(null, increasePercent)
+                });
+            });
         }
+
     });
-    if (symbols.length === 0) {
-        return;
-    }
-    const s:number = sentiment(obj.body).score;
-    if (s === 0) {
-        return;
-    }
-    const date = new Date(obj.object.postedTime);
-    symbols.forEach(symbol => {
-        dataHolder.addValue(symbol, s, date);
+
+    async.series(asyncFuncs, (err, increasePercents: number[]) => {
+        let total = 0;
+        increasePercents.forEach(i => total += i);
+        let average = total / increasePercents.length;
+
+        console.log('Average: ' + average);
     });
-});
-
-parser.on('end', () => {
-    fs.writeFileSync(path.join(__dirname, 'data2.json'), JSON.stringify(dataHolder.data, null, 4), 'utf-8');
-    console.log('end!!');
-});
-
-
-interface Twit {
-    body: string;
-    object: TwitObject;
-    entities: TwitEntities;
 }
-interface TwitObject {
-    postedTime: string;
-}
-interface TwitEntities {
-    symbols: TwitSymbol[];
-}
-interface TwitSymbol {
-    symbol: string;
-}
-
