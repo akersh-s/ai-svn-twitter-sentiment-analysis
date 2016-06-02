@@ -6,12 +6,4 @@ export class SvmData {
 		this.x.push(x);
         this.y.push(y);
 	}
-	
-	getSvmParams() {
-		let normalizedX = normalize(x);
-		return {
-			x: normalizedX,
-			y: this.y
-		}
-	}
 }
