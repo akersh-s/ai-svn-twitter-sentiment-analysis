@@ -1,5 +1,5 @@
 'use strict';
-import {Prediction} from './index';
+import {Prediction} from './prediction.model';
 export function normalize(x: number[][], predictions: Prediction[]) {
     const highest = JSON.parse(JSON.stringify(x[0]));
     const lowest = JSON.parse(JSON.stringify(x[0]));
