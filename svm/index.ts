@@ -34,7 +34,7 @@ export function runSentiment(stockActions: StockAction[], allowCache?: boolean):
     predictions.forEach(prediction => {
         let p = svm.predict(prediction.data);
         let action = p === 1 ? 'Buy' : 'Do Nothing';
-        console.log(`Prediction for ${prediction.symbol}: ${action}`);
+        console.log(`Prediction for ${prediction.symbol}: ${action} (${p})`);
         svmResults.push(new SvmResult(prediction, p));
     });
     
