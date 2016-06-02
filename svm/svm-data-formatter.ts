@@ -44,6 +44,7 @@ function gatherPreviousStockActions():StockAction[] {
 function formatSvmData(allPreviousStockActions: StockAction[]): SvmData {
 	let svmData = new SvmData();
 	allPreviousStockActions.forEach(stockAction => {
+		debug(`Running ${stockAction.stock.symbol} for date ${stockAction.getDate()}`);
 		let svmRecord = [];
 		
 		let price = stockAction.price;
@@ -58,7 +59,7 @@ function formatSvmData(allPreviousStockActions: StockAction[]): SvmData {
 		//Validate Sentiments
 		isValidSVmItem = isValidSVmItem && stockAction.daySentiments.length === 4;
 		
-		
+		debug(`Is valid: ${isValidSVmItem ? 'Yes' : 'No'}`);
 		if (isValidSVmItem) {
 			const increasePercent = ((nextStockAction.price - stockAction.price) / stockAction.price) * 100;
 			
