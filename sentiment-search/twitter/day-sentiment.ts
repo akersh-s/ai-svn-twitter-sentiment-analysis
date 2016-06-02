@@ -1,7 +1,10 @@
 import {formatDate, today} from '../util/date-util';
 import {Stock} from '../stock.model';
+import {StockAction} from '../stock-action.model';
 import {Robinhood, QuoteDataResultBody, QuoteDataResult} from '../../shared/robinhood.api';
 import {calculateMeanVarianceAndDeviation, calculateBuyPrice, calculateSellPrice, calcIncreasePercent} from '../util/math-util';
+
+export {StockAction} from '../stock-action.model';
 export class DaySentiment {
     public totalSentiment: number = 0;
     public numTweets: number = 0;
@@ -66,29 +69,6 @@ export function determineBuyOrSell(stock: Stock, daySentiments: DaySentiment[]):
     return new StockAction(stock, action, increasePercent, totalTweets, daySentiments);
 }
 
-export class StockAction {
-    public price: number;
-    constructor(public stock: Stock, public action: Action, public percentChange: number, public numTweets: number, public daySentiments: DaySentiment[], public error?: string) { }
-
-    addPrice(): Promise<number> {
-        return new Promise<number>((resolve, reject) => {
-            if (!this.stock) {
-                reject('No Stock Symbol to find price');
-            }
-            let symbolFormatted = this.stock.symbol.replace(/\$/, '').toUpperCase();
-            let robinhood = new Robinhood(null, null);
-            robinhood.quote_data(symbolFormatted, (err, response, body: QuoteDataResultBody) => {
-                if (err) reject(err);
-                
-                if (!body.results || body.results.length < 1) {
-                    reject('No results');
-                }
-                this.price = parseFloat(body.results[0].bid_price);
-                resolve(this.price);
-            });
-        });
-    }
-}
 export enum Action {
     Buy, Sell, DoNothing
 }

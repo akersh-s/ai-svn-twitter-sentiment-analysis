@@ -42,7 +42,7 @@ function normalizeWithMinMax(arr: number[][], minArr: number[], maxArr: number[]
     }
     return normalized;
 }
-function normalizePredictionsWithMinMax(arr: Prediction[], minArr: number[], maxArr: number[]) {
+function normalizePredictionsWithMinMax(arr: Prediction[], minArr: number[], maxArr: number[]): Prediction[] {
     const normalized = [];
     let j, item, row:number[];
     

@@ -9,6 +9,7 @@ import {getLastNPrices, YahooQueryResult} from '../shared/yahoo-price';
 let stockActions: StockAction[] = JSON.parse(fs.readFileSync(__dirname + '/../shared/results.json', 'utf-8')).map(s => {
     let stock = new Stock(s.stock.symbol, s.stock.keywords);
     let stockAction = new StockAction(stock, s.action, s.percentChange, s.numTweets, s.daySentiments);
+    stockAction.price = s.price;
     return stockAction;
 });
 
