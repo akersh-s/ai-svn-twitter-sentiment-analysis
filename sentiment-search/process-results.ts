@@ -1,11 +1,10 @@
 import * as path from 'path';
 import * as fs from 'fs';
 import {FileUtil} from '../shared/util/file-util';
-
-import {StockAction, Action} from './twitter/day-sentiment';
+import {StockAction, Action, DaySentiment} from './twitter/day-sentiment';
 import {Stock} from './stock.model';
 import {runSentiment} from '../svm';
-async function processResults():Promise<any> {
+async function processResults(): Promise<any> {
     if (!fs.existsSync(FileUtil.resultsFile)) {
         console.log('results.json does not exist! please run ts-node sentiment-search first.');
         process.exit(-1);
@@ -13,11 +12,18 @@ async function processResults():Promise<any> {
 
     let results: StockAction[] = JSON.parse(fs.readFileSync(FileUtil.resultsFile, 'utf-8')).map(result => {
         let stock = new Stock(result.stock.symbol, result.stock.keywords);
+        let daySentiments = result.daySentiments.map(d => {
+            let daySentiment = new DaySentiment(new Date(d.day));
+            daySentiment.average = d.average;
+            daySentiment.numTweets = d.numTweets;
+            daySentiment.totalSentiment = d.totalSentiment;
+            return daySentiment;
+        });
         let sa = new StockAction(stock, result.action, result.percentChange, result.numTweets, result.daySentiments);
         sa.price = result.price;
         return sa;
     });
-    
+
     let buyResults = results.filter((a) => {
         let isBuy = a.action === Action.Buy;
         let isMinimumTweets = a.numTweets > 40;

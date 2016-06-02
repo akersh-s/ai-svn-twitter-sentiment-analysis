@@ -6,6 +6,7 @@ import {SvmData} from './svm-data.model';
 import {Prediction} from './prediction.model';
 import {debug} from '../sentiment-search/util/log-util';
 import {Stock} from '../sentiment-search/stock.model';
+import {DaySentiment} from '../sentiment-search/twitter/day-sentiment';
 export function getSvmData(): SvmData {
 	let allPreviousStockActions = gatherPreviousStockActions();
 	debug('All Previous Stock Actions Length: ' + allPreviousStockActions.length);
@@ -39,6 +40,13 @@ function gatherPreviousStockActions(): StockAction[] {
 	FileUtil.lastResultsFiles.forEach(f => {
 		let fStockActions = JSON.parse(fs.readFileSync(f, 'utf-8') || '[]').map(result => {
 			let stock = new Stock(result.stock.symbol, result.stock.keywords);
+			let daySentiments = result.daySentiments.map(d => {
+				let daySentiment = new DaySentiment(new Date(d.day));
+				daySentiment.average = d.average;
+				daySentiment.numTweets = d.numTweets;
+				daySentiment.totalSentiment = d.totalSentiment;
+				return daySentiment;
+			});
 			let sa = new StockAction(stock, result.action, result.percentChange, result.numTweets, result.daySentiments);
 			sa.price = result.price;
 			return sa;
