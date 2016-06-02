@@ -13,13 +13,14 @@ async function processResults(): Promise<any> {
     let results: StockAction[] = JSON.parse(fs.readFileSync(FileUtil.resultsFile, 'utf-8')).map(result => {
         let stock = new Stock(result.stock.symbol, result.stock.keywords);
         let daySentiments = result.daySentiments.map(d => {
+            console.log('process-results', JSON.stringify(d));
             let daySentiment = new DaySentiment(new Date(d.day));
             daySentiment.average = d.average;
             daySentiment.numTweets = d.numTweets;
             daySentiment.totalSentiment = d.totalSentiment;
             return daySentiment;
         });
-        let sa = new StockAction(stock, result.action, result.percentChange, result.numTweets, result.daySentiments);
+        let sa = new StockAction(stock, result.action, result.percentChange, result.numTweets, daySentiments);
         sa.price = result.price;
         return sa;
     });
