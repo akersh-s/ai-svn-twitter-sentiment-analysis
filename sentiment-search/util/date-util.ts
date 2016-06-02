@@ -2,7 +2,7 @@ import * as yargs from 'yargs';
 import {debug} from './log-util';
 let argv = yargs.argv;
 
-let oneDay = 1000 * 60 * 60 * 24;
+export let oneDay = 1000 * 60 * 60 * 24;
 export let today = argv.today ? new Date(argv.today) : new Date();
 export let yesterday = new Date(+today - oneDay);
 export let tomorrow = new Date(+today + oneDay);
