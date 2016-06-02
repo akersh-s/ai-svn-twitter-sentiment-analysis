@@ -41,9 +41,7 @@ function gatherPreviousStockActions(): StockAction[] {
 		let fStockActions = JSON.parse(fs.readFileSync(f, 'utf-8') || '[]').map(result => {
 			let stock = new Stock(result.stock.symbol, result.stock.keywords);
 			let daySentiments = result.daySentiments.map(d => {
-				console.log('svm-data-formatter', JSON.stringify(d));
 				let daySentiment = new DaySentiment(new Date(d.day));
-				daySentiment.average = d.average;
 				daySentiment.numTweets = d.numTweets;
 				daySentiment.totalSentiment = d.totalSentiment;
 				return daySentiment;
