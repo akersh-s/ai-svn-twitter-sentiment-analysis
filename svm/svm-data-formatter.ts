@@ -1,5 +1,5 @@
 import * as fs from 'fs';
-import {oneDay} from '../sentiment-search/util/date-util';
+import {oneDay, formatDate} from '../sentiment-search/util/date-util';
 import {FileUtil} from '../shared/util/file-util';
 import {StockAction, Action} from '../sentiment-search/twitter/day-sentiment';
 import {SvmData} from './svm-data.model';
@@ -57,10 +57,8 @@ function gatherPreviousStockActions(): StockAction[] {
 }
 function formatSvmData(allPreviousStockActions: StockAction[]): SvmData {
 	let svmData = new SvmData();
-	debug('Formatting SVM data');
 	allPreviousStockActions.forEach(stockAction => {
 		debug(JSON.stringify(stockAction.stock));
-		debug(`Running ${stockAction.stock.symbol} for date ${stockAction.getDate()}`);
 		let svmRecord = [];
 
 		let price = stockAction.price;
@@ -75,11 +73,11 @@ function formatSvmData(allPreviousStockActions: StockAction[]): SvmData {
 		//Validate Sentiments
 		isValidSVmItem = isValidSVmItem && stockAction.daySentiments.length === 4;
 
-		debug(`Is valid: ${isValidSVmItem ? 'Yes' : 'No'}`);
 		if (isValidSVmItem) {
 			const increasePercent = ((nextStockAction.price - stockAction.price) / stockAction.price) * 100;
 
 			let y = increasePercent > 2 ? 1 : -1;
+			debug(`${stockAction.stock.symbol}: ${nextStockAction.price} on ${formatDate(nextStockAction.getDate())}, ${stockAction.price} on ${formatDate(stockAction.getDate())} - Increase Percent: ${increasePercent}`)
 			let x = createX(stockAction, previousStockAction);
 			svmData.addRecord(x, y);
 		}
