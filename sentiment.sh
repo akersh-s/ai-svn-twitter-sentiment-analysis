@@ -10,4 +10,4 @@ while read symbol keywords; do
 done < "sentiment-search/stocks"
 
 #Determine which to buy and save symbols to buy.json
-ts-node sentiment-search/process-results.ts
+ts-node sentiment-search/process-results.ts --today="$today" --debug
