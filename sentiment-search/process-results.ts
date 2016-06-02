@@ -13,7 +13,9 @@ async function processResults():Promise<any> {
 
     let results: StockAction[] = JSON.parse(fs.readFileSync(FileUtil.resultsFile, 'utf-8')).map(result => {
         let stock = new Stock(result.stock.symbol, result.stock.keywords);
-        return new StockAction(stock, result.action, result.percentChange, result.numTweets, result.daySentiments);
+        let sa = new StockAction(stock, result.action, result.percentChange, result.numTweets, result.daySentiments);
+        sa.price = result.price;
+        return sa;
     });
     
     let buyResults = results.filter((a) => {
