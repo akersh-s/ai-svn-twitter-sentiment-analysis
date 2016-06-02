@@ -45,6 +45,7 @@ function formatSvmData(allPreviousStockActions: StockAction[]): SvmData {
 	let svmData = new SvmData();
 	debug('Formatting SVM data');
 	allPreviousStockActions.forEach(stockAction => {
+		debug(JSON.stringify(stockAction.stock));
 		debug(`Running ${stockAction.stock.symbol} for date ${stockAction.getDate()}`);
 		let svmRecord = [];
 		
