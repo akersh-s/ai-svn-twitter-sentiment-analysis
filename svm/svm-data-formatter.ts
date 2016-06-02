@@ -58,7 +58,6 @@ function gatherPreviousStockActions(): StockAction[] {
 function formatSvmData(allPreviousStockActions: StockAction[]): SvmData {
 	let svmData = new SvmData();
 	allPreviousStockActions.forEach(stockAction => {
-		debug(JSON.stringify(stockAction.stock));
 		let svmRecord = [];
 
 		let price = stockAction.price;
@@ -76,7 +75,7 @@ function formatSvmData(allPreviousStockActions: StockAction[]): SvmData {
 		if (isValidSVmItem) {
 			const increasePercent = ((nextStockAction.price - stockAction.price) / stockAction.price) * 100;
 
-			let y = increasePercent > 2 ? 1 : -1;
+			let y = increasePercent > 1 ? 1 : -1;
 			debug(`${stockAction.stock.symbol}: ${nextStockAction.price} on ${formatDate(nextStockAction.getDate())}, ${stockAction.price} on ${formatDate(stockAction.getDate())} - Increase Percent: ${increasePercent}`)
 			let x = createX(stockAction, previousStockAction);
 			svmData.addRecord(x, y);
