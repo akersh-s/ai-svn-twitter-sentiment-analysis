@@ -4,10 +4,12 @@ import {FileUtil} from '../shared/util/file-util';
 import {StockAction, Action} from '../sentiment-search/twitter/day-sentiment';
 import {SvmData} from './svm-data.model';
 import {Prediction} from './prediction.model';
-
+import {debug} from '../sentiment-search/util/log-util';
 export function getSvmData(): SvmData {
 	let allPreviousStockActions = gatherPreviousStockActions();
+	debug('All Prevoius Stock Actions Length: ' + allPreviousStockActions.length);
 	let formattedSvmData = formatSvmData(allPreviousStockActions);
+	debug('formattedSvmData: ' + formattedSvmData.x.length);
 	return formattedSvmData;
 }
 
