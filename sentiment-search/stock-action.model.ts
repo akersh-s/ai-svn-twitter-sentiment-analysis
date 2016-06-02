@@ -34,7 +34,10 @@ export class StockAction {
         let date: Date = null;
         this.daySentiments.forEach(daySentiment => {
             if (date) {
-                date = new Date(Math.max(+date, +daySentiment.day));
+                console.log(JSON.stringify(daySentiment));
+                if (daySentiment.day) {
+                    date = new Date(Math.max(+date, +daySentiment.day));    
+                }
             }
             else {
                 date = daySentiment.day;
