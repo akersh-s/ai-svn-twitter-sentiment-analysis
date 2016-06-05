@@ -7,10 +7,10 @@ import {Prediction} from './prediction.model';
 import {debug} from '../sentiment-search/util/log-util';
 import {Stock} from '../sentiment-search/stock.model';
 import {DaySentiment} from '../sentiment-search/twitter/day-sentiment';
-export function getSvmData(): SvmData {
+export function getSvmData(priceThreshold: number): SvmData {
 	let allPreviousStockActions = gatherPreviousStockActions();
 	debug('All Previous Stock Actions Length: ' + allPreviousStockActions.length);
-	let formattedSvmData = formatSvmData(allPreviousStockActions);
+	let formattedSvmData = formatSvmData(allPreviousStockActions, priceThreshold);
 	debug('formattedSvmData: ' + formattedSvmData.x.length);
 	return formattedSvmData;
 }
@@ -55,7 +55,7 @@ function gatherPreviousStockActions(): StockAction[] {
 	});
 	return stockActions;
 }
-function formatSvmData(allPreviousStockActions: StockAction[]): SvmData {
+function formatSvmData(allPreviousStockActions: StockAction[], priceThreshold: number): SvmData {
 	let svmData = new SvmData();
 	allPreviousStockActions.forEach(stockAction => {
 		let svmRecord = [];
@@ -75,7 +75,7 @@ function formatSvmData(allPreviousStockActions: StockAction[]): SvmData {
 		if (isValidSVmItem) {
 			const increasePercent = ((nextStockAction.price - stockAction.price) / stockAction.price) * 100;
 
-			let y = increasePercent > 1 ? 1 : -1;
+			let y = increasePercent > priceThreshold ? 1 : -1;
 			debug(`${stockAction.stock.symbol}: ${nextStockAction.price} on ${formatDate(nextStockAction.getDate())}, ${stockAction.price} on ${formatDate(stockAction.getDate())} - Increase Percent: ${increasePercent}`)
 			let x = createX(stockAction, previousStockAction);
 			svmData.addRecord(x, y);
@@ -116,14 +116,18 @@ function getNearbyStockAction(stockAction: StockAction, allPreviousStockActions:
 
 function createX(stockAction: StockAction, previousStockAction: StockAction): number[] {
 	let x = [];
+	let timeGoneBy = +stockAction.getDate() - +previousStockAction.getDate();
+	let changeInPrice = (stockAction.price - previousStockAction.price) / previousStockAction.price;
 
-	x.push(previousStockAction.price);
-	x.push(stockAction.price);
-	stockAction.daySentiments.forEach(s => {
-		x.push(s.totalSentiment);
-		x.push(s.numTweets);
-	});
+	let d0 = stockAction.daySentiments[0].totalSentiment;
+	let d1 = stockAction.daySentiments[1].totalSentiment;
+	let d2 = stockAction.daySentiments[2].totalSentiment;
+	let d3 = stockAction.daySentiments[3].totalSentiment;
 
-
+	x.push(changeInPrice);
+	x.push(d0 - d1);
+	x.push(d1 - d2);
+	x.push(d2 - d3);
+	
 	return x;
 }

@@ -4,7 +4,8 @@ import {FileUtil} from '../shared/util/file-util';
 import {StockAction, Action, DaySentiment} from './twitter/day-sentiment';
 import {Stock} from './stock.model';
 import {runSentiment} from '../svm';
-async function processResults(): Promise<any> {
+import {debug} from './util/log-util';
+function processResults() {
     if (!fs.existsSync(FileUtil.resultsFile)) {
         console.log('results.json does not exist! please run ts-node sentiment-search first.');
         process.exit(-1);
@@ -45,7 +46,16 @@ async function processResults(): Promise<any> {
         });
     }
     fs.writeFileSync(FileUtil.buyFile, JSON.stringify(buys, null, 4), 'utf-8');
-    await runSentiment(results);
+    let resultsPriceThreshold;
+    let svmResults = [];
+    [3, 2, 1, 0.75, 0.66, 0.50, 0.25, 0].forEach(priceThreshold => {
+        if (svmResults.length < 3) {
+            resultsPriceThreshold = priceThreshold;
+            svmResults = runSentiment(results, priceThreshold);    
+            debug(`Price Threshold: ${resultsPriceThreshold}, Results Length: ${svmResults.length}`);    
+        }
+    });
+    
 }
 processResults();
 
