@@ -25,10 +25,13 @@ export function getPredictions(todaysStockActions: StockAction[]): Prediction[] 
 		let previousStockAction = getPreviousStockAction(todaysStockAction, allPreviousStockActions);
 		isValid = isValid && !!previousStockAction && !!previousStockAction.price;
 
+		let p2StockAction = getPreviousStockAction(previousStockAction, allPreviousStockActions);
+		isValid = isValid && !!p2StockAction && !!p2StockAction.price;
+
 		isValid = isValid && todaysStockAction.daySentiments.length === 4;
 
 		if (isValid) {
-			let x = createX(todaysStockAction, previousStockAction);
+			let x = createX(todaysStockAction, previousStockAction, p2StockAction);
 			predictions.push(new Prediction(todaysStockAction.stock.symbol, x));
 		}
 	});
@@ -66,6 +69,9 @@ function formatSvmData(allPreviousStockActions: StockAction[], priceThreshold: n
 		let previousStockAction = getPreviousStockAction(stockAction, allPreviousStockActions);
 		isValidSVmItem = isValidSVmItem && !!previousStockAction && !!previousStockAction.price;
 
+		let p2StockAction = getPreviousStockAction(previousStockAction, allPreviousStockActions);
+		isValidSVmItem = isValidSVmItem && !!p2StockAction && !!p2StockAction.price;
+
 		let nextStockAction = getNextStockAction(stockAction, allPreviousStockActions);
 		isValidSVmItem = isValidSVmItem && !!nextStockAction && !!nextStockAction.price;
 
@@ -77,7 +83,7 @@ function formatSvmData(allPreviousStockActions: StockAction[], priceThreshold: n
 
 			let y = increasePercent > priceThreshold ? 1 : -1;
 			debug(`${stockAction.stock.symbol}: ${nextStockAction.price} on ${formatDate(nextStockAction.getDate())}, ${stockAction.price} on ${formatDate(stockAction.getDate())} - Increase Percent: ${increasePercent}`)
-			let x = createX(stockAction, previousStockAction);
+			let x = createX(stockAction, previousStockAction, p2StockAction);
 			svmData.addRecord(x, y);
 		}
 	});
@@ -94,6 +100,9 @@ function getNextStockAction(stockAction: StockAction, allPreviousStockActions: S
 }
 
 function getNearbyStockAction(stockAction: StockAction, allPreviousStockActions: StockAction[], isForward: boolean): StockAction {
+	if (!stockAction) {
+		return null;
+	} 
 	let date = stockAction.getDate();
 	let nearbyStockAction: StockAction = null;
 	if (!stockAction.price) {
@@ -114,10 +123,11 @@ function getNearbyStockAction(stockAction: StockAction, allPreviousStockActions:
 	return nearbyStockAction;
 }
 
-function createX(stockAction: StockAction, previousStockAction: StockAction): number[] {
+function createX(stockAction: StockAction, previousStockAction: StockAction, p2StockAction: StockAction): number[] {
 	let x = [];
 	let timeGoneBy = +stockAction.getDate() - +previousStockAction.getDate();
-	let changeInPrice = (stockAction.price - previousStockAction.price) / previousStockAction.price;
+	let changeInPrice = change(stockAction.price, previousStockAction.price);
+	let changeInP2Price = change(previousStockAction.price, p2StockAction.price);
 
 	let d0 = stockAction.daySentiments[0].totalSentiment;
 	let d1 = stockAction.daySentiments[1].totalSentiment;
@@ -125,6 +135,7 @@ function createX(stockAction: StockAction, previousStockAction: StockAction): nu
 	let d3 = stockAction.daySentiments[3].totalSentiment;
 
 	x.push(changeInPrice);
+	x.push(changeInP2Price);
 
 	x.push(change(d0, d1));
 	x.push(change(d1, d2));

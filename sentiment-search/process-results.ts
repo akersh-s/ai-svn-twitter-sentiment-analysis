@@ -3,7 +3,7 @@ import * as fs from 'fs';
 import {FileUtil} from '../shared/util/file-util';
 import {StockAction, Action, DaySentiment} from './twitter/day-sentiment';
 import {Stock} from './stock.model';
-import {runSentiment} from '../svm';
+import {runSentiment, SvmResult} from '../svm';
 import {debug} from './util/log-util';
 function processResults() {
     if (!fs.existsSync(FileUtil.resultsFile)) {
@@ -47,14 +47,21 @@ function processResults() {
     }
     fs.writeFileSync(FileUtil.buyFile, JSON.stringify(buys, null, 4), 'utf-8');
     let resultsPriceThreshold;
-    let svmResults = [];
-    [3, 2, 1, 0.75, 0.66, 0.50, 0.25, 0].forEach(priceThreshold => {
+    let svmResults:SvmResult[] = [];
+    [5, 3, 2, 1, 0.75, 0.66, 0.50, 0.25, 0].forEach(priceThreshold => {
         if (svmResults.length < 3) {
             resultsPriceThreshold = priceThreshold;
             svmResults = runSentiment(results, priceThreshold);    
             debug(`Price Threshold: ${resultsPriceThreshold}, Results Length: ${svmResults.length}`);    
         }
     });
+    buys = svmResults.map(s => {
+        return s.prediction.symbol.replace(/\$/, '');
+    });
+    if (buys.length > 0) {
+        fs.writeFileSync(FileUtil.buyFile, JSON.stringify(buys, null, 4), 'utf-8');
+    }
+    
     
 }
 processResults();
