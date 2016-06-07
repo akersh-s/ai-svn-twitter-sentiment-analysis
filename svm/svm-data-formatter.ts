@@ -125,9 +125,23 @@ function createX(stockAction: StockAction, previousStockAction: StockAction): nu
 	let d3 = stockAction.daySentiments[3].totalSentiment;
 
 	x.push(changeInPrice);
-	x.push(d0 - d1);
-	x.push(d1 - d2);
-	x.push(d2 - d3);
+
+	x.push(change(d0, d1));
+	x.push(change(d1, d2));
+	x.push(change(d2, d3));
+
+	d0 = stockAction.daySentiments[0].numTweets;
+	d1 = stockAction.daySentiments[1].numTweets;
+	d2 = stockAction.daySentiments[2].numTweets;
+	d3 = stockAction.daySentiments[3].numTweets;
 	
+	x.push(change(d0, d1));
+	x.push(change(d1, d2));
+	x.push(change(d2, d3));
+
 	return x;
+}
+
+function change(one, two) {
+	return (one - two) / Math.max(two, 1);
 }
