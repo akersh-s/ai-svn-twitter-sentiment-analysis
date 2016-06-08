@@ -28,10 +28,13 @@ export function getPredictions(todaysStockActions: StockAction[]): Prediction[] 
 		let p2StockAction = getPreviousStockAction(previousStockAction, allPreviousStockActions);
 		isValid = isValid && !!p2StockAction && !!p2StockAction.price;
 
+		let p3StockAction = getPreviousStockAction(p2StockAction, allPreviousStockActions);
+		isValid = isValid && !!p3StockAction && !!p3StockAction.price;
+		
 		isValid = isValid && todaysStockAction.daySentiments.length === 4;
 
 		if (isValid) {
-			let x = createX(todaysStockAction, previousStockAction, p2StockAction);
+			let x = createX(todaysStockAction, previousStockAction, p2StockAction, p3StockAction);
 			predictions.push(new Prediction(todaysStockAction.stock.symbol, x));
 		}
 	});
@@ -72,6 +75,9 @@ function formatSvmData(allPreviousStockActions: StockAction[], priceThreshold: n
 		let p2StockAction = getPreviousStockAction(previousStockAction, allPreviousStockActions);
 		isValidSVmItem = isValidSVmItem && !!p2StockAction && !!p2StockAction.price;
 
+		let p3StockAction = getPreviousStockAction(p2StockAction, allPreviousStockActions);
+		isValidSVmItem = isValidSVmItem && !!p3StockAction && !!p3StockAction.price;
+
 		let nextStockAction = getNextStockAction(stockAction, allPreviousStockActions);
 		isValidSVmItem = isValidSVmItem && !!nextStockAction && !!nextStockAction.price;
 
@@ -83,7 +89,7 @@ function formatSvmData(allPreviousStockActions: StockAction[], priceThreshold: n
 
 			let y = increasePercent > priceThreshold ? 1 : -1;
 			debug(`${stockAction.stock.symbol}: ${nextStockAction.price} on ${formatDate(nextStockAction.getDate())}, ${stockAction.price} on ${formatDate(stockAction.getDate())} - Increase Percent: ${increasePercent}`)
-			let x = createX(stockAction, previousStockAction, p2StockAction);
+			let x = createX(stockAction, previousStockAction, p2StockAction, p3StockAction);
 			svmData.addRecord(x, y);
 		}
 	});
@@ -123,11 +129,12 @@ function getNearbyStockAction(stockAction: StockAction, allPreviousStockActions:
 	return nearbyStockAction;
 }
 
-function createX(stockAction: StockAction, previousStockAction: StockAction, p2StockAction: StockAction): number[] {
+function createX(stockAction: StockAction, previousStockAction: StockAction, p2StockAction: StockAction, p3StockAction: StockAction): number[] {
 	let x = [];
 	let timeGoneBy = +stockAction.getDate() - +previousStockAction.getDate();
 	let changeInPrice = change(stockAction.price, previousStockAction.price);
 	let changeInP2Price = change(previousStockAction.price, p2StockAction.price);
+	let changeInP3Price = change(p2StockAction.price, p3StockAction.price);
 
 	let d0 = stockAction.daySentiments[0].totalSentiment;
 	let d1 = stockAction.daySentiments[1].totalSentiment;
@@ -136,6 +143,7 @@ function createX(stockAction: StockAction, previousStockAction: StockAction, p2S
 
 	x.push(changeInPrice);
 	x.push(changeInP2Price);
+	x.push(changeInP3Price);
 
 	x.push(change(d0, d1));
 	x.push(change(d1, d2));

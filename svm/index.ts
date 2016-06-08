@@ -18,7 +18,7 @@ export function runSentiment(stockActions: StockAction[], priceThreshold: number
         x: normalized.x,
         y: svmData.y
     });
-
+    let sigma = Math.random() * 100;
     svm.train({
         C: 1.1, // default : 1.0. C in SVM.
         tol: 1e-2, // default : 1e-4. Higher tolerance --> Higher precision
@@ -26,7 +26,7 @@ export function runSentiment(stockActions: StockAction[], priceThreshold: number
         alpha_tol: 1e-3, // default : 1e-5. Higher alpha_tolerance --> Higher precision
 
         kernel: { type: "polynomial", c: 1, d: 5 }
-        //kernel: { type: "gaussian", sigma: 1 }
+        //kernel: { type: "gaussian", sigma: sigma }
         //kernel: {type : "linear"}
     });
 

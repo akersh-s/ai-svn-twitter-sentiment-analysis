@@ -59,7 +59,7 @@ function processResults() {
         return s.prediction.symbol.replace(/\$/, '');
     });
     if (buys.length > 0) {
-        fs.writeFileSync(FileUtil.buyFile, JSON.stringify(buys, null, 4), 'utf-8');
+        //fs.writeFileSync(FileUtil.buyFile, JSON.stringify(buys, null, 4), 'utf-8');
     }
     
     
