@@ -48,7 +48,7 @@ function processResults() {
     fs.writeFileSync(FileUtil.buyFile, JSON.stringify(buys, null, 4), 'utf-8');
     let resultsPriceThreshold;
     let svmResults:SvmResult[] = [];
-    [5, 3, 2, 1, 0.75, 0.66, 0.50, 0.25, 0].forEach(priceThreshold => {
+    [10, 5, 3, 2, 1, 0.75, 0.66, 0.50, 0.25, 0].forEach(priceThreshold => {
         if (svmResults.length < 3) {
             resultsPriceThreshold = priceThreshold;
             svmResults = runSentiment(results, priceThreshold);    

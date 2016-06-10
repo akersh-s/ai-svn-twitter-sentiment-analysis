@@ -6,6 +6,7 @@ import {calculateMeanVarianceAndDeviation, calculateBuyPrice, calculateSellPrice
 export class StockAction {
     public price: number;
     private cachedDate: Date;
+    private quoteDataResult: QuoteDataResult;
     constructor(public stock: Stock, public action: Action, public percentChange: number, public numTweets: number, public daySentiments: DaySentiment[], public error?: string) { }
 
     addPrice(): Promise<number> {
@@ -21,7 +22,9 @@ export class StockAction {
                 if (!body.results || body.results.length < 1) {
                     reject('No results');
                 }
-                this.price = parseFloat(body.results[0].bid_price);
+                this.quoteDataResult = body.results[0];
+                this.price = parseFloat(this.quoteDataResult.bid_price);
+                
                 resolve(this.price);
             });
         });
