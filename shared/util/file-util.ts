@@ -41,7 +41,7 @@ function collectLast45ResultFiles(): string[] {
         }
     });
     
-    
+    console.log(allResultFiles);
     return allResultFiles;
 }
 
@@ -52,7 +52,6 @@ function fileIsLast45Days(f: string) { //And not same day
     let dateParsed = f.substring(f.indexOf(fileStart) + fileStart.length);
     dateParsed = dateParsed.substring(0, dateParsed.indexOf('.')).replace(/-/g, '/');
     let date = new Date(dateParsed);
-    console.log(date, dateParsed);
     let msGoneBy = +today - +date;
     return msGoneBy < d45DaysAgo && msGoneBy > oneDay;
 }

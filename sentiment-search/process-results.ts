@@ -48,7 +48,7 @@ function processResults() {
     fs.writeFileSync(FileUtil.buyFile, JSON.stringify(buys, null, 4), 'utf-8');
     let resultsPriceThreshold;
     let svmResults:SvmResult[] = [];
-    [10, 5, 3, 2, 1, 0.75, 0.66, 0.50, 0.25, 0].forEach(priceThreshold => {
+    [2, 1, 0.50, 0.25, 0].forEach(priceThreshold => {
         if (svmResults.length < 3) {
             resultsPriceThreshold = priceThreshold;
             svmResults = runSentiment(results, priceThreshold);    
@@ -59,7 +59,7 @@ function processResults() {
         return s.prediction.symbol.replace(/\$/, '');
     });
     if (buys.length > 0) {
-        //fs.writeFileSync(FileUtil.buyFile, JSON.stringify(buys, null, 4), 'utf-8');
+        fs.writeFileSync(FileUtil.buyFile, JSON.stringify(buys, null, 4), 'utf-8');
     }
     
     

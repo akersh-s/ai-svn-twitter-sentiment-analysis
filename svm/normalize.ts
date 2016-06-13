@@ -1,6 +1,12 @@
 'use strict';
 import {Prediction} from './prediction.model';
 export function normalize(x: number[][], predictions: Prediction[]) {
+    if (x.length === 0) {
+        return {
+            x: x,
+            predictions: predictions
+        };
+    }
     const highest = JSON.parse(JSON.stringify(x[0]));
     const lowest = JSON.parse(JSON.stringify(x[0]));
     const predictionData = predictions.map(p => {

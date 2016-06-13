@@ -1,5 +1,5 @@
 import * as fs from 'fs';
-import {oneDay, formatDate} from '../sentiment-search/util/date-util';
+import {oneDay, formatDate, isWeekend} from '../sentiment-search/util/date-util';
 import {FileUtil} from '../shared/util/file-util';
 import {StockAction, Action} from '../sentiment-search/twitter/day-sentiment';
 import {SvmData} from './svm-data.model';
@@ -65,9 +65,9 @@ function formatSvmData(allPreviousStockActions: StockAction[], priceThreshold: n
 	let svmData = new SvmData();
 	allPreviousStockActions.forEach(stockAction => {
 		let svmRecord = [];
-
+		let date = stockAction.getDate();
 		let price = stockAction.price;
-		let isValidSVmItem: boolean = !!price;
+		let isValidSVmItem: boolean = !!price && !isWeekend(date);
 
 		let previousStockAction = getPreviousStockAction(stockAction, allPreviousStockActions);
 		isValidSVmItem = isValidSVmItem && !!previousStockAction && !!previousStockAction.price;
@@ -88,7 +88,7 @@ function formatSvmData(allPreviousStockActions: StockAction[], priceThreshold: n
 			const increasePercent = ((nextStockAction.price - stockAction.price) / stockAction.price) * 100;
 
 			let y = increasePercent > priceThreshold ? 1 : -1;
-			debug(`${stockAction.stock.symbol}: ${nextStockAction.price} on ${formatDate(nextStockAction.getDate())}, ${stockAction.price} on ${formatDate(stockAction.getDate())} - Increase Percent: ${increasePercent}`)
+			debug(`${stockAction.stock.symbol}: ${nextStockAction.price} on ${formatDate(nextStockAction.getDate())}, ${stockAction.price} on ${formatDate(date)} - Increase Percent: ${increasePercent}`)
 			let x = createX(stockAction, previousStockAction, p2StockAction, p3StockAction);
 			svmData.addRecord(x, y);
 		}
@@ -111,17 +111,17 @@ function getNearbyStockAction(stockAction: StockAction, allPreviousStockActions:
 	} 
 	let date = stockAction.getDate();
 	let nearbyStockAction: StockAction = null;
-	if (!stockAction.price) {
+	if (!stockAction.price || !date) {
 		return null;
 	}
 	let direction = isForward ? 1 : -1;
 	let i = 0;
-	while (!nearbyStockAction && i < 10) {
+	while (!nearbyStockAction && i < 5) {
 		i++;
 
 		let candidateDate = new Date(+date + (i * oneDay * direction));
 		let candidate = StockAction.findStockActionForSymbolAndDate(stockAction.stock.symbol, candidateDate, allPreviousStockActions);
-		if (candidate && candidate.price && candidate.price !== stockAction.price) {
+		if (candidate && candidate.price && candidate.price !== stockAction.price && !isWeekend(candidate.getDate())) {
 			nearbyStockAction = candidate;
 		}
 
@@ -141,9 +141,9 @@ function createX(stockAction: StockAction, previousStockAction: StockAction, p2S
 	let d2 = stockAction.daySentiments[2].totalSentiment;
 	let d3 = stockAction.daySentiments[3].totalSentiment;
 
-	x.push(changeInPrice);
-	x.push(changeInP2Price);
-	x.push(changeInP3Price);
+	//x.push(changeInPrice);
+	//x.push(changeInP2Price);
+	//x.push(changeInP3Price);
 
 	x.push(change(d0, d1));
 	x.push(change(d1, d2));
@@ -154,9 +154,9 @@ function createX(stockAction: StockAction, previousStockAction: StockAction, p2S
 	d2 = stockAction.daySentiments[2].numTweets;
 	d3 = stockAction.daySentiments[3].numTweets;
 	
-	x.push(change(d0, d1));
-	x.push(change(d1, d2));
-	x.push(change(d2, d3));
+	//x.push(change(d0, d1));
+	//x.push(change(d1, d2));
+	//x.push(change(d2, d3));
 
 	return x;
 }

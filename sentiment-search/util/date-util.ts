@@ -48,3 +48,10 @@ export function getUntilDate(day: Date): string {
     var tomorrow = new Date(+day + oneDay)
     return formatDate(tomorrow);
 }
+
+export function isWeekend(date:Date) {
+    var day = date.getDay();
+    var isWeekend = (day == 6) || (day == 0);
+
+    return isWeekend;
+};
