@@ -1,5 +1,6 @@
 import * as fs from 'fs';
 import {oneDay, formatDate, isWeekend} from '../sentiment-search/util/date-util';
+import {Distribution, calculateBuyPrice, calculateMeanVarianceAndDeviation} from '../sentiment-search/util/math-util';
 import {FileUtil} from '../shared/util/file-util';
 import {StockAction, Action} from '../sentiment-search/twitter/day-sentiment';
 import {SvmData} from './svm-data.model';
@@ -61,6 +62,7 @@ function gatherPreviousStockActions(): StockAction[] {
 	});
 	return stockActions;
 }
+
 function formatSvmData(allPreviousStockActions: StockAction[], priceThreshold: number): SvmData {
 	let svmData = new SvmData();
 	allPreviousStockActions.forEach(stockAction => {
@@ -86,8 +88,15 @@ function formatSvmData(allPreviousStockActions: StockAction[], priceThreshold: n
 
 		if (isValidSVmItem) {
 			const increasePercent = ((nextStockAction.price - stockAction.price) / stockAction.price) * 100;
+			let d0 = stockAction.daySentiments[0].totalSentiment;
+			let d1 = stockAction.daySentiments[1].totalSentiment;
+			let d2 = stockAction.daySentiments[2].totalSentiment;
+			let d3 = stockAction.daySentiments[3].totalSentiment;
 
-			let y = increasePercent > priceThreshold ? 1 : -1;
+			let distribution = calculateMeanVarianceAndDeviation([d1, d2, d3]);
+			let buyPrice = calculateBuyPrice(distribution);
+			let y = increasePercent > priceThreshold && d0 > buyPrice ? 1 : -1;
+
 			debug(`${stockAction.stock.symbol}: ${nextStockAction.price} on ${formatDate(nextStockAction.getDate())}, ${stockAction.price} on ${formatDate(date)} - Increase Percent: ${increasePercent}`)
 			let x = createX(stockAction, previousStockAction, p2StockAction, p3StockAction);
 			svmData.addRecord(x, y);
@@ -141,13 +150,19 @@ function createX(stockAction: StockAction, previousStockAction: StockAction, p2S
 	let d2 = stockAction.daySentiments[2].totalSentiment;
 	let d3 = stockAction.daySentiments[3].totalSentiment;
 
-	//x.push(changeInPrice);
-	//x.push(changeInP2Price);
-	//x.push(changeInP3Price);
+	x.push(changeInPrice);
+	x.push(changeInP2Price);
+	x.push(changeInP3Price);
 
-	x.push(change(d0, d1));
-	x.push(change(d1, d2));
-	x.push(change(d2, d3));
+	//x.push(change(d0, d1));
+	//x.push(change(d1, d2));
+	//x.push(change(d2, d3));
+	let distribution = calculateMeanVarianceAndDeviation([d1, d2, d3]);
+	let buyPrice = calculateBuyPrice(distribution);
+	x.push(change(d0, buyPrice));
+	distribution = calculateMeanVarianceAndDeviation([d2, d3]);
+	buyPrice = calculateBuyPrice(distribution);
+	x.push(change(d1, buyPrice));
 
 	d0 = stockAction.daySentiments[0].numTweets;
 	d1 = stockAction.daySentiments[1].numTweets;

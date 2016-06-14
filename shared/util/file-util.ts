@@ -10,10 +10,11 @@ let userHome = process.env[(process.platform == 'win32') ? 'USERPROFILE' : 'HOME
 let formattedDate = formatDate(today);
 export class FileUtil {
     static resultsFile: string = path.join(userHome, 'results.json');
-    static resultsFileDate: string = path.join(userHome, `results-${formattedDate}.json`)
+    static resultsFileDate: string = path.join(userHome, `results-${formattedDate}.json`);
     static buyFile: string = path.join(userHome, 'buy.json');
     static sellStatsFile: string = path.join(userHome, `sell-stats-${hashCode(username)}.json`);
     static svmFile: string = path.join(userHome, 'svm.json');
+    static earningsFileDate: string = path.join(userHome, `earnings-${formattedDate}.json`);
     static lastResultsFiles: string[] = collectLast45ResultFiles();
 }
 

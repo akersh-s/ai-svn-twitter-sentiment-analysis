@@ -24,6 +24,7 @@
     "JSONStream": "^1.1.1",
     "async": "^2.0.0-rc.3",
     "form-data": "^1.0.0-rc4",
+    "google-finance": "^0.1.4",
     "machine_learning": "0.0.8",
     "request": "^2.72.0",
     "robinhood": "^0.3.1",

@@ -1,10 +1,13 @@
 import * as path from 'path';
 import * as fs from 'fs';
+import * as yargs from 'yargs';
 import {FileUtil} from '../shared/util/file-util';
 import {StockAction, Action, DaySentiment} from './twitter/day-sentiment';
 import {Stock} from './stock.model';
 import {runSentiment, SvmResult} from '../svm';
 import {debug} from './util/log-util';
+import {determineHighestEarners, StockClosePercent} from '../earnings';
+let argv = yargs.argv;
 function processResults() {
     if (!fs.existsSync(FileUtil.resultsFile)) {
         console.log('results.json does not exist! please run ts-node sentiment-search first.');
@@ -31,7 +34,7 @@ function processResults() {
     }).sort((a, b) => {
         return b.percentChange - a.percentChange;
     });
-    let buys = [];
+    let buys:string[] = [];
     if (buyResults.length === 0) {
         console.log('Do Nothing');
     }
@@ -47,12 +50,12 @@ function processResults() {
     }
     fs.writeFileSync(FileUtil.buyFile, JSON.stringify(buys, null, 4), 'utf-8');
     let resultsPriceThreshold;
-    let svmResults:SvmResult[] = [];
+    let svmResults: SvmResult[] = [];
     [2, 1, 0.50, 0.25, 0].forEach(priceThreshold => {
         if (svmResults.length < 3) {
             resultsPriceThreshold = priceThreshold;
-            svmResults = runSentiment(results, priceThreshold);    
-            debug(`Price Threshold: ${resultsPriceThreshold}, Results Length: ${svmResults.length}`);    
+            svmResults = runSentiment(results, priceThreshold);
+            debug(`Price Threshold: ${resultsPriceThreshold}, Results Length: ${svmResults.length}`);
         }
     });
     buys = svmResults.map(s => {
@@ -60,9 +63,18 @@ function processResults() {
     });
     if (buys.length > 0) {
         fs.writeFileSync(FileUtil.buyFile, JSON.stringify(buys, null, 4), 'utf-8');
+        if (argv.past) {
+            determineHighestEarners().then((earnings: StockClosePercent[]) => {
+                let totalPercent = 0;
+                buys.forEach(buy => {
+                    totalPercent += StockClosePercent.findEarning(earnings, buy);
+                });
+                let earningPercent = totalPercent / buys.length;
+                console.log(`Average Earning Percent: ${earningPercent}`);
+            });
+        }
     }
-    
-    
+
 }
 processResults();
 
