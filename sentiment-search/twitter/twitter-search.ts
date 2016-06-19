@@ -1,5 +1,5 @@
 import {Stock} from '../stock.model';
-import {formatDate, getUntilDate} from '../util/date-util';
+import {formatDate, getUntilDate, getLast3Days, getOldestDate} from '../util/date-util';
 import {debug} from '../util/log-util';
 import {SearchParams, SearchResult, Status} from './search.model';
 import {DaySentiment} from './day-sentiment';
@@ -8,58 +8,70 @@ import {Twitter} from './twitter-api/index.js';
 import * as fs from 'fs';
 import * as path from 'path';
 
+let last3Days = getLast3Days();
+let oldestDate = getOldestDate(last3Days);
 let config = JSON.parse(fs.readFileSync(__dirname + '/twitter-config.json', 'utf-8'));
 export class TwitterSearch {
     twitter: Twitter;
+    cache: SentimentCacheItem[];
+    cacheFilled: boolean;
+
     constructor(private stock: Stock) {
         this.twitter = new Twitter(config);
-
+        this.cache = [];
+        this.cacheFilled = false;
     }
 
-    getTweets(date: Date, daySentiment: DaySentiment, cb:(err, daySentiment:DaySentiment) => any) {
-        this.get100(date, daySentiment, cb);
+    async getTweets(daySentiment: DaySentiment): Promise<DaySentiment> {
+        if (!this.cacheFilled) {
+            await this.get100(daySentiment);
+            this.cacheFilled = true;
+        }
+        let formattedDate = formatDate(daySentiment.day);
+        let tweetSentiments = this.cache.filter(c => {
+            return formatDate(c.date) === formattedDate && c.sentiment !== 0;
+        });
+        tweetSentiments.forEach(t => {
+            daySentiment.addTweetSentiment(t.sentiment);
+        });
+        return daySentiment;
     }
 
-    private get100(day: Date, daySentiment: DaySentiment, cb: (err, daySentiment:DaySentiment) => any, prevStatuses?, maxId?: string) {
+    private get100(daySentiment: DaySentiment, maxId?: string):Promise<DaySentiment> {
         let q = this.stock.q;
-        let untilDate = getUntilDate(day);
+        let untilDate = getUntilDate(oldestDate);
         
-        debug('Doing search with maxId ' + maxId + ' for date ' + formatDate(day));
-        setTimeout(() => {
-            this.twitter.get('search/tweets', new SearchParams(q, untilDate, maxId).format(), (err: Error, tweets: SearchResult) => {
-                if (err) {
-                    cb(err, null);    
-                }
-                
-                var containsYesterdaysTweets = false;
-                let statuses: Status[] = tweets.statuses || [];
-                debug('Search completed. Results: ' + statuses.length);
-                statuses.forEach((status) => {
-                    let date = new Date(status.created_at);
-                    if (date.getDate() === day.getDate()) {
+        debug('Doing search with maxId ' + maxId + ' for date ' + formatDate(daySentiment.day));
+        return new Promise<DaySentiment>((resolve, reject) => {
+            setTimeout(() => {
+                this.twitter.get('search/tweets', new SearchParams(q, untilDate, maxId).format(), (err: Error, tweets: SearchResult) => {
+                    if (err) {
+                        debug(err);
+                        return resolve(daySentiment);
+                    }
+                    
+                    let statuses: Status[] = tweets.statuses || [];
+                    debug('Search completed. Results: ' + statuses.length);
+                    statuses.forEach((status) => {
+                        let date = new Date(status.created_at);
                         let s:number = sentiment(status.text).score;
-                        if (s !== 0) {
-                            daySentiment.addTweetSentiment(s);
-                        }
+                        this.cache.push(new SentimentCacheItem(date, s));
+                    });
+
+                    var nextId:string = null;
+                    if (tweets.search_metadata && tweets.search_metadata.next_results) {
+                        nextId = this.parseNextId(tweets.search_metadata.next_results);
+                    }
+                    if (statuses.length > 0 && nextId) {
+                        this.get100(daySentiment, nextId).then((daySentiment => {
+                            resolve(daySentiment);
+                        }));
                     } else {
-                        containsYesterdaysTweets = true;
+                        resolve(daySentiment);
                     }
                 });
-
-                if (prevStatuses) {
-                    statuses = prevStatuses.concat(statuses);
-                }
-                var nextId:string = null;
-                if (tweets.search_metadata && tweets.search_metadata.next_results) {
-                    nextId = this.parseNextId(tweets.search_metadata.next_results);
-                }
-                if (statuses.length > 0 && nextId && !containsYesterdaysTweets) {
-                    this.get100(day, daySentiment, cb, statuses, nextId);
-                } else {
-                    cb(null, daySentiment);
-                }
-            });
-        }, 5 * 1001); //Stay in the Allowed Number of calls.
+            }, 5 * 1001); //Stay in the Allowed Number of calls.
+        });
     }
 
     parseNextId(nextResults: string): string {
@@ -76,4 +88,8 @@ export class TwitterSearch {
         });
         return nextId;
     }
+}
+
+class SentimentCacheItem {
+    constructor(public date: Date, public sentiment: number) {}
 }

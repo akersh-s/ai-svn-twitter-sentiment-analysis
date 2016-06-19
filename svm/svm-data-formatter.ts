@@ -150,10 +150,14 @@ function createX(stockAction: StockAction, previousStockAction: StockAction, p2S
 	let d2 = stockAction.daySentiments[2].totalSentiment;
 	let d3 = stockAction.daySentiments[3].totalSentiment;
 
-	x.push(changeInPrice);
-	x.push(changeInP2Price);
-	x.push(changeInP3Price);
+	//x.push(changeInPrice);
+	//x.push(changeInP2Price);
+	//x.push(changeInP3Price);
 
+	//x.push(d0);
+	//x.push(d1);
+	//x.push(d2);
+	//x.push(d3);
 	//x.push(change(d0, d1));
 	//x.push(change(d1, d2));
 	//x.push(change(d2, d3));
@@ -162,7 +166,7 @@ function createX(stockAction: StockAction, previousStockAction: StockAction, p2S
 	x.push(change(d0, buyPrice));
 	distribution = calculateMeanVarianceAndDeviation([d2, d3]);
 	buyPrice = calculateBuyPrice(distribution);
-	x.push(change(d1, buyPrice));
+	//x.push(change(d1, buyPrice));
 
 	d0 = stockAction.daySentiments[0].numTweets;
 	d1 = stockAction.daySentiments[1].numTweets;

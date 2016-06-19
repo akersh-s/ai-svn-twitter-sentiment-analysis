@@ -49,10 +49,7 @@ export function determineActionForStock(stock: Stock, cb: Function) {
                     daySentiment.numTweets += dayData.numTweets;
                     return scrapeDone(null, daySentiment);
                 }
-                twitter.getTweets(day, daySentiment, (err, daySentiment: DaySentiment) => {
-                    if (err) {
-                        return scrapeDone(err);
-                    }
+                twitter.getTweets(daySentiment).then(daySentiment => {
                     data[formattedDate] = daySentiment;
                     debug(`Writing ${stockCacheName}`);
                     fs.writeFileSync(stockCacheName, JSON.stringify(data, null, 4), 'utf-8');

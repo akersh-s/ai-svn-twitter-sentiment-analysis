@@ -49,6 +49,14 @@ export function getUntilDate(day: Date): string {
     return formatDate(tomorrow);
 }
 
+export function getOldestDate(dates: Date[]): Date {
+    let oldestDateMs: number = Infinity;
+    dates.forEach(d => {
+        oldestDateMs = Math.min(oldestDateMs, +d);
+    });
+    return new Date(oldestDateMs);
+}
+
 export function isWeekend(date:Date) {
     var day = date.getDay();
     var isWeekend = (day == 6) || (day == 0);

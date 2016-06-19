@@ -87,7 +87,7 @@ export class StockTwits {
                 headers: this.headers
             });
 
-            this.getMoreTwits(streamId, dataId, minTwitId * 100, [], cb);
+            this.getMoreTwits(streamId, dataId, minTwitId + 10, [], cb);
         });
     }
 
