@@ -70,7 +70,7 @@ export class TwitterSearch {
                         resolve(daySentiment);
                     }
                 });
-            }, 5 * 1001); //Stay in the Allowed Number of calls.
+            }, 2100); //Stay in the Allowed Number of calls.
         });
     }
 
