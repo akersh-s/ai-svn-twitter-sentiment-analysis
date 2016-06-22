@@ -6,8 +6,8 @@ import * as path from 'path';
 import {FileUtil} from '../shared/util/file-util';
 import {formatDate, yesterday, today, getDaysAgo} from '../shared/util/date-util';
 
-export async function determineHighestEarners(): Promise<StockClosePercent[]> {
-    if (fs.existsSync(FileUtil.earningsFileDate)) {
+export async function determineHighestEarners(stocks: string[]): Promise<StockClosePercent[]> {
+    /*if (fs.existsSync(FileUtil.earningsFileDate)) {
         return new Promise<StockClosePercent[]>((resolve, reject) => {
             let results = fs.readFile(FileUtil.earningsFileDate, 'utf-8', (err, data) => {
                 if (err) return reject(err);
@@ -16,12 +16,13 @@ export async function determineHighestEarners(): Promise<StockClosePercent[]> {
                 resolve(cachedStockClosePercents);
             })
         });
-    }
-    let stocksFile = fs.readFileSync(path.join(__dirname, '..', 'sentiment-search', 'stocks'), 'utf-8');
-    let stocks = stocksFile.trim().split(/[\n\r]+/g).map(line => {
+    }*/
+    let stocksFile = fs.readFileSync(path.join(__dirname, '..', 'sentiment', 'stocks'), 'utf-8');
+    /*let stocks = stocksFile.trim().split(/[\n\r]+/g).map(line => {
         return line.split(/\s/)[0].replace(/\$/, '');
-    });
+    });*/
     let i = 0;
+    
     let stockClosePercents:StockClosePercent[] = [];
     while (i < stocks.length) {
         try {

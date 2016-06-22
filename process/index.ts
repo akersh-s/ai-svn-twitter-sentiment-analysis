@@ -22,7 +22,7 @@ function processResults() {
 
     let resultsPriceThreshold;
     let svmResults: SvmResult[] = [];
-    [2, 1, 0.50, 0.25, 0].forEach(priceThreshold => {
+    [].forEach(priceThreshold => {
         if (svmResults.length < 3) {
             resultsPriceThreshold = priceThreshold;
             svmResults = runSentiment(results, priceThreshold);
@@ -32,10 +32,40 @@ function processResults() {
     let buys = svmResults.map(s => {
         return s.prediction.symbol.replace(/\$/, '');
     });
+    buys = [
+    "AG",
+    "BAC",
+    "BCS",
+    "CHK",
+    "CS",
+    "DB",
+    "EMES",
+    "ETE",
+    "F",
+    "FCX",
+    "FIT",
+    "JCP",
+    "KBH",
+    "LL",
+    "MRO",
+    "NOK",
+    "P",
+    "RAD",
+    "RBS",
+    "RIG",
+    "SQ",
+    "SWN",
+    "TCK",
+    "TK",
+    "VALE",
+    "WLL",
+    "WTW",
+    "YELP"
+];
     if (buys.length > 0) {
         fs.writeFileSync(FileUtil.buyFile, JSON.stringify(buys, null, 4), 'utf-8');
         if (argv.past) {
-            determineHighestEarners().then((earnings: StockClosePercent[]) => {
+            determineHighestEarners(buys).then((earnings: StockClosePercent[]) => {
                 let totalPercent = 0;
                 buys.forEach(buy => {
                     totalPercent += StockClosePercent.findEarning(earnings, buy);
