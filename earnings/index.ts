@@ -1,8 +1,10 @@
 let googleFinance = require('google-finance');
+
 import * as fs from 'fs';
 import * as path from 'path';
+
 import {FileUtil} from '../shared/util/file-util';
-import {formatDate, yesterday, today, getDaysAgo} from '../sentiment-search/util/date-util';
+import {formatDate, yesterday, today, getDaysAgo} from '../shared/util/date-util';
 
 export async function determineHighestEarners(): Promise<StockClosePercent[]> {
     if (fs.existsSync(FileUtil.earningsFileDate)) {

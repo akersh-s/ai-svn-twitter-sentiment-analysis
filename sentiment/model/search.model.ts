@@ -1,4 +1,4 @@
-import {debug} from '../util/log-util'
+import {debug} from '../../shared/util/log-util'
 export class SearchParams {
     lang: string = 'en';
     count: number = 100;

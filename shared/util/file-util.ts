@@ -2,7 +2,7 @@ import * as path from 'path';
 import * as yargs from 'yargs';
 import * as fs from 'fs';
 
-import {formatDate, today, getDaysAgo, oneDay} from '../../sentiment-search/util/date-util';
+import {formatDate, today, getDaysAgo, oneDay} from './date-util';
 
 let argv = yargs.argv;
 let username = argv.username;
@@ -41,8 +41,7 @@ function collectLast45ResultFiles(): string[] {
             allResultFiles.push(path.join(userHome, f));
         }
     });
-    
-    console.log(allResultFiles);
+
     return allResultFiles;
 }
 

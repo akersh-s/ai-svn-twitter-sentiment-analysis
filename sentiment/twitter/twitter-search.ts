@@ -1,15 +1,15 @@
-import {Stock} from '../stock.model';
-import {formatDate, getUntilDate, getLast3Days, getOldestDate} from '../util/date-util';
-import {debug} from '../util/log-util';
-import {SearchParams, SearchResult, Status} from './search.model';
-import {DaySentiment} from './day-sentiment';
-import * as sentiment from 'sentiment';
-import {Twitter} from './twitter-api/index.js';
 import * as fs from 'fs';
 import * as path from 'path';
+import * as sentiment from 'sentiment';
 
-let last3Days = getLast3Days();
-let oldestDate = getOldestDate(last3Days);
+import {Stock} from '../model/stock.model';
+import {formatDate, getUntilDate, getLast3Days, getOldestDate} from '../../shared/util/date-util';
+import {debug} from '../../shared/util/log-util';
+import {SearchParams, SearchResult, Status} from '../model/search.model';
+import {DaySentiment} from '../model/day-sentiment.model';
+import {Twitter} from './twitter-api/index.js';
+
+
 let config = JSON.parse(fs.readFileSync(__dirname + '/twitter-config.json', 'utf-8'));
 export class TwitterSearch {
     twitter: Twitter;
@@ -39,7 +39,7 @@ export class TwitterSearch {
 
     private get100(daySentiment: DaySentiment, maxId?: string):Promise<DaySentiment> {
         let q = this.stock.q;
-        let untilDate = getUntilDate(oldestDate);
+        let untilDate = getUntilDate(daySentiment.day);
         
         debug('Doing search with maxId ' + maxId + ' for date ' + formatDate(daySentiment.day));
         return new Promise<DaySentiment>((resolve, reject) => {

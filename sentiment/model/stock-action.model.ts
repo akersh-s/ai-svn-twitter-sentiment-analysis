@@ -1,8 +1,9 @@
-import {Action, DaySentiment} from './twitter/day-sentiment';
-import {formatDate, today} from './util/date-util';
+import {DaySentiment} from './day-sentiment.model';
+import {Action} from './action.enum';
+import {formatDate, today} from '../../shared/util/date-util';
 import {Stock} from './stock.model';
-import {Robinhood, QuoteDataResultBody, QuoteDataResult} from '../shared/robinhood.api';
-import {calculateMeanVarianceAndDeviation, calculateBuyPrice, calculateSellPrice, calcIncreasePercent} from './util/math-util';
+import {Robinhood, QuoteDataResultBody, QuoteDataResult} from '../../shared/robinhood.api';
+import {calculateMeanVarianceAndDeviation, calculateBuyPrice, calculateSellPrice, calcIncreasePercent} from '../../shared/util/math-util';
 export class StockAction {
     public price: number;
     private cachedDate: Date;
