@@ -22,7 +22,7 @@ function processResults() {
 
     let resultsPriceThreshold;
     let svmResults: SvmResult[] = [];
-    [].forEach(priceThreshold => {
+    [2, 1, 0.25].forEach(priceThreshold => {
         if (svmResults.length < 3) {
             resultsPriceThreshold = priceThreshold;
             svmResults = runSentiment(results, priceThreshold);
