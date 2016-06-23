@@ -2,8 +2,8 @@ rm -rf ~/results.json
 rm -rf ~/svm.json
 rm -rf ~/buy.json
 
-today=`date`
-
+#today=`date`
+today='06/22/2016'
 tsc --p ./
 sudo cp -R sentiment/ build/sentiment/
 
