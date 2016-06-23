@@ -8,7 +8,7 @@ import {Prediction} from './prediction.model';
 
 import * as async from 'async';
 let ml = require('machine_learning');
-export function runSentiment(daySentiments: DaySentiment[], priceThreshold: number): SvmResult[] {
+export function runSentiment(daySentiments: DaySentiment[], priceThreshold: number, C: number, tol: number, alpha_tol: number, c: number, d: number): SvmResult[] {
     let svmData = getSvmData(priceThreshold);
     let predictions: Prediction[] = getPredictions(daySentiments);
     let normalized = normalize(svmData.x, predictions);
@@ -18,12 +18,12 @@ export function runSentiment(daySentiments: DaySentiment[], priceThreshold: numb
         y: svmData.y
     });
     svm.train({
-        C: 1, // default : 1.0. C in SVM.
-        tol: 1e-2, // default : 1e-4. Higher tolerance --> Higher precision
-        max_passes: 8, // default : 20. Higher max_passes --> Higher precision
-        alpha_tol: 1e-3, // default : 1e-5. Higher alpha_tolerance --> Higher precision
+        C: C, // default : 1.0. C in SVM.
+        tol: tol, // default : 1e-4. Higher tolerance --> Higher precision
+        max_passes: 20, // default : 20. Higher max_passes --> Higher precision
+        alpha_tol: alpha_tol, // default : 1e-5. Higher alpha_tolerance --> Higher precision
 
-        kernel: { type: "polynomial", c: 1, d: 5 }
+        kernel: { type: "polynomial", c: c, d: d }
         //kernel: { type: "gaussian", sigma: 1e5 }
         //kernel: {type : "linear"}
     });

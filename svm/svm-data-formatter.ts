@@ -7,7 +7,7 @@ import {Prediction} from './prediction.model';
 import {debug} from '../shared/util/log-util';
 import {Stock} from '../sentiment/model/stock.model';
 import {DaySentiment} from '../sentiment/model/day-sentiment.model';
-
+let L = 3;
 export function getSvmData(priceThreshold: number): SvmData {
 	let allPreviousDaySentiments:DaySentiment[] = gatherPreviousDaySentiments();
 	debug('All Previous Stock Actions Length: ' + allPreviousDaySentiments.length);
@@ -24,14 +24,14 @@ export function getPredictions(todaysDaySentiments: DaySentiment[]): Prediction[
 		let isValid: boolean = !!price;
 		let prevDaySentiment = todaysDaySentiment;
 		let collectedDaySentiments:DaySentiment[] = [prevDaySentiment];
-		for (var i = 0; i < 9; i++) {
+		for (var i = 0; i < L; i++) {
 			prevDaySentiment = getPreviousDaySentiment(prevDaySentiment, allPreviousDaySentiments);
 			if (prevDaySentiment && prevDaySentiment.price) {
 				collectedDaySentiments.push(prevDaySentiment);
 			}
 		}
 
-		isValid = isValid && collectedDaySentiments.length === 10;
+		isValid = isValid && collectedDaySentiments.length === L;
 
 		if (isValid) {
 			let x = createX(collectedDaySentiments);
@@ -59,14 +59,14 @@ function formatSvmData(allPreviousDaySentiments: DaySentiment[], priceThreshold:
 		let isValidSVmItem: boolean = !!price && !isWeekend(date);
 		let prevDaySentiment = daySentiment;
 		let collectedDaySentiments:DaySentiment[] = [prevDaySentiment];
-		for (var i = 0; i < 9; i++) {
+		for (var i = 0; i < L; i++) {
 			prevDaySentiment = getPreviousDaySentiment(prevDaySentiment, allPreviousDaySentiments);
 			if (prevDaySentiment && prevDaySentiment.price) {
 				collectedDaySentiments.push(prevDaySentiment);
 			}
 		}
 
-		isValidSVmItem = isValidSVmItem && collectedDaySentiments.length === 10;
+		isValidSVmItem = isValidSVmItem && collectedDaySentiments.length === L;
 
 		let nextDaySentiment = getNextDaySentiment(daySentiment, allPreviousDaySentiments);
 		isValidSVmItem = isValidSVmItem && !!nextDaySentiment && !!nextDaySentiment.price;
@@ -119,10 +119,12 @@ function getNearbyDaySentiment(daySentiment: DaySentiment, allPreviousDaySentime
 
 function createX(daySentiments: DaySentiment[]): number[] {
 	let x = [];
-	daySentiments.forEach(d => {
-		x.push(d.totalSentiment);
-		x.push(d.price);
-	})
+	for (var i = 0; i < daySentiments.length - 1; i++) {
+		var d1 = daySentiments[i];
+		var d2 = daySentiments[i + 1];
+		x.push(change(d1.totalSentiment, d2.totalSentiment));
+		//x.push(change(d1.price, d2.price));
+	}
 
 	return x;
 }

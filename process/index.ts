@@ -22,10 +22,28 @@ function processResults() {
 
     let resultsPriceThreshold;
     let svmResults: SvmResult[] = [];
-    [2, 1, 0.25].forEach(priceThreshold => {
+    /*[1, 0.25, 2].forEach(priceThreshold => {
+        [1, 1e-2, 2, 1e3, 4].forEach(C => {
+            [1e-4, 1e-3, 1e-2, 1e-1].forEach(tol => {
+                [1e-5, 1e-4, 1e-3, 1e-2].forEach(alpha_tol => {
+                    [1e-3, -5, 3, 1, 0, 1, 3, 5, 1e3].forEach(c => {
+                        [1e-3, -5, 3, 1, 0, 1, 3, 5, 1e3].forEach(d => {
+                            if (svmResults.length < 3) {
+                                resultsPriceThreshold = priceThreshold;
+                                svmResults = runSentiment(results, priceThreshold, C, tol, alpha_tol, c, d);
+                                debug(`Price Threshold: ${resultsPriceThreshold}, Results Length: ${svmResults.length}`);
+                            }
+                        });
+                    });
+                });
+            });
+        });
+
+    });*/
+    [0.25].forEach(priceThreshold => {
         if (svmResults.length < 3) {
             resultsPriceThreshold = priceThreshold;
-            svmResults = runSentiment(results, priceThreshold);
+            svmResults = runSentiment(results, priceThreshold, 1, 1e2, 1e2, 1, 5);
             debug(`Price Threshold: ${resultsPriceThreshold}, Results Length: ${svmResults.length}`);
         }
     });
