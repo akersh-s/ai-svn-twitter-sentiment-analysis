@@ -21,7 +21,12 @@ async function run():Promise<any> {
         let symbol = stocks[i];
         console.log(`Running ${symbol}`);
         let stock = new Stock(symbol, keywords);
-        await getDaySentiment(stock);
+        try {
+            await getDaySentiment(stock);
+        }
+        catch (e) {
+            console.log(`Failed to get Day Sentiment for ${stock}.`);
+        }
     }
     return;
 }
