@@ -32,36 +32,7 @@ function processResults() {
     let buys = svmResults.map(s => {
         return s.prediction.symbol.replace(/\$/, '');
     });
-    buys = [
-    "AG",
-    "BAC",
-    "BCS",
-    "CHK",
-    "CS",
-    "DB",
-    "EMES",
-    "ETE",
-    "F",
-    "FCX",
-    "FIT",
-    "JCP",
-    "KBH",
-    "LL",
-    "MRO",
-    "NOK",
-    "P",
-    "RAD",
-    "RBS",
-    "RIG",
-    "SQ",
-    "SWN",
-    "TCK",
-    "TK",
-    "VALE",
-    "WLL",
-    "WTW",
-    "YELP"
-];
+
     if (buys.length > 0) {
         fs.writeFileSync(FileUtil.buyFile, JSON.stringify(buys, null, 4), 'utf-8');
         if (argv.past) {
