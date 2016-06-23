@@ -4,9 +4,12 @@ rm -rf ~/buy.json
 
 today=`date`
 
+tsc --p ./
+cp -R sentiment/ build/sentiment/
+
 #Do Sentiment Analysis on each symbol from Twitter
 while read symbol keywords; do
-    ts-node sentiment --symbol="$symbol" --keywords="$keywords" --today="$today" --debug
+    time node build/sentiment --symbol="$symbol" --keywords="$keywords" --today="$today" --debug
     echo "ts-node sentiment --symbol=\"$symbol\" --keywords=\"$keywords\" --today=\"$today\" --debug"
 done < "sentiment/stocks"
 
