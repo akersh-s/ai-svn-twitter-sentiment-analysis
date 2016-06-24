@@ -18,10 +18,10 @@ export class StockAction {
             let symbolFormatted = this.stock.symbol.replace(/\$/, '').toUpperCase();
             let robinhood = new Robinhood(null, null);
             robinhood.quote_data(symbolFormatted, (err, response, body: QuoteDataResultBody) => {
-                if (err) reject(err);
+                if (err) return reject(err);
 
-                if (!body.results || body.results.length < 1) {
-                    reject('No results');
+                if (!body || !body.results || body.results.length < 1) {
+                    return reject('No results');
                 }
                 this.quoteDataResult = body.results[0];
                 this.price = parseFloat(this.quoteDataResult.bid_price);

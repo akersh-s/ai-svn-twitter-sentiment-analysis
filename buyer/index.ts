@@ -23,7 +23,7 @@ let robinhood = new Robinhood(username, password);
 robinhood.login(() => {
     robinhood.quote_data(stockSymbolsToBuy.join(','), (err, response, body) => {
         if (err) throw err;
-        console.log(body.results);
+
         let results = body.results;
         let buySymbols: BuySymbol[] = [];
         results.forEach((result) => {

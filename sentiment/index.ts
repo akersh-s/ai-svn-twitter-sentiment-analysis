@@ -8,18 +8,19 @@ import {FileUtil} from '../shared/util/file-util';
 import {DaySentiment} from './model/day-sentiment.model';
 import {today} from '../shared/util/date-util';
 
+let stocks = fs.readFileSync(path.join(__dirname, '/stocks'), 'utf-8').trim().split(/[\n\r]+/g);
+let i = 0;
+
 process.on('uncaughtException', function (err) {
     console.error(err);
-    console.log("Node NOT Exiting...");
+    run();
 });
 
 run();
 async function run():Promise<any> {
-    let stocks = fs.readFileSync(path.join(__dirname, '/stocks'), 'utf-8').trim().split(/[\n\r]+/g);
     let keywords = '';
-    for (var i = 0; i < stocks.length; i++) {
-        let symbol = stocks[i];
-        console.log(`Running ${symbol}`);
+    while (i < stocks.length) {
+        let symbol = stocks[i++];
         let stock = new Stock(symbol, keywords);
         try {
             await getDaySentiment(stock);
