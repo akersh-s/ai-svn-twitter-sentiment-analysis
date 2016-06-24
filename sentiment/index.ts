@@ -12,12 +12,13 @@ let stocks = fs.readFileSync(path.join(__dirname, '/stocks'), 'utf-8').trim().sp
 let i = 0;
 
 process.on('uncaughtException', function (err) {
-    console.error(err);
+    console.log('Error', err);
     run();
 });
 
 run();
 async function run():Promise<any> {
+    console.log('Starting');
     let keywords = '';
     while (i < stocks.length) {
         let symbol = stocks[i++];
