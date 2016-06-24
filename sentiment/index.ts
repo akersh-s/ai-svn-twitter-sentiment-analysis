@@ -17,12 +17,12 @@ process.on('uncaughtException', function (err) {
 });
 
 run();
-async function run():Promise<any> {
+async function run(): Promise<any> {
     console.log('Starting');
     let keywords = '';
     while (i < stocks.length) {
         let symbol = stocks[i++];
-        console.log(`Running ${symbol} (${i + 1 } / ${stocks.length})`);
+        console.log(`Running ${symbol} (${i + 1} / ${stocks.length})`);
         let stock = new Stock(symbol, keywords);
         try {
             await getDaySentiment(stock);
@@ -39,17 +39,24 @@ function getDaySentiment(stock: Stock): Promise<any> {
     let stocktwits = new StockTwits(stock);
     let daySentiment = new DaySentiment(stock, today);
     return new Promise<any>((resolve, reject) => {
-        Promise.all([twitter.getTweets(daySentiment), stocktwits.processStocktwitsSentiment(daySentiment), daySentiment.addPrice()]).then(() => {
-            let results: DaySentiment[] = [];
-            if (fs.existsSync(FileUtil.resultsFile)) {
-                results = JSON.parse(fs.readFileSync(FileUtil.resultsFile, 'utf-8'));
-            }
-            results.push(daySentiment);
-            let daySentimentStingified = JSON.stringify(results, null, 4)
-            fs.writeFileSync(FileUtil.resultsFile, daySentimentStingified, 'utf-8');
-            fs.writeFileSync(FileUtil.resultsFileDate, daySentimentStingified, 'utf-8');
-            resolve(1);
-        });
+        try {
+            Promise.all([twitter.getTweets(daySentiment), stocktwits.processStocktwitsSentiment(daySentiment), daySentiment.addPrice()]).then(() => {
+                let results: DaySentiment[] = [];
+                if (fs.existsSync(FileUtil.resultsFile)) {
+                    results = JSON.parse(fs.readFileSync(FileUtil.resultsFile, 'utf-8'));
+                }
+                results.push(daySentiment);
+                let daySentimentStingified = JSON.stringify(results, null, 4)
+                fs.writeFileSync(FileUtil.resultsFile, daySentimentStingified, 'utf-8');
+                fs.writeFileSync(FileUtil.resultsFileDate, daySentimentStingified, 'utf-8');
+                resolve(1);
+            });
+        }
+        catch (e) {
+            console.log(e);
+            reject();
+        }
+
     });
 }
 
