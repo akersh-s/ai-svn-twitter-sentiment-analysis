@@ -22,7 +22,7 @@ async function run(): Promise<any> {
     let keywords = '';
     while (i < stocks.length) {
         let symbol = stocks[i++];
-        console.log(`Running ${symbol} (${i + 1} / ${stocks.length})`);
+        console.log(`Running ${symbol} (${i} / ${stocks.length})`);
         let stock = new Stock(symbol, keywords);
         try {
             await getDaySentiment(stock);
@@ -50,6 +50,9 @@ function getDaySentiment(stock: Stock): Promise<any> {
                 fs.writeFileSync(FileUtil.resultsFile, daySentimentStingified, 'utf-8');
                 fs.writeFileSync(FileUtil.resultsFileDate, daySentimentStingified, 'utf-8');
                 resolve(1);
+            }, (err) => {
+                console.log(err);
+                resolve(0);
             });
         }
         catch (e) {
