@@ -30,7 +30,8 @@ export function runSentiment(daySentiments: DaySentiment[], priceThreshold: numb
 
     let svmResults: SvmResult[] = [];
     predictions.forEach(prediction => {
-        let p = svm.predict(prediction.data);
+        let p = svm.f(prediction.data);
+        console.log('Result - ' + prediction.symbol, p);
         if (p === 1) {
             console.log(`SVM - Buy ${prediction.symbol}`);
             svmResults.push(new SvmResult(prediction, p));    

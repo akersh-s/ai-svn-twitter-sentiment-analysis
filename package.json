@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "sentiment": "sh sentiment.sh",
+    "oldsentiment": "sh sentiment.sh",
+    "sentiment": "ts-node sentiment --today='06/22/2016' --debug",
     "buy": "sh buy.sh",
     "sell": "sh sell.sh",
     "compile": "tsc --outDir generated sentiment-search/index.ts"
