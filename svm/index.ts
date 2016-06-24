@@ -9,8 +9,10 @@ import {Prediction} from './prediction.model';
 import * as async from 'async';
 let ml = require('machine_learning');
 export function runSentiment(daySentiments: DaySentiment[], priceThreshold: number, C: number, tol: number, alpha_tol: number, c: number, d: number): SvmResult[] {
+    console.log('Day Sentiments: ', JSON.stringify(daySentiments));
     let svmData = getSvmData(priceThreshold);
     let predictions: Prediction[] = getPredictions(daySentiments);
+    console.log('Predictions: ' + predictions.length);
     let normalized = normalize(svmData.x, predictions);
     predictions = normalized.predictions;
     let svm = new ml.SVM({

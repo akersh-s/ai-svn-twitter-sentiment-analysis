@@ -30,7 +30,7 @@ export function getPredictions(todaysDaySentiments: DaySentiment[]): Prediction[
 				collectedDaySentiments.push(prevDaySentiment);
 			}
 		}
-
+		console.log(collectedDaySentiments.length);
 		isValid = isValid && collectedDaySentiments.length === L;
 
 		if (isValid) {
@@ -59,8 +59,11 @@ function formatSvmData(allPreviousDaySentiments: DaySentiment[], priceThreshold:
 		let isValidSVmItem: boolean = !!price && !isWeekend(date);
 		let prevDaySentiment = daySentiment;
 		let collectedDaySentiments:DaySentiment[] = [prevDaySentiment];
+		let thisPreviousDaySentiments = allPreviousDaySentiments.filter(d => {
+			return d.stock.symbol === daySentiment.stock.symbol;
+		});
 		for (var i = 0; i < L; i++) {
-			prevDaySentiment = getPreviousDaySentiment(prevDaySentiment, allPreviousDaySentiments);
+			prevDaySentiment = getPreviousDaySentiment(prevDaySentiment, thisPreviousDaySentiments);
 			if (prevDaySentiment && prevDaySentiment.price) {
 				collectedDaySentiments.push(prevDaySentiment);
 			}
@@ -68,7 +71,7 @@ function formatSvmData(allPreviousDaySentiments: DaySentiment[], priceThreshold:
 
 		isValidSVmItem = isValidSVmItem && collectedDaySentiments.length === L;
 
-		let nextDaySentiment = getNextDaySentiment(daySentiment, allPreviousDaySentiments);
+		let nextDaySentiment = getNextDaySentiment(daySentiment, thisPreviousDaySentiments);
 		isValidSVmItem = isValidSVmItem && !!nextDaySentiment && !!nextDaySentiment.price;
 
 		if (isValidSVmItem) {

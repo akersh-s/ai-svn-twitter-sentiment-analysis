@@ -3,7 +3,7 @@ rm -rf ~/svm.json
 rm -rf ~/buy.json
 
 #today=`date`
-today='06/22/2016'
+today='06/23/2016'
 
 ts-node sentiment --today="$today" --debug
 
