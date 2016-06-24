@@ -21,6 +21,7 @@ async function run():Promise<any> {
     let keywords = '';
     while (i < stocks.length) {
         let symbol = stocks[i++];
+        console.log(`Running ${symbol} (${i + 1 } / ${stocks.length})`);
         let stock = new Stock(symbol, keywords);
         try {
             await getDaySentiment(stock);
