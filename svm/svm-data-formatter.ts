@@ -30,7 +30,7 @@ export function getPredictions(todaysDaySentiments: DaySentiment[]): Prediction[
 				collectedDaySentiments.push(prevDaySentiment);
 			}
 		}
-		console.log(collectedDaySentiments.length);
+
 		isValid = isValid && collectedDaySentiments.length === L;
 
 		if (isValid) {
