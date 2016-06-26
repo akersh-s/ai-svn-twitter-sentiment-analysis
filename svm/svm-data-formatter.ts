@@ -7,7 +7,7 @@ import {Prediction} from './prediction.model';
 import {debug} from '../shared/util/log-util';
 import {Stock} from '../sentiment/model/stock.model';
 import {DaySentiment} from '../sentiment/model/day-sentiment.model';
-let L = 3;
+let L = 10;
 export function getSvmData(priceThreshold: number): SvmData {
 	let allPreviousDaySentiments:DaySentiment[] = gatherPreviousDaySentiments();
 	debug('All Previous Stock Actions Length: ' + allPreviousDaySentiments.length);
@@ -24,7 +24,7 @@ export function getPredictions(todaysDaySentiments: DaySentiment[]): Prediction[
 		let isValid: boolean = !!price;
 		let prevDaySentiment = todaysDaySentiment;
 		let collectedDaySentiments:DaySentiment[] = [prevDaySentiment];
-		for (var i = 0; i < L; i++) {
+		for (var i = 1; i < L; i++) {
 			prevDaySentiment = getPreviousDaySentiment(prevDaySentiment, allPreviousDaySentiments);
 			if (prevDaySentiment && prevDaySentiment.price) {
 				collectedDaySentiments.push(prevDaySentiment);
@@ -62,7 +62,7 @@ function formatSvmData(allPreviousDaySentiments: DaySentiment[], priceThreshold:
 		let thisPreviousDaySentiments = allPreviousDaySentiments.filter(d => {
 			return d.stock.symbol === daySentiment.stock.symbol;
 		});
-		for (var i = 0; i < L; i++) {
+		for (var i = 1; i < L; i++) {
 			prevDaySentiment = getPreviousDaySentiment(prevDaySentiment, thisPreviousDaySentiments);
 			if (prevDaySentiment && prevDaySentiment.price) {
 				collectedDaySentiments.push(prevDaySentiment);
@@ -79,7 +79,7 @@ function formatSvmData(allPreviousDaySentiments: DaySentiment[], priceThreshold:
 
 			let y = increasePercent > priceThreshold ? 1 : -1;
 
-			debug(`${daySentiment.stock.symbol}: ${nextDaySentiment.price} on ${formatDate(nextDaySentiment.day)}, ${daySentiment.price} on ${formatDate(date)} - Increase Percent: ${increasePercent}`)
+			//debug(`${daySentiment.stock.symbol}: ${nextDaySentiment.price} on ${formatDate(nextDaySentiment.day)}, ${daySentiment.price} on ${formatDate(date)} - Increase Percent: ${increasePercent}`)
 			let x = createX(collectedDaySentiments);
 			svmData.addRecord(x, y);
 		}
@@ -127,7 +127,7 @@ function createX(daySentiments: DaySentiment[]): number[] {
 		var d1 = daySentiments[i];
 		var d2 = daySentiments[i + 1];
 		x.push(change(d1.totalSentiment, d2.totalSentiment));
-		//x.push(change(d1.price, d2.price));
+		x.push(change(d1.price, d2.price));
 	}
 
 	return x;

@@ -40,10 +40,10 @@ function processResults() {
         });
 
     });*/
-    [0.25].forEach(priceThreshold => {
+    [3, 2, 1, 0.25].forEach(priceThreshold => {
         if (svmResults.length < 3) {
             resultsPriceThreshold = priceThreshold;
-            svmResults = runSentiment(results, priceThreshold, 1, 1e2, 1e2, 1, 5);
+            svmResults = runSentiment(results, priceThreshold);
             debug(`Price Threshold: ${resultsPriceThreshold}, Results Length: ${svmResults.length}`);
         }
     });
