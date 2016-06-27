@@ -30,6 +30,7 @@
     "robinhood": "^0.3.1",
     "sentiment": "^1.0.6",
     "stocktwits": "0.0.4",
+    "svm": "^0.1.1",
     "twitter": "^1.2.5",
     "yargs": "^4.6.0"
   }

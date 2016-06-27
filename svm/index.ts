@@ -8,13 +8,17 @@ import {Prediction} from './prediction.model';
 
 import * as async from 'async';
 let ml = require('machine_learning');
+let svm = require('svm');
+
 export function runSentiment(daySentiments: DaySentiment[], priceThreshold: number): SvmResult[] {
-    console.log('Day Sentiments: ', JSON.stringify(daySentiments));
     let svmData = getSvmData(priceThreshold);
     let predictions: Prediction[] = getPredictions(daySentiments);
     console.log('Predictions: ' + predictions.length);
     let normalized = normalize(svmData.x, predictions);
     predictions = normalized.predictions;
+    let svmResults: SvmResult[] = [];
+
+    /*
     let svm = new ml.SVM({
         x: normalized.x,
         y: svmData.y
@@ -31,7 +35,7 @@ export function runSentiment(daySentiments: DaySentiment[], priceThreshold: numb
     };
     svm.train(trainMetadata);
 
-    let svmResults: SvmResult[] = [];
+    
     predictions.forEach(prediction => {
         let p = svm.f(prediction.data);
         console.log('Result - ' + prediction.symbol, p);
@@ -41,8 +45,19 @@ export function runSentiment(daySentiments: DaySentiment[], priceThreshold: numb
             svmResults.push(new SvmResult(prediction, p));    
         }
     });
-    console.log(JSON.stringify(trainMetadata, null, 4))
-    
+    console.log(JSON.stringify(trainMetadata, null, 4))*/
+
+    console.log('Running SVM...');
+    let SVM = new svm.SVM();
+    SVM.train(normalized.x, svmData.y)
+    predictions.forEach(prediction => {
+        let p = SVM.predictOne(prediction.data);
+        console.log('Result - ' + prediction.symbol, p);
+        if (p === 1) {
+            console.log(`SVM - Buy ${prediction.symbol}`);
+            svmResults.push(new SvmResult(prediction, p));    
+        }
+    });
     return svmResults;
 }
 
@@ -50,4 +65,13 @@ export class SvmResult {
     constructor(public prediction: Prediction, public value: number) {
 
     }
+}
+
+function formatData(svmData, normalized): number[][] {
+    var i;
+    let formatted = [];
+    for (i = 0; i < svmData.y; i++) {
+        formatted.push(svmData.y[i], normalized.x[i]);
+    }
+    return formatted;
 }

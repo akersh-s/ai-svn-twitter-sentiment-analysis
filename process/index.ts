@@ -40,7 +40,7 @@ function processResults() {
         });
 
     });*/
-    [3, 2, 1, 0.25].forEach(priceThreshold => {
+    [10, 5, 3, 2, 1, 0.25].forEach(priceThreshold => {
         if (svmResults.length < 3) {
             resultsPriceThreshold = priceThreshold;
             svmResults = runSentiment(results, priceThreshold);

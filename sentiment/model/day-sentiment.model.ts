@@ -84,7 +84,6 @@ export class DaySentiment {
                 foundStockAction = s;
             }
         });
-        
         return foundStockAction;
     }
 }

@@ -7,9 +7,9 @@ import {Prediction} from './prediction.model';
 import {debug} from '../shared/util/log-util';
 import {Stock} from '../sentiment/model/stock.model';
 import {DaySentiment} from '../sentiment/model/day-sentiment.model';
-let L = 10;
+let L = 4;
 export function getSvmData(priceThreshold: number): SvmData {
-	let allPreviousDaySentiments:DaySentiment[] = gatherPreviousDaySentiments();
+	let allPreviousDaySentiments: DaySentiment[] = gatherPreviousDaySentiments();
 	debug('All Previous Stock Actions Length: ' + allPreviousDaySentiments.length);
 	let formattedSvmData = formatSvmData(allPreviousDaySentiments, priceThreshold);
 	debug('formattedSvmData: ' + formattedSvmData.x.length);
@@ -23,9 +23,12 @@ export function getPredictions(todaysDaySentiments: DaySentiment[]): Prediction[
 		let price = todaysDaySentiment.price;
 		let isValid: boolean = !!price;
 		let prevDaySentiment = todaysDaySentiment;
-		let collectedDaySentiments:DaySentiment[] = [prevDaySentiment];
+		let collectedDaySentiments: DaySentiment[] = [prevDaySentiment];
+		let thisPreviousDaySentiments = allPreviousDaySentiments.filter(d => {
+			return d.stock.symbol === todaysDaySentiment.stock.symbol;
+		});
 		for (var i = 1; i < L; i++) {
-			prevDaySentiment = getPreviousDaySentiment(prevDaySentiment, allPreviousDaySentiments);
+			prevDaySentiment = getPreviousDaySentiment(prevDaySentiment, thisPreviousDaySentiments);
 			if (prevDaySentiment && prevDaySentiment.price) {
 				collectedDaySentiments.push(prevDaySentiment);
 			}
@@ -42,7 +45,7 @@ export function getPredictions(todaysDaySentiments: DaySentiment[]): Prediction[
 }
 
 function gatherPreviousDaySentiments(): DaySentiment[] {
-	let daySentiments:DaySentiment[] = [];
+	let daySentiments: DaySentiment[] = [];
 	FileUtil.lastResultsFiles.forEach(f => {
 		let fDaySentiments = DaySentiment.parseArray(JSON.parse(fs.readFileSync(f, 'utf-8')));
 		daySentiments = daySentiments.concat(fDaySentiments);
@@ -58,7 +61,7 @@ function formatSvmData(allPreviousDaySentiments: DaySentiment[], priceThreshold:
 		let price = daySentiment.price;
 		let isValidSVmItem: boolean = !!price && !isWeekend(date);
 		let prevDaySentiment = daySentiment;
-		let collectedDaySentiments:DaySentiment[] = [prevDaySentiment];
+		let collectedDaySentiments: DaySentiment[] = [prevDaySentiment];
 		let thisPreviousDaySentiments = allPreviousDaySentiments.filter(d => {
 			return d.stock.symbol === daySentiment.stock.symbol;
 		});
@@ -78,6 +81,7 @@ function formatSvmData(allPreviousDaySentiments: DaySentiment[], priceThreshold:
 			const increasePercent = ((nextDaySentiment.price - daySentiment.price) / daySentiment.price) * 100;
 
 			let y = increasePercent > priceThreshold ? 1 : -1;
+			//let y = increasePercent;
 
 			//debug(`${daySentiment.stock.symbol}: ${nextDaySentiment.price} on ${formatDate(nextDaySentiment.day)}, ${daySentiment.price} on ${formatDate(date)} - Increase Percent: ${increasePercent}`)
 			let x = createX(collectedDaySentiments);
@@ -99,7 +103,7 @@ function getNextDaySentiment(daySentiment: DaySentiment, allPreviousDaySentiment
 function getNearbyDaySentiment(daySentiment: DaySentiment, allPreviousDaySentiments: DaySentiment[], isForward: boolean): DaySentiment {
 	if (!daySentiment) {
 		return null;
-	} 
+	}
 	let date = daySentiment.day;
 	let nearbyDaySentiment: DaySentiment = null;
 	if (!daySentiment.price || !date) {
@@ -126,9 +130,12 @@ function createX(daySentiments: DaySentiment[]): number[] {
 	for (var i = 0; i < daySentiments.length - 1; i++) {
 		var d1 = daySentiments[i];
 		var d2 = daySentiments[i + 1];
-		x.push(change(d1.totalSentiment, d2.totalSentiment));
+		//x.push(change(d1.totalSentiment, d2.totalSentiment));
 		x.push(change(d1.price, d2.price));
 	}
+	daySentiments.forEach(d => {
+		x.push(d.totalSentiment);
+	});
 
 	return x;
 }
