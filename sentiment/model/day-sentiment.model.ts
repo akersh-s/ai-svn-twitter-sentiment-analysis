@@ -1,11 +1,12 @@
 import {formatDate} from '../../shared/util/date-util'
 import {Stock} from './stock.model';
-import {Robinhood, QuoteDataResultBody, QuoteDataResult} from '../../shared/robinhood.api';
+import {Robinhood, QuoteDataResultBody, QuoteDataResult, FundamentalResponse} from '../../shared/robinhood.api';
 
 export class DaySentiment {
     public totalSentiment: number = 0;
     public numTweets: number = 0;
     public quoteDataResult: QuoteDataResult;
+    public fundamentals: FundamentalResponse;
 
     constructor(public stock: Stock, public day: Date) { }
 
@@ -30,6 +31,7 @@ export class DaySentiment {
         return parseFloat(this.quoteDataResult.bid_price);
     }
 
+    //Adds price and fundamental information
     addPrice(): Promise<number> {
         return new Promise<number>((resolve, reject) => {
             let symbolFormatted = this.stock.symbol.replace(/\$/, '').toUpperCase();
@@ -43,7 +45,16 @@ export class DaySentiment {
                 this.quoteDataResult = body.results[0];
                 let price = parseFloat(this.quoteDataResult.bid_price);
 
-                resolve(price);
+                robinhood.fundamentals(symbolFormatted, (err, response, body: FundamentalResponse) => {
+                    if (err) return reject(err);
+
+                    if (!body) {
+                        return reject('No fundamental results');
+                    }
+
+                    this.fundamentals = body;
+                    resolve(price);
+                })
             });
         });
     }

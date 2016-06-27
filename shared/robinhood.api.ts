@@ -93,6 +93,13 @@ export class Robinhood {
   quote_data(symbol: string, cb: (err, response, body: QuoteDataResultBody) => any) {
     return this.request.get({
       uri: endpoints.quotes,
+      qs: { symbols: symbol.toUpperCase(), statistics: true }
+    }, cb);
+  }
+
+  statistics(symbol: string, cb: (err, response, body) => any) {
+    return this.request.get({
+      uri: 'https://api.robinhood.com/stats/',
       qs: { symbols: symbol.toUpperCase() }
     }, cb);
   }
@@ -129,7 +136,7 @@ export class Robinhood {
     return this.get(endpoints.document_requests, cb);
   }
 
-  fundamentals(symbol: string, cb: (err, response, body) => any) {
+  fundamentals(symbol: string, cb: (err, response, body: FundamentalResponse) => any) {
     return this.get(`${endpoints.fundamentals}${symbol}/`, cb);
   }
 
@@ -195,4 +202,18 @@ export interface QuoteDataResult {
   symbol: string;
   trading_halted: boolean;
   updated_at: string;
+}
+
+export interface FundamentalResponse {
+  open: string;
+  high: string;
+  low: string;
+  volume: string;
+  average_volume: string;
+  high_52_weeks: string;
+  dividend_yield: string;
+  low_52_weeks: string;
+  market_cap: string;
+  pe_ratio: string;
+  description: string;
 }
