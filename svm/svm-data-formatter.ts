@@ -19,6 +19,7 @@ export function getSvmData(priceThreshold: number): SvmData {
 export function getPredictions(todaysDaySentiments: DaySentiment[]): Prediction[] {
 	let allPreviousDaySentiments = gatherPreviousDaySentiments();
 	let predictions = [];
+	console.log(JSON.stringify(todaysDaySentiments));
 	todaysDaySentiments.forEach(todaysDaySentiment => {
 		let price = todaysDaySentiment.price;
 		let isValid: boolean = !!price;
@@ -33,7 +34,6 @@ export function getPredictions(todaysDaySentiments: DaySentiment[]): Prediction[
 				collectedDaySentiments.push(prevDaySentiment);
 			}
 		}
-
 		isValid = isValid && collectedDaySentiments.length === L;
 
 		if (isValid) {

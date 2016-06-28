@@ -60,18 +60,20 @@ export class DaySentiment {
     }
 
     static parseArray(a: any[]): DaySentiment[] {
-        return a.map(result => {
+        let daySentiments: DaySentiment[] = [];
+        a.forEach(result => {
             if (result.daySentiments) {
                 //Legacy with StockActions
                 let stock = new Stock(result.stock.symbol, result.stock.keywords);
-                let d = result.daySentiments[0];
-                let daySentiment = new DaySentiment(stock, new Date(d.day));
-                daySentiment.numTweets = d.numTweets;
-                daySentiment.totalSentiment = d.totalSentiment;
-                daySentiment.quoteDataResult = result.quoteDataResult || {
-                    bid_price: result.price
-                };
-                return daySentiment;
+                result.daySentiments.forEach(d => {
+                    let daySentiment = new DaySentiment(stock, new Date(d.day));
+                    daySentiment.numTweets = d.numTweets;
+                    daySentiment.totalSentiment = d.totalSentiment;
+                    daySentiment.quoteDataResult = result.quoteDataResult || {
+                        bid_price: result.price
+                    };
+                    daySentiments.push(daySentiment);
+                });
             }
             else {
                 let stock = new Stock(result.stock.symbol, result.stock.keywords);
@@ -79,9 +81,10 @@ export class DaySentiment {
                 daySentiment.totalSentiment = result.totalSentiment;
                 daySentiment.numTweets = result.numTweets;
                 daySentiment.quoteDataResult = result.quoteDataResult;
-                return daySentiment;
+                daySentiments.push(daySentiment);
             }
         });
+        return daySentiments;
     }
 
     static findDaySentimentForSymbolAndDate(symbol: string, date: Date, daySentiments: DaySentiment[]): DaySentiment {
