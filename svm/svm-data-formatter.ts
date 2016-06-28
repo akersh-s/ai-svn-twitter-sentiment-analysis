@@ -111,14 +111,16 @@ function getNearbyDaySentiment(daySentiment: DaySentiment, allPreviousDaySentime
 	}
 	let direction = isForward ? 1 : -1;
 	let i = 0;
+
 	while (!nearbyDaySentiment && i < 8) {
 		i++;
 
 		let candidateDate = new Date(+date + (i * oneDay * direction));
-		let candidate = DaySentiment.findDaySentimentForSymbolAndDate(daySentiment.stock.symbol, candidateDate, allPreviousDaySentiments);
-		//console.log((candidate && candidate.price), candidate && candidate.price !== daySentiment.price, candidate && !isWeekend(candidate.day));
-		if (candidate && candidate.price && candidate.price !== daySentiment.price && !isWeekend(candidate.day)) {
-			nearbyDaySentiment = candidate;
+		if (!isWeekend(candidateDate)) {
+			let candidate = DaySentiment.findDaySentimentForSymbolAndDate(daySentiment.stock.symbol, candidateDate, allPreviousDaySentiments);
+			if (candidate && candidate.price && candidate.price !== daySentiment.price) {
+				nearbyDaySentiment = candidate;
+			}
 		}
 
 	}
