@@ -1,6 +1,7 @@
 import * as fs from 'fs';
 import {FileUtil} from '../shared/util/file-util';
-let tHours = 1000 * 60 * 60 * 12; //12 hours 
+import {oneDay} from '../shared/util/date-util';
+let tHours = oneDay * 7; //7 days 
 const sellCurrentPrice = 0.998; //If it drops 0.2% from the highest recorded price, sell the stock.
 export class SellSymbol {
     constructor(public symbol: string, public price: number, public quantity: number, public lastUpdate: Date) {}

@@ -40,7 +40,6 @@ export function getPreviousWorkDay(date: Date): Date {
 }
 
 export function getDaysAgo(n: number): Date {
-    var today = new Date();
     return new Date(+today - (n * oneDay));
 }
 

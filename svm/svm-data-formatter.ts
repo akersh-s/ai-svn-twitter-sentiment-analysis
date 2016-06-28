@@ -1,5 +1,5 @@
 import * as fs from 'fs';
-import {oneDay, formatDate, isWeekend} from '../shared/util/date-util';
+import {oneDay, formatDate, isWeekend, today} from '../shared/util/date-util';
 import {Distribution, calculateBuyPrice, calculateMeanVarianceAndDeviation} from '../shared/util/math-util';
 import {FileUtil} from '../shared/util/file-util';
 import {SvmData} from './svm-data.model';
@@ -19,7 +19,9 @@ export function getSvmData(priceThreshold: number): SvmData {
 export function getPredictions(todaysDaySentiments: DaySentiment[]): Prediction[] {
 	let allPreviousDaySentiments = gatherPreviousDaySentiments();
 	let predictions = [];
-	console.log(JSON.stringify(todaysDaySentiments));
+	todaysDaySentiments = removeDupes(todaysDaySentiments).filter(d => {
+		return formatDate(d.day) === formatDate(today);
+	});
 	todaysDaySentiments.forEach(todaysDaySentiment => {
 		let price = todaysDaySentiment.price;
 		let isValid: boolean = !!price;
@@ -50,7 +52,19 @@ function gatherPreviousDaySentiments(): DaySentiment[] {
 		let fDaySentiments = DaySentiment.parseArray(JSON.parse(fs.readFileSync(f, 'utf-8')));
 		daySentiments = daySentiments.concat(fDaySentiments);
 	});
-	return daySentiments;
+	return removeDupes(daySentiments);
+}
+function removeDupes(daySentiments: DaySentiment[]): DaySentiment[] {
+	let removedDupes: DaySentiment[] = [];
+	daySentiments.forEach(d => {
+		let found = removedDupes.find(dupe => {
+			return dupe.stock.symbol === d.stock.symbol && formatDate(dupe.day) === formatDate(d.day);
+		});
+		if (!found) {
+			removedDupes.push(d);
+		}
+	});
+	return removedDupes;
 }
 
 function formatSvmData(allPreviousDaySentiments: DaySentiment[], priceThreshold: number): SvmData {
@@ -74,14 +88,14 @@ function formatSvmData(allPreviousDaySentiments: DaySentiment[], priceThreshold:
 
 		isValidSVmItem = isValidSVmItem && collectedDaySentiments.length === L;
 
-		let nextDaySentiment = getNextDaySentiment(daySentiment, thisPreviousDaySentiments);
+		//let nextDaySentiment = getNextDaySentiment(daySentiment, thisPreviousDaySentiments);
+		let nextDaySentiment = getDaySentimentInAWeek(daySentiment, thisPreviousDaySentiments);
 		isValidSVmItem = isValidSVmItem && !!nextDaySentiment && !!nextDaySentiment.price;
 
 		if (isValidSVmItem) {
 			const increasePercent = ((nextDaySentiment.price - daySentiment.price) / daySentiment.price) * 100;
 
 			let y = increasePercent > priceThreshold ? 1 : -1;
-			//let y = increasePercent;
 
 			//debug(`${daySentiment.stock.symbol}: ${nextDaySentiment.price} on ${formatDate(nextDaySentiment.day)}, ${daySentiment.price} on ${formatDate(date)} - Increase Percent: ${increasePercent}`)
 			let x = createX(collectedDaySentiments);
@@ -127,12 +141,32 @@ function getNearbyDaySentiment(daySentiment: DaySentiment, allPreviousDaySentime
 	return nearbyDaySentiment;
 }
 
+function getDaySentimentInAWeek(daySentiment: DaySentiment, allPreviousDaySentiments: DaySentiment[]): DaySentiment {
+	if (!daySentiment || !daySentiment.price || !daySentiment.day) {
+		return null;
+	}
+	let weekDaySentiment: DaySentiment = null;
+
+	let i = 6;
+	while (!weekDaySentiment && i < 10) {
+		i++;
+		let candidateDate = new Date(+daySentiment.day + (i * oneDay));
+		if (!isWeekend(candidateDate)) {
+			let candidate = DaySentiment.findDaySentimentForSymbolAndDate(daySentiment.stock.symbol, candidateDate, allPreviousDaySentiments);
+			if (candidate && candidate.price && candidate.price !== daySentiment.price) {
+				weekDaySentiment = candidate;
+			}
+		}
+	}
+	return weekDaySentiment;
+}
+
 function createX(daySentiments: DaySentiment[]): number[] {
 	let x = [];
 	for (var i = 0; i < daySentiments.length - 1; i++) {
 		var d1 = daySentiments[i];
 		var d2 = daySentiments[i + 1];
-		//x.push(change(d1.totalSentiment, d2.totalSentiment));
+		x.push(change(d1.totalSentiment, d2.totalSentiment));
 		x.push(change(d1.price, d2.price));
 	}
 	daySentiments.forEach(d => {

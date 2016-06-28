@@ -30,7 +30,7 @@ export async function determineHighestEarners(stocks: string[]): Promise<StockCl
             stockClosePercents.push(stockClosePercent);
         }
         catch (e) {
-            console.log(stocks[i] + ' failed');
+            console.log(stocks[i] + ' failed:', e);
         }
         i++;
     }
@@ -48,8 +48,8 @@ async function getPriceIncrease(symbol: string): Promise<StockClosePercent> {
     return new Promise<StockClosePercent>((resolve, reject) => {
         googleFinance.historical({
             symbol: symbol,
-            from: formatDate(getDaysAgo(5)),
-            to: formatDate(today)
+            from: formatDate(today),
+            to: formatDate(getDaysAgo(-7))
         }, (err, quotes) => {
             if (err) return reject(err);
             if (quotes.length < 2) {
@@ -57,7 +57,9 @@ async function getPriceIncrease(symbol: string): Promise<StockClosePercent> {
             }
             let historicalQuotes:HistoricalQuote[] = quotes.map(q => new HistoricalQuote(q));
             let todaysQuote = historicalQuotes[historicalQuotes.length - 1];
-            let previousQuote = historicalQuotes[historicalQuotes.length - 2];
+            console.log('todaysQuote', todaysQuote.date, todaysQuote.close);
+            let previousQuote = historicalQuotes[0];
+            console.log('previousQuote', previousQuote.date, previousQuote.close);
             let percent = ((todaysQuote.close - previousQuote.close) / previousQuote.close) * 100;
             resolve(new StockClosePercent(symbol, percent));
         });
