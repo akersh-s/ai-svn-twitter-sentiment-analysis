@@ -13,7 +13,7 @@ import {determineHighestEarners, StockClosePercent} from '../earnings';
 let argv = yargs.argv;
 function processResults() {
     if (!fs.existsSync(FileUtil.resultsFileDate)) {
-        console.log('results.json does not exist! please run ts-node sentiment-search first.');
+        console.log('results.json does not exist! please run ts-node sentiment first.');
         process.exit(-1);
     }
 
@@ -22,7 +22,7 @@ function processResults() {
     let resultsPriceThreshold;
     let svmResults: SvmResult[] = [];
 
-    [5, 4, 3, 2, 1].forEach(priceThreshold => {
+    [2, 1].forEach(priceThreshold => {
         if (svmResults.length < 3) {
             resultsPriceThreshold = priceThreshold;
             svmResults = runSentiment(results, priceThreshold);
