@@ -1,5 +1,5 @@
 import * as fs from 'fs';
-import {oneDay, formatDate, isWeekend, today} from '../shared/util/date-util';
+import {oneDay, formatDate, isWeekend, yesterday} from '../shared/util/date-util';
 import {Distribution, calculateBuyPrice, calculateMeanVarianceAndDeviation} from '../shared/util/math-util';
 import {FileUtil} from '../shared/util/file-util';
 import {SvmData} from './svm-data.model';
@@ -7,7 +7,7 @@ import {Prediction} from './prediction.model';
 import {debug} from '../shared/util/log-util';
 import {Stock} from '../sentiment/model/stock.model';
 import {DaySentiment} from '../sentiment/model/day-sentiment.model';
-let L = 4;
+let L = 10;
 export function getSvmData(priceThreshold: number): SvmData {
 	let allPreviousDaySentiments: DaySentiment[] = gatherPreviousDaySentiments();
 	debug('All Previous Stock Actions Length: ' + allPreviousDaySentiments.length);
@@ -20,7 +20,7 @@ export function getPredictions(todaysDaySentiments: DaySentiment[]): Prediction[
 	let allPreviousDaySentiments = gatherPreviousDaySentiments();
 	let predictions = [];
 	todaysDaySentiments = removeDupes(todaysDaySentiments).filter(d => {
-		return formatDate(d.day) === formatDate(today);
+		return formatDate(d.day) === formatDate(yesterday);
 	});
 	todaysDaySentiments.forEach(todaysDaySentiment => {
 		let price = todaysDaySentiment.price;
@@ -166,8 +166,8 @@ function createX(daySentiments: DaySentiment[]): number[] {
 	for (var i = 0; i < daySentiments.length - 1; i++) {
 		var d1 = daySentiments[i];
 		var d2 = daySentiments[i + 1];
-		//x.push(change(d1.totalSentiment, d2.totalSentiment));
-		//x.push(change(d1.price, d2.price));
+		x.push(change(d1.totalSentiment, d2.totalSentiment));
+		x.push(change(d1.price, d2.price));
 	}
 	daySentiments.forEach(d => {
 		x.push(d.totalSentiment);

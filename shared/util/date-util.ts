@@ -4,10 +4,10 @@ let argv = yargs.argv;
 
 export let oneDay = 1000 * 60 * 60 * 24;
 export let today = argv.today ? new Date(argv.today) : new Date();
-export let yesterday = new Date(+today - oneDay);
+export let yesterday = determinePreviousWorkDay(today);
 export let tomorrow = new Date(+today + oneDay);
 
-debug(`Today: ${formatDate(today)}`);
+debug(`Today: ${formatDate(today)} - Yesterday: ${formatDate(yesterday)}`);
 
 export function formatDate(date: Date, char?: string): string {
     char = char || '-';
@@ -62,3 +62,11 @@ export function isWeekend(date:Date) {
 
     return isWeekend;
 };
+
+function determinePreviousWorkDay(today:Date): Date {
+    let previousDay = new Date(+today - oneDay);
+    while (previousDay.getDay() === 6 || previousDay.getDay() === 0) {
+        previousDay = new Date(+previousDay - oneDay);
+    }
+    return previousDay;
+}
