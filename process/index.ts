@@ -19,14 +19,14 @@ function processResults() {
 
     let results: DaySentiment[] = DaySentiment.parseArray(JSON.parse(fs.readFileSync(FileUtil.resultsFileDate, 'utf-8')));
 
-    let resultsPriceThreshold;
+    let resultAccuracy;
     let svmResults: SvmResult[] = [];
 
-    [2, 1].forEach(priceThreshold => {
+    [5,3,2,1].forEach(a => {
         if (svmResults.length < 3) {
-            resultsPriceThreshold = priceThreshold;
-            svmResults = runSentiment(results, priceThreshold);
-            debug(`Price Threshold: ${resultsPriceThreshold}, Results Length: ${svmResults.length}`);
+            resultAccuracy = a;
+            svmResults = runSentiment(results, a);
+            debug(`Accuracy: ${resultAccuracy}, Results Length: ${svmResults.length}`);
         }
     });
     let buys = svmResults.map(s => {

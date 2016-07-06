@@ -5,6 +5,7 @@ import * as path from 'path';
 
 import {FileUtil} from '../shared/util/file-util';
 import {formatDate, yesterday, today, getDaysAgo} from '../shared/util/date-util';
+import {Variables} from '../shared/variables';
 
 export async function determineHighestEarners(stocks: string[]): Promise<StockClosePercent[]> {
     /*if (fs.existsSync(FileUtil.earningsFileDate)) {
@@ -49,7 +50,7 @@ async function getPriceIncrease(symbol: string): Promise<StockClosePercent> {
         googleFinance.historical({
             symbol: symbol,
             from: formatDate(today),
-            to: formatDate(getDaysAgo(-7))
+            to: formatDate(getDaysAgo(Variables.numDays * -1))
         }, (err, quotes) => {
             if (err) return reject(err);
             if (quotes.length < 2) {

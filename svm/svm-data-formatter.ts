@@ -5,9 +5,10 @@ import {FileUtil} from '../shared/util/file-util';
 import {SvmData} from './svm-data.model';
 import {Prediction} from './prediction.model';
 import {debug} from '../shared/util/log-util';
+import {Variables} from '../shared/variables';
 import {Stock} from '../sentiment/model/stock.model';
 import {DaySentiment} from '../sentiment/model/day-sentiment.model';
-let L = 4;
+
 export function getSvmData(priceThreshold: number): SvmData {
 	let allPreviousDaySentiments: DaySentiment[] = gatherPreviousDaySentiments();
 	debug('All Previous Stock Actions Length: ' + allPreviousDaySentiments.length);
@@ -30,13 +31,13 @@ export function getPredictions(todaysDaySentiments: DaySentiment[]): Prediction[
 		let thisPreviousDaySentiments = allPreviousDaySentiments.filter(d => {
 			return d.stock.symbol === todaysDaySentiment.stock.symbol;
 		});
-		for (var i = 1; i < L; i++) {
+		for (var i = 1; i < Variables.numPreviousDaySentiments; i++) {
 			prevDaySentiment = getPreviousDaySentiment(prevDaySentiment, thisPreviousDaySentiments);
 			if (prevDaySentiment && prevDaySentiment.price) {
 				collectedDaySentiments.push(prevDaySentiment);
 			}
 		}
-		isValid = isValid && collectedDaySentiments.length === L;
+		isValid = isValid && collectedDaySentiments.length === Variables.numPreviousDaySentiments;
 
 		if (isValid) {
 			let x = createX(collectedDaySentiments);
@@ -79,17 +80,16 @@ function formatSvmData(allPreviousDaySentiments: DaySentiment[], priceThreshold:
 		let thisPreviousDaySentiments = allPreviousDaySentiments.filter(d => {
 			return d.stock.symbol === daySentiment.stock.symbol;
 		});
-		for (var i = 1; i < L; i++) {
+		for (var i = 1; i < Variables.numPreviousDaySentiments; i++) {
 			prevDaySentiment = getPreviousDaySentiment(prevDaySentiment, thisPreviousDaySentiments);
 			if (prevDaySentiment && prevDaySentiment.price) {
 				collectedDaySentiments.push(prevDaySentiment);
 			}
 		}
 
-		isValidSVmItem = isValidSVmItem && collectedDaySentiments.length === L;
+		isValidSVmItem = isValidSVmItem && collectedDaySentiments.length === Variables.numPreviousDaySentiments;
 
-		//let nextDaySentiment = getNextDaySentiment(daySentiment, thisPreviousDaySentiments);
-		let nextDaySentiment = getDaySentimentInAWeek(daySentiment, thisPreviousDaySentiments);
+		let nextDaySentiment = getDaySentimentInNDays(Variables.numDays, daySentiment, thisPreviousDaySentiments);
 		isValidSVmItem = isValidSVmItem && !!nextDaySentiment && !!nextDaySentiment.price;
 
 		if (isValidSVmItem) {
@@ -141,14 +141,14 @@ function getNearbyDaySentiment(daySentiment: DaySentiment, allPreviousDaySentime
 	return nearbyDaySentiment;
 }
 
-function getDaySentimentInAWeek(daySentiment: DaySentiment, allPreviousDaySentiments: DaySentiment[]): DaySentiment {
+function getDaySentimentInNDays(n: number, daySentiment: DaySentiment, allPreviousDaySentiments: DaySentiment[]): DaySentiment {
 	if (!daySentiment || !daySentiment.price || !daySentiment.day) {
 		return null;
 	}
 	let weekDaySentiment: DaySentiment = null;
 
 	let i = 6;
-	while (!weekDaySentiment && i < 10) {
+	while (!weekDaySentiment && i < ((n + 3) * 2)) {
 		i++;
 		let candidateDate = new Date(+daySentiment.day + (i * oneDay));
 		if (!isWeekend(candidateDate)) {
