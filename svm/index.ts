@@ -1,6 +1,7 @@
 import * as fs from 'fs';
 import {DaySentiment} from '../sentiment/model/day-sentiment.model';
 import {today} from '../shared/util/date-util';
+import {Variables} from '../shared/variables';
 import {FileUtil} from '../shared/util/file-util';
 import {normalize} from './normalize';
 import {getSvmData, getPredictions} from './svm-data-formatter';
@@ -20,7 +21,7 @@ export function runSentiment(daySentiments: DaySentiment[], priceThreshold: numb
 
     console.log('Running SVM...');
     let SVM = new svm.SVM();
-    SVM.train(normalized.x, svmData.y, { kernel: 'rbf', rbfsigma: 5e-2, C: 0.9 })
+    SVM.train(normalized.x, svmData.y, { kernel: 'rbf', rbfsigma: Variables.rbfsigma, C: Variables.C })
     predictions.forEach(prediction => {
         let p = SVM.predictOne(prediction.data);
         console.log('Result - ' + prediction.symbol, p);

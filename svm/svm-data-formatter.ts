@@ -132,7 +132,8 @@ function getNearbyDaySentiment(daySentiment: DaySentiment, allPreviousDaySentime
 		let candidateDate = new Date(+date + (i * oneDay * direction));
 		if (!isWeekend(candidateDate)) {
 			let candidate = DaySentiment.findDaySentimentForSymbolAndDate(daySentiment.stock.symbol, candidateDate, allPreviousDaySentiments);
-			if (candidate && candidate.price && candidate.price !== daySentiment.price) {
+			const fullfillsFundamentalReq:boolean = Variables.includeFundamentals ? !!candidate.fundamentals : true;
+			if (candidate && candidate.price && candidate.price !== daySentiment.price && fullfillsFundamentalReq) {
 				nearbyDaySentiment = candidate;
 			}
 		}
@@ -153,7 +154,8 @@ function getDaySentimentInNDays(n: number, daySentiment: DaySentiment, allPrevio
 		let candidateDate = new Date(+daySentiment.day + (i * oneDay));
 		if (!isWeekend(candidateDate)) {
 			let candidate = DaySentiment.findDaySentimentForSymbolAndDate(daySentiment.stock.symbol, candidateDate, allPreviousDaySentiments);
-			if (candidate && candidate.price && candidate.price !== daySentiment.price) {
+			const fullfillsFundamentalReq:boolean = Variables.includeFundamentals ? !!candidate.fundamentals : true;
+			if (candidate && candidate.price && candidate.price !== daySentiment.price && fullfillsFundamentalReq) {
 				weekDaySentiment = candidate;
 			}
 		}
@@ -166,13 +168,15 @@ function createX(daySentiments: DaySentiment[]): number[] {
 	for (var i = 0; i < daySentiments.length - 1; i++) {
 		var d1 = daySentiments[i];
 		var d2 = daySentiments[i + 1];
-		//x.push(change(d1.totalSentiment, d2.totalSentiment));
-		//x.push(change(d1.price, d2.price));
+		Variables.includeSentimentChange && x.push(change(d1.totalSentiment, d2.totalSentiment));
+		Variables.includePriceChange && x.push(change(d1.price, d2.price));
+		Variables.includeTimeChange && x.push(change(+d1.day, +d2.day));
 	}
 	daySentiments.forEach(d => {
-		x.push(d.totalSentiment);
-		x.push(d.price);
-		x.push(d.numTweets);
+		Variables.includeSentiment && x.push(d.totalSentiment);
+		Variables.includePrice && x.push(d.price);
+		Variables.includeNumTweets && x.push(d.numTweets);
+		Variables.includeTime && x.push(+d.day);
 	});
 
 	return x;
