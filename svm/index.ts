@@ -11,13 +11,18 @@ import * as async from 'async';
 let ml = require('machine_learning');
 let svm = require('svm');
 
-export function runSentiment(daySentiments: DaySentiment[], priceThreshold: number): SvmResult[] {
-    let svmData = getSvmData(priceThreshold);
+export function runSentiment(daySentiments: DaySentiment[]): SvmResult[] {
+    let svmData = getSvmData();
     let predictions: Prediction[] = getPredictions(daySentiments);
     console.log('Predictions: ' + predictions.length);
     let normalized = normalize(svmData.x, predictions);
     predictions = normalized.predictions;
     let svmResults: SvmResult[] = [];
+
+    if (normalized.x.length === 0|| svmData.y.length === 0 || predictions.length === 0) {
+        console.log('No data to run SVM...');
+        return [];
+    }
 
     console.log('Running SVM...');
     let SVM = new svm.SVM();

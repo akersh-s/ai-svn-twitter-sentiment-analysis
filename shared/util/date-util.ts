@@ -1,13 +1,13 @@
 import * as yargs from 'yargs';
 import {debug} from './log-util';
+import {FileUtil} from './file-util';
 let argv = yargs.argv;
-
+export let today;
+export let yesterday;
+export let tomorrow;
 export let oneDay = 1000 * 60 * 60 * 24;
-export let today = argv.today ? new Date(argv.today) : new Date();
-export let yesterday = new Date(+today - oneDay);
-export let tomorrow = new Date(+today + oneDay);
+setToday(argv.today ? new Date(argv.today) : new Date())
 
-debug(`Today: ${formatDate(today)}`);
 
 export function formatDate(date: Date, char?: string): string {
     char = char || '-';
@@ -62,3 +62,11 @@ export function isWeekend(date:Date) {
 
     return isWeekend;
 };
+
+export function setToday(date: Date):void {
+    today = date;
+    yesterday = new Date(+today - oneDay);
+    tomorrow = new Date(+today + oneDay);
+
+    debug(`Today: ${formatDate(today)}`);
+}

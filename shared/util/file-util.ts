@@ -14,8 +14,22 @@ export class FileUtil {
     static buyFile: string = path.join(userHome, 'buy.json');
     static sellStatsFile: string = path.join(userHome, `sell-stats-${hashCode(username)}.json`);
     static svmFile: string = path.join(userHome, 'svm.json');
+    static bestSearchFile: string = path.join(userHome, 'best-search.json');
     static earningsFileDate: string = path.join(userHome, `earnings-${formattedDate}.json`);
-    static lastResultsFiles: string[] = collectLast45ResultFiles();
+    static lastResultsFiles: string[] = FileUtil.collectLast45ResultFiles();
+    static collectLast45ResultFiles(): string[] {
+        var resultsFileRegex = /^results-\d+-\d+-\d+\.json$/;
+
+        var allResultFiles = [];
+        fs.readdirSync(userHome).forEach(f => {
+            if (resultsFileRegex.test(f) && fileIsLast45Days(f)) {
+                allResultFiles.push(path.join(userHome, f));
+            }
+        });
+
+        return allResultFiles;
+    }
+
 }
 
 function hashCode(s) {
@@ -32,22 +46,10 @@ function hashCode(s) {
     return Math.abs(hash);
 }
 
-function collectLast45ResultFiles(): string[] {
-    var resultsFileRegex = /^results-\d+-\d+-\d+\.json$/;
-
-    var allResultFiles = [];
-    fs.readdirSync(userHome).forEach(f => {
-        if (resultsFileRegex.test(f) && fileIsLast45Days(f)) {
-            allResultFiles.push(path.join(userHome, f));
-        }
-    });
-
-    return allResultFiles;
-}
 
 function fileIsLast45Days(f: string) { //And not same day
     const d45DaysAgo = oneDay * 45;
-     
+
     let fileStart = 'results-';
     let dateParsed = f.substring(f.indexOf(fileStart) + fileStart.length);
     dateParsed = dateParsed.substring(0, dateParsed.indexOf('.')).replace(/-/g, '/');

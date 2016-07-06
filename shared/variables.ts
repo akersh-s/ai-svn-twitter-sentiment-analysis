@@ -1,4 +1,5 @@
 export class Variables {
+    static priceThreshold: number = 3;
     static numDays: number = 1;
     static numPreviousDaySentiments: number = 4;
     static rbfsigma: number = 5e-2;

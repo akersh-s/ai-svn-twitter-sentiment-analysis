@@ -11,7 +11,7 @@ import {debug} from '../shared/util/log-util';
 import {determineHighestEarners, StockClosePercent} from '../earnings';
 
 let argv = yargs.argv;
-function processResults() {
+export function processResults(): Promise<number> {
     if (!fs.existsSync(FileUtil.resultsFileDate)) {
         console.log('results.json does not exist! please run ts-node sentiment first.');
         process.exit(-1);
@@ -19,33 +19,35 @@ function processResults() {
 
     let results: DaySentiment[] = DaySentiment.parseArray(JSON.parse(fs.readFileSync(FileUtil.resultsFileDate, 'utf-8')));
 
-    let resultAccuracy;
     let svmResults: SvmResult[] = [];
 
-    [5,3,2,1].forEach(a => {
-        if (svmResults.length < 3) {
-            resultAccuracy = a;
-            svmResults = runSentiment(results, a);
-            debug(`Accuracy: ${resultAccuracy}, Results Length: ${svmResults.length}`);
-        }
-    });
+    svmResults = runSentiment(results);
+    debug(`Results Length: ${svmResults.length}`);
     let buys = svmResults.map(s => {
         return s.prediction.symbol.replace(/\$/, '');
     });
-
-    if (buys.length > 0) {
-        fs.writeFileSync(FileUtil.buyFile, JSON.stringify(buys, null, 4), 'utf-8');
-        if (argv.past) {
-            determineHighestEarners(buys).then((earnings: StockClosePercent[]) => {
-                let totalPercent = 0;
-                buys.forEach(buy => {
-                    totalPercent += StockClosePercent.findEarning(earnings, buy);
+    return new Promise<number>((resolve, reject) => {
+        if (buys.length > 0) {
+            fs.writeFileSync(FileUtil.buyFile, JSON.stringify(buys, null, 4), 'utf-8');
+            if (1 + 2 === 3) {
+                determineHighestEarners(buys).then((earnings: StockClosePercent[]) => {
+                    let totalPercent = 0;
+                    buys.forEach(buy => {
+                        totalPercent += StockClosePercent.findEarning(earnings, buy);
+                    });
+                    let earningPercent = totalPercent / buys.length;
+                    console.log(`Average Earning Percent: ${earningPercent}`);
+                    resolve(earningPercent);
                 });
-                let earningPercent = totalPercent / buys.length;
-                console.log(`Average Earning Percent: ${earningPercent}`);
-            });
+            }
+            else {
+                resolve(0);
+            }
+        } else {
+            resolve(0);
         }
-    }
+    });
+
 
 }
 processResults();

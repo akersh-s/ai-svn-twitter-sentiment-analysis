@@ -9,10 +9,10 @@ import {Variables} from '../shared/variables';
 import {Stock} from '../sentiment/model/stock.model';
 import {DaySentiment} from '../sentiment/model/day-sentiment.model';
 
-export function getSvmData(priceThreshold: number): SvmData {
+export function getSvmData(): SvmData {
 	let allPreviousDaySentiments: DaySentiment[] = gatherPreviousDaySentiments();
 	debug('All Previous Stock Actions Length: ' + allPreviousDaySentiments.length);
-	let formattedSvmData = formatSvmData(allPreviousDaySentiments, priceThreshold);
+	let formattedSvmData = formatSvmData(allPreviousDaySentiments);
 	debug('formattedSvmData: ' + formattedSvmData.x.length);
 	return formattedSvmData;
 }
@@ -68,7 +68,7 @@ function removeDupes(daySentiments: DaySentiment[]): DaySentiment[] {
 	return removedDupes;
 }
 
-function formatSvmData(allPreviousDaySentiments: DaySentiment[], priceThreshold: number): SvmData {
+function formatSvmData(allPreviousDaySentiments: DaySentiment[]): SvmData {
 	let svmData = new SvmData();
 	allPreviousDaySentiments.forEach(daySentiment => {
 		let svmRecord = [];
@@ -95,7 +95,7 @@ function formatSvmData(allPreviousDaySentiments: DaySentiment[], priceThreshold:
 		if (isValidSVmItem) {
 			const increasePercent = ((nextDaySentiment.price - daySentiment.price) / daySentiment.price) * 100;
 
-			let y = increasePercent > priceThreshold ? 1 : -1;
+			let y = increasePercent > Variables.priceThreshold ? 1 : -1;
 
 			//debug(`${daySentiment.stock.symbol}: ${nextDaySentiment.price} on ${formatDate(nextDaySentiment.day)}, ${daySentiment.price} on ${formatDate(date)} - Increase Percent: ${increasePercent}`)
 			let x = createX(collectedDaySentiments);
@@ -132,7 +132,7 @@ function getNearbyDaySentiment(daySentiment: DaySentiment, allPreviousDaySentime
 		let candidateDate = new Date(+date + (i * oneDay * direction));
 		if (!isWeekend(candidateDate)) {
 			let candidate = DaySentiment.findDaySentimentForSymbolAndDate(daySentiment.stock.symbol, candidateDate, allPreviousDaySentiments);
-			const fullfillsFundamentalReq:boolean = Variables.includeFundamentals ? !!candidate.fundamentals : true;
+			const fullfillsFundamentalReq:boolean = candidate && Variables.includeFundamentals() ? !!candidate.fundamentals : true;
 			if (candidate && candidate.price && candidate.price !== daySentiment.price && fullfillsFundamentalReq) {
 				nearbyDaySentiment = candidate;
 			}
@@ -154,7 +154,7 @@ function getDaySentimentInNDays(n: number, daySentiment: DaySentiment, allPrevio
 		let candidateDate = new Date(+daySentiment.day + (i * oneDay));
 		if (!isWeekend(candidateDate)) {
 			let candidate = DaySentiment.findDaySentimentForSymbolAndDate(daySentiment.stock.symbol, candidateDate, allPreviousDaySentiments);
-			const fullfillsFundamentalReq:boolean = Variables.includeFundamentals ? !!candidate.fundamentals : true;
+			const fullfillsFundamentalReq:boolean = candidate && Variables.includeFundamentals() ? !!candidate.fundamentals : true;
 			if (candidate && candidate.price && candidate.price !== daySentiment.price && fullfillsFundamentalReq) {
 				weekDaySentiment = candidate;
 			}
