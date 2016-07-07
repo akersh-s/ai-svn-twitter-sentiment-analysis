@@ -1,5 +1,5 @@
 import * as fs from 'fs';
-import {oneDay, formatDate, isWeekend, today} from '../shared/util/date-util';
+import {oneDay, formatDate, isWeekend, isSameDay, today, yesterday} from '../shared/util/date-util';
 import {Distribution, calculateBuyPrice, calculateMeanVarianceAndDeviation} from '../shared/util/math-util';
 import {FileUtil} from '../shared/util/file-util';
 import {SvmData} from './svm-data.model';
@@ -21,8 +21,12 @@ export function getPredictions(todaysDaySentiments: DaySentiment[]): Prediction[
 	let allPreviousDaySentiments = gatherPreviousDaySentiments();
 	let predictions = [];
 	todaysDaySentiments = removeDupes(todaysDaySentiments).filter(d => {
-		return formatDate(d.day) === formatDate(today);
+		if (isSameDay(d.day, yesterday) || isSameDay(d.day, today)) {
+			console.log(formatDate(d.day));
+		}
+		return isSameDay(d.day, yesterday);
 	});
+	console.log(todaysDaySentiments.length);
 	todaysDaySentiments.forEach(todaysDaySentiment => {
 		let price = todaysDaySentiment.price;
 		let isValid: boolean = !!price;
@@ -31,12 +35,11 @@ export function getPredictions(todaysDaySentiments: DaySentiment[]): Prediction[
 		let thisPreviousDaySentiments = allPreviousDaySentiments.filter(d => {
 			return d.stock.symbol === todaysDaySentiment.stock.symbol;
 		});
-		for (var i = 1; i < Variables.numPreviousDaySentiments; i++) {
+		for (var i = 1; i <= Variables.numPreviousDaySentiments; i++) {
 			prevDaySentiment = getPreviousDaySentiment(prevDaySentiment, thisPreviousDaySentiments);
-			if (prevDaySentiment && prevDaySentiment.price) {
-				collectedDaySentiments.push(prevDaySentiment);
-			}
+			prevDaySentiment && collectedDaySentiments.push(prevDaySentiment); 
 		}
+		console.log(`${collectedDaySentiments.length} === ${Variables.numPreviousDaySentiments}`);
 		isValid = isValid && collectedDaySentiments.length === Variables.numPreviousDaySentiments;
 
 		if (isValid) {

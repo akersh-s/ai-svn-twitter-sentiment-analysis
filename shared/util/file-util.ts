@@ -23,13 +23,18 @@ export class FileUtil {
         var allResultFiles = [];
         fs.readdirSync(userHome).forEach(f => {
             if (resultsFileRegex.test(f) && fileIsLast45Days(f)) {
+                console.log(f);
                 allResultFiles.push(path.join(userHome, f));
             }
         });
 
         return allResultFiles;
     }
-
+    static refreshFileNames() {
+        formattedDate = formatDate(today);
+        FileUtil.resultsFileDate = path.join(userHome, `results-${formattedDate}.json`);
+        FileUtil.earningsFileDate = path.join(userHome, `earnings-${formattedDate}.json`);
+    }
 }
 
 function hashCode(s) {

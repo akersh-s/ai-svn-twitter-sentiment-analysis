@@ -50,5 +50,5 @@ export function processResults(): Promise<number> {
 
 
 }
-processResults();
+//processResults();
 

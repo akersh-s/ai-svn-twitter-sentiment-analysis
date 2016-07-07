@@ -56,12 +56,16 @@ export function getOldestDate(dates: Date[]): Date {
     return new Date(oldestDateMs);
 }
 
-export function isWeekend(date:Date) {
+export function isWeekend(date:Date): boolean {
     var day = date.getDay();
     var isWeekend = (day == 6) || (day == 0);
 
     return isWeekend;
 };
+
+export function isSameDay(d1: Date, d2: Date): boolean {
+    return formatDate(d1) === formatDate(d2);
+}
 
 export function setToday(date: Date):void {
     today = date;

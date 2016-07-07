@@ -12,7 +12,11 @@ let ml = require('machine_learning');
 let svm = require('svm');
 
 export function runSentiment(daySentiments: DaySentiment[]): SvmResult[] {
-    let svmData = getSvmData();
+    //let svmData = getSvmData();
+    let svmData = {
+        x: [],
+        y: []
+    }
     let predictions: Prediction[] = getPredictions(daySentiments);
     console.log('Predictions: ' + predictions.length);
     let normalized = normalize(svmData.x, predictions);

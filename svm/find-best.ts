@@ -8,14 +8,14 @@ import {DaySentiment} from '../sentiment/model/day-sentiment.model';
 import {runSentiment, SvmResult} from './';
 import {processResults} from '../process';
 
-const dates = [new Date('06/21/2016'), new Date('06/23/2016'), new Date('06/29/2016')];
+const dates = [new Date('06/23/2016'), new Date('06/27/2016'), new Date('06/29/2016')];
 async function runTests() {
     for (let run = 1; run < 10000; run++) {
         console.log(`Run ${run}`);
 
         const priceThreshold = getRandomIntInclusive(0, 3);
         const numDays = getRandomIntInclusive(1, 4);
-        const numPreviousDaySentiments = getRandomIntInclusive(2, 10);
+        const numPreviousDaySentiments = getRandomIntInclusive(2, 5);
         const rbfsigma = 0.5;//getRandomBoolean ? 0.5 : getRandomIntInclusive(1e-3, 1e3);
         const C = 1;//getRandomBoolean() ? 1 : getRandomIntInclusive(1e-3, 1e3);
         const includeSentimentChange = getRandomBoolean();
@@ -47,8 +47,10 @@ async function runTest(testDetails: TestDetails): Promise<any> {
     for (var i = 0; i < testDetails.days.length; i++) {
         let day = testDetails.days[i];
 
-        testDetails.setup();
         setToday(day);
+        FileUtil.refreshFileNames();
+        testDetails.setup();
+        
 
         let m:number = await processResults();
         moneyMade += m;
