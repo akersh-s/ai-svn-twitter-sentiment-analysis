@@ -12,12 +12,12 @@ import {determineHighestEarners, StockClosePercent} from '../earnings';
 
 let argv = yargs.argv;
 export function processResults(): Promise<number> {
-    if (!fs.existsSync(FileUtil.resultsFileDate)) {
-        console.log('results.json does not exist! please run ts-node sentiment first.');
+    if (!fs.existsSync(FileUtil.resultsFileYesterday)) {
+        console.log('results.json does not exist for yesterday! please run ts-node sentiment first.');
         process.exit(-1);
     }
 
-    let results: DaySentiment[] = DaySentiment.parseArray(JSON.parse(fs.readFileSync(FileUtil.resultsFileDate, 'utf-8')));
+    let results: DaySentiment[] = DaySentiment.parseArray(JSON.parse(fs.readFileSync(FileUtil.resultsFileYesterday, 'utf-8')));
 
     let svmResults: SvmResult[] = [];
 

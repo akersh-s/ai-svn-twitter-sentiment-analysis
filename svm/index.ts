@@ -1,7 +1,7 @@
 import * as fs from 'fs';
 import {DaySentiment} from '../sentiment/model/day-sentiment.model';
-import {today} from '../shared/util/date-util';
 import {Variables} from '../shared/variables';
+import {today, yesterday, formatDate} from '../shared/util/date-util';
 import {FileUtil} from '../shared/util/file-util';
 import {normalize} from './normalize';
 import {getSvmData, getPredictions} from './svm-data-formatter';
@@ -43,9 +43,7 @@ export function runSentiment(daySentiments: DaySentiment[]): SvmResult[] {
 }
 
 export class SvmResult {
-    constructor(public prediction: Prediction, public value: number) {
-
-    }
+    constructor(public prediction: Prediction, public value: number) {}
 }
 
 function formatData(svmData, normalized): number[][] {

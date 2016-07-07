@@ -8,7 +8,6 @@ export let tomorrow;
 export let oneDay = 1000 * 60 * 60 * 24;
 setToday(argv.today ? new Date(argv.today) : new Date())
 
-
 export function formatDate(date: Date, char?: string): string {
     char = char || '-';
     let year: string = date.getFullYear() + '';
@@ -69,8 +68,16 @@ export function isSameDay(d1: Date, d2: Date): boolean {
 
 export function setToday(date: Date):void {
     today = date;
-    yesterday = new Date(+today - oneDay);
+    yesterday = determinePreviousWorkDay(today);
     tomorrow = new Date(+today + oneDay);
 
-    debug(`Today: ${formatDate(today)}`);
+    debug(`Today: ${formatDate(today)} - Yesterday: ${formatDate(yesterday)}`);
+}
+
+function determinePreviousWorkDay(today:Date): Date {
+    let previousDay = new Date(+today - oneDay);
+    while (previousDay.getDay() === 6 || previousDay.getDay() === 0) {
+        previousDay = new Date(+previousDay - oneDay);
+    }
+    return previousDay;
 }
