@@ -3,7 +3,7 @@ import * as async from 'async';
 
 import {Variables} from '../shared/variables';
 import {FileUtil} from '../shared/util/file-util';
-import {setToday} from '../shared/util/date-util';
+import {setToday, formatDate} from '../shared/util/date-util';
 import {DaySentiment} from '../sentiment/model/day-sentiment.model';
 import {runSentiment, SvmResult} from './';
 import {processResults} from '../process';
@@ -51,7 +51,7 @@ async function runTest(testDetails: TestDetails): Promise<any> {
         FileUtil.refreshFileNames();
         testDetails.setup();
         
-
+        console.log(`Day: ${formatDate(day)}`);
         let m:number = await processResults();
         moneyMade += m;
     }
