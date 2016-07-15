@@ -18,9 +18,10 @@ export function getSvmData(): SvmData {
 }
 
 export function getPredictions(todaysDaySentiments: DaySentiment[]): Prediction[] {
+	debug(`Collecting Predictions from ${todaysDaySentiments.length} sentiments`);
 	let allPreviousDaySentiments = gatherPreviousDaySentiments();
 	let predictions = [];
-	todaysDaySentiments = removeDupes(todaysDaySentiments).filter(d => {
+	todaysDaySentiments = todaysDaySentiments.filter(d => {
 		return isSameDay(d.day, yesterday);
 	});
 	todaysDaySentiments.forEach(todaysDaySentiment => {
@@ -42,65 +43,62 @@ export function getPredictions(todaysDaySentiments: DaySentiment[]): Prediction[
 			predictions.push(new Prediction(todaysDaySentiment.stock.symbol, x));
 		}
 	});
+	debug(`Completed collecting ${predictions.length} predictions.`);
 	return predictions;
 }
 
 function gatherPreviousDaySentiments(): DaySentiment[] {
+	debug('Gathering previous sentiments...');
 	let daySentiments: DaySentiment[] = [];
 	FileUtil.lastResultsFiles.forEach(f => {
+		debug('Reading ' + f);
 		let fDaySentiments = DaySentiment.parseArray(JSON.parse(fs.readFileSync(f, 'utf-8')));
 		daySentiments = daySentiments.concat(fDaySentiments);
 	});
-	return removeDupes(daySentiments);
-}
-function removeDupes(daySentiments: DaySentiment[]): DaySentiment[] {
-	let removedDupes: DaySentiment[] = [];
-	daySentiments.forEach(d => {
-		let found = removedDupes.find(dupe => {
-			return dupe.stock.symbol === d.stock.symbol && formatDate(dupe.day) === formatDate(d.day);
-		});
-		if (!found) {
-			removedDupes.push(d);
-		}
-	});
-	return removedDupes;
+	return daySentiments;
 }
 
 function formatSvmData(allPreviousDaySentiments: DaySentiment[]): SvmData {
+	debug('Formatting SVM Data...');
 	let svmData = new SvmData();
 	allPreviousDaySentiments.forEach(daySentiment => {
 		let svmRecord = [];
 		let date = daySentiment.day;
 		let price = daySentiment.price;
-		let isValidSVmItem: boolean = !!price && !isWeekend(date);
+		let isValidSvmItem: boolean = !!price && !isWeekend(date);
 		let prevDaySentiment = daySentiment;
 		let collectedDaySentiments: DaySentiment[] = [prevDaySentiment];
-		let thisPreviousDaySentiments = allPreviousDaySentiments.filter(d => {
-			return d.stock.symbol === daySentiment.stock.symbol;
+		let thisPreviousDaySentiments: DaySentiment[] = isValidSvmItem && allPreviousDaySentiments.filter(d => {
+			return d.stock.symbol === daySentiment.stock.symbol && +daySentiment.day > +d.day;
 		});
-		for (var i = 1; i < Variables.numPreviousDaySentiments; i++) {
+		for (var i = 1; i < Variables.numPreviousDaySentiments && isValidSvmItem; i++) {
 			prevDaySentiment = getPreviousDaySentiment(prevDaySentiment, thisPreviousDaySentiments);
-			if (prevDaySentiment && prevDaySentiment.price) {
-				collectedDaySentiments.push(prevDaySentiment);
-			}
+			isValidSvmItem = isValidSvmItem && !!prevDaySentiment;
+			prevDaySentiment && collectedDaySentiments.push(prevDaySentiment);
 		}
+		if (collectedDaySentiments.length > 1) {
+			console.log(collectedDaySentiments.length, collectedDaySentiments.length === Variables.numPreviousDaySentiments)
+		}
+		isValidSvmItem = isValidSvmItem && collectedDaySentiments.length === Variables.numPreviousDaySentiments;
 
-		isValidSVmItem = isValidSVmItem && collectedDaySentiments.length === Variables.numPreviousDaySentiments;
+		let nextDaySentiment: DaySentiment = isValidSvmItem && getDaySentimentInNDays(Variables.numDays, daySentiment, allPreviousDaySentiments);
+		if (collectedDaySentiments.length > 1) {
+			console.log('Next Day Sentiment', nextDaySentiment);
+		}
+		isValidSvmItem = isValidSvmItem && !!nextDaySentiment && !!nextDaySentiment.price;
 
-		let nextDaySentiment = getDaySentimentInNDays(Variables.numDays, daySentiment, thisPreviousDaySentiments);
-		isValidSVmItem = isValidSVmItem && !!nextDaySentiment && !!nextDaySentiment.price;
-
-		if (isValidSVmItem) {
+		if (isValidSvmItem) {
 			const increasePercent = ((nextDaySentiment.price - daySentiment.price) / daySentiment.price) * 100;
-
+			
 			let y = increasePercent > Variables.priceThreshold ? 1 : -1;
 
 			//debug(`${daySentiment.stock.symbol}: ${nextDaySentiment.price} on ${formatDate(nextDaySentiment.day)}, ${daySentiment.price} on ${formatDate(date)} - Increase Percent: ${increasePercent}`)
 			let x = createX(collectedDaySentiments);
 			svmData.addRecord(x, y);
+			debug(`Found Valid! Increase Percent: ${increasePercent} - Price Threshold: ${Variables.priceThreshold} - x: ${x}`);
 		}
 	});
-
+	debug('Finished formatting SVM Data');
 	return svmData;
 }
 
@@ -147,7 +145,8 @@ function getDaySentimentInNDays(n: number, daySentiment: DaySentiment, allPrevio
 	let weekDaySentiment: DaySentiment = null;
 
 	let i = 6;
-	while (!weekDaySentiment && i < ((n + 3) * 2)) {
+	let maxI = (n + i + 3) * 2;
+	while (!weekDaySentiment && i < maxI) {
 		i++;
 		let candidateDate = new Date(+daySentiment.day + (i * oneDay));
 		if (!isWeekend(candidateDate)) {
@@ -163,7 +162,7 @@ function getDaySentimentInNDays(n: number, daySentiment: DaySentiment, allPrevio
 
 function createX(daySentiments: DaySentiment[]): number[] {
 	let x = [];
-	for (var i = 0; i < daySentiments.length - 1; i++) {
+	for (var i = 0; i < daySentiments.length - 2; i++) {
 		var d1 = daySentiments[i];
 		var d2 = daySentiments[i + 1];
 		Variables.includeSentimentChange && x.push(change(d1.totalSentiment, d2.totalSentiment));

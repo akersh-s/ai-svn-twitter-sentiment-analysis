@@ -3,33 +3,31 @@ import * as path from 'path';
 import * as sentiment from 'sentiment';
 
 import {Stock} from '../model/stock.model';
-import {formatDate, getUntilDate, getLast3Days, getOldestDate} from '../../shared/util/date-util';
+import {today, formatDate, getUntilDate, getLast3Days, getOldestDate} from '../../shared/util/date-util';
 import {debug} from '../../shared/util/log-util';
 import {SearchParams, SearchResult, Status} from '../model/search.model';
 import {DaySentiment} from '../model/day-sentiment.model';
 import {Twitter} from './twitter-api/index.js';
 
-
+let totalRequests = 0;
+const formattedToday = formatDate(today);
 let config = JSON.parse(fs.readFileSync(__dirname + '/twitter-config.json', 'utf-8'));
 export class TwitterSearch {
+    private requestTime: Date;
+    private requests: number = 0;
     twitter: Twitter;
     cache: SentimentCacheItem[];
-    cacheFilled: boolean;
 
-    constructor(private stock: Stock) {
+    constructor() {
         this.twitter = new Twitter(config);
-        this.cache = [];
-        this.cacheFilled = false;
     }
 
-    async getTweets(daySentiment: DaySentiment): Promise<DaySentiment> {
-        if (!this.cacheFilled) {
-            await this.get100(daySentiment);
-            this.cacheFilled = true;
+    async getTweetSentiment(daySentiment: DaySentiment): Promise<DaySentiment> {
+        if (!this.cache) {
+            this.cache = await this.downloadAllTweets();
         }
-        let formattedDate = formatDate(daySentiment.day);
         let tweetSentiments = this.cache.filter(c => {
-            return formatDate(c.date) === formattedDate && c.sentiment !== 0;
+            return c.symbols.indexOf(daySentiment.stock.symbol) !== -1;
         });
         tweetSentiments.forEach(t => {
             daySentiment.addTweetSentiment(t.sentiment);
@@ -37,40 +35,67 @@ export class TwitterSearch {
         return daySentiment;
     }
 
-    private get100(daySentiment: DaySentiment, maxId?: string):Promise<DaySentiment> {
-        let q = this.stock.q;
-        let untilDate = getUntilDate(daySentiment.day);
-        
-        debug('Doing search with maxId ' + maxId + ' for date ' + formatDate(daySentiment.day));
-        return new Promise<DaySentiment>((resolve, reject) => {
+    private async downloadAllTweets(): Promise<SentimentCacheItem[]> {
+        let sentimentCache: SentimentCacheItem[] = []
+        let symbols = fs.readFileSync(__dirname + '/../stocks', 'utf-8').trim().split(/[\n\r]+/g);
+        let currentIndex = 0;
+        while (currentIndex < symbols.length) {
+            let subSymbols = [];
+            while (subSymbols.join(' OR ').length < 330 && currentIndex < symbols.length) {
+                subSymbols.push(symbols[currentIndex++]);
+            }
+            let statuses = await this.get100Tweets(subSymbols.join(' OR '));
+            statuses.forEach(status => {
+                let s: number = sentiment(status.text).score;
+                let symbols = this.findSymbolsInText(status.text, subSymbols);
+                if (s && s !== 0) {
+                    sentimentCache.push(new SentimentCacheItem(s, symbols))
+                }
+            });
+
+        }
+        return sentimentCache;
+    }
+
+    private findSymbolsInText(text: string, subSymbols: string[]): string[] {
+        const upperText = text.toUpperCase();
+        let symbolsInText: string[] = [];
+
+        subSymbols.forEach(s => {
+            if (upperText.indexOf(s.toUpperCase()) !== -1) {
+                symbolsInText.push(s);
+            }
+        });
+
+        return symbolsInText;
+    }
+
+    private get100Tweets(q: string, maxId?: string): Promise<Status[]> {
+        const untilDate = getUntilDate(today);
+        return new Promise<Status[]>((resolve, reject) => {
             setTimeout(() => {
                 this.twitter.get('search/tweets', new SearchParams(q, untilDate, maxId).format(), (err: Error, tweets: SearchResult) => {
                     if (err) {
                         debug(err);
-                        return resolve(daySentiment);
+                        return resolve([]);
                     }
-                    
                     let statuses: Status[] = tweets.statuses || [];
-                    debug('Search completed. Results: ' + statuses.length);
-                    statuses.forEach((status) => {
-                        let date = new Date(status.created_at);
-                        let s:number = sentiment(status.text).score;
-                        this.cache.push(new SentimentCacheItem(date, s));
-                    });
-
-                    var nextId:string = null;
+                    statuses = statuses.filter(s => formatDate(new Date(s.created_at)) === formattedToday)
+                    debug('Twitter Search completed. Results: ' + statuses.length);
+                    let nextId: string = null;
                     if (tweets.search_metadata && tweets.search_metadata.next_results) {
                         nextId = this.parseNextId(tweets.search_metadata.next_results);
                     }
                     if (statuses.length > 0 && nextId) {
-                        this.get100(daySentiment, nextId).then((daySentiment => {
-                            resolve(daySentiment);
-                        }));
-                    } else {
-                        resolve(daySentiment);
+                        this.get100Tweets(q, nextId).then((moreStatuses: Status[]) => {
+                            resolve(statuses.concat(moreStatuses));
+                        });
+                    }
+                    else {
+                        resolve(statuses);
                     }
                 });
-            }, 5020); //Stay in the Allowed Number of calls.
+            }, this.getRequestTime());
         });
     }
 
@@ -88,8 +113,27 @@ export class TwitterSearch {
         });
         return nextId;
     }
+
+    private getRequestTime(): number {
+        const t15min = 1000 * 60 * 15;
+        if (!this.requestTime || ((+new Date() - +this.requestTime)) > t15min) {
+            this.requestTime = new Date();
+            this.requests = 0;
+        }
+        this.requests++;
+        let requestTime;
+        if (this.requests < 170) {
+            requestTime = 0;
+        }
+        else {
+            let endTime: number = +this.requestTime + t15min;
+            requestTime = Math.max(0, endTime - +new Date());
+        }
+        debug(`Request Pause Time: ${requestTime} ms - Total Requests: ${++totalRequests}`);
+        return requestTime;
+    }
 }
 
 class SentimentCacheItem {
-    constructor(public date: Date, public sentiment: number) {}
+    constructor(public sentiment: number, public symbols: string[]) { }
 }

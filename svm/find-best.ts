@@ -73,7 +73,7 @@ async function runTest(testDetails: TestDetails): Promise<any> {
 
 
 class TestDetails {
-    public moneyMade:number;
+    public moneyMade: number;
     constructor(
         public priceThreshold: number,
         public numDays: number,

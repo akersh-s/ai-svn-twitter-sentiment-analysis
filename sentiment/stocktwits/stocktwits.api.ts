@@ -87,6 +87,7 @@ export class StockTwits {
                         }
                     });
                 }
+                debug('Stocktwits Search completed. Results: ' + twitsToAddToList.length);
                 if (twitsToAddToList.length > 0) {
                     twits = twits.concat(twitsToAddToList);
                     console.log('Getting more twits', twits.length);

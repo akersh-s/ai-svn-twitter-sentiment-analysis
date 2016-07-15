@@ -65,15 +65,14 @@ export class DaySentiment {
             if (result.daySentiments) {
                 //Legacy with StockActions
                 let stock = new Stock(result.stock.symbol, result.stock.keywords);
-                result.daySentiments.forEach(d => {
-                    let daySentiment = new DaySentiment(stock, new Date(d.day));
-                    daySentiment.numTweets = d.numTweets;
-                    daySentiment.totalSentiment = d.totalSentiment;
-                    daySentiment.quoteDataResult = result.quoteDataResult || {
-                        bid_price: result.price
-                    };
-                    daySentiments.push(daySentiment);
-                });
+                let d = result.daySentiments[result.daySentiments.length - 1];
+                let daySentiment = new DaySentiment(stock, new Date(d.day));
+                daySentiment.numTweets = d.numTweets;
+                daySentiment.totalSentiment = d.totalSentiment;
+                daySentiment.quoteDataResult = result.quoteDataResult || {
+                    bid_price: result.price
+                };
+                daySentiments.push(daySentiment);
             }
             else {
                 let stock = new Stock(result.stock.symbol, result.stock.keywords);
@@ -81,6 +80,7 @@ export class DaySentiment {
                 daySentiment.totalSentiment = result.totalSentiment;
                 daySentiment.numTweets = result.numTweets;
                 daySentiment.quoteDataResult = result.quoteDataResult;
+                daySentiment.fundamentals = result.fundamentals;
                 daySentiments.push(daySentiment);
             }
         });

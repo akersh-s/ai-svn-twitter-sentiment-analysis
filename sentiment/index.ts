@@ -10,6 +10,7 @@ import {today} from '../shared/util/date-util';
 
 let stocks = fs.readFileSync(path.join(__dirname, '/stocks'), 'utf-8').trim().split(/[\n\r]+/g);
 let i = 0;
+const twitter = new TwitterSearch();
 
 process.on('uncaughtException', function (err) {
     console.log('Error', err);
@@ -35,12 +36,12 @@ async function run(): Promise<any> {
 }
 
 function getDaySentiment(stock: Stock): Promise<any> {
-    let twitter = new TwitterSearch(stock);
+    
     let stocktwits = new StockTwits(stock);
     let daySentiment = new DaySentiment(stock, today);
     return new Promise<any>((resolve, reject) => {
         try {
-            Promise.all([twitter.getTweets(daySentiment), stocktwits.processStocktwitsSentiment(daySentiment), daySentiment.addPrice()]).then(() => {
+            Promise.all([twitter.getTweetSentiment(daySentiment), stocktwits.processStocktwitsSentiment(daySentiment), daySentiment.addPrice()]).then(() => {
                 let results: DaySentiment[] = [];
                 if (fs.existsSync(FileUtil.resultsFile)) {
                     results = JSON.parse(fs.readFileSync(FileUtil.resultsFile, 'utf-8'));
