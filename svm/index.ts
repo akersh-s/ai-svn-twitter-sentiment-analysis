@@ -34,7 +34,7 @@ export async function runSentiment(daySentiments: DaySentiment[]): Promise<SvmRe
         eps: 1e-3,
         cacheSize: 200,
         shrinking: true,
-        probability: true
+        probability: false
     });
     let svmParams = await collectSvmParams(daySentiments, predictions);
     return new Promise<SvmResult[]>((resolve, reject) => {
@@ -47,7 +47,6 @@ export async function runSentiment(daySentiments: DaySentiment[]): Promise<SvmRe
                 // predict things 
                 predictions.forEach(function (prediction) {
                     let p = clf.predictSync(prediction.data);
-                    console.log(p);
                     if (p === 1) {
                         console.log(`SVM - Buy ${prediction.symbol}`);
                         svmResults.push(new SvmResult(prediction, p));
