@@ -30,6 +30,13 @@ export class DaySentiment {
     get price():number {
         return parseFloat(this.quoteDataResult.bid_price);
     }
+    
+    get volume(): number {
+        if (!this.fundamentals || !this.fundamentals.volume) {
+            return 0;
+        }
+        return parseFloat(this.fundamentals.volume);
+    }
 
     //Adds price and fundamental information
     addPrice(): Promise<number> {

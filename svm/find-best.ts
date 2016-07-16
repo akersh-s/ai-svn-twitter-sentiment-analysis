@@ -6,14 +6,14 @@ import {FileUtil} from '../shared/util/file-util';
 import {setToday, formatDate} from '../shared/util/date-util';
 import {DaySentiment} from '../sentiment/model/day-sentiment.model';
 import {runSentiment, SvmResult} from './';
-import {processResults} from '../process';
+import {processResults} from '../process/process-results';
 
-const dates = [new Date('06/23/2016'), new Date('06/28/2016'), new Date('06/29/2016')];
+const dates = [new Date('07/06/2016'), new Date('07/07/2016'), new Date('07/13/2016')];
 async function runTests() {
     for (let run = 1; run < 10000; run++) {
         console.log(`Run ${run}`);
 
-        const priceThreshold = getRandomIntInclusive(0, 3);
+        const priceThreshold = getRandomIntInclusive(0, 5);
         const numDays = getRandomIntInclusive(1, 4);
         const numPreviousDaySentiments = getRandomIntInclusive(2, 5);
         const rbfsigma = 0.5;//getRandomBoolean ? 0.5 : getRandomIntInclusive(1e-3, 1e3);
@@ -22,15 +22,18 @@ async function runTests() {
         const includePriceChange = getRandomBoolean();
         const includeNumTweetsChange = getRandomBoolean();
         const includeSentiment = getRandomBoolean();
-        const includePrice = getRandomBoolean();
+        const includePrice = false;//getRandomBoolean();
         const includeNumTweets = getRandomBoolean();
-        const includeTime = getRandomBoolean();
+        const includeTime = false;//getRandomBoolean();
         const includeTimeChange = getRandomBoolean();
-        const includeHigh = false;//getRandomBoolean();
-        const includeLow = false;//getRandomBoolean();
-        const includeVolume = false;//getRandomBoolean();
+        const includeHighChange = getRandomBoolean();
+        const includeLowChange = getRandomBoolean();
+        const includeVolumeChange = getRandomBoolean();
+        const kernelType = ['LINEAR', 'POLY', 'RBF', 'SIGMOID'][getRandomIntInclusive(0, 3)];
+        const svmType = ['C_SVC', 'NU_SVC', 'ONE_CLASS', 'EPSILON_SVR', 'NU_SVR'][getRandomIntInclusive(0, 4)];
 
-        const testDetails = new TestDetails(priceThreshold, numDays, numPreviousDaySentiments, rbfsigma, C, includeSentimentChange, includePriceChange, includeNumTweetsChange, includeSentiment, includePrice, includeNumTweets, includeTime, includeTimeChange, includeHigh, includeLow, includeVolume, dates);
+
+        const testDetails = new TestDetails(priceThreshold, numDays, numPreviousDaySentiments, rbfsigma, C, includeSentimentChange, includePriceChange, includeNumTweetsChange, includeSentiment, includePrice, includeNumTweets, includeTime, includeTimeChange, includeHighChange, includeLowChange, includeVolumeChange, kernelType, svmType, dates);
 
         try {
             console.log(JSON.stringify(testDetails));
@@ -88,9 +91,11 @@ class TestDetails {
         public includeNumTweets: boolean,
         public includeTime: boolean,
         public includeTimeChange: boolean,
-        public includeHigh: boolean,
-        public includeLow: boolean,
-        public includeVolume: boolean,
+        public includeHighChange: boolean,
+        public includeLowChange: boolean,
+        public includeVolumeChange: boolean,
+        public kernelType: string,
+        public svmType: string,
         public days: Date[]) { }
 
     setup(): void {
@@ -108,9 +113,11 @@ class TestDetails {
         Variables.includeTime = this.includeTime;
         Variables.includeTimeChange = this.includeTimeChange;
 
-        Variables.includeHigh = this.includeHigh;
-        Variables.includeLow = this.includeLow;
-        Variables.includeVolume = this.includeVolume;
+        Variables.includeHighChange = this.includeHighChange;
+        Variables.includeLowChange = this.includeLowChange;
+        Variables.includeVolumeChange = this.includeVolumeChange;
+        Variables.kernelType = this.kernelType;
+        Variables.svmType = this.svmType;
 
         FileUtil.lastResultsFiles = FileUtil.collectLast45ResultFiles();
     }

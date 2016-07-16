@@ -1,6 +1,6 @@
 export class Variables {
-    static priceThreshold: number = 3;
-    static numDays: number = 2;
+    static priceThreshold: number = 4;
+    static numDays: number = 3 ;
     static numPreviousDaySentiments: number = 4;
     static rbfsigma: number = 0.5;
     static C: number = 1.0;
@@ -17,11 +17,14 @@ export class Variables {
     static includeTimeChange: boolean = true;
 
     //Fundamentals
-    static includeHigh: boolean = true;
-    static includeLow: boolean = true;
-    static includeVolume: boolean = true;
+    static includeHighChange: boolean = false;
+    static includeLowChange: boolean = false;
+    static includeVolumeChange: boolean = false;
+
+    static kernelType: string = 'RBF';
+    static svmType: string = 'C_SVC';
 
     static includeFundamentals():boolean {
-        return Variables.includeHigh || Variables.includeLow || Variables.includeVolume;
+        return Variables.includeHighChange || Variables.includeLowChange || Variables.includeVolumeChange;
     }
 }

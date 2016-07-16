@@ -18,7 +18,7 @@ export async function determineHighestEarners(stocks: string[]): Promise<StockCl
             })
         });
     }*/
-    let stocksFile = fs.readFileSync(path.join(__dirname, '..', 'sentiment', 'stocks'), 'utf-8');
+    //let stocksFile = fs.readFileSync(path.join(__dirname, '..', 'sentiment', 'stocks'), 'utf-8');
     /*let stocks = stocksFile.trim().split(/[\n\r]+/g).map(line => {
         return line.split(/\s/)[0].replace(/\$/, '');
     });*/
@@ -46,6 +46,7 @@ export async function determineHighestEarners(stocks: string[]): Promise<StockCl
 }
 
 async function getPriceIncrease(symbol: string): Promise<StockClosePercent> {
+    console.log(formatDate(getDaysAgo(Variables.numDays * -1)));
     return new Promise<StockClosePercent>((resolve, reject) => {
         googleFinance.historical({
             symbol: symbol,
@@ -54,14 +55,15 @@ async function getPriceIncrease(symbol: string): Promise<StockClosePercent> {
         }, (err, quotes) => {
             if (err) return reject(err);
             if (quotes.length < 2) {
+                console.log(quotes);
                 return reject('Not enough results');
             }
             let historicalQuotes:HistoricalQuote[] = quotes.map(q => new HistoricalQuote(q));
             let todaysQuote = historicalQuotes[historicalQuotes.length - 1];
-            console.log('todaysQuote', todaysQuote.date, todaysQuote.close);
+            
             let previousQuote = historicalQuotes[0];
-            console.log('previousQuote', previousQuote.date, previousQuote.close);
             let percent = ((todaysQuote.close - previousQuote.close) / previousQuote.close) * 100;
+            console.log(`${symbol} - Today's Quote (${formatDate(todaysQuote.date)}): ${todaysQuote.close} - Previous Quote (${formatDate(previousQuote.date)}): ${previousQuote.close} - ${percent}%`);
             resolve(new StockClosePercent(symbol, percent));
         });
     });

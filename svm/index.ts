@@ -1,26 +1,66 @@
 import * as fs from 'fs';
 import {DaySentiment} from '../sentiment/model/day-sentiment.model';
 import {Variables} from '../shared/variables';
-import {today, yesterday, formatDate} from '../shared/util/date-util';
+import {today, formatDate} from '../shared/util/date-util';
 import {FileUtil} from '../shared/util/file-util';
 import {normalize} from './normalize';
 import {getSvmData, getPredictions} from './svm-data-formatter';
 import {Prediction} from './prediction.model';
 
 import * as async from 'async';
-let ml = require('machine_learning');
-let svm = require('svm');
+//let ml = require('machine_learning');
+//let svm = require('svm');
+var svm = require('node-svm');
 
-export function runSentiment(daySentiments: DaySentiment[]): SvmResult[] {
+export async function runSentiment(daySentiments: DaySentiment[]): Promise<SvmResult[]> {
     let svmResults: SvmResult[] = [];
-    let predictions: Prediction[] = getPredictions(daySentiments);
+    let predictions: Prediction[] = await getPredictions(daySentiments);
     if (predictions.length === 0) {
         throw new Error('There is nothing to predict.');
     }
-    const svm = new ml.SVM(collectSvmParams(daySentiments, predictions));
+    const clf = new svm.SVM({
+        svmType: Variables.svmType,
+        c: [0.03125, 0.125, 0.5, 2, 8],
 
-    console.log('Running SVM...');
-    svm.train({
+        // kernels parameters 
+        kernelType: Variables.kernelType,
+        gamma: [0.03125, 0.125, 0.5, 2, 8],
+
+        // training options 
+        kFold: 4,
+        normalize: true,
+        reduce: true,
+        retainedVariance: 0.99,
+        eps: 1e-3,
+        cacheSize: 200,
+        shrinking: true,
+        probability: true
+    });
+    let svmParams = await collectSvmParams(daySentiments, predictions);
+    return new Promise<SvmResult[]>((resolve, reject) => {
+        console.log('Running SVM...');
+        clf
+            .train(svmParams)
+            .progress(function (rate) {
+                console.log(rate);
+            }).done(function () {
+                // predict things 
+                predictions.forEach(function (prediction) {
+                    let p = clf.predictSync(prediction.data);
+                    console.log(p);
+                    if (p === 1) {
+                        console.log(`SVM - Buy ${prediction.symbol}`);
+                        svmResults.push(new SvmResult(prediction, p));
+                    }
+                });
+                resolve(svmResults);
+            });;
+    });
+
+
+
+    //const svm = new ml.SVM(await collectSvmParams(daySentiments, predictions));
+    /*svm.train({
         C: Variables.C,
         max_passes: 50,
         kernel: { type: 'gaussian', sigma: Variables.rbfsigma }
@@ -33,7 +73,7 @@ export function runSentiment(daySentiments: DaySentiment[]): SvmResult[] {
             svmResults.push(new SvmResult(prediction, p));
         }
     });
-    return svmResults;
+    return svmResults;*/
 }
 
 export class SvmResult {
@@ -49,8 +89,8 @@ function formatData(svmData, normalized): number[][] {
     return formatted;
 }
 
-function collectSvmParams(daySentiments: DaySentiment[], predictions: Prediction[]): { x: number[], y: number[] } {
-    let svmData = getSvmData();
+async function collectSvmParams(daySentiments: DaySentiment[], predictions: Prediction[]): Promise<any[]> {
+    let svmData = await getSvmData();
 
     let normalized = normalize(svmData.x, predictions);
     predictions = normalized.predictions;
@@ -60,8 +100,9 @@ function collectSvmParams(daySentiments: DaySentiment[], predictions: Prediction
         throw new Error('No data to run SVM...');
     }
 
-    return {
-        x: normalized.x,
-        y: svmData.y
-    };
+    const formatted = [];
+    for (let i = 0; i < normalized.x.length; i++) {
+        formatted.push([normalized.x[i], svmData.y[i]]);
+    }
+    return formatted;
 }

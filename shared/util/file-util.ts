@@ -8,11 +8,9 @@ let argv = yargs.argv;
 let username = argv.username;
 let userHome = process.env[(process.platform == 'win32') ? 'USERPROFILE' : 'HOME'];
 let formattedDate = formatDate(today);
-let formattedYesterday = formatDate(yesterday);
 export class FileUtil {
     static resultsFile: string = path.join(userHome, 'results.json');
     static resultsFileDate: string = path.join(userHome, `results-${formattedDate}.json`);
-    static resultsFileYesterday: string = path.join(userHome, `results-${formattedYesterday}.json`);
     static buyFile: string = path.join(userHome, 'buy.json');
     static sellStatsFile: string = path.join(userHome, `sell-stats-${hashCode(username)}.json`);
     static svmFile: string = path.join(userHome, 'svm.json');
@@ -31,12 +29,13 @@ export class FileUtil {
 
         return allResultFiles;
     }
+    static getStocks(): string[] {
+        return fs.readFileSync(path.join(__dirname, '/../stocks'), 'utf-8').trim().split(/[\n\r]+/g);
+    }
     static refreshFileNames() {
         formattedDate = formatDate(today);
-        formattedYesterday = formatDate(yesterday);
         FileUtil.resultsFileDate = path.join(userHome, `results-${formattedDate}.json`);
         FileUtil.earningsFileDate = path.join(userHome, `earnings-${formattedDate}.json`);
-        FileUtil.resultsFileYesterday = path.join(userHome, `results-${formattedYesterday}.json`);
     }
 }
 
@@ -55,7 +54,7 @@ function hashCode(s) {
 }
 
 
-function fileIsLast45Days(f: string) { //And not same day or yesterday
+function fileIsLast45Days(f: string) { //And not same day 
     const d45DaysAgo = oneDay * 45;
 
     let fileStart = 'results-';
@@ -63,5 +62,5 @@ function fileIsLast45Days(f: string) { //And not same day or yesterday
     dateParsed = dateParsed.substring(0, dateParsed.indexOf('.')).replace(/-/g, '/');
     let date = new Date(dateParsed);
     let msGoneBy = +today - +date;
-    return msGoneBy < d45DaysAgo && msGoneBy > (oneDay * 2);
+    return msGoneBy < d45DaysAgo && formatDate(date) !== formattedDate;
 }

@@ -8,7 +8,6 @@ import {FileUtil} from '../shared/util/file-util';
 import {DaySentiment} from './model/day-sentiment.model';
 import {today} from '../shared/util/date-util';
 
-let stocks = fs.readFileSync(path.join(__dirname, '/stocks'), 'utf-8').trim().split(/[\n\r]+/g);
 let i = 0;
 const twitter = new TwitterSearch();
 
@@ -20,6 +19,7 @@ process.on('uncaughtException', function (err) {
 run();
 async function run(): Promise<any> {
     console.log('Starting');
+    let stocks = FileUtil.getStocks();
     let keywords = '';
     while (i < stocks.length) {
         let symbol = stocks[i++];
