@@ -55,7 +55,11 @@ async function runTest(testDetails: TestDetails): Promise<any> {
         testDetails.setup();
         
         console.log(`Day: ${formatDate(day)}`);
-        let m:number = await processResults();
+        let m:number = 0;
+        try {
+            m = await processResults();
+        }
+        catch (e) {}
         moneyMade += m;
     }
     if (!moneyMade) {

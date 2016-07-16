@@ -5,6 +5,7 @@ import * as sentiment from 'sentiment';
 import {Stock} from '../model/stock.model';
 import {today, formatDate, getUntilDate, getLast3Days, getOldestDate} from '../../shared/util/date-util';
 import {debug} from '../../shared/util/log-util';
+import {FileUtil} from '../../shared/util/file-util';
 import {SearchParams, SearchResult, Status} from '../model/search.model';
 import {DaySentiment} from '../model/day-sentiment.model';
 import {Twitter} from './twitter-api/index.js';
@@ -37,7 +38,7 @@ export class TwitterSearch {
 
     private async downloadAllTweets(): Promise<SentimentCacheItem[]> {
         let sentimentCache: SentimentCacheItem[] = []
-        let symbols = fs.readFileSync(__dirname + '/../stocks', 'utf-8').trim().split(/[\n\r]+/g);
+        let symbols = FileUtil.getStocks();
         let currentIndex = 0;
         while (currentIndex < symbols.length) {
             let subSymbols = [];
