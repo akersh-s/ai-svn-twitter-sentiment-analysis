@@ -89,7 +89,7 @@ function formatData(svmData, normalized): number[][] {
 }
 
 async function collectSvmParams(daySentiments: DaySentiment[], minIncrease: number): Promise<any[]> {
-    let svmData = await getSvmData(minIncrase);
+    let svmData = await getSvmData(minIncrease);
 
     //let normalized = normalize(svmData.x, predictions);
     //predictions = normalized.predictions;
