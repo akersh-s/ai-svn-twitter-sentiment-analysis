@@ -10,7 +10,7 @@ import {Stock} from '../sentiment/model/stock.model';
 import {DaySentiment} from '../sentiment/model/day-sentiment.model';
 
 export async function getSvmData(minIncrease: number): Promise<SvmData> {
-	let formattedSvmData = await formatSvmData(minIncrease: number);
+	let formattedSvmData = await formatSvmData(minIncrease);
 	debug('formattedSvmData: ' + formattedSvmData.x.length);
 	return formattedSvmData;
 }
