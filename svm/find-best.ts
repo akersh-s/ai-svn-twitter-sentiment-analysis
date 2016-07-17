@@ -29,8 +29,8 @@ async function runTests() {
         const includeHighChange = getRandomBoolean();
         const includeLowChange = getRandomBoolean();
         const includeVolumeChange = getRandomBoolean();
-        const kernelType = ['LINEAR', 'POLY', 'RBF', 'SIGMOID'][getRandomIntInclusive(0, 3)];
-        const svmType = ['C_SVC', 'NU_SVC', 'ONE_CLASS', 'EPSILON_SVR', 'NU_SVR'][getRandomIntInclusive(0, 4)];
+        const kernelType = 'RBF';//['LINEAR', 'POLY', 'RBF', 'SIGMOID'][getRandomIntInclusive(0, 3)];
+        const svmType = 'C_SVC';//['C_SVC', 'NU_SVC', 'ONE_CLASS', 'EPSILON_SVR', 'NU_SVR'][getRandomIntInclusive(0, 4)];
 
 
         const testDetails = new TestDetails(priceThreshold, numDays, numPreviousDaySentiments, rbfsigma, C, includeSentimentChange, includePriceChange, includeNumTweetsChange, includeSentiment, includePrice, includeNumTweets, includeTime, includeTimeChange, includeHighChange, includeLowChange, includeVolumeChange, kernelType, svmType, dates);

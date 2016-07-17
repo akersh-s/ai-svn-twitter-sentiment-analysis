@@ -9,8 +9,8 @@ import {Variables} from '../shared/variables';
 import {Stock} from '../sentiment/model/stock.model';
 import {DaySentiment} from '../sentiment/model/day-sentiment.model';
 
-export async function getSvmData(): Promise<SvmData> {
-	let formattedSvmData = await formatSvmData();
+export async function getSvmData(minIncrease: number): Promise<SvmData> {
+	let formattedSvmData = await formatSvmData(minIncrease: number);
 	debug('formattedSvmData: ' + formattedSvmData.x.length);
 	return formattedSvmData;
 }
@@ -78,7 +78,7 @@ function readDaySentiments(f: string): Promise<DaySentiment[]> {
 	});
 }
 
-async function formatSvmData(): Promise<SvmData> {
+async function formatSvmData(minIncrease: number): Promise<SvmData> {
 	let svmData = new SvmData();
 	let stocks = FileUtil.getStocks();
 	let groupedStocks: string[][] = group<string>(stocks, 500);
@@ -110,7 +110,7 @@ async function formatSvmData(): Promise<SvmData> {
 				if (isValidSvmItem) {
 					const increasePercent = ((nextDaySentiment.price - daySentiment.price) / daySentiment.price) * 100;
 
-					let y = increasePercent > Variables.priceThreshold ? 1 : 0;
+					let y = increasePercent > minIncrease ? 1 : 0;
 
 					//debug(`${daySentiment.stock.symbol}: ${nextDaySentiment.price} on ${formatDate(nextDaySentiment.day)}, ${daySentiment.price} on ${formatDate(date)} - Increase Percent: ${increasePercent}`)
 					let x = createX(collectedDaySentiments);

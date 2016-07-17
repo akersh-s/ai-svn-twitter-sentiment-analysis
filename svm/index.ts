@@ -12,7 +12,7 @@ import * as async from 'async';
 //let svm = require('svm');
 var svm = require('node-svm');
 
-export async function runSentiment(daySentiments: DaySentiment[]): Promise<SvmResult[]> {
+export async function runSentiment(daySentiments: DaySentiment[], minIncrease: number): Promise<SvmResult[]> {
     let svmResults: SvmResult[] = [];
     let predictions: Prediction[] = await getPredictions(daySentiments);
     if (predictions.length === 0) {
@@ -20,7 +20,7 @@ export async function runSentiment(daySentiments: DaySentiment[]): Promise<SvmRe
     }
     const clf = new svm.SVM({
         svmType: Variables.svmType,
-        c: [0.03125, 0.125, 0.5, 2, 8],
+        c: [0.03125, 0.125, 0.5, 1, 2, 8],
 
         // kernels parameters 
         kernelType: Variables.kernelType,
@@ -36,7 +36,7 @@ export async function runSentiment(daySentiments: DaySentiment[]): Promise<SvmRe
         shrinking: true,
         probability: false
     });
-    let svmParams = await collectSvmParams(daySentiments, predictions);
+    let svmParams = await collectSvmParams(daySentiments, minIncrease);
     return new Promise<SvmResult[]>((resolve, reject) => {
         console.log('Running SVM...');
         clf
@@ -88,20 +88,20 @@ function formatData(svmData, normalized): number[][] {
     return formatted;
 }
 
-async function collectSvmParams(daySentiments: DaySentiment[], predictions: Prediction[]): Promise<any[]> {
-    let svmData = await getSvmData();
+async function collectSvmParams(daySentiments: DaySentiment[], minIncrease: number): Promise<any[]> {
+    let svmData = await getSvmData(minIncrase);
 
-    let normalized = normalize(svmData.x, predictions);
-    predictions = normalized.predictions;
+    //let normalized = normalize(svmData.x, predictions);
+    //predictions = normalized.predictions;
 
-    if (normalized.x.length === 0 || svmData.y.length === 0 || predictions.length === 0) {
+    if (svmData.x.length === 0 || svmData.y.length === 0) {
         console.log('No data to run SVM...');
         throw new Error('No data to run SVM...');
     }
 
     const formatted = [];
-    for (let i = 0; i < normalized.x.length; i++) {
-        formatted.push([normalized.x[i], svmData.y[i]]);
+    for (let i = 0; i < svmData.x.length; i++) {
+        formatted.push([svmData.x[i], svmData.y[i]]);
     }
     return formatted;
 }

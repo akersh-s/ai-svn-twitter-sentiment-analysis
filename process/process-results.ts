@@ -20,8 +20,11 @@ export async function processResults(): Promise<number> {
     let results: DaySentiment[] = DaySentiment.parseArray(JSON.parse(fs.readFileSync(FileUtil.resultsFileDate, 'utf-8')));
 
     let svmResults: SvmResult[] = [];
-
-    svmResults = await runSentiment(results);
+    for (var i = 5; i > 0 && svmResults.length < 3; i--) {
+        console.log('Running SVM for Min Increase: ' + i);
+        svmResults = await runSentiment(results, i);
+    }
+    
     debug(`Results Length: ${svmResults.length}`);
     let buys = svmResults.map(s => {
         return s.prediction.symbol.replace(/\$/, '');
