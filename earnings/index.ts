@@ -4,73 +4,69 @@ import * as fs from 'fs';
 import * as path from 'path';
 
 import {FileUtil} from '../shared/util/file-util';
-import {formatDate, yesterday, today, getDaysAgo} from '../shared/util/date-util';
+import {formatDate, yesterday, today, getDaysAgo, isWeekend} from '../shared/util/date-util';
+import {DaySentiment} from '../sentiment/model/day-sentiment.model';
 import {Variables} from '../shared/variables';
 
-export async function determineHighestEarners(stocks: string[]): Promise<StockClosePercent[]> {
-    /*if (fs.existsSync(FileUtil.earningsFileDate)) {
-        return new Promise<StockClosePercent[]>((resolve, reject) => {
-            let results = fs.readFile(FileUtil.earningsFileDate, 'utf-8', (err, data) => {
-                if (err) return reject(err);
-                let parsedData = JSON.parse(data);
-                let cachedStockClosePercents:StockClosePercent[] = parsedData.map(d => new StockClosePercent(d.symbol, d.percent));
-                resolve(cachedStockClosePercents);
-            })
-        });
-    }*/
-    //let stocksFile = fs.readFileSync(path.join(__dirname, '..', 'sentiment', 'stocks'), 'utf-8');
-    /*let stocks = stocksFile.trim().split(/[\n\r]+/g).map(line => {
-        return line.split(/\s/)[0].replace(/\$/, '');
-    });*/
+export function determineHighestEarners(stocks: string[]): StockClosePercent[] {
     let i = 0;
+
+    let fromDate: Date = today;
+    let toDate: Date = getDaysAgo(Variables.numDays * -1);
+    while (!fs.existsSync(FileUtil.getResultsFileForDate(toDate)) && +fromDate < +toDate && !isWeekend(toDate)) {
+        ++i;
+        toDate = getDaysAgo((Variables.numDays * -1) + i);
+    }
+    if (!fs.existsSync(FileUtil.getResultsFileForDate(toDate))) {
+        return [];
+    }
+
+    const fromDateSentiments: DaySentiment[] = getDaySentimentsForStocks(stocks, fromDate);
+    const toDateSentiments: DaySentiment[] = getDaySentimentsForStocks(stocks, toDate);
     
     let stockClosePercents:StockClosePercent[] = [];
-    while (i < stocks.length) {
-        try {
-            let stockClosePercent = await getPriceIncrease(stocks[i]);
-            stockClosePercents.push(stockClosePercent);
+    stocks.forEach(stock => {
+        const fromDateSentiment = getSingle(fromDateSentiments.filter(s => s.stock.symbol === stock));
+        const toDateSentiment = getSingle(toDateSentiments.filter(s => s.stock.symbol === stock));
+        if (fromDateSentiment && toDateSentiment) {
+            stockClosePercents.push(new StockClosePercent(stock, toDateSentiment.price, fromDateSentiment.price));
         }
-        catch (e) {
-            console.log(stocks[i] + ' failed:', e);
-        }
-        i++;
-    }
+    });
     stockClosePercents.sort((a, b) => {
         return b.percent - a.percent;
     });
     stockClosePercents.forEach(s => {
         console.log(s.toString());
     });
-    fs.writeFileSync(FileUtil.earningsFileDate, JSON.stringify(stockClosePercents), 'utf-8');
     return stockClosePercents;
 }
 
-async function getPriceIncrease(symbol: string): Promise<StockClosePercent> {
-    console.log(formatDate(getDaysAgo(Variables.numDays * -1)));
-    return new Promise<StockClosePercent>((resolve, reject) => {
-        googleFinance.historical({
-            symbol: symbol,
-            from: formatDate(today),
-            to: formatDate(getDaysAgo(Variables.numDays * -1))
-        }, (err, quotes) => {
-            if (err) return reject(err);
-            if (quotes.length < 2) {
-                console.log(quotes);
-                return reject('Not enough results');
-            }
-            let historicalQuotes:HistoricalQuote[] = quotes.map(q => new HistoricalQuote(q));
-            let todaysQuote = historicalQuotes[historicalQuotes.length - 1];
-            
-            let previousQuote = historicalQuotes[0];
-            let percent = ((todaysQuote.close - previousQuote.close) / previousQuote.close) * 100;
-            console.log(`${symbol} - Today's Quote (${formatDate(todaysQuote.date)}): ${todaysQuote.close} - Previous Quote (${formatDate(previousQuote.date)}): ${previousQuote.close} - ${percent}%`);
-            resolve(new StockClosePercent(symbol, percent));
-        });
+function getDaySentimentsForStocks(stocks: string[], date: Date): DaySentiment[] {
+    let daySentiments: DaySentiment[] = DaySentiment.parseArray(JSON.parse(fs.readFileSync(FileUtil.getResultsFileForDate(date), 'utf-8')));
+    return daySentiments.filter(daySentiment => {
+        return stocks.indexOf(daySentiment.stock.symbol) !== -1;
     });
 }
 
+function getSingle<T>(arr: T[]): T {
+    if (arr && arr.length > 0) {
+        return arr[0];
+    }
+    else {
+        return undefined;
+    }
+}
+
 export class StockClosePercent {
-    constructor(public symbol: string, public percent: number) {}
+    public percent: number;
+    constructor(public symbol: string, public futureQuote: number, public currentQuote: number) {
+        if (!futureQuote || !currentQuote) {
+            this.percent = 0;
+        }
+        else {
+            this.percent = ((futureQuote - currentQuote) / currentQuote) * 100;
+        }
+    }
 
     toString() {
         return `${this.symbol}: %${this.percent}`;
@@ -86,21 +82,9 @@ export class StockClosePercent {
         return earning;
     }
 }
-class HistoricalQuote {
-    date: Date;
-    open: number;
-    high: number;
-    low: number;
+
+type StockClose = {
+    stock: string;
     close: number;
-    volume: number;
-    symbol: string;
-    constructor(obj: any) {
-        this.date = obj.date;
-        this.open = obj.open;
-        this.high = obj.high;
-        this.low = obj.low;
-        this.close = obj.close;
-        this.volume = obj.volume;
-        this.symbol = obj.symbol;
-    }
-}
+};
+

@@ -73,7 +73,7 @@ export class DaySentiment {
                 //Legacy with StockActions
                 let stock = new Stock(result.stock.symbol, result.stock.keywords);
                 let d = result.daySentiments[result.daySentiments.length - 1];
-                let daySentiment = new DaySentiment(stock, new Date(d.day));
+                let daySentiment = new DaySentiment(stock, new Date(d.day.replace(/T../, 'T15')));
                 daySentiment.numTweets = d.numTweets;
                 daySentiment.totalSentiment = d.totalSentiment;
                 daySentiment.quoteDataResult = result.quoteDataResult || {
@@ -83,7 +83,8 @@ export class DaySentiment {
             }
             else {
                 let stock = new Stock(result.stock.symbol, result.stock.keywords);
-                let daySentiment = new DaySentiment(stock, new Date(result.day));
+                let daySentiment = new DaySentiment(stock, new Date(result.day.replace(/T../, 'T12')));
+                //console.log(result.day, daySentiment.day);
                 daySentiment.totalSentiment = result.totalSentiment;
                 daySentiment.numTweets = result.numTweets;
                 daySentiment.quoteDataResult = result.quoteDataResult;

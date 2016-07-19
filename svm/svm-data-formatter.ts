@@ -20,6 +20,7 @@ export async function getPredictions(todaysDaySentiments: DaySentiment[]): Promi
 	let allPreviousDaySentiments = await gatherPreviousDaySentiments();
 	let predictions = [];
 	todaysDaySentiments = todaysDaySentiments.filter(d => {
+		console.log(d.day, today);
 		return isSameDay(d.day, today);
 	});
 	todaysDaySentiments.forEach(todaysDaySentiment => {

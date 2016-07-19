@@ -37,9 +37,13 @@ export class FileUtil {
         FileUtil.resultsFileDate = path.join(userHome, `results-${formattedDate}.json`);
         FileUtil.earningsFileDate = path.join(userHome, `earnings-${formattedDate}.json`);
     }
+    static getResultsFileForDate(date: Date) {
+        const formattedDate = formatDate(date);
+        return  path.join(userHome, `results-${formattedDate}.json`);
+    }
 }
 
-function hashCode(s) {
+function hashCode(s: string): number {
     if (!s) {
         return 0;
     }
