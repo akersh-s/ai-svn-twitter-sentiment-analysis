@@ -84,7 +84,6 @@ export class DaySentiment {
             else {
                 let stock = new Stock(result.stock.symbol, result.stock.keywords);
                 let daySentiment = new DaySentiment(stock, new Date(result.day.replace(/T../, 'T12')));
-                //console.log(result.day, daySentiment.day);
                 daySentiment.totalSentiment = result.totalSentiment;
                 daySentiment.numTweets = result.numTweets;
                 daySentiment.quoteDataResult = result.quoteDataResult;
