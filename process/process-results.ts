@@ -8,6 +8,7 @@ import {StockAction} from '../sentiment/model/stock-action.model';
 import {Stock} from '../sentiment/model/stock.model';
 import {runSentiment, SvmResult} from '../svm';
 import {debug} from '../shared/util/log-util';
+import {yesterday} from '../shared/util/date-util';
 import {determineHighestEarners, StockClosePercent} from '../earnings';
 
 let argv = yargs.argv;
@@ -17,7 +18,10 @@ export async function processResults(): Promise<number> {
         process.exit(-1);
     }
 
-    let results: DaySentiment[] = DaySentiment.parseArray(JSON.parse(fs.readFileSync(FileUtil.resultsFileDate, 'utf-8')));
+    let results: DaySentiment[] = DaySentiment.parseArrayFromFile(FileUtil.resultsFileDate);
+    if (fs.existsSync(FileUtil.getResultsFileForDate(yesterday))) {
+        results = results.concat(DaySentiment.parseArrayFromFile(FileUtil.getResultsFileForDate(yesterday)));
+    }
 
     let svmResults: SvmResult[] = [];
     for (var i = 8; i > 0 && svmResults.length < 3; i--) {

@@ -1,6 +1,7 @@
 import {formatDate} from '../../shared/util/date-util'
 import {Stock} from './stock.model';
 import {Robinhood, QuoteDataResultBody, QuoteDataResult, FundamentalResponse} from '../../shared/robinhood.api';
+import * as fs from 'fs';
 
 export class DaySentiment {
     public totalSentiment: number = 0;
@@ -73,7 +74,7 @@ export class DaySentiment {
                 //Legacy with StockActions
                 let stock = new Stock(result.stock.symbol, result.stock.keywords);
                 let d = result.daySentiments[result.daySentiments.length - 1];
-                let daySentiment = new DaySentiment(stock, new Date(d.day.replace(/T../, 'T15')));
+                let daySentiment = new DaySentiment(stock, new Date(reformatDate(result.day)));
                 daySentiment.numTweets = d.numTweets;
                 daySentiment.totalSentiment = d.totalSentiment;
                 daySentiment.quoteDataResult = result.quoteDataResult || {
@@ -83,7 +84,7 @@ export class DaySentiment {
             }
             else {
                 let stock = new Stock(result.stock.symbol, result.stock.keywords);
-                let daySentiment = new DaySentiment(stock, new Date(result.day.replace(/T../, 'T12')));
+                let daySentiment = new DaySentiment(stock, new Date(reformatDate(result.day)));
                 daySentiment.totalSentiment = result.totalSentiment;
                 daySentiment.numTweets = result.numTweets;
                 daySentiment.quoteDataResult = result.quoteDataResult;
@@ -92,6 +93,10 @@ export class DaySentiment {
             }
         });
         return daySentiments;
+    }
+
+    static parseArrayFromFile(f: string): DaySentiment[] {
+        return DaySentiment.parseArray(JSON.parse(fs.readFileSync(f, 'utf-8')));
     }
 
     static findDaySentimentForSymbolAndDate(symbol: string, date: Date, daySentiments: DaySentiment[]): DaySentiment {
@@ -106,5 +111,16 @@ export class DaySentiment {
             }
         });
         return foundStockAction;
+    }
+}
+
+function reformatDate(s: string) {
+    const tIndex = s && s.indexOf('T');
+    if (tIndex !== -1) {
+        let d = s.substring(0, tIndex).replace(/-/g, '/');
+        return d;
+    }
+    else {
+        throw new Error('Some weird string formatting: ' + s);
     }
 }
