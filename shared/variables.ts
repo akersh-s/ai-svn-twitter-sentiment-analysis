@@ -1,16 +1,16 @@
 export class Variables {
     static priceThreshold: number = 4;
     static numDays: number = 2;
-    static numPreviousDaySentiments: number = 4;
+    static numPreviousDaySentiments: number = 5;
     static rbfsigma: number = 0.5;
     static C: number = 1.0;
 
     static includeSentimentChange: boolean = true;
     static includePriceChange: boolean = true;
     static includeNumTweetsChange: boolean = true;
-    static includeSentiment: boolean = false;
+    static includeSentiment: boolean = true;
     static includePrice: boolean = false;
-    static includeNumTweets: boolean = true;
+    static includeNumTweets: boolean = false;
 
     //Time
     static includeTime: boolean = false;

@@ -39,7 +39,17 @@ export function getPreviousWorkDay(date: Date): Date {
 }
 
 export function getDaysAgo(n: number): Date {
-    return new Date(+today - (n * oneDay));
+    let daysRemoved = 0, i = 0;
+    let posMultiplier = n >= 0 ? 1 : -1;
+    let date: Date = today;
+    while (daysRemoved <= Math.abs(n)) {
+        date = new Date(+today - (i * oneDay * posMultiplier));
+        if (!isWeekend(date)) {
+            daysRemoved++;
+        }
+        i++;
+    }
+    return date;
 }
 
 export function getUntilDate(day: Date): string {

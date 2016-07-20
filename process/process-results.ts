@@ -37,12 +37,8 @@ export async function processResults(): Promise<number> {
         if (buys.length > 0) {
             fs.writeFileSync(FileUtil.buyFile, JSON.stringify(buys, null, 4), 'utf-8');
             if (argv.past) {
-                let earnings: StockClosePercent[] = determineHighestEarners(buys)
-                let totalPercent = 0;
-                buys.forEach(buy => {
-                    totalPercent += StockClosePercent.findEarning(earnings, buy);
-                });
-                let earningPercent = totalPercent / buys.length;
+                const earnings: StockClosePercent[] = determineHighestEarners(buys)
+                const earningPercent = StockClosePercent.findAverage(earnings);
                 console.log(`Average Earning Percent: ${earningPercent}`);
                 resolve(earningPercent);
             }

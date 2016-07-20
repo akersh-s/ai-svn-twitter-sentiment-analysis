@@ -23,8 +23,8 @@ export function determineHighestEarners(stocks: string[]): StockClosePercent[] {
 
     const fromDateSentiments: DaySentiment[] = getDaySentimentsForStocks(stocks, fromDate);
     const toDateSentiments: DaySentiment[] = getDaySentimentsForStocks(stocks, toDate);
-    
-    let stockClosePercents:StockClosePercent[] = [];
+
+    let stockClosePercents: StockClosePercent[] = [];
     stocks.forEach(stock => {
         const fromDateSentiment = getSingle(fromDateSentiments.filter(s => s.stock.symbol === stock));
         const toDateSentiment = getSingle(toDateSentiments.filter(s => s.stock.symbol === stock));
@@ -81,10 +81,20 @@ export class StockClosePercent {
         })
         return earning;
     }
+
+    static findAverage(stockClosePercents: StockClosePercent[]): number {
+        if (stockClosePercents.length === 0) {
+            return 0;
+        }
+        let totalPercent = 0;
+        stockClosePercents.forEach(buy => {
+            totalPercent += StockClosePercent.findEarning(stockClosePercents, buy.symbol);
+        });
+        return totalPercent / stockClosePercents.length;
+    }
 }
 
 type StockClose = {
     stock: string;
     close: number;
 };
-
