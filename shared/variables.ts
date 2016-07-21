@@ -1,7 +1,7 @@
 export class Variables {
-    static priceThreshold: number = 4;
+    static priceThreshold: number = 3;
     static numDays: number = 2;
-    static numPreviousDaySentiments: number = 5;
+    static numPreviousDaySentiments: number = 7;
     static rbfsigma: number = 0.5;
     static C: number = 1.0;
 

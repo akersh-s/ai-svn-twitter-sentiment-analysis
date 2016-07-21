@@ -8,14 +8,14 @@ import {DaySentiment} from '../sentiment/model/day-sentiment.model';
 import {runSentiment, SvmResult} from './';
 import {processResults} from '../process/process-results';
 
-const dates = [new Date('07/13/2016'), new Date('07/15/2016')];
+const dates = [new Date('07/15/2016')];
 async function runTests() {
     for (let run = 1; run < 10000; run++) {
         console.log(`Run ${run}`);
 
         const priceThreshold = getRandomIntInclusive(0, 5);
         const numDays = getRandomIntInclusive(1, 4);
-        const numPreviousDaySentiments = getRandomIntInclusive(2, 5);
+        const numPreviousDaySentiments = getRandomIntInclusive(2, 7);
         const rbfsigma = 0.5;//getRandomBoolean ? 0.5 : getRandomIntInclusive(1e-3, 1e3);
         const C = 1;//getRandomBoolean() ? 1 : getRandomIntInclusive(1e-3, 1e3);
         const includeSentimentChange = getRandomBoolean();

@@ -9,6 +9,7 @@ import {Stock} from '../sentiment/model/stock.model';
 import {runSentiment, SvmResult} from '../svm';
 import {debug} from '../shared/util/log-util';
 import {yesterday} from '../shared/util/date-util';
+import {Variables} from '../shared/variables';
 import {determineHighestEarners, StockClosePercent} from '../earnings';
 
 let argv = yargs.argv;
@@ -24,12 +25,11 @@ export async function processResults(): Promise<number> {
     }
 
     let svmResults: SvmResult[] = [];
-    for (var i = 8; i > 0 && svmResults.length < 3; i--) {
-        console.log('Running SVM for Min Increase: ' + i);
-        svmResults = await runSentiment(results, i);
-    }
+    //for (var i = 6; i > 0 && svmResults.length < 3; i--) {}
+    debug('Running SVM for Min Increase: ' + Variables.priceThreshold);
+    svmResults = await runSentiment(results, Variables.priceThreshold);
+    debug(`Svm Results: ${svmResults.length} for Min Increase: ${Variables.priceThreshold}`);
 
-    debug(`Results Length: ${svmResults.length}`);
     let buys = svmResults.map(s => {
         return s.prediction.symbol.replace(/\$/, '');
     });

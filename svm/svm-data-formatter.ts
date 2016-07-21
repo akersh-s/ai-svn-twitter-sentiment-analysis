@@ -81,15 +81,16 @@ function readDaySentiments(f: string): Promise<DaySentiment[]> {
 async function formatSvmData(minIncrease: number): Promise<SvmData> {
 	let svmData = new SvmData();
 	let stocks = FileUtil.getStocks();
-	let groupedStocks: string[][] = group<string>(stocks, 500);
+	let groupedStocks: string[][] = group<string>(stocks, 1500);
 	let i = 0;
 
 	while (i < groupedStocks.length) {
 		let groupedStock: string[] = groupedStocks[i++];
 		let allPreviousDaySentiments: DaySentiment[] = await gatherPreviousDaySentiments(groupedStock);
 		groupedStock.forEach(stock => {
+			//debug(`SVM Data size: ${svmData.x.length}`);
 			let stockPreviousDaySentiments = allPreviousDaySentiments.filter(d => d.stock.symbol === stock);
-			debug(`Number of Previous Stock Actions for ${stock}: ${stockPreviousDaySentiments.length}, SVM Data size: ${svmData.x.length}`);
+
 			stockPreviousDaySentiments.forEach(daySentiment => {
 				let svmRecord = [];
 				let date = daySentiment.day;
