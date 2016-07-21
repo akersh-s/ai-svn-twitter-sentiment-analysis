@@ -29,7 +29,7 @@ export class DaySentiment {
     }
 
     get price():number {
-        return parseFloat(this.quoteDataResult.bid_price);
+        return parseFloat(this.quoteDataResult.last_trade_price);
     }
     
     get volume(): number {
@@ -78,7 +78,7 @@ export class DaySentiment {
                 daySentiment.numTweets = d.numTweets;
                 daySentiment.totalSentiment = d.totalSentiment;
                 daySentiment.quoteDataResult = result.quoteDataResult || {
-                    bid_price: result.price
+                    last_trade_price: result.price
                 };
                 daySentiments.push(daySentiment);
             }

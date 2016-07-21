@@ -29,7 +29,7 @@ async function runTests() {
         const includeHighChange = getRandomBoolean();
         const includeLowChange = getRandomBoolean();
         const includeVolumeChange = getRandomBoolean();
-        const kernelType = 'RBF';//['LINEAR', 'POLY', 'RBF', 'SIGMOID'][getRandomIntInclusive(0, 3)];
+        const kernelType = ['LINEAR', 'POLY', 'RBF', 'SIGMOID'][getRandomIntInclusive(0, 3)];
         const svmType = 'C_SVC';//['C_SVC', 'NU_SVC', 'ONE_CLASS', 'EPSILON_SVR', 'NU_SVR'][getRandomIntInclusive(0, 4)];
 
 
