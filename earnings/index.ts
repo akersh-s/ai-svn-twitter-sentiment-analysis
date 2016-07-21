@@ -10,6 +10,7 @@ import {Variables} from '../shared/variables';
 
 export function determineHighestEarners(stocks: string[]): StockClosePercent[] {
     let i = 0;
+    stocks = stocks.map(stock => stock.replace(/^\$?/, '$'));
 
     let fromDate: Date = today;
     let toDate: Date = getDaysAgo(Variables.numDays * -1);
