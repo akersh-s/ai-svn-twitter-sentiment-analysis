@@ -46,7 +46,6 @@ export async function getPredictions(todaysDaySentiments: DaySentiment[]): Promi
 }
 
 function gatherPreviousDaySentiments(stocks?: string[]): Promise<DaySentiment[]> {
-	debug('Gathering previous sentiments...');
 	let daySentiments: DaySentiment[] = [];
 	let promiseFuncs = [];
 	FileUtil.lastResultsFiles.forEach(f => {
@@ -82,6 +81,7 @@ async function formatSvmData(minIncrease: number): Promise<SvmData> {
 	let svmData = new SvmData();
 	let stocks = FileUtil.getStocks();
 	let groupedStocks: string[][] = group<string>(stocks, 1500);
+	groupedStocks = [groupedStocks[0]];
 	let i = 0;
 
 	while (i < groupedStocks.length) {

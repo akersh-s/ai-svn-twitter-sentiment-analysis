@@ -34,7 +34,7 @@ export async function runSentiment(daySentiments: DaySentiment[], minIncrease: n
         eps: 1e-3,
         cacheSize: 200,
         shrinking: true,
-        probability: false
+        probability: true
     });
     let svmParams = await collectSvmParams(daySentiments, minIncrease);
     return new Promise<SvmResult[]>((resolve, reject) => {
@@ -46,9 +46,10 @@ export async function runSentiment(daySentiments: DaySentiment[], minIncrease: n
             }).done(function () {
                 // predict things 
                 predictions.forEach(function (prediction) {
+                    let probRes = clf.predictProbabilitiesSync(prediction.data);
                     let p = clf.predictSync(prediction.data);
-                    if (p === 1) {
-                        console.log(`SVM - Buy ${prediction.symbol}`);
+                    if (p === 1 && probRes[1] > probRes[0]) {
+                        console.log(`SVM - Buy ${prediction.symbol} ${JSON.stringify(probRes)}`);
                         svmResults.push(new SvmResult(prediction, p));
                     }
                 });
