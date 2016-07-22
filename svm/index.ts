@@ -50,9 +50,16 @@ export async function runSentiment(daySentiments: DaySentiment[], minIncrease: n
                     let p = clf.predictSync(prediction.data);
                     if (p === 1 && probRes[1] > probRes[0]) {
                         console.log(`SVM - Buy ${prediction.symbol} ${JSON.stringify(probRes)}`);
-                        svmResults.push(new SvmResult(prediction, p));
+                        svmResults.push(new SvmResult(prediction, p, probRes[1]));
                     }
                 });
+
+                svmResults = svmResults.sort((b, a) => {
+                    return b.probability - a.probability;
+                }).filter((value, index) => {
+                    return index < 20;
+                });
+                
                 resolve(svmResults);
             });;
     });
@@ -77,7 +84,7 @@ export async function runSentiment(daySentiments: DaySentiment[], minIncrease: n
 }
 
 export class SvmResult {
-    constructor(public prediction: Prediction, public value: number) { }
+    constructor(public prediction: Prediction, public value: number, public probability: number) { }
 }
 
 function formatData(svmData, normalized): number[][] {

@@ -31,6 +31,7 @@ export async function processResults(): Promise<number> {
     debug(`Svm Results: ${svmResults.length} for Min Increase: ${Variables.priceThreshold}`);
 
     let buys = svmResults.map(s => {
+        console.log(`Buy ${s.prediction.symbol} with Probability ${s.probability}`);
         return s.prediction.symbol.replace(/\$/, '');
     });
     return new Promise<number>((resolve, reject) => {
