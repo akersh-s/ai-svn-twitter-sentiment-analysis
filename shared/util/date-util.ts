@@ -38,12 +38,13 @@ export function getPreviousWorkDay(date: Date): Date {
     return prevDate;
 }
 
-export function getDaysAgo(n: number): Date {
+export function getDaysAgo(n: number, refDate?: Date): Date {
+    refDate = refDate || today;
     let daysRemoved = 0, i = 0;
     let posMultiplier = n >= 0 ? 1 : -1;
-    let date: Date = today;
+    let date: Date = refDate;
     while (daysRemoved <= Math.abs(n)) {
-        date = new Date(+today - (i * oneDay * posMultiplier));
+        date = new Date(+refDate - (i * oneDay * posMultiplier));
         if (!isWeekend(date)) {
             daysRemoved++;
         }

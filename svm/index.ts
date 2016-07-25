@@ -57,7 +57,7 @@ export async function runSentiment(daySentiments: DaySentiment[], minIncrease: n
                 svmResults = svmResults.sort((a, b) => {
                     return b.probability - a.probability;
                 }).filter((value, index) => {
-                    return index < 20;
+                    return index < 5;
                 });
                 
                 resolve(svmResults);
