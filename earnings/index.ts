@@ -33,9 +33,6 @@ export function determineHighestEarners(stocks: string[]): StockClosePercent[] {
             stockClosePercents.push(new StockClosePercent(stock, toDateSentiment.price, fromDateSentiment.price));
         }
     });
-    stockClosePercents.sort((a, b) => {
-        return b.percent - a.percent;
-    });
     stockClosePercents.forEach(s => {
         console.log(s.toString());
     });

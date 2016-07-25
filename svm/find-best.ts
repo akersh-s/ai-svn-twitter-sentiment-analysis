@@ -8,7 +8,7 @@ import {DaySentiment} from '../sentiment/model/day-sentiment.model';
 import {runSentiment, SvmResult} from './';
 import {processResults} from '../process/process-results';
 
-const dates = [new Date('07/15/2016')];
+const dates = [new Date('07/19/2016')];
 async function runTests() {
     for (let run = 1; run < 10000; run++) {
         console.log(`Run ${run}`);
