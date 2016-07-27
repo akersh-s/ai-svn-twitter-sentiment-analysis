@@ -19,9 +19,7 @@ export async function getPredictions(todaysDaySentiments: DaySentiment[]): Promi
 	debug(`Collecting Predictions from ${todaysDaySentiments.length} sentiments`);
 	let allPreviousDaySentiments = await gatherPreviousDaySentiments();
 	let predictions = [];
-	todaysDaySentiments = todaysDaySentiments.filter(d => {
-		return isSameDay(d.day, today);
-	});
+
 	todaysDaySentiments.forEach(todaysDaySentiment => {
 		let price = todaysDaySentiment.price;
 		let isValid: boolean = !!price;
