@@ -17,8 +17,8 @@ export class Variables {
     static includeTimeChange: boolean = true;
 
     //Fundamentals
-    static includeHighChange: boolean = true;
-    static includeLowChange: boolean = true;
+    static includeHighChange: boolean = false;
+    static includeLowChange: boolean = false;
     static includeVolumeChange: boolean = true;
 
     static kernelType: string = 'RBF';

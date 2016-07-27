@@ -32,7 +32,7 @@ export async function runSentiment(daySentiments: DaySentiment[], minIncrease: n
         reduce: true,
         retainedVariance: 0.99,
         eps: 1e-3,
-        cacheSize: 200,
+        cacheSize: 400,
         shrinking: true,
         probability: true
     });
