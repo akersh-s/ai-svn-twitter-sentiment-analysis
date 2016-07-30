@@ -33,6 +33,7 @@ export class TwitterSearch {
         tweetSentiments.forEach(t => {
             daySentiment.addTweetSentiment(t.sentiment);
         });
+        daySentiment.tweetsComplete = true;
         return daySentiment;
     }
 

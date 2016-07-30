@@ -39,6 +39,7 @@ export class StockTwits {
         catch (e) {
             debug(e);
         }
+        daySentiment.twitsComplete = true;
         return daySentiment;
     }
 

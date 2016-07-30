@@ -202,6 +202,9 @@ export interface QuoteDataResult {
   symbol: string;
   trading_halted: boolean;
   updated_at: string;
+
+  //Delete these fields
+  instrument?: string;
 }
 
 export interface FundamentalResponse {
@@ -215,5 +218,8 @@ export interface FundamentalResponse {
   low_52_weeks: string;
   market_cap: string;
   pe_ratio: string;
-  description: string;
+
+  //Delete these fields
+  description?: string;
+  instrument?: string;
 }

@@ -9,6 +9,11 @@ export class DaySentiment {
     public quoteDataResult: QuoteDataResult;
     public fundamentals: FundamentalResponse;
 
+    public tweetsComplete: boolean = false;
+    public twitsComplete: boolean = false;
+    public priceComplete: boolean = false;
+
+
     constructor(public stock: Stock, public day: Date) { }
 
     addTweetSentiment(sentiment: number) {
@@ -28,10 +33,10 @@ export class DaySentiment {
         return formatDate(date) === formatDate(this.day);
     }
 
-    get price():number {
+    get price(): number {
         return parseFloat(this.quoteDataResult.last_trade_price);
     }
-    
+
     get volume(): number {
         if (!this.fundamentals || !this.fundamentals.volume) {
             return 0;
@@ -52,19 +57,52 @@ export class DaySentiment {
                 }
                 this.quoteDataResult = body.results[0];
                 let price = parseFloat(this.quoteDataResult.bid_price);
+                setTimeout(() => {
+                    robinhood.fundamentals(symbolFormatted, (err, response, body: FundamentalResponse) => {
+                        if (err) return reject(err);
 
-                robinhood.fundamentals(symbolFormatted, (err, response, body: FundamentalResponse) => {
-                    if (err) return reject(err);
+                        if (!body) {
+                            return reject('No fundamental results');
+                        }
 
-                    if (!body) {
-                        return reject('No fundamental results');
-                    }
-
-                    this.fundamentals = body;
-                    resolve(price);
-                })
+                        this.fundamentals = body;
+                        this.priceComplete = true;
+                        resolve(price);
+                    });
+                }, 100);
             });
         });
+    }
+
+    isComplete(): boolean {
+        return this.tweetsComplete && this.twitsComplete && this.priceComplete;
+    }
+
+    deleteUnusedFields(): DaySentiment {
+        delete this.fundamentals.instrument;
+        delete this.fundamentals.description;
+        delete this.quoteDataResult.instrument;
+
+        delete this.priceComplete;
+        delete this.twitsComplete;
+        delete this.tweetsComplete;
+
+        for (var property in this.stock) {
+            if (!this.stock[property]) {
+                delete this.stock[property];
+            }
+        }
+        for (var property in this.fundamentals) {
+            if (!this.fundamentals[property]) {
+                delete this.fundamentals[property];
+            }
+        }
+        for (var property in this.quoteDataResult) {
+            if (!this.quoteDataResult[property]) {
+                delete this.quoteDataResult[property];
+            }
+        }
+        return this;
     }
 
     static parseArray(a: any[]): DaySentiment[] {
@@ -102,7 +140,7 @@ export class DaySentiment {
     static findDaySentimentForSymbolAndDate(symbol: string, date: Date, daySentiments: DaySentiment[]): DaySentiment {
         let formattedDate = formatDate(date);
         let foundStockAction = null;
-        
+
         daySentiments.forEach(s => {
             let sDate = s.day;
             let sformattedDate = formatDate(sDate);

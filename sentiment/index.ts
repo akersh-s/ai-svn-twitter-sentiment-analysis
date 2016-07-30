@@ -1,5 +1,6 @@
 import * as fs from 'fs';
 import * as path from 'path';
+import * as async from 'async';
 
 import {Stock} from './model/stock.model';
 import {TwitterSearch} from './twitter';
@@ -7,60 +8,90 @@ import {StockTwits} from './stocktwits';
 import {FileUtil} from '../shared/util/file-util';
 import {DaySentiment} from './model/day-sentiment.model';
 import {today} from '../shared/util/date-util';
+import {debug} from '../shared/util/log-util';
 
-let i = 0;
 const twitter = new TwitterSearch();
-
-process.on('uncaughtException', function (err) {
+let results: DaySentiment[] = [];
+process.on('uncaughtException', function(err) {
     console.log('Error', err);
-    run();
 });
 
 run();
-async function run(): Promise<any> {
+function run(): Promise<any> {
     console.log('Starting');
     let stocks = FileUtil.getStocks();
-    let keywords = '';
-    while (i < stocks.length) {
-        let symbol = stocks[i++];
-        console.log(`Running ${symbol} (${i} / ${stocks.length})`);
-        let stock = new Stock(symbol, keywords);
-        try {
-            await getDaySentiment(stock);
-        }
-        catch (e) {
-            console.log(`Failed to get Day Sentiment for ${stock}.`);
-        }
-    }
-    return;
-}
+    const keywords = '';
+    const daySentiments: DaySentiment[] = stocks.map(s => {
+        const stock = new Stock(s, keywords);
+        return new DaySentiment(stock, today);
+    });
 
-function getDaySentiment(stock: Stock): Promise<any> {
-    
-    let stocktwits = new StockTwits(stock);
-    let daySentiment = new DaySentiment(stock, today);
     return new Promise<any>((resolve, reject) => {
-        try {
-            Promise.all([twitter.getTweetSentiment(daySentiment), stocktwits.processStocktwitsSentiment(daySentiment), daySentiment.addPrice()]).then(() => {
-                let results: DaySentiment[] = [];
-                if (fs.existsSync(FileUtil.resultsFile)) {
-                    results = JSON.parse(fs.readFileSync(FileUtil.resultsFile, 'utf-8'));
-                }
-                results.push(daySentiment);
-                let daySentimentStingified = JSON.stringify(results, null, 4)
-                fs.writeFileSync(FileUtil.resultsFile, daySentimentStingified, 'utf-8');
-                fs.writeFileSync(FileUtil.resultsFileDate, daySentimentStingified, 'utf-8');
-                resolve(1);
-            }, (err) => {
-                console.log(err);
-                resolve(0);
-            });
-        }
-        catch (e) {
-            console.log(e);
-            reject();
-        }
-
+        Promise.all([addTweets(daySentiments), addTwits(daySentiments), addPrices(daySentiments)]).then(() => {
+            processComplete(null, 0);
+            resolve(1);
+        }, (err) => {
+            console.log(err);
+            resolve(0);
+        });
     });
 }
 
+async function addTweets(daySentiments: DaySentiment[]): Promise<any> {
+    for (let i = 0; i < daySentiments.length; i++) {
+        const daySentiment = daySentiments[i];
+        debug(`Running Twitter ${daySentiment.stock.symbol} (${i} / ${daySentiments.length})`);
+        try { await twitter.getTweetSentiment(daySentiment); } catch (e) { };
+        processComplete(daySentiment, i);
+    }
+}
+
+async function addTwits(daySentiments: DaySentiment[]): Promise<any> {
+    return new Promise<any>((resolve, reject) => {
+        var q = async.queue((daySentiment: DaySentiment, cb) => {
+            const stocktwits = new StockTwits(daySentiment.stock);
+            const i = findIndex(daySentiment, daySentiments);
+            debug(`Running Stocktwits ${daySentiment.stock.symbol} (${i} / ${daySentiments.length})`);
+            stocktwits.processStocktwitsSentiment(daySentiment).then(() => {
+                processComplete(daySentiment, i);
+                cb();
+            }, () => {
+                processComplete(daySentiment, i);
+                cb();
+            });
+        }, 4);
+
+        q.push(daySentiments, () => {
+            resolve();
+        });
+    });
+}
+
+async function addPrices(daySentiments: DaySentiment[]): Promise<any> {
+    for (let i = 0; i < daySentiments.length; i++) {
+        const daySentiment = daySentiments[i];
+        debug(`Running Price ${daySentiment.stock.symbol} (${i} / ${daySentiments.length})`);
+        try { await daySentiment.addPrice(); } catch (e) { };
+        processComplete(daySentiment, i);
+    }
+}
+
+function processComplete(daySentiment: DaySentiment, index: number): void {
+    if (daySentiment && daySentiment.isComplete()) {
+        results.push(daySentiment.deleteUnusedFields());
+    }
+
+    if (index % 10 === 0) {
+        let daySentimentStingified = JSON.stringify(results, null, 4)
+        fs.writeFileSync(FileUtil.resultsFileDate, daySentimentStingified, 'utf-8');
+    }
+}
+
+function findIndex(daySentiment: DaySentiment, daySentiments: DaySentiment[]): number {
+    for (let i = 0; i < daySentiments.length; i++) {
+        if (daySentiments[i].stock.symbol === daySentiment.stock.symbol) {
+            return i;
+        }
+    }
+    return -1;
+}
