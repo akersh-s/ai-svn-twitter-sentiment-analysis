@@ -17,28 +17,35 @@ export async function getSvmData(minIncrease: number): Promise<SvmData> {
 
 export async function getPredictions(todaysDaySentiments: DaySentiment[]): Promise<Prediction[]> {
 	debug(`Collecting Predictions from ${todaysDaySentiments.length} sentiments`);
-	let allPreviousDaySentiments = await gatherPreviousDaySentiments();
 	let predictions = [];
 
-	todaysDaySentiments.forEach(todaysDaySentiment => {
-		let price = todaysDaySentiment.price;
-		let isValid: boolean = !!price;
-		let prevDaySentiment = todaysDaySentiment;
-		let collectedDaySentiments: DaySentiment[] = [prevDaySentiment];
-		let thisPreviousDaySentiments = allPreviousDaySentiments.filter(d => {
-			return d.stock.symbol === todaysDaySentiment.stock.symbol;
+	let groupedTodaysDaySentiments: DaySentiment[][] = group(todaysDaySentiments, 1500);
+	let i = 0;
+
+	while (i < groupedTodaysDaySentiments.length) {
+		let groupedTDS: DaySentiment[] = groupedTodaysDaySentiments[i++];
+		let allPreviousDaySentiments: DaySentiment[] = await gatherPreviousDaySentiments(groupedTDS.map(t => t.stock.symbol));
+		groupedTDS.forEach(todaysDaySentiment => {
+			let price = todaysDaySentiment.price;
+			let isValid: boolean = !!price;
+			let prevDaySentiment = todaysDaySentiment;
+			let collectedDaySentiments: DaySentiment[] = [prevDaySentiment];
+			let thisPreviousDaySentiments = allPreviousDaySentiments.filter(d => {
+				return d.stock.symbol === todaysDaySentiment.stock.symbol;
+			});
+			for (var i = 1; i < Variables.numPreviousDaySentiments; i++) {
+				prevDaySentiment = getPreviousDaySentiment(prevDaySentiment, thisPreviousDaySentiments);
+				prevDaySentiment && collectedDaySentiments.push(prevDaySentiment);
+			}
+			isValid = isValid && collectedDaySentiments.length === Variables.numPreviousDaySentiments;
+			isValid = isValid && collectedDaySentiments.some(d => d.numTweets > 0);
+			if (isValid) {
+				let x = createX(collectedDaySentiments);
+				predictions.push(new Prediction(todaysDaySentiment.stock.symbol, x));
+			}
 		});
-		for (var i = 1; i < Variables.numPreviousDaySentiments; i++) {
-			prevDaySentiment = getPreviousDaySentiment(prevDaySentiment, thisPreviousDaySentiments);
-			prevDaySentiment && collectedDaySentiments.push(prevDaySentiment);
-		}
-		isValid = isValid && collectedDaySentiments.length === Variables.numPreviousDaySentiments;
-		isValid = isValid && collectedDaySentiments.some(d => d.numTweets > 0);
-		if (isValid) {
-			let x = createX(collectedDaySentiments);
-			predictions.push(new Prediction(todaysDaySentiment.stock.symbol, x));
-		}
-	});
+	}
+
 	debug(`Completed collecting ${predictions.length} predictions.`);
 	return predictions;
 }
@@ -77,10 +84,11 @@ function readDaySentiments(f: string): Promise<DaySentiment[]> {
 
 async function formatSvmData(minIncrease: number): Promise<SvmData> {
 	let svmData = new SvmData();
+	let increases = [];
 	let stocks = FileUtil.getStocks();
 	let groupedStocks: string[][] = group<string>(stocks, 1500);
 	let i = 0;
-
+	
 	while (i < groupedStocks.length) {
 		let groupedStock: string[] = groupedStocks[i++];
 		let allPreviousDaySentiments: DaySentiment[] = await gatherPreviousDaySentiments(groupedStock);
@@ -109,7 +117,7 @@ async function formatSvmData(minIncrease: number): Promise<SvmData> {
 					const increasePercent = ((nextDaySentiment.price - daySentiment.price) / daySentiment.price) * 100;
 
 					let y = increasePercent > minIncrease ? 1 : 0;
-
+					increases.push(increasePercent);
 					//debug(`${daySentiment.stock.symbol}: ${nextDaySentiment.price} on ${formatDate(nextDaySentiment.day)}, ${daySentiment.price} on ${formatDate(date)} - Increase Percent: ${increasePercent}`)
 					let x = createX(collectedDaySentiments);
 					svmData.addRecord(x, y);
@@ -117,8 +125,13 @@ async function formatSvmData(minIncrease: number): Promise<SvmData> {
 			});
 		});
 	}
+	increases.sort((a, b) => b - a);
+	let t5i = Math.floor(increases.length * 0.05);
+	let t10i = Math.floor(increases.length * 0.1);
+	let t20i = Math.floor(increases.length * 0.2);
+	let t30i = Math.floor(increases.length * 0.3);
 
-	debug('Finished formatting SVM Data');
+	debug(`Finished formatting SVM Data... Top 5 Price: ${increases[t5i]}, Top 10 Price: ${increases[t10i]}, Top 20 Price: ${increases[t20i]}, Top 30 Price: ${increases[t30i]}`);
 	return svmData;
 }
 

@@ -20,9 +20,6 @@ export async function processResults(): Promise<number> {
     }
 
     let results: DaySentiment[] = DaySentiment.parseArrayFromFile(FileUtil.resultsFileDate);
-    if (fs.existsSync(FileUtil.getResultsFileForDate(yesterday))) {
-        results = results.concat(DaySentiment.parseArrayFromFile(FileUtil.getResultsFileForDate(yesterday)));
-    }
 
     let svmResults: SvmResult[] = [];
     //for (var i = 6; i > 0 && svmResults.length < 3; i--) {}

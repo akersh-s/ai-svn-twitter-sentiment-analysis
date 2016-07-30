@@ -7,7 +7,6 @@ import * as fs from 'fs';
 import * as path from 'path';
 import * as async from 'async';
 
-isNotWeekend();
 let argv = yargs.argv;
 let username = validate('username', argv.username);
 let password = validate('password', argv.password);

@@ -14,7 +14,9 @@ var svm = require('node-svm');
 
 export async function runSentiment(daySentiments: DaySentiment[], minIncrease: number): Promise<SvmResult[]> {
     let svmResults: SvmResult[] = [];
+    let startTime = Date.now();
     let predictions: Prediction[] = await getPredictions(daySentiments);
+    console.log(`Prediction run time: ${Math.ceil((Date.now() - startTime) / 1000)}s`);
     if (predictions.length === 0) {
         throw new Error('There is nothing to predict.');
     }
@@ -97,7 +99,9 @@ function formatData(svmData, normalized): number[][] {
 }
 
 async function collectSvmParams(daySentiments: DaySentiment[], minIncrease: number): Promise<any[]> {
+    let startTime = Date.now();
     let svmData = await getSvmData(minIncrease);
+    console.log(`SVM Data collection run time: ${Math.ceil((Date.now() - startTime) / 1000)}s`);
 
     //let normalized = normalize(svmData.x, predictions);
     //predictions = normalized.predictions;
