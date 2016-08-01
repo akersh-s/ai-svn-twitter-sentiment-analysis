@@ -2,6 +2,7 @@ import {Robinhood} from '../shared/robinhood.api';
 import {validate, isNotWeekend} from '../shared/validate';
 import {BuySymbol, determineNumToBuy} from './buy-symbol';
 import {FileUtil} from '../shared/util/file-util';
+import {Variables} from '../shared/variables';
 import * as yargs from 'yargs';
 import * as fs from 'fs';
 import * as path from 'path';
@@ -41,7 +42,7 @@ robinhood.login(() => {
             robinhood.get(account.portfolio, (err, response, body) => {
                 if (err) throw err;
 
-                const portionOfPreviousEquity = parseFloat(body.last_core_equity) / 4;
+                const portionOfPreviousEquity = parseFloat(body.last_core_equity) / Variables.numDays;
                 const maxAmountOfMoneyToSpend = Math.min(buyingPower, portionOfPreviousEquity);
                 determineNumToBuy(maxAmountOfMoneyToSpend, buySymbols);
 
