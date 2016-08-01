@@ -21,7 +21,7 @@ export class SellSymbol {
         let sellDate = getDaysAgo(Variables.numDays * -1, this.lastUpdate);
         sellDate = new Date(+sellDate - (oneDay / 2));
 
-        return +sellDate > Date.now();
+        return Date.now() > +sellDate;
     }
 }
 
