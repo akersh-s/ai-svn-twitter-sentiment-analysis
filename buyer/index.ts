@@ -23,48 +23,58 @@ robinhood.login(() => {
     robinhood.quote_data(stockSymbolsToBuy.join(','), (err, response, body) => {
         if (err) throw err;
 
-        let results = body.results;
-        let buySymbols: BuySymbol[] = [];
+        const results = body.results;
+        const buySymbols: BuySymbol[] = [];
         results.forEach((result) => {
             if (result && result.symbol) {
-              buySymbols.push(new BuySymbol(result.symbol, parseFloat(result.bid_price)));  
+                buySymbols.push(new BuySymbol(result.symbol, parseFloat(result.bid_price)));
             }
         });
         robinhood.accounts((err, response, body) => {
             if (err) throw err;
 
-            var account = body.results[0];
-            let buyingPower:number = parseFloat(account.buying_power);
-            determineNumToBuy(buyingPower, buySymbols);
-            console.log(JSON.stringify(buySymbols, null, 4));
+            const account = body.results[0];
+
+            const buyingPower: number = parseFloat(account.buying_power);
             
-            buyStocks(robinhood, buySymbols);
+            
+            robinhood.get(account.portfolio, (err, response, body) => {
+                if (err) throw err;
+
+                const portionOfPreviousEquity = parseFloat(body.last_core_equity) / 4;
+                const maxAmountOfMoneyToSpend = Math.min(buyingPower, portionOfPreviousEquity);
+                determineNumToBuy(maxAmountOfMoneyToSpend, buySymbols);
+
+                console.log(JSON.stringify(buySymbols, null, 4));
+                buyStocks(robinhood, buySymbols);
+            })
+            
         });
-        
+
     });
 });
 
 function buyStocks(robinhood: Robinhood, buySymbols: BuySymbol[]) {
     let asyncFuncs = [];
-    
+
     buySymbols.forEach((buySymbol) => {
-       asyncFuncs.push((done) => {
-           if (buySymbol.numToBuy === 0) {
-               return done();
-           }
-          //Sleep between purchases so it looks less automated.
-          setTimeout(() => {
-              console.log(`Requesting ${buySymbol.numToBuy} shares of ${buySymbol.symbol}...`);
-              robinhood.buy(buySymbol.symbol, buySymbol.numToBuy, (err, response, body) => {
-                 if (err) throw err;
-                 
-                 console.log(`Completed purchase request for ${buySymbol.numToBuy} shares of ${buySymbol.symbol}!`, body);
-                 done(); 
-              });
-          }, 10000); 
-       });
+        asyncFuncs.push((done) => {
+            if (buySymbol.numToBuy === 0) {
+                return done();
+            }
+            //Sleep between purchases so it looks less automated.
+            setTimeout(() => {
+                console.log(`Requesting ${buySymbol.numToBuy} shares of ${buySymbol.symbol}...`);
+                robinhood.buy(buySymbol.symbol, buySymbol.numToBuy, (err, response, body) => {
+                    if (err) throw err;
+
+                    console.log(`Completed purchase request for ${buySymbol.numToBuy} shares of ${buySymbol.symbol}!`, body);
+                    done();
+                });
+            }, 10000);
+        });
     });
-    
+
     async.series(asyncFuncs, () => {
         console.log('Completed purchases.');
     });

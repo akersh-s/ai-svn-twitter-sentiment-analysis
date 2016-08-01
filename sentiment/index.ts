@@ -59,7 +59,7 @@ async function addTwits(daySentiments: DaySentiment[]): Promise<any> {
                 processComplete(daySentiment, i);
                 cb();
             });
-        }, 4);
+        }, 5);
 
         q.push(daySentiments, () => {
             resolve();

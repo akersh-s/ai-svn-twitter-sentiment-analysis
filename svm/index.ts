@@ -41,13 +41,22 @@ export async function runSentiment(daySentiments: DaySentiment[], minIncrease: n
     let svmParams = await collectSvmParams(daySentiments, minIncrease);
     return new Promise<SvmResult[]>((resolve, reject) => {
         console.log('Running SVM...');
+        let ProgressBar = require('progress');
+        let lastTick:number = 0;
+        let bar = new ProgressBar('  SVM [:bar] :percent, ETA :etas, Elapsed :elapsed', {
+            complete: '=',
+            incomplete: ' ',
+            width: 30,
+            total: 1
+        })
         clf
             .train(svmParams)
-            .progress(function (rate) {
-                console.log(rate);
-            }).done(function () {
+            .progress((rate: number) => {
+                bar.tick(rate - lastTick);
+                lastTick = rate;
+            }).done(() => {
                 // predict things 
-                predictions.forEach(function (prediction) {
+                predictions.forEach((prediction) => {
                     let probRes = clf.predictProbabilitiesSync(prediction.data);
                     let p = clf.predictSync(prediction.data);
                     if (p === 1 && probRes[1] > probRes[0]) {
@@ -65,24 +74,6 @@ export async function runSentiment(daySentiments: DaySentiment[], minIncrease: n
                 resolve(svmResults);
             });;
     });
-
-
-
-    //const svm = new ml.SVM(await collectSvmParams(daySentiments, predictions));
-    /*svm.train({
-        C: Variables.C,
-        max_passes: 50,
-        kernel: { type: 'gaussian', sigma: Variables.rbfsigma }
-    });
-
-    predictions.forEach(prediction => {
-        let p = svm.predict(prediction.data);
-        if (p === 1) {
-            console.log(`SVM - Buy ${prediction.symbol}`);
-            svmResults.push(new SvmResult(prediction, p));
-        }
-    });
-    return svmResults;*/
 }
 
 export class SvmResult {
