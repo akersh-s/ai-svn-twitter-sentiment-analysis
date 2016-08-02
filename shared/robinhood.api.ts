@@ -69,6 +69,18 @@ export class Robinhood {
       });
     });
   }
+  loginPromise(): Promise<any> {
+    return new Promise<any>((resolve, reject) => {
+      try {
+        this.login(() => {
+          resolve();
+        });
+      }
+      catch (e) {
+        reject();
+      }
+    })
+  }
 
   accounts(cb: (err, response, body) => any) {
     return this.get(endpoints.accounts, cb);
@@ -79,6 +91,17 @@ export class Robinhood {
       uri: uri
     }, cb);
   }
+
+  getPromise(uri: string): Promise<any> {
+    return new Promise<any>((resolve, reject) => {
+      this.get(uri, (err, response, body) => {
+        if (err) return reject(err);
+
+        resolve(body);
+      });
+    });
+  }
+
   investment_profile(cb: (err, response, body) => any) {
     return this.get(endpoints.investment_profile, cb);
   }
@@ -118,6 +141,20 @@ export class Robinhood {
 
   positions(cb: (err, response, body) => any) {
     return this.get(endpoints.positions, cb);
+  }
+
+  positionsPromise(): Promise<any> {
+    return new Promise<any>((resolve, reject) => {
+      try {
+        this.positions((err, response, body) => {
+          if (err) return reject(err);
+          resolve(body);
+        });
+      }
+      catch (e) {
+        reject(e);
+      }
+    });
   }
 
   applications(cb: (err, response, body) => any) {

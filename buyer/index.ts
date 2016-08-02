@@ -18,9 +18,13 @@ if (!fs.existsSync(FileUtil.buyFile)) {
 }
 let stockSymbolsToBuy: string[] = JSON.parse(fs.readFileSync(FileUtil.buyFile, 'utf-8'));
 
-//Start
-let robinhood = new Robinhood(username, password);
-robinhood.login(() => {
+runBuyer();
+async function runBuyer(): Promise<any> {
+    //Start
+    let robinhood = new Robinhood(username, password);
+    await robinhood.loginPromise();
+
+    stockSymbolsToBuy = await filterOutNonOwnedStocks(robinhood, stockSymbolsToBuy);
     robinhood.quote_data(stockSymbolsToBuy.join(','), (err, response, body) => {
         if (err) throw err;
 
@@ -37,8 +41,8 @@ robinhood.login(() => {
             const account = body.results[0];
 
             const buyingPower: number = parseFloat(account.buying_power);
-            
-            
+
+
             robinhood.get(account.portfolio, (err, response, body) => {
                 if (err) throw err;
 
@@ -49,11 +53,36 @@ robinhood.login(() => {
                 console.log(JSON.stringify(buySymbols, null, 4));
                 buyStocks(robinhood, buySymbols);
             })
-            
+
         });
 
     });
-});
+}
+
+async function filterOutNonOwnedStocks(robinhood: Robinhood, stockList: string[]): Promise<string[]> {
+    const positionData = await robinhood.positionsPromise();
+    const positions = positionData.results;
+    const ownedSymbols: string[] = [];
+    for (let i = 0; i < positions.length; i++) {
+        const position = positions[i];
+        const quantity = parseFloat(position.quantity);
+        if (quantity > 0) {
+            try {
+                const instrumentData = await robinhood.getPromise(positions[i].instrument);
+                const symbol = instrumentData.symbol;
+                console.log(`Currently own ${quantity} shares of ${symbol}`);
+                ownedSymbols.push(symbol);
+            }
+            catch (e) {
+                console.log(e);
+            }
+        }
+        
+    }
+    const nonOwnedSymbols = stockList.filter(s => ownedSymbols.indexOf(s) === -1);
+    console.log(`Stocks not owned: ${nonOwnedSymbols.join(', ')}`)
+    return nonOwnedSymbols;
+}
 
 function buyStocks(robinhood: Robinhood, buySymbols: BuySymbol[]) {
     let asyncFuncs = [];
