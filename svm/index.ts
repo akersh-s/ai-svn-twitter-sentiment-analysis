@@ -11,6 +11,7 @@ import * as async from 'async';
 //let ml = require('machine_learning');
 //let svm = require('svm');
 var svm = require('node-svm');
+var isWin = process.platform === 'win32';
 
 export async function runSentiment(daySentiments: DaySentiment[], minIncrease: number): Promise<SvmResult[]> {
     let svmResults: SvmResult[] = [];
@@ -48,7 +49,7 @@ export async function runSentiment(daySentiments: DaySentiment[], minIncrease: n
             incomplete: ' ',
             width: 30,
             total: 1
-        })
+        });
         clf
             .train(svmParams)
             .progress((rate: number) => {

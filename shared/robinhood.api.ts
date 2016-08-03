@@ -86,6 +86,16 @@ export class Robinhood {
     return this.get(endpoints.accounts, cb);
   }
 
+  accountsPromise(): Promise<any> {
+    return new Promise<any>((resolve, reject) => {
+      this.accounts((err, response, body) => {
+        if (err) return reject(err);
+
+        resolve(body);
+      });
+    });
+  }
+
   get(uri: string, cb: (err, response, body) => any) {
     return this.request.get({
       uri: uri
@@ -118,6 +128,16 @@ export class Robinhood {
       uri: endpoints.quotes,
       qs: { symbols: symbol.toUpperCase(), statistics: true }
     }, cb);
+  }
+
+  quote_dataPromise(symbol: string): Promise<any> {
+    return new Promise<any>((resolve, reject) => {
+      this.quote_data(symbol, (err, response, body) => {
+        if (err) return reject(err);
+
+        return resolve(body);
+      });
+    });
   }
 
   statistics(symbol: string, cb: (err, response, body) => any) {
@@ -216,6 +236,16 @@ export class Robinhood {
 
   buy(symbol: string, quantity: number, callback: (err, response, body) => any) {
     return this.placeOrder(symbol, quantity, 'buy', callback);
+  }
+
+  buyPromise(symbol: string, quantity: number): Promise<any> {
+    return new Promise<any>((resolve, reject) => {
+      this.buy(symbol, quantity, (err, response, body) => {
+        if (err) return reject(err);
+
+        resolve(body);
+      });
+    });
   }
 
   sell(symbol: string, quantity: number, callback: (err, response, body) => any) {
