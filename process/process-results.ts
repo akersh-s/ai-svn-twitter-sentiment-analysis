@@ -8,7 +8,7 @@ import {StockAction} from '../sentiment/model/stock-action.model';
 import {Stock} from '../sentiment/model/stock.model';
 import {runSentiment, SvmResult} from '../svm';
 import {debug} from '../shared/util/log-util';
-import {yesterday} from '../shared/util/date-util';
+import {today} from '../shared/util/date-util';
 import {Variables} from '../shared/variables';
 import {determineHighestEarners, StockClosePercent} from '../earnings';
 
@@ -34,6 +34,7 @@ export async function processResults(): Promise<number> {
     return new Promise<number>((resolve, reject) => {
         if (buys.length > 0) {
             fs.writeFileSync(FileUtil.buyFile, JSON.stringify(buys, null, 4), 'utf-8');
+
             if (argv.past) {
                 const earnings: StockClosePercent[] = determineHighestEarners(buys)
                 const earningPercent = StockClosePercent.findAverage(earnings);
@@ -41,6 +42,10 @@ export async function processResults(): Promise<number> {
                 resolve(earningPercent);
             }
             else {
+                //Record the results in a results file.
+                const artifactBuyFile = FileUtil.getArtifactBuyFileForDate(today);
+                fs.writeFileSync(artifactBuyFile, JSON.stringify(svmResults, null, 4), 'utf-8');
+
                 resolve(0);
             }
         } else {

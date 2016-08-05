@@ -39,7 +39,15 @@ export class FileUtil {
     }
     static getResultsFileForDate(date: Date) {
         const formattedDate = formatDate(date);
-        return  path.join(userHome, `results-${formattedDate}.json`);
+        return path.join(userHome, `results-${formattedDate}.json`);
+    }
+    static getArtifactBuyFileForDate(date: Date) {
+        const formattedDate = formatDate(date);
+        const artifactBuyFolder = path.join(userHome, 'trade-artifacts');
+        if (!fs.existsSync(artifactBuyFolder)) {
+            fs.mkdirSync(artifactBuyFolder);
+        }
+        return path.join(artifactBuyFolder, `buy-${formattedDate}.json`);
     }
 }
 
