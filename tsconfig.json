@@ -9,5 +9,12 @@
         "removeComments": false,
         "noImplicitAny": false,
         "outDir": "build"
-    }
+    },
+    "files": [
+        "main.d.ts",
+        "typings/main.d.ts",
+        "typings/index.d.ts",
+        "sentiment/index.ts",
+        "svm/index.ts"
+    ]
 }
