@@ -39,6 +39,15 @@ export async function processResults(): Promise<number> {
                 const earnings: StockClosePercent[] = determineHighestEarners(buys)
                 const earningPercent = StockClosePercent.findAverage(earnings);
                 console.log(`Average Earning Percent: ${earningPercent}`);
+
+                //Record the results in a results file.
+                const artifactBuyFile = FileUtil.getArtifactBuyFileForDate(today);
+                fs.writeFileSync(artifactBuyFile, JSON.stringify({
+                    svmResults,
+                    earnings,
+                    earningPercent
+                }, null, 4), 'utf-8');
+
                 resolve(earningPercent);
             }
             else {
