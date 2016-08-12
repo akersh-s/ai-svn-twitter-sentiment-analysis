@@ -40,7 +40,7 @@ async function runBuyer(): Promise<any> {
 
     const portfolioBody = await robinhood.getPromise(account.portfolio);
 
-    const portionOfPreviousEquity = parseFloat(portfolioBody.last_core_equity) / (Variables.numDays - 1); // Allow for one day with no results.
+    const portionOfPreviousEquity = parseFloat(portfolioBody.last_core_equity) / (Variables.numDays - 2); // Allow for two days with no results.
     const amountOfMoneySpentToday = await getAmountOfMoneySpentToday(robinhood);
     const maxAmountOfMoneyToSpend = Math.max(0, Math.min(buyingPower - amountOfMoneySpentToday, portionOfPreviousEquity - amountOfMoneySpentToday));
     console.log(`Amount of money to spend: $${maxAmountOfMoneyToSpend}`);
