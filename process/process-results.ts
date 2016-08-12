@@ -24,7 +24,7 @@ export async function processResults(): Promise<number> {
     let svmResults: SvmResult[] = [];
     //for (var i = 6; i > 0 && svmResults.length < 3; i--) {}
     debug('Running SVM for Min Increase: ' + Variables.priceThreshold);
-    svmResults = await runSentiment(results, Variables.priceThreshold);
+    svmResults = await runSentiment();
     debug(`Svm Results: ${svmResults.length} for Min Increase: ${Variables.priceThreshold}`);
 
     let buys = svmResults.map(s => {

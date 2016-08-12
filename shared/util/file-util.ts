@@ -14,6 +14,8 @@ export class FileUtil {
     static buyFile: string = path.join(userHome, 'buy.json');
     static sellStatsFile: string = path.join(userHome, `sell-stats-${hashCode(username)}.json`);
     static svmFile: string = path.join(userHome, 'svm.json');
+    static svmData: string = path.join(userHome, 'svm-data.json');
+    static predictionData: string = path.join(userHome, 'prediction-data.json');
     static bestSearchFile: string = path.join(userHome, 'best-search.json');
     static earningsFileDate: string = path.join(userHome, `earnings-${formattedDate}.json`);
     static lastResultsFiles: string[] = FileUtil.collectLast45ResultFiles();
