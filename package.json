@@ -26,6 +26,7 @@
     "async": "^2.0.0-rc.3",
     "form-data": "^1.0.0-rc4",
     "google-finance": "^0.1.4",
+    "lodash": "^4.15.0",
     "machine_learning": "0.0.8",
     "node-svm": "^2.1.8",
     "progress": "^1.1.8",

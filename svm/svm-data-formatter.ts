@@ -1,4 +1,6 @@
 import * as fs from 'fs';
+import * as _ from 'lodash';
+
 import {oneDay, formatDate, isWeekend, isSameDay, today} from '../shared/util/date-util';
 import {Distribution, calculateBuyPrice, calculateMeanVarianceAndDeviation} from '../shared/util/math-util';
 import {FileUtil} from '../shared/util/file-util';
@@ -116,11 +118,13 @@ async function formatSvmData(): Promise<SvmData> {
 				if (isValidSvmItem && Math.random() > 0.2) {
 					const increasePercent = ((nextDaySentiment.price - daySentiment.price) / daySentiment.price) * 100;
 
-					let y = increasePercent > Variables.priceThreshold ? 1 : 0;
+					const y = increasePercent > Variables.priceThreshold ? 1 : 0;
 					increases.push(increasePercent);
 					//debug(`${daySentiment.stock.symbol}: ${nextDaySentiment.price} on ${formatDate(nextDaySentiment.day)}, ${daySentiment.price} on ${formatDate(date)} - Increase Percent: ${increasePercent}`)
-					let x = createX(collectedDaySentiments);
-					svmData.addRecord(x, y);
+					const xy = createX(collectedDaySentiments);
+					xy.push(y);
+
+					svmData.xy.push(xy);
 				}
 			});
 		});
@@ -132,6 +136,8 @@ async function formatSvmData(): Promise<SvmData> {
 	let t30i = Math.floor(increases.length * 0.3);
 
 	debug(`Finished formatting SVM Data... Top 5 Price: ${increases[t5i]}, Top 10 Price: ${increases[t10i]}, Top 20 Price: ${increases[t20i]}, Top 30 Price: ${increases[t30i]}`);
+	svmData.xy = _.sampleSize(svmData.xy, Variables.maxSvmData);
+	svmData.createXsYs();
 	return svmData;
 }
 
