@@ -113,7 +113,7 @@ async function formatSvmData(): Promise<SvmData> {
 				let nextDaySentiment: DaySentiment = isValidSvmItem && getDaySentimentInNDays(Variables.numDays, daySentiment, stockPreviousDaySentiments);
 				isValidSvmItem = isValidSvmItem && !!nextDaySentiment && !!nextDaySentiment.price;
 				isValidSvmItem = isValidSvmItem && collectedDaySentiments.filter(d => d.numTweets > 0).length >= 2;
-				if (isValidSvmItem) {
+				if (isValidSvmItem && Math.random() > 0.7) {
 					const increasePercent = ((nextDaySentiment.price - daySentiment.price) / daySentiment.price) * 100;
 
 					let y = increasePercent > Variables.priceThreshold ? 1 : 0;
