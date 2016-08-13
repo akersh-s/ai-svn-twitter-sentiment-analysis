@@ -49,19 +49,20 @@ export async function runSentiment(): Promise<SvmResult[]> {
 
     return new Promise<SvmResult[]>((resolve, reject) => {
         console.log('Running SVM...');
-        let ProgressBar = require('progress');
+        /*let ProgressBar = require('progress');
         let lastTick: number = 0;
         let bar = new ProgressBar('  SVM [:bar] :percent, ETA :etas, Elapsed :elapsed', {
             complete: '=',
             incomplete: ' ',
             width: 30,
             total: 1
-        });
+        });*/
         clf
             .train(getSvmDataFromFile())
             .progress((rate: number) => {
-                bar.tick(rate - lastTick);
-                lastTick = rate;
+                console.log(rate);
+                //bar.tick(rate - lastTick);
+                //lastTick = rate;
             }).done(() => {
                 const predictions = getPredictionsFromFile();
                 // predict things 
