@@ -24,7 +24,7 @@ export class Variables {
     static kernelType: string = 'RBF';
     static svmType: string = 'C_SVC';
 
-    static maxSvmData: number = 28000;
+    static maxSvmData: number = 26000;
 
     static includeFundamentals():boolean {
         return Variables.includeHighChange || Variables.includeLowChange || Variables.includeVolumeChange;
