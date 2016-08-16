@@ -48,7 +48,8 @@ export async function runSentiment(): Promise<SvmResult[]> {
     });
 
     return new Promise<SvmResult[]>((resolve, reject) => {
-        console.log('Running SVM...');
+        const startDate = new Date();
+        console.log('Running SVM...', startDate);
         /*let ProgressBar = require('progress');
         let lastTick: number = 0;
         let bar = new ProgressBar('  SVM [:bar] :percent, ETA :etas, Elapsed :elapsed', {
@@ -60,7 +61,8 @@ export async function runSentiment(): Promise<SvmResult[]> {
         clf
             .train(getSvmDataFromFile())
             .progress((rate: number) => {
-                console.log(rate);
+                let secondsGoneBy = Math.floor((Date.now() - +startDate) / 1000);
+                console.log(`Progress: ${rate} after ${secondsGoneBy}s`);
                 //bar.tick(rate - lastTick);
                 //lastTick = rate;
             }).done(() => {
@@ -69,18 +71,14 @@ export async function runSentiment(): Promise<SvmResult[]> {
                 predictions.forEach((prediction) => {
                     let probRes = clf.predictProbabilitiesSync(prediction.data);
                     let p = clf.predictSync(prediction.data);
-                    if (p === 1 || p === 0.5) {
-                        console.log(`SVM - Buy ${prediction.symbol} ${JSON.stringify(probRes)}`);
-                        svmResults.push(new SvmResult(prediction, p, probRes[1]));
-                    }
+                    console.log(probRes, p, typeof p);
+                    svmResults.push(new SvmResult(prediction, p, calculatePredictedIncrease(probRes)));
                 });
 
                 svmResults = svmResults.sort((a, b) => {
-                    const aIncrease = a['1'] + (a['0.5'] * 0.5);
-                    const bIncrease = b['1'] + (b['0.5'] * 0.5);
-                    return bIncrease - aIncrease;
+                    return b.probability - a.probability;
                 }).filter((value, index) => {
-                    return index < 5;
+                    return index < 5 && value.probability > 2;
                 });
 
                 resolve(svmResults);
@@ -126,4 +124,14 @@ async function collectSvmParams(daySentiments: DaySentiment[]): Promise<any[]> {
         formatted.push([svmData.x[i], svmData.y[i]]);
     }
     return formatted;
+}
+
+function calculatePredictedIncrease(probRes: any): number {
+    let predictedIncrease = 0;
+    for (let key in probRes) {
+        let possibleIncreasePercent = parseFloat(key);
+        let probabilityOf = probRes[key];
+        predictedIncrease += (possibleIncreasePercent * probabilityOf);
+    }
+    return predictedIncrease;
 }
