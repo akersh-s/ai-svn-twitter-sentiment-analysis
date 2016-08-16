@@ -20,7 +20,7 @@ export async function formatSentiment(): Promise<any> {
     if (predictions.length === 0) {
         throw new Error('There is nothing to predict.');
     }
-    fs.writeFileSync(FileUtil.predictionData, JSON.stringify(predictions), 'utf-8'); 
+    fs.writeFileSync(FileUtil.predictionData, JSON.stringify(predictions), 'utf-8');
 
     const svmParams = await collectSvmParams(daySentiments);
     fs.writeFileSync(FileUtil.svmData, JSON.stringify(svmParams), 'utf-8');
@@ -69,14 +69,16 @@ export async function runSentiment(): Promise<SvmResult[]> {
                 predictions.forEach((prediction) => {
                     let probRes = clf.predictProbabilitiesSync(prediction.data);
                     let p = clf.predictSync(prediction.data);
-                    if (p === 1 && probRes[1] > probRes[0]) {
+                    if (p === 1 || p === 0.5) {
                         console.log(`SVM - Buy ${prediction.symbol} ${JSON.stringify(probRes)}`);
                         svmResults.push(new SvmResult(prediction, p, probRes[1]));
                     }
                 });
 
                 svmResults = svmResults.sort((a, b) => {
-                    return b.probability - a.probability;
+                    const aIncrease = a['1'] + (a['0.5'] * 0.5);
+                    const bIncrease = b['1'] + (b['0.5'] * 0.5);
+                    return bIncrease - aIncrease;
                 }).filter((value, index) => {
                     return index < 5;
                 });

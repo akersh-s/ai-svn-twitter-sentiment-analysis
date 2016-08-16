@@ -118,7 +118,7 @@ async function formatSvmData(): Promise<SvmData> {
 				if (isValidSvmItem) {
 					const increasePercent = ((nextDaySentiment.price - daySentiment.price) / daySentiment.price) * 100;
 
-					const y = increasePercent > Variables.priceThreshold ? 1 : 0;
+					const y = increasePercent > Variables.priceThreshold ? 1 : increasePercent > (Variables.priceThreshold / 2) ? 0.5 : 0;
 					increases.push(increasePercent);
 					//debug(`${daySentiment.stock.symbol}: ${nextDaySentiment.price} on ${formatDate(nextDaySentiment.day)}, ${daySentiment.price} on ${formatDate(date)} - Increase Percent: ${increasePercent}`)
 					const xy = createX(collectedDaySentiments);
@@ -217,7 +217,7 @@ function getDaySentimentInNDays(n: number, daySentiment: DaySentiment, allPrevio
 }
 
 function createX(daySentiments: DaySentiment[]): number[] {
-	let x = [];
+	let x: number[] = [];
 	for (var i = 0; i < daySentiments.length - 2; i++) {
 		var d1 = daySentiments[i];
 		var d2 = daySentiments[i + 1];
