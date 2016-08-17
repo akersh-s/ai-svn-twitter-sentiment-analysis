@@ -17,7 +17,7 @@ export async function formatSentiment(): Promise<any> {
     fs.writeFileSync(FileUtil.svmData, JSON.stringify(svmParams), 'utf-8');
 }
 
-export async function runSentiment(): Promise<SvmResult[]> {
+export async function runSvm(): Promise<SvmResult[]> {
     let svmResults: SvmResult[] = [];
     const clf = new svm.SVM({
         svmType: Variables.svmType,
@@ -56,30 +56,11 @@ export async function runSentiment(): Promise<SvmResult[]> {
                 console.log(`Progress: ${rate} after ${secondsGoneBy}s`);
                 //bar.tick(rate - lastTick);
                 //lastTick = rate;
-            }).done(async function () {
-                let daySentiments: DaySentiment[] = DaySentiment.parseArrayFromFile(FileUtil.resultsFileDate);
-                let startTime = Date.now();
-                let predictions: Prediction[] = await getPredictions(daySentiments);
-                console.log(`Prediction run time: ${Math.ceil((Date.now() - startTime) / 1000)}s`);
-                if (predictions.length === 0) {
-                    throw new Error('There is nothing to predict.');
-                }
-                //const predictions = getPredictionsFromFile();
-                // predict things 
-                predictions.forEach((prediction) => {
-                    let probRes = clf.predictProbabilitiesSync(prediction.data);
-                    let p = clf.predictSync(prediction.data);
-                    svmResults.push(new SvmResult(prediction, p, calculatePredictedIncrease(probRes)));
-                });
+            }).spread(async function (trainedModel, trainingReport) {
+                fs.writeFileSync(FileUtil.svmModelFile, JSON.stringify(trainedModel), 'utf-8');
 
-                svmResults = svmResults.sort((a, b) => {
-                    return b.probability - a.probability;
-                }).filter((value, index) => {
-                    return index < 5 && value.probability > 2;
-                });
-
-                resolve(svmResults);
-            });;
+                resolve();
+            });
     });
 }
 function getSvmDataFromFile(): any[] {
@@ -121,14 +102,4 @@ async function collectSvmParams(): Promise<any[]> {
         formatted.push([svmData.x[i], svmData.y[i]]);
     }
     return formatted;
-}
-
-function calculatePredictedIncrease(probRes: any): number {
-    let predictedIncrease = 0;
-    for (let key in probRes) {
-        let possibleIncreasePercent = parseFloat(key);
-        let probabilityOf = probRes[key];
-        predictedIncrease += (possibleIncreasePercent * probabilityOf);
-    }
-    return predictedIncrease;
 }

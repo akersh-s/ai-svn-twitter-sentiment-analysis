@@ -6,11 +6,12 @@ import {FileUtil} from '../shared/util/file-util';
 import {DaySentiment} from '../sentiment/model/day-sentiment.model';
 import {StockAction} from '../sentiment/model/stock-action.model';
 import {Stock} from '../sentiment/model/stock.model';
-import {runSentiment, SvmResult} from '../svm';
+import {SvmResult} from '../svm';
 import {debug} from '../shared/util/log-util';
 import {today} from '../shared/util/date-util';
 import {Variables} from '../shared/variables';
 import {determineHighestEarners, StockClosePercent} from '../earnings';
+import {predict} from '../svm/predict';
 
 let argv = yargs.argv;
 export async function processResults(): Promise<number> {
@@ -21,11 +22,7 @@ export async function processResults(): Promise<number> {
 
     let results: DaySentiment[] = DaySentiment.parseArrayFromFile(FileUtil.resultsFileDate);
 
-    let svmResults: SvmResult[] = [];
-    //for (var i = 6; i > 0 && svmResults.length < 3; i--) {}
-    debug('Running SVM for Min Increase: ' + Variables.priceThreshold);
-    svmResults = await runSentiment();
-    debug(`Svm Results: ${svmResults.length} for Min Increase: ${Variables.priceThreshold}`);
+    let svmResults: SvmResult[] = await predict();
 
     let buys = svmResults.map(s => {
         console.log(`Buy ${s.prediction.symbol} with Probability ${s.probability}`);
