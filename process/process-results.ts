@@ -23,7 +23,7 @@ export async function processResults(): Promise<number> {
     let results: DaySentiment[] = DaySentiment.parseArrayFromFile(FileUtil.resultsFileDate);
 
     let svmResults: SvmResult[] = await predict();
-
+    console.log(`Results: ${svmResults.length}`);
     let buys = svmResults.map(s => {
         console.log(`Buy ${s.prediction.symbol} with Probability ${s.probability}`);
         return s.prediction.symbol.replace(/\$/, '');
