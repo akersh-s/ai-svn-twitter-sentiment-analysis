@@ -23,19 +23,26 @@ export async function predict(): Promise<SvmResult[]> {
     if (predictions.length === 0) {
         throw new Error('There is nothing to predict.');
     }
-    //const predictions = getPredictionsFromFile();
-    // predict things 
-    predictions.forEach((prediction) => {
-        let probRes = clf.predictProbabilitiesSync(prediction.data);
-        let p = clf.predictSync(prediction.data);
-        svmResults.push(new SvmResult(prediction, p, calculatePredictedIncrease(probRes)));
-    });
 
-    svmResults = svmResults.sort((a, b) => {
-        return b.probability - a.probability;
-    }).filter((value, index) => {
-        return index < 5 && value.probability > 2;
-    });
+    // Make predictions
+    try {
+        predictions.forEach((prediction) => {
+            console.log(prediction.symbol);
+            let probRes = clf.predictProbabilitiesSync(prediction.data);
+            let p = clf.predictSync(prediction.data);
+            svmResults.push(new SvmResult(prediction, p, calculatePredictedIncrease(probRes)));
+        });
+
+        svmResults = svmResults.sort((a: SvmResult, b: SvmResult) => {
+            return b.probability - a.probability;
+        }).filter((value: SvmResult, index: number) => {
+            return index < 5 && value.probability > 2;
+        });
+    }
+    catch (e) {
+        console.log(e);
+        throw e;
+    }
 
     return svmResults;
 }
