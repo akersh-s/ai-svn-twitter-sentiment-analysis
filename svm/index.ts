@@ -13,16 +13,7 @@ const svm = require('node-svm');
 const isWin = process.platform === 'win32';
 
 export async function formatSentiment(): Promise<any> {
-    let daySentiments: DaySentiment[] = DaySentiment.parseArrayFromFile(FileUtil.resultsFileDate);
-    let startTime = Date.now();
-    let predictions: Prediction[] = await getPredictions(daySentiments);
-    console.log(`Prediction run time: ${Math.ceil((Date.now() - startTime) / 1000)}s`);
-    if (predictions.length === 0) {
-        throw new Error('There is nothing to predict.');
-    }
-    fs.writeFileSync(FileUtil.predictionData, JSON.stringify(predictions), 'utf-8');
-
-    const svmParams = await collectSvmParams(daySentiments);
+    const svmParams = await collectSvmParams();
     fs.writeFileSync(FileUtil.svmData, JSON.stringify(svmParams), 'utf-8');
 }
 
@@ -65,13 +56,19 @@ export async function runSentiment(): Promise<SvmResult[]> {
                 console.log(`Progress: ${rate} after ${secondsGoneBy}s`);
                 //bar.tick(rate - lastTick);
                 //lastTick = rate;
-            }).done(() => {
-                const predictions = getPredictionsFromFile();
+            }).done(async function () {
+                let daySentiments: DaySentiment[] = DaySentiment.parseArrayFromFile(FileUtil.resultsFileDate);
+                let startTime = Date.now();
+                let predictions: Prediction[] = await getPredictions(daySentiments);
+                console.log(`Prediction run time: ${Math.ceil((Date.now() - startTime) / 1000)}s`);
+                if (predictions.length === 0) {
+                    throw new Error('There is nothing to predict.');
+                }
+                //const predictions = getPredictionsFromFile();
                 // predict things 
                 predictions.forEach((prediction) => {
                     let probRes = clf.predictProbabilitiesSync(prediction.data);
                     let p = clf.predictSync(prediction.data);
-                    console.log(probRes, p, typeof p);
                     svmResults.push(new SvmResult(prediction, p, calculatePredictedIncrease(probRes)));
                 });
 
@@ -106,7 +103,7 @@ function formatData(svmData, normalized): number[][] {
     return formatted;
 }
 
-async function collectSvmParams(daySentiments: DaySentiment[]): Promise<any[]> {
+async function collectSvmParams(): Promise<any[]> {
     let startTime = Date.now();
     let svmData = await getSvmData();
     console.log(`SVM Data collection run time: ${Math.ceil((Date.now() - startTime) / 1000)}s`);
