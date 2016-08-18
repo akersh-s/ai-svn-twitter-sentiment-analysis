@@ -27,7 +27,6 @@ export async function predict(): Promise<SvmResult[]> {
     // Make predictions
     try {
         predictions.forEach((prediction) => {
-            console.log(prediction.symbol);
             let probRes = clf.predictProbabilitiesSync(prediction.data);
             let p = clf.predictSync(prediction.data);
             svmResults.push(new SvmResult(prediction, p, calculatePredictedIncrease(probRes)));
@@ -36,7 +35,7 @@ export async function predict(): Promise<SvmResult[]> {
         svmResults = svmResults.sort((a: SvmResult, b: SvmResult) => {
             return b.probability - a.probability;
         }).filter((value: SvmResult, index: number) => {
-            return index < 5 && value.probability > 2;
+            return index < 5 && value.probability > 0;
         });
     }
     catch (e) {
