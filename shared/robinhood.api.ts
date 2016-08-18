@@ -224,10 +224,8 @@ export class Robinhood {
         if (err) throw err;
 
         var quoteData = body.results[0];
-        const lastTradePrice = parseFloat(quoteData.last_trade_price);
-        const sellPrice = parseFloat(quoteData.bid_price);
-        const compare = transaction === 'buy' ? Math.min : Math.max;
-        form.price = compare(lastTradePrice, sellPrice) + '';
+        const bidPrice = parseFloat(quoteData.bid_price);
+        form.price = bidPrice + '';
 
         return this.request.post({
           uri: endpoints.orders,
