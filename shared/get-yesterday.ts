@@ -1,4 +1,3 @@
-import {oneDay} from './util/date-util';
+import {yesterday} from './util/date-util';
 
-let time = Date.now() - oneDay;
-console.log(new Date(time));
+console.log(yesterday);
