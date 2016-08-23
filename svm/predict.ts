@@ -29,7 +29,7 @@ export async function predict(): Promise<SvmResult[]> {
         predictions.forEach((prediction) => {
             let probRes = clf.predictProbabilitiesSync(prediction.data);
             let p = clf.predictSync(prediction.data);
-            svmResults.push(new SvmResult(prediction, p, calculatePredictedIncrease(probRes)));
+            svmResults.push(new SvmResult(prediction, p, probRes['1']));
         });
 
         svmResults = svmResults.sort((a: SvmResult, b: SvmResult) => {
