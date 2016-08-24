@@ -33,7 +33,7 @@ export async function runSvm(): Promise<SvmResult[]> {
         reduce: true,
         retainedVariance: 0.99,
         eps: 1e-3,
-        cacheSize: 200,
+        cacheSize: 40 * 1000, // 40 GB (WTF!!!)
         shrinking: true,
         probability: true
     });
