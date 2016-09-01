@@ -8,13 +8,14 @@ export class SellSymbol {
     constructor(public symbol: string, public price: number, public quantity: number, public lastUpdate: Date) {}
     
     isReadyToSell(): boolean {
-        const sellStat = sellStats.findForSymbol(this.symbol);
+        /*const sellStat = sellStats.findForSymbol(this.symbol);
         if (!this.hasEnoughTimeElapsed() || !sellStat) {
             return false;
         } 
         var allowedDropAmount = sellStat.price * sellCurrentPrice;
         
-        return this.price < allowedDropAmount;
+        return this.price < allowedDropAmount;*/
+        return this.hasEnoughTimeElapsed();
     }
 
     hasEnoughTimeElapsed(): boolean {
