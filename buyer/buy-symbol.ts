@@ -1,4 +1,5 @@
 import {BuyUtil} from './buy.util';
+import {Robinhood} from '../shared/robinhood.api';
 
 export class BuySymbol {
     numToBuy: number = 0;
@@ -9,7 +10,7 @@ export function determineNumToBuy(buyPower: number, buySymbols: BuySymbol[]): vo
     if (buySymbols.length === 0) {
         return;
     }
-    let currentPower = buyPower * 0.95; //Robinhood only allows you spend 95%
+    let currentPower = buyPower;
     let shareForEach = currentPower / buySymbols.length;
     buySymbols.forEach((buySymbol) => {
         var amountToSpend = Math.max(buySymbol.price, shareForEach);

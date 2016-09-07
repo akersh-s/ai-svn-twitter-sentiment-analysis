@@ -81,7 +81,7 @@ function lookupPrice(quoteData: QuoteDataResult[], symbol: string): number {
     let price = 0;
     quoteData.forEach((quoteItem) => {
         if (quoteItem.symbol === symbol) {
-            price = parseFloat(quoteItem.bid_price);
+            price = parseFloat(quoteItem.ask_price);
         }
     });
     return price;

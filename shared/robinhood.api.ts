@@ -130,8 +130,8 @@ export class Robinhood {
     }, cb);
   }
 
-  quote_dataPromise(symbol: string): Promise<any> {
-    return new Promise<any>((resolve, reject) => {
+  quote_dataPromise(symbol: string): Promise<QuoteDataResultBody> {
+    return new Promise<QuoteDataResultBody>((resolve, reject) => {
       this.quote_data(symbol, (err, response, body) => {
         if (err) return reject(err);
 
@@ -259,7 +259,7 @@ export interface QuoteDataResultBody {
 }
 export interface QuoteDataResult {
   ask_price: string;
-  ask_size: number;
+  ask_size: string;
   bid_price: string;
   bid_size: number;
   last_trade_price: string;

@@ -42,7 +42,7 @@ async function runBuyer(): Promise<any> {
 
     const portionOfPreviousEquity = parseFloat(portfolioBody.last_core_equity) / (Variables.numDays - 2); // Allow for one day with no results.
     const amountOfMoneySpentToday = await getAmountOfMoneySpentToday(robinhood);
-    const maxAmountOfMoneyToSpend = Math.max(0, Math.min(buyingPower - amountOfMoneySpentToday, portionOfPreviousEquity - amountOfMoneySpentToday));
+    const maxAmountOfMoneyToSpend = Math.max(0, Math.min((buyingPower - amountOfMoneySpentToday) * 0.95, portionOfPreviousEquity - amountOfMoneySpentToday));
     console.log(`Amount of money to spend: $${maxAmountOfMoneyToSpend}`);
     determineNumToBuy(maxAmountOfMoneyToSpend, buySymbols);
 
@@ -99,11 +99,17 @@ async function buyStocks(robinhood: Robinhood, buySymbols: BuySymbol[]) {
 
     for (let i = 0; i < buySymbols.length; i++) {
         let buySymbol = buySymbols[i];
-
-        console.log(`Requesting ${buySymbol.numToBuy} shares of ${buySymbol.symbol} at price $${buySymbol.price}...`);
-        body = await robinhood.buyPromise(buySymbol.symbol, buySymbol.numToBuy);
-        console.log(`Completed purchase request for ${buySymbol.numToBuy} shares of ${buySymbol.symbol}!`, body);
-        await sleep(1000);
+        let remainingToBuy: number = buySymbol.numToBuy;
+        while (remainingToBuy > 0) {
+            const quoteData = await robinhood.quote_dataPromise(buySymbol.symbol);
+            const size = parseFloat(quoteData.results[0].ask_size);
+            const sizeToRequest = Math.min(remainingToBuy, size);
+            console.log(`Requesting ${sizeToRequest} shares of ${buySymbol.symbol} at price $${buySymbol.price}... Ask size is ${size}`);
+            body = await robinhood.buyPromise(buySymbol.symbol, sizeToRequest);
+            console.log(`Completed purchase request for ${sizeToRequest} shares of ${buySymbol.symbol}!`, body);
+            remainingToBuy -= sizeToRequest;
+            await sleep(Math.floor(Math.random() * 10000));
+        }
     }
 
     console.log('Completed purchases.');
