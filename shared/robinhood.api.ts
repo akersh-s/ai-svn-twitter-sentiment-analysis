@@ -224,12 +224,12 @@ export class Robinhood {
         if (err) throw err;
 
         var quoteData = body.results[0];
-        const bidPrice = parseFloat(quoteData.bid_price);
-        form.price = bidPrice + '';
+        const price = transaction === 'buy' ? parseFloat(quoteData.bid_price) : parseFloat(quoteData.ask_price);
+        form.price = price + '';
 
         return this.request.post({
           uri: endpoints.orders,
-          form: form
+          form
         }, cb);
       });
     });

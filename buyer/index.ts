@@ -73,7 +73,7 @@ async function filterOutNonOwnedStocks(robinhood: Robinhood, stockList: SvmResul
 
     }
     const nonOwnedSymbols = stockList.filter(s => ownedSymbols.indexOf(s.prediction.symbol.replace(/\$/, '')) === -1);
-    console.log(`Stocks not owned: ${nonOwnedSymbols.join(', ')}`)
+    console.log(`Stocks not owned: ${nonOwnedSymbols.map(n => n.prediction.symbol).join(', ')}`)
     return nonOwnedSymbols;
 }
 
@@ -101,17 +101,10 @@ async function buyStocks(robinhood: Robinhood, buySymbols: BuySymbol[]) {
 
     for (let i = 0; i < buySymbols.length; i++) {
         let buySymbol = buySymbols[i];
-        let remainingToBuy: number = buySymbol.numToBuy;
-        while (remainingToBuy > 0) {
-            const quoteData = await robinhood.quote_dataPromise(buySymbol.symbol);
-            const size = parseFloat(quoteData.results[0].ask_size);
-            const sizeToRequest = Math.min(remainingToBuy, size);
-            console.log(`Requesting ${sizeToRequest} shares of ${buySymbol.symbol} at price $${buySymbol.price}... Ask size is ${size}`);
-            body = await robinhood.buyPromise(buySymbol.symbol, sizeToRequest);
-            console.log(`Completed purchase request for ${sizeToRequest} shares of ${buySymbol.symbol}!`, body);
-            remainingToBuy -= sizeToRequest;
-            await sleep(Math.floor(Math.random() * 10000));
-        }
+        console.log(`Requesting ${buySymbol.numToBuy} shares of ${buySymbol.symbol} at price $${buySymbol.price}...`);
+        body = await robinhood.buyPromise(buySymbol.symbol, buySymbol.numToBuy);
+        console.log(`Completed purchase request for ${buySymbol.numToBuy} shares of ${buySymbol.symbol}!`, body);
+        await sleep(Math.floor(Math.random() * 10000));
     }
 
     console.log('Completed purchases.');
