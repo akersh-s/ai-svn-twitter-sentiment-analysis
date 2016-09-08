@@ -2,6 +2,7 @@ import {Robinhood} from '../shared/robinhood.api';
 import {validate, isNotWeekend} from '../shared/validate';
 import {today, formatDate} from '../shared/util/date-util';
 import {BuySymbol, determineNumToBuy} from './buy-symbol';
+import {SvmResult} from '../svm';
 import {FileUtil} from '../shared/util/file-util';
 import {Variables} from '../shared/variables';
 import * as yargs from 'yargs';
@@ -17,7 +18,7 @@ if (!fs.existsSync(FileUtil.buyFile)) {
     console.log(`Buy file is missing. Exiting.`);
     process.exit(-1);
 }
-let stockSymbolsToBuy: string[] = JSON.parse(fs.readFileSync(FileUtil.buyFile, 'utf-8'));
+let stockSymbolsToBuy: SvmResult[] = SvmResult.readArrayFromFile(FileUtil.buyFile);
 
 runBuyer();
 async function runBuyer(): Promise<any> {
@@ -26,12 +27,14 @@ async function runBuyer(): Promise<any> {
     await robinhood.loginPromise();
 
     stockSymbolsToBuy = await filterOutNonOwnedStocks(robinhood, stockSymbolsToBuy);
-    const quoteDataBody = await robinhood.quote_dataPromise(stockSymbolsToBuy.join(','));
+    stockSymbolsToBuy = stockSymbolsToBuy.filter(svmResult => svmResult.probability > 0.3);
+    const quoteDataBody = await robinhood.quote_dataPromise(stockSymbolsToBuy.map((svmResult => svmResult.prediction.symbol.replace(/\$/, ''))).join(','));
     const results = quoteDataBody.results;
     const buySymbols: BuySymbol[] = [];
     results.forEach((result) => {
         if (result && result.symbol) {
-            buySymbols.push(new BuySymbol(result.symbol, parseFloat(result.bid_price)));
+            const svmResult: SvmResult = stockSymbolsToBuy.find(s => s.prediction.symbol.replace(/\$/, '') === result.symbol);
+            svmResult && buySymbols.push(new BuySymbol(result.symbol, parseFloat(result.bid_price), svmResult));
         }
     });
     const accounts = await robinhood.accountsPromise();
@@ -40,17 +43,16 @@ async function runBuyer(): Promise<any> {
 
     const portfolioBody = await robinhood.getPromise(account.portfolio);
 
-    const portionOfPreviousEquity = parseFloat(portfolioBody.last_core_equity) / (Variables.numDays - 2); // Allow for one day with no results.
-    const amountOfMoneySpentToday = await getAmountOfMoneySpentToday(robinhood);
-    const maxAmountOfMoneyToSpend = Math.max(0, Math.min((buyingPower - amountOfMoneySpentToday) * 0.95, portionOfPreviousEquity - amountOfMoneySpentToday));
+    const previousEquity = parseFloat(portfolioBody.last_core_equity);
+    const maxAmountOfMoneyToSpend = Math.max(0, Math.min(buyingPower * 0.95, previousEquity));
     console.log(`Amount of money to spend: $${maxAmountOfMoneyToSpend}`);
-    determineNumToBuy(maxAmountOfMoneyToSpend, buySymbols);
+    determineNumToBuy(maxAmountOfMoneyToSpend, previousEquity, buySymbols);
 
     console.log(JSON.stringify(buySymbols, null, 4));
     await buyStocks(robinhood, buySymbols);
 }
 
-async function filterOutNonOwnedStocks(robinhood: Robinhood, stockList: string[]): Promise<string[]> {
+async function filterOutNonOwnedStocks(robinhood: Robinhood, stockList: SvmResult[]): Promise<SvmResult[]> {
     const positionData = await robinhood.positionsPromise();
     const positions = positionData.results;
     const ownedSymbols: string[] = [];
@@ -70,7 +72,7 @@ async function filterOutNonOwnedStocks(robinhood: Robinhood, stockList: string[]
         }
 
     }
-    const nonOwnedSymbols = stockList.filter(s => ownedSymbols.indexOf(s) === -1);
+    const nonOwnedSymbols = stockList.filter(s => ownedSymbols.indexOf(s.prediction.symbol.replace(/\$/, '')) === -1);
     console.log(`Stocks not owned: ${nonOwnedSymbols.join(', ')}`)
     return nonOwnedSymbols;
 }

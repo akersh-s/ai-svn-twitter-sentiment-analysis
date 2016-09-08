@@ -30,7 +30,7 @@ export async function processResults(): Promise<number> {
     });
     return new Promise<number>((resolve, reject) => {
         if (buys.length > 0) {
-            fs.writeFileSync(FileUtil.buyFile, JSON.stringify(buys, null, 4), 'utf-8');
+            fs.writeFileSync(FileUtil.buyFile, JSON.stringify(svmResults, null, 4), 'utf-8');
 
             if (argv.past) {
                 const earnings: StockClosePercent[] = determineHighestEarners(buys)
