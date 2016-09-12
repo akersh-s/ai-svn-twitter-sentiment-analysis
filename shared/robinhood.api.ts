@@ -3,6 +3,9 @@
 import * as request from 'request';
 import {RequestAPI, Request, CoreOptions} from 'request';
 
+import * as yargs from 'yargs';
+const argv = yargs.argv;
+
 let endpoints = {
   login: 'https://api.robinhood.com/api-token-auth/',
   investment_profile: 'https://api.robinhood.com/user/investment_profile/',
@@ -207,7 +210,7 @@ export class Robinhood {
       quantity: quantity,
       side: transaction,
       symbol: symbol.toUpperCase(),
-      time_in_force: 'gfd',
+      time_in_force: 'ioc',
       trigger: 'immediate',
       type: 'market',
       instrument: null,
@@ -224,9 +227,13 @@ export class Robinhood {
         if (err) throw err;
 
         var quoteData = body.results[0];
-        const price = transaction === 'buy' ? parseFloat(quoteData.bid_price) : parseFloat(quoteData.ask_price);
+        const bidPrice = parseFloat(quoteData.bid_price);
+        const askPrice = parseFloat(quoteData.ask_price);
+        const betweenPrice = ((bidPrice * 0.75) + (askPrice * 0.25)).toFixed(2);
+        console.log(`${symbol} - Bid Price: ${bidPrice}, Ask Price: ${askPrice}, Between: ${betweenPrice}`);
+        const price = argv.desperate ? betweenPrice : transaction === 'buy' ? bidPrice : askPrice;
         form.price = price + '';
-
+        console.log(`Requesting ${quantity} ${symbol} stocks at $${price}`);
         return this.request.post({
           uri: endpoints.orders,
           form

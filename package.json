@@ -8,6 +8,7 @@
     "best": "ts-node svm/find-best.ts --today='06/16/2016' --debug --past",
     "sentiment": "sh sentiment.sh",
     "buy": "sh buy.sh",
+    "buy-desperate": "sh buy-desperate.sh",
     "sell": "sh sell.sh",
     "compile": "tsc --outDir generated sentiment-search/index.ts"
   },
