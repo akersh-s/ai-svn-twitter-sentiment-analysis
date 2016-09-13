@@ -210,7 +210,7 @@ export class Robinhood {
       quantity: quantity,
       side: transaction,
       symbol: symbol.toUpperCase(),
-      time_in_force: 'ioc',
+      time_in_force: 'gfd',
       trigger: 'immediate',
       type: 'market',
       instrument: null,
