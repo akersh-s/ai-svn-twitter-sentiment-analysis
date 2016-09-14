@@ -237,7 +237,15 @@ export class Robinhood {
         return this.request.post({
           uri: endpoints.orders,
           form
-        }, cb);
+        }, (err, response, body) => {
+          if (body && body.detail && body.detail.indexOf('You can only purchase ') !== -1) {
+            const newQuantity = parseFloat(body.detail.replace(/You can only purchase (\d+).*/, '$1'))
+            this.placeOrder(symbol, newQuantity, transaction, cb);
+          }
+          else {
+            cb(err, response, body);
+          }
+        });
       });
     });
   }
