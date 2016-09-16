@@ -2,7 +2,7 @@ import {Robinhood} from '../shared/robinhood.api';
 import {validate, isNotWeekend} from '../shared/validate';
 import {today, formatDate} from '../shared/util/date-util';
 import {BuySymbol, determineNumToBuy} from './buy-symbol';
-import {SvmResult} from '../svm';
+import {SvmResult} from '../svm/svm-result';
 import {FileUtil} from '../shared/util/file-util';
 import {Variables} from '../shared/variables';
 import * as yargs from 'yargs';
@@ -27,7 +27,7 @@ async function runBuyer(): Promise<any> {
     await robinhood.loginPromise();
 
     stockSymbolsToBuy = await filterOutNonOwnedStocks(robinhood, stockSymbolsToBuy);
-    stockSymbolsToBuy = stockSymbolsToBuy.filter(svmResult => svmResult.probability > 0.3);
+    stockSymbolsToBuy = stockSymbolsToBuy.filter(svmResult => svmResult.probability > 0.4);
     const quoteDataBody = await robinhood.quote_dataPromise(stockSymbolsToBuy.map((svmResult => svmResult.prediction.symbol.replace(/\$/, ''))).join(','));
     const results = quoteDataBody.results;
     const buySymbols: BuySymbol[] = [];
