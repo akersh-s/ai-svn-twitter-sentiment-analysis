@@ -1,6 +1,6 @@
 import {BuyUtil} from './buy.util';
 import {Robinhood} from '../shared/robinhood.api';
-import {SvmResult} from '../svm';
+import {SvmResult} from '../svm/svm-result';
 
 export class BuySymbol {
     numToBuy: number = 0;

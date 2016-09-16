@@ -9,6 +9,8 @@ let username = argv.username;
 let userHome = process.env[(process.platform == 'win32') ? 'USERPROFILE' : 'HOME'];
 let formattedDate = formatDate(today);
 export class FileUtil {
+    static userHome: string = userHome;
+    static tradeArtifacts: string = path.join(userHome, 'trade-artifacts');
     static resultsFile: string = path.join(userHome, 'results.json');
     static resultsFileDate: string = path.join(userHome, `results-${formattedDate}.json`);
     static buyFile: string = path.join(userHome, 'buy.json');

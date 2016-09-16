@@ -5,7 +5,7 @@ import {Variables} from '../shared/variables';
 import {FileUtil} from '../shared/util/file-util';
 import {setToday, formatDate} from '../shared/util/date-util';
 import {DaySentiment} from '../sentiment/model/day-sentiment.model';
-import {SvmResult} from './';
+import {SvmResult} from './svm-result';
 import {processResults} from '../process/process-results';
 
 const dates = [new Date('07/15/2016'), new Date('07/19/2016')];

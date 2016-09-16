@@ -1,4 +1,6 @@
 import * as fs from 'fs';
+import * as async from 'async';
+
 import {DaySentiment} from '../sentiment/model/day-sentiment.model';
 import {Variables} from '../shared/variables';
 import {today, formatDate} from '../shared/util/date-util';
@@ -6,8 +8,7 @@ import {FileUtil} from '../shared/util/file-util';
 import {normalize} from './normalize';
 import {getSvmData, getPredictions} from './svm-data-formatter';
 import {Prediction} from './prediction.model';
-
-import * as async from 'async';
+import {SvmResult} from './svm-result';
 
 const svm = require('node-svm');
 const isWin = process.platform === 'win32';
@@ -69,20 +70,6 @@ function getSvmDataFromFile(): any[] {
 
 function getPredictionsFromFile(): Prediction[] {
     return JSON.parse(fs.readFileSync(FileUtil.predictionData, 'utf-8'));
-}
-
-export class SvmResult {
-    constructor(public prediction: Prediction, public value: number, public probability: number) { }
-
-    static readArrayFromFile(f: string): SvmResult[] {
-        const arr: any[] = JSON.parse(fs.readFileSync(f, 'utf-8'));
-        const svmResults: SvmResult[] = [];
-        arr.forEach(item => {
-            const prediction = new Prediction(item.prediction.symbol, item.prediction.data);
-            svmResults.push(new SvmResult(prediction, item.value, item.probability));
-        });
-        return svmResults;
-    }
 }
 
 function formatData(svmData, normalized): number[][] {

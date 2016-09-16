@@ -6,7 +6,7 @@ import {FileUtil} from '../shared/util/file-util';
 import {DaySentiment} from '../sentiment/model/day-sentiment.model';
 import {StockAction} from '../sentiment/model/stock-action.model';
 import {Stock} from '../sentiment/model/stock.model';
-import {SvmResult} from '../svm';
+import {SvmResult} from '../svm/svm-result';
 import {debug} from '../shared/util/log-util';
 import {today} from '../shared/util/date-util';
 import {Variables} from '../shared/variables';

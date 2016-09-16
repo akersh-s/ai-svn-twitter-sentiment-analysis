@@ -6,7 +6,7 @@ import {FileUtil} from '../shared/util/file-util';
 import {normalize} from './normalize';
 import {getSvmData, getPredictions} from './svm-data-formatter';
 import {Prediction} from './prediction.model';
-import {SvmResult} from './';
+import {SvmResult} from './svm-result';
 
 import * as async from 'async';
 
