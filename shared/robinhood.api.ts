@@ -158,8 +158,13 @@ export class Robinhood {
     return this.get(endpoints.dividends, cb);
   }
 
-  orders(cb: (err, response, body) => any) {
-    return this.get(endpoints.orders, cb);
+  orders(): Promise<OrderResponseBody> {
+    return new Promise<OrderResponseBody>((resolve, reject) => {
+      this.get(endpoints.orders, (err, response, body) => {
+        if (err) return reject(err);
+        return resolve(body)
+      });
+    });
   }
 
   positions(cb: (err, response, body) => any) {
@@ -264,8 +269,14 @@ export class Robinhood {
     });
   }
 
-  sell(symbol: string, quantity: number, callback: (err, response, body) => any) {
-    return this.placeOrder(symbol, quantity, 'sell', callback);
+  sell(symbol: string, quantity: number): Promise<any> {
+    return new Promise<any>((resolve, reject) => {
+      this.placeOrder(symbol, quantity, 'sell', (err, response, body) => {
+        if (err) return reject(err);
+
+        resolve(body);
+      });
+    });
   }
 }
 
@@ -305,4 +316,30 @@ export interface FundamentalResponse {
   //Delete these fields
   description?: string;
   instrument?: string;
+}
+
+export interface OrderResponseBody {
+  results: Order[]
+}
+
+export interface Order {
+  updated_at: string;
+  time_in_force: string;
+  fees: string;
+  id: string;
+  cumulative_quantity: string;
+  instrument: string;
+  state: string; //filled
+  trigger: string; //immediate
+  type: string; //market
+  last_transaction_at: string; //Date
+  price: string; //number
+  executions: any[];
+  account: string;
+  url: string;
+  created_at: string;
+  side: string; //buy or sell
+  position: string;
+  average_price: string;
+  quantity: string;
 }

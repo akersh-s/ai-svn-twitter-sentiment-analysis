@@ -1,8 +1,8 @@
 'use strict';
 
-import {Robinhood, QuoteDataResult} from '../shared/robinhood.api';
-import {validate, isNotWeekend} from '../shared/validate';
-import {SellSymbol, sellStats} from './sell-symbol';
+import { Robinhood, QuoteDataResult } from '../shared/robinhood.api';
+import { validate, isNotWeekend } from '../shared/validate';
+import { SellSymbol, hasEnoughTimeElapsedFromDate } from './sell-symbol';
 import * as yargs from 'yargs';
 import * as async from 'async';
 
@@ -12,79 +12,39 @@ let username = validate('username', argv.username);
 let password = validate('password', argv.password);
 
 //Start
-let robinhood = new Robinhood(username, password);
-robinhood.login(() => {
-    robinhood.positions((err, response, body) => {
-        if (err) throw err;
-
-        let asyncFuncs = [];
-        let results: PositionResult[] = body.results;
-        results.forEach((result) => {
-            let quantity: number = parseFloat(result.quantity);
-            let lastUpdate: Date = new Date(result.updated_at);
-            if (quantity > 0) {
-                asyncFuncs.push((done) => {
-                    robinhood.get(result.instrument, (err, response, body: InstrumentResult) => {
-                        if (err) throw err;
-
-                        console.log(body.symbol);
-                        let symbol: string = body.symbol;
-                        done(null, new SellSymbolNoPrice(symbol, quantity, lastUpdate));
-                    });
-                });
-            }
-        });
-
-        async.series(asyncFuncs, (err, sellSymbolNoPrices: SellSymbolNoPrice[]) => {
-            let symbols: string[] = sellSymbolNoPrices.map(s => s.symbol);
-            robinhood.quote_data(symbols.join(','), (err, response, body) => {
-                if (err) throw err;
-                console.log(body, symbols.join(','));
-                let quoteData = body.results;
-                let sellSymbols = [];
-                sellSymbolNoPrices.forEach((s) => {
-                    let price = lookupPrice(quoteData, s.symbol);
-                    sellSymbols.push(new SellSymbol(s.symbol, price, s.quantity, s.lastUpdate));
-                });
-                sellStocks(sellSymbols)
-            });
-        });
-
+async function run() {
+    let robinhood = new Robinhood(username, password);
+    await robinhood.loginPromise();
+    const positions = await robinhood.positionsPromise();
+    let results: PositionResult[] = positions.results;
+    results = results.filter(r => parseFloat(r.quantity) > 0);
+    const orderResponseBody = await robinhood.orders();
+    let orders = orderResponseBody.results;
+    let sellSymbolPromises: Promise<SellSymbol>[] = orders.filter(o => {
+        const hasEnoughTimeElapsed = hasEnoughTimeElapsedFromDate(new Date(o.created_at));
+        const currentlyOwned = !!results.find(r => r.instrument === o.instrument);
+        return o.state !== 'cancelled' && o.side === 'buy' && hasEnoughTimeElapsed && currentlyOwned;
+    }).map(async function(o) {
+        let instrument: InstrumentResult = await robinhood.getPromise(o.instrument);
+        return new SellSymbol(instrument.symbol, parseFloat(o.quantity), new Date(o.created_at));
     });
-});
+    let sellSymbols: SellSymbol[] = await Promise.all(sellSymbolPromises);
+    sellStocks(robinhood, sellSymbols);
+}
+run();
 
-function sellStocks(sellSymbols: SellSymbol[]) {
+
+async function sellStocks(robinhood: Robinhood, sellSymbols: SellSymbol[]) {
     let asyncFuncs = [];
 
-    sellSymbols.forEach(sellSymbol => {
+    sellSymbols.forEach(async function(sellSymbol) {
         if (sellSymbol.isReadyToSell()) {
-            console.log(`${sellSymbol.symbol} is ready to sell`);
-            asyncFuncs.push((done) => {
-                setTimeout(() => {
-                    console.log(`Selling ${sellSymbol.quantity} shares of ${sellSymbol.symbol}.`)
-                    robinhood.sell(sellSymbol.symbol, sellSymbol.quantity, (err, response, body) => {
-                       done(err, body); 
-                    });
-                }, 1000);
-            });
+            console.log(`${sellSymbol.symbol} is ready to sell - ${sellSymbol.quantity} stocks`);
+            const response = await robinhood.sell(sellSymbol.symbol, sellSymbol.quantity);
+            console.log(response);
         }
     })
-
-
-    async.series(asyncFuncs, () => {
-        console.log('Completed selling.');
-        sellStats.update(sellSymbols);
-    });
-}
-
-function lookupPrice(quoteData: QuoteDataResult[], symbol: string): number {
-    let price = 0;
-    quoteData.forEach((quoteItem) => {
-        if (quoteItem.symbol === symbol) {
-            price = parseFloat(quoteItem.ask_price);
-        }
-    });
-    return price;
+    console.log('Completed selling.');
 }
 
 interface PositionResult {
@@ -115,8 +75,4 @@ interface InstrumentResult {
     id: string;
     market: string; //url
     name: string;
-}
-
-class SellSymbolNoPrice {
-    constructor(public symbol: string, public quantity: number, public lastUpdate: Date) { }
 }

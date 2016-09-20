@@ -81,7 +81,7 @@ function getDaySentimentsForStocks(stocks: string[], date: Date): DaySentiment[]
         return stocks.indexOf(daySentiment.stock.symbol) !== -1;
     });
 }
-results = results.filter(r => r.probability > 0.6 && r.probability < 1.0)
+results = results.filter(r => r.probability > 0 && r.probability < 0.3)
 results.forEach(r => console.log(r.toString()));
 const totalPrice = results.map(a => a.changePrice).reduce((a, b) => a + b);
 console.log(`Total: ${results.length}, Average Gain: ${totalPrice / results.length}`)
