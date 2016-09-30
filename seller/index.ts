@@ -28,7 +28,8 @@ async function run() {
         let instrument: InstrumentResult = await robinhood.getPromise(o.instrument);
         return new SellSymbol(instrument.symbol, parseFloat(o.quantity), new Date(o.created_at));
     });
-    let sellSymbols: SellSymbol[] = await Promise.all(sellSymbolPromises);
+    const completed = Promise.all(sellSymbolPromises);
+    let sellSymbols: SellSymbol[] = await completed;
     sellStocks(robinhood, sellSymbols);
 }
 run();
