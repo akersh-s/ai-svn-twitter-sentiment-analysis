@@ -27,7 +27,7 @@ async function runBuyer(): Promise<any> {
     await robinhood.loginPromise();
 
     stockSymbolsToBuy = await filterOutNonOwnedStocks(robinhood, stockSymbolsToBuy);
-    stockSymbolsToBuy = stockSymbolsToBuy.filter(svmResult => svmResult.probability > 0.4);
+    stockSymbolsToBuy = stockSymbolsToBuy.filter(svmResult => svmResult.probability > 0.5);
     const quoteDataBody = await robinhood.quote_dataPromise(stockSymbolsToBuy.map((svmResult => svmResult.prediction.symbol.replace(/\$/, ''))).join(','));
     const results = quoteDataBody.results;
     const buySymbols: BuySymbol[] = [];
