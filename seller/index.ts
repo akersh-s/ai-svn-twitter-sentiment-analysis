@@ -25,12 +25,12 @@ async function run() {
         const currentlyOwned = !!results.find(r => r.instrument === o.instrument);
         return o.state !== 'cancelled' && o.side === 'buy' && hasEnoughTimeElapsed && currentlyOwned;
     }).map(async function(o) {
-        let instrument: InstrumentResult = await robinhood.getPromise(o.instrument);
+        const instrument: InstrumentResult = await robinhood.getPromise(o.instrument);
         return new SellSymbol(instrument.symbol, parseFloat(o.quantity), new Date(o.created_at));
     });
     const completed = Promise.all(sellSymbolPromises);
-    let sellSymbols: SellSymbol[] = await completed;
-    sellStocks(robinhood, sellSymbols);
+    const sellSymbols: SellSymbol[] = await completed;
+    sellStocks(robinhood, sellSymbols); 
 }
 run();
 
