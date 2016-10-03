@@ -1,7 +1,7 @@
 'use strict';
 
 import * as request from 'request';
-import {RequestAPI, Request, CoreOptions} from 'request';
+import { RequestAPI, Request, CoreOptions } from 'request';
 
 import * as yargs from 'yargs';
 const argv = yargs.argv;
@@ -28,7 +28,10 @@ let endpoints = {
   watchlists: 'https://api.robinhood.com/watchlists/',
   positions: 'https://api.robinhood.com/positions/',
   portfolios: 'https://api.robinhood.com/portfolios/',
-  fundamentals: 'https://api.robinhood.com/fundamentals/' // Need to concatenate symbol to end.
+  fundamentals: 'https://api.robinhood.com/fundamentals/', // Need to concatenate symbol to end.
+  cancel(orderId: string) {
+    return `https://api.robinhood.com/orders/${orderId}/cancel/`
+  }
 };
 
 export class Robinhood {
@@ -96,6 +99,15 @@ export class Robinhood {
 
         resolve(body);
       });
+    });
+  }
+
+  cancel(orderId: string): Promise<any> {
+    return new Promise<any>((resolve, reject) => {
+      this.request.post(endpoints.cancel(orderId), (err, response, body) => {
+        if (err) return reject(err);
+        resolve(body);
+      })
     });
   }
 
@@ -210,7 +222,7 @@ export class Robinhood {
   }
 
   private placeOrder(symbol: string, quantity: number, transaction: string, cb: (err, response, body) => any) {
-    let form = {
+    const form: OrderForm = {
       account: this.account,
       quantity: quantity,
       side: transaction,
@@ -219,7 +231,7 @@ export class Robinhood {
       trigger: 'immediate',
       type: 'market',
       instrument: null,
-      price: null
+      price: undefined
     };
 
     this.instruments(symbol, (err, response, body) => {
@@ -234,10 +246,10 @@ export class Robinhood {
         var quoteData = body.results[0];
         const bidPrice = parseFloat(quoteData.bid_price);
         const askPrice = parseFloat(quoteData.ask_price);
-        const betweenPrice = ((bidPrice * 0.75) + (askPrice * 0.25)).toFixed(2);
+        const betweenPrice = parseFloat(((bidPrice * 0.75) + (askPrice * 0.25)).toFixed(2));
         console.log(`${symbol} - Bid Price: ${bidPrice}, Ask Price: ${askPrice}, Between: ${betweenPrice}`);
         const price = argv.desperate ? betweenPrice : transaction === 'buy' ? bidPrice : askPrice;
-        form.price = price + '';
+        form.price = price;
         console.log(`Requesting ${quantity} ${symbol} stocks at $${price}`);
         return this.request.post({
           uri: endpoints.orders,
@@ -343,3 +355,16 @@ export interface Order {
   average_price: string;
   quantity: string;
 }
+
+type OrderForm = {
+  account: string,
+  instrument: string,
+  symbol: string,
+  type: string,
+  time_in_force: string,
+  trigger: string,
+  price: number,
+  stop_price?: number,
+  quantity: number,
+  side: string
+};
