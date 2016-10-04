@@ -244,12 +244,13 @@ export class Robinhood {
         if (err) throw err;
 
         var quoteData = body.results[0];
+        
         const bidPrice = parseFloat(quoteData.bid_price);
         const askPrice = parseFloat(quoteData.ask_price);
         const betweenPrice = parseFloat(((bidPrice * 0.75) + (askPrice * 0.25)).toFixed(2));
         console.log(`${symbol} - Bid Price: ${bidPrice}, Ask Price: ${askPrice}, Between: ${betweenPrice}`);
         const price = argv.desperate ? betweenPrice : transaction === 'buy' ? bidPrice : askPrice;
-        form.price = price;
+        form.price = parseFloat(quoteData.last_trade_price);
         console.log(`Requesting ${quantity} ${symbol} stocks at $${price}`);
         return this.request.post({
           uri: endpoints.orders,
