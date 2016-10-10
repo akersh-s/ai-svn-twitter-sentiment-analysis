@@ -332,7 +332,8 @@ export interface FundamentalResponse {
 }
 
 export interface OrderResponseBody {
-  results: Order[]
+  results: Order[];
+  next: string;
 }
 
 export interface Order {

@@ -15,6 +15,7 @@ export class SellSymbol {
         var allowedDropAmount = sellStat.price * sellCurrentPrice;
         
         return this.price < allowedDropAmount;*/
+        console.log(this.symbol, this.hasEnoughTimeElapsed());
         return this.hasEnoughTimeElapsed();
     }
 

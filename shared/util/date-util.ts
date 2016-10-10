@@ -18,6 +18,7 @@ export function formatDate(date: Date, char?: string): string {
     let formatted = [year, monthStr, day].join(char);
     return formatted;
 }
+console.log(new Date(formatDate(new Date())))
 
 export function getLast3Days(): Date[] {
     let dates = [today], i;
