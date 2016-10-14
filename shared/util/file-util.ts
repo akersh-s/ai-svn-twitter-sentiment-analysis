@@ -71,8 +71,8 @@ function hashCode(s: string): number {
 }
 
 
-function fileIsLast45Days(f: string) { //And not same day 
-    const d45DaysAgo = oneDay * 45;
+function fileIsLast45Days(f: string) {
+    const d45DaysAgo = oneDay * 100;
 
     let fileStart = 'results-';
     let dateParsed = f.substring(f.indexOf(fileStart) + fileStart.length);

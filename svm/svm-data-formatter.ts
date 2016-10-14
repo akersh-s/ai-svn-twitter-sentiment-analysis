@@ -232,6 +232,7 @@ function createX(daySentiments: DaySentiment[]): number[] {
 		Variables.includePrice && x.push(d.price);
 		Variables.includeNumTweets && x.push(d.numTweets);
 		Variables.includeTime && x.push(+d.day);
+		Variables.includePriceBracket && x.push(getPriceBracket(d.price));
 	});
 
 	return x;
@@ -239,4 +240,22 @@ function createX(daySentiments: DaySentiment[]): number[] {
 
 function change(one, two) {
 	return (one - two) / Math.max(two, 1);
+}
+
+function getPriceBracket(price: number): number {
+	if (price >= 0 && price <= 1) {
+		return 0;
+	}
+	else if (price > 1 && price <= 10) {
+		return 1;
+	}
+	else if (price > 10 && price <= 50) {
+		return 2;
+	}
+	else if (price > 50 && price <= 200) {
+		return 3;
+	}
+	else {
+		return 4;
+	}
 }

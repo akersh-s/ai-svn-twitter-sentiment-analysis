@@ -53,8 +53,10 @@ export async function runSvm(): Promise<SvmResult[]> {
         clf
             .train(getSvmDataFromFile())
             .progress((rate: number) => {
-                let secondsGoneBy = Math.floor((Date.now() - +startDate) / 1000);
-                console.log(`Progress: ${rate} after ${secondsGoneBy}s`);
+                const hoursGoneBy = (Date.now() - +startDate) / (1000 * 60 * 60);
+                const totalTimeInHours = (1 / rate) * hoursGoneBy;
+                const hoursRemaining = totalTimeInHours - hoursGoneBy;
+                console.log(`Progress: ${rate} after ${hoursGoneBy}h, Time remaining: ${hoursRemaining}h, Total time: ${totalTimeInHours}h`);
                 //bar.tick(rate - lastTick);
                 //lastTick = rate;
             }).spread(async function (trainedModel, trainingReport) {
