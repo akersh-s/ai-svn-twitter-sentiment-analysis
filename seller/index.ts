@@ -41,18 +41,18 @@ async function run() {
         return new SellSymbol(instrument.symbol, quantity, new Date(o.created_at));
     });
     const completed = Promise.all(sellSymbolPromises);
-    let sellSymbols: SellSymbol[] = await completed;
-    sellSymbols = sellSymbols.filter((s, i) => {
-        const othersOfSymbol = sellSymbols.filter((e, j) => e.symbol === s.symbol && i !== j).sort((a, b) => b.quantity - a.quantity);
-        if (othersOfSymbol.length) {
-            const largestOther = othersOfSymbol[0];
-            return largestOther.quantity < s.quantity;
+    const sellSymbols: SellSymbol[] = await completed;
+    const sellSymbolsFiltered: SellSymbol[] = [];
+    let curSellSymbol: SellSymbol;
+    while (curSellSymbol = sellSymbols.pop()) {
+        const greaterSellSymbols = sellSymbols.filter(s => s.symbol === curSellSymbol.symbol && s.quantity >= curSellSymbol.quantity);
+        console.log('Current', curSellSymbol.symbol, curSellSymbol.quantity);
+        console.log('Greater ones', greaterSellSymbols);
+        if (greaterSellSymbols.length === 0) {
+            sellSymbolsFiltered.push(curSellSymbol);
         }
-        else {
-            return true;
-        }
-    });
-    sellStocks(robinhood, sellSymbols);
+    }
+    sellStocks(robinhood, sellSymbolsFiltered);
 }
 run();
 
