@@ -222,8 +222,8 @@ function createX(daySentiments: DaySentiment[]): number[] {
 	for (var i = 0; i < daySentiments.length - 2; i++) {
 		var d1 = daySentiments[i];
 		var d2 = daySentiments[i + 1];
-		Variables.includeSentimentChange && x.push(getIncreaseOrDecrease(d1.totalSentiment, d2.totalSentiment));
-		Variables.includePriceChange && x.push(change(round3(d1.price), round3(d2.price)));
+		Variables.includeSentimentChange && x.push(change(d1.totalSentiment, d2.totalSentiment));
+		Variables.includePriceChange && x.push(Math.round(change(d1.price, d2.price)));
 		Variables.includeTimeChange && x.push(change(+d1.day, +d2.day));
 		Variables.includeVolumeChange && x.push(getIncreaseOrDecrease(d1.volume, d2.volume))
 	}
@@ -264,6 +264,6 @@ function getIncreaseOrDecrease(num1: number, num2: number): number {
 	return num1 === num2 ? 0 : num1 > num2 ? 1 : -1;
 }
 
-function round3(x: number): number {
-    return Math.ceil(x/3)*3;
+function round5(x: number): number {
+    return Math.ceil(x/5)*5;
 }
