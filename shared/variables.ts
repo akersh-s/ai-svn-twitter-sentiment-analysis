@@ -1,5 +1,5 @@
 export class Variables {
-    static priceThreshold: number = 2;
+    static priceThreshold: number = 3;
     static numDays: number = 2;
     static numPreviousDaySentiments: number = 5;
     static rbfsigma: number = 0.5;
@@ -11,7 +11,7 @@ export class Variables {
     static includeSentiment: boolean = true;
     static includePrice: boolean = false;
     static includePriceBracket: boolean = true;
-    static includeNumTweets: boolean = false;
+    static includeNumTweets: boolean = true;
 
     //Time
     static includeTime: boolean = false;
@@ -21,6 +21,7 @@ export class Variables {
     static includeHighChange: boolean = false;
     static includeLowChange: boolean = false;
     static includeVolumeChange: boolean = true;
+    static includeDayOfWeek: boolean = true;
 
     static kernelType: string = 'RBF';
     static svmType: string = 'C_SVC';
