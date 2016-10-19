@@ -220,7 +220,7 @@ function getDaySentimentInNDays(n: number, daySentiment: DaySentiment, allPrevio
 function createX(daySentiments: DaySentiment[]): number[] {
 	let x: number[] = [];
 	Variables.includeDayOfWeek && x.push(daySentiments[0].day.getDay());
-	for (var i = 0; i < daySentiments.length - 2; i++) {
+	for (let i = 0; i < daySentiments.length - 2; i+= Variables.numDays) {
 		var d1 = daySentiments[i];
 		var d2 = daySentiments[i + 1];
 		Variables.includeSentimentChange && x.push(change(d1.totalSentiment, d2.totalSentiment));
@@ -228,13 +228,14 @@ function createX(daySentiments: DaySentiment[]): number[] {
 		Variables.includeTimeChange && x.push(change(+d1.day, +d2.day));
 		Variables.includeVolumeChange && x.push(Math.round(change(d1.volume, d2.volume)));
 	}
-	daySentiments.forEach(d => {
+	for (let i = 0; i < daySentiments.length; i+= Variables.numDays) {
+		let d = daySentiments[i];
 		Variables.includeSentiment && x.push(d.totalSentiment);
 		Variables.includePrice && x.push(d.price);
 		Variables.includeNumTweets && x.push(d.numTweets);
 		Variables.includeTime && x.push(+d.day);
 		Variables.includePriceBracket && x.push(getPriceBracket(d.price));
-	});
+	}
 
 	return x;
 }
