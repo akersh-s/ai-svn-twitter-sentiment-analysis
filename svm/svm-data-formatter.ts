@@ -220,9 +220,9 @@ function getDaySentimentInNDays(n: number, daySentiment: DaySentiment, allPrevio
 function createX(daySentiments: DaySentiment[]): number[] {
 	let x: number[] = [];
 	Variables.includeDayOfWeek && x.push(daySentiments[0].day.getDay());
-	for (let i = 0; i < daySentiments.length - 2; i+= Variables.numDays) {
+	for (let i = 0; i < daySentiments.length - (Variables.numDays + 1); i+= Variables.numDays) {
 		var d1 = daySentiments[i];
-		var d2 = daySentiments[i + 1];
+		var d2 = daySentiments[i + Variables.numDays];
 		Variables.includeSentimentChange && x.push(change(d1.totalSentiment, d2.totalSentiment));
 		Variables.includePriceChange && x.push(Math.round(change(d1.price, d2.price)));
 		Variables.includeTimeChange && x.push(change(+d1.day, +d2.day));
