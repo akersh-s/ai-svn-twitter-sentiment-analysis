@@ -5,8 +5,8 @@ export class Variables {
     static rbfsigma: number = 0.5;
     static C: number = 1.0;
 
-    static includeSentimentChange: boolean = true;
-    static includePriceChange: boolean = true;
+    static includeSentimentChange: boolean = false;
+    static includePriceChange: boolean = false;
     static includeNumTweetsChange: boolean = false;
     static includeSentiment: boolean = true;
     static includePrice: boolean = false;
@@ -15,7 +15,7 @@ export class Variables {
 
     //Time
     static includeTime: boolean = false;
-    static includeTimeChange: boolean = true;
+    static includeTimeChange: boolean = false;
 
     //Fundamentals
     static includeHighChange: boolean = false;
