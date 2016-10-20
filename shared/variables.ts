@@ -37,16 +37,21 @@ export class Variables {
 }
 
 function argInt(val: string, defValue: number): number {
-    return argv[val] ? parseInt(argv[val]) : defValue;
+    const result = argv[val] ? parseInt(argv[val]) : defValue;
+    console.log(val, result);
+    return result;
 }
 
 function argBoolean(val: string, defValue: boolean): boolean {
+    let result: boolean;
     if (argv[val] !== undefined && argv[val] !== null) {
-        return argv[val] === 'true' || argv[val] === true;
+        result = argv[val] === 'true' || argv[val] === true;
     }
     else {
-        return defValue;
+        result = defValue;
     }
+    console.log(val, result);
+    return result;
 }
 
 //--price-threshold=3 --num-days=2 --previous-day-sentiments=10 --skip-day-sentiments=1 --include-sentiment-change=true --include-price-change=true --include-num-tweets-change=true --include-sentiment=true --include-price=true --include-price-bracket=true --include-num-tweets=true --include-time=false --include-time-change=true --include-volume-chage=true --include-day-of-week=true --max-svm-data=7000
