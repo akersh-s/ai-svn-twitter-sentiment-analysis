@@ -223,6 +223,7 @@ function createX(daySentiments: DaySentiment[]): number[] {
 	for (let i = 0; i < daySentiments.length - (Variables.skipDaySentiments + 1); i+= Variables.skipDaySentiments) {
 		var d1 = daySentiments[i];
 		var d2 = daySentiments[i + Variables.skipDaySentiments];
+		
 		Variables.includeSentimentChange && x.push(change(d1.totalSentiment, d2.totalSentiment));
 		Variables.includePriceChange && x.push(Math.round(change(d1.price, d2.price)));
 		Variables.includeTimeChange && x.push(change(+d1.day, +d2.day));

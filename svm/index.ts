@@ -18,8 +18,7 @@ export async function formatSentiment(): Promise<any> {
     fs.writeFileSync(FileUtil.svmData, JSON.stringify(svmParams), 'utf-8');
 }
 
-export async function runSvm(): Promise<SvmResult[]> {
-    let svmResults: SvmResult[] = [];
+export function runSvm(): Promise<any> {
     const clf = new svm.SVM({
         svmType: Variables.svmType,
         c: [0.03125, 0.125, 0.5, 1, 2, 8],
@@ -39,17 +38,9 @@ export async function runSvm(): Promise<SvmResult[]> {
         probability: true
     });
 
-    return new Promise<SvmResult[]>((resolve, reject) => {
+    return new Promise<any>((resolve, reject) => {
         const startDate = new Date();
         console.log('Running SVM...', startDate);
-        /*let ProgressBar = require('progress');
-        let lastTick: number = 0;
-        let bar = new ProgressBar('  SVM [:bar] :percent, ETA :etas, Elapsed :elapsed', {
-            complete: '=',
-            incomplete: ' ',
-            width: 30,
-            total: 1
-        });*/
         clf
             .train(getSvmDataFromFile())
             .progress((rate: number) => {
@@ -57,12 +48,12 @@ export async function runSvm(): Promise<SvmResult[]> {
                 const totalTimeInHours = (1 / rate) * hoursGoneBy;
                 const hoursRemaining = totalTimeInHours - hoursGoneBy;
                 console.log(`Progress: ${rate} after ${hoursGoneBy}h, Time remaining: ${hoursRemaining}h, Total time: ${totalTimeInHours}h`);
-                //bar.tick(rate - lastTick);
-                //lastTick = rate;
-            }).spread(async function (trainedModel, trainingReport) {
+            }).spread((trainedModel, trainingReport) => {
+                
                 fs.writeFileSync(FileUtil.svmModelFile, JSON.stringify(trainedModel), 'utf-8');
-
-                resolve();
+                console.log('Completed!');
+                process.exit(0);
+                resolve({});
             });
     });
 }
