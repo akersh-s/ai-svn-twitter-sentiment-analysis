@@ -2,9 +2,9 @@ import * as path from 'path';
 import * as yargs from 'yargs';
 import * as fs from 'fs';
 
-import {formatDate, today, yesterday, getDaysAgo, oneDay} from './date-util';
-
+import {formatDate, today, yesterday, getDaysAgo, oneDay} from './date-util'; 
 let argv = yargs.argv;
+let runId = argv['run-id'] ? '-' + argv['run-id'] : '';
 let username = argv.username;
 let userHome = process.env[(process.platform == 'win32') ? 'USERPROFILE' : 'HOME'];
 let formattedDate = formatDate(today);
@@ -13,11 +13,11 @@ export class FileUtil {
     static tradeArtifacts: string = path.join(userHome, 'trade-artifacts');
     static resultsFile: string = path.join(userHome, 'results.json');
     static resultsFileDate: string = path.join(userHome, `results-${formattedDate}.json`);
-    static buyFile: string = path.join(userHome, 'buy.json');
+    static buyFile: string = path.join(userHome, 'buy' + runId + '.json');
     static sellStatsFile: string = path.join(userHome, `sell-stats-${hashCode(username)}.json`);
     static svmFile: string = path.join(userHome, 'svm.json');
-    static svmModelFile: string = path.join(userHome, 'svm-model.json');
-    static svmData: string = path.join(userHome, 'svm-data.json');
+    static svmModelFile: string = path.join(userHome, 'svm-model' + runId + '.json');
+    static svmData: string = path.join(userHome, 'svm-data' + runId + '.json');
     static predictionData: string = path.join(userHome, 'prediction-data.json');
     static bestSearchFile: string = path.join(userHome, 'best-search.json');
     static earningsFileDate: string = path.join(userHome, `earnings-${formattedDate}.json`);
@@ -72,12 +72,12 @@ function hashCode(s: string): number {
 
 
 function fileIsLast45Days(f: string) {
-    const d45DaysAgo = oneDay * 45;
+    const d45DaysAgo = oneDay * 30;
 
     let fileStart = 'results-';
     let dateParsed = f.substring(f.indexOf(fileStart) + fileStart.length);
     dateParsed = dateParsed.substring(0, dateParsed.indexOf('.')).replace(/-/g, '/');
     let date = new Date(dateParsed);
     let msGoneBy = +today - +date;
-    return msGoneBy < d45DaysAgo && formatDate(date) !== formattedDate;
+    return msGoneBy < d45DaysAgo && msGoneBy > 0 && formatDate(date) !== formattedDate;
 }

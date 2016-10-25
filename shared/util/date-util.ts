@@ -38,6 +38,16 @@ export function getPreviousWorkDay(date: Date): Date {
     return prevDate;
 }
 
+export function getNextWorkDay(date: Date): Date {
+    var nextDate = date;
+    var isWeekend = true;
+    while (isWeekend) {
+        nextDate = new Date(+nextDate + oneDay);
+        isWeekend = (nextDate.getDay() == 6) || (nextDate.getDay() == 0);
+    }
+    return nextDate;
+}
+
 export function getDaysAgo(n: number, refDate?: Date): Date {
     refDate = refDate || today;
     let daysRemoved = 0, i = 0;

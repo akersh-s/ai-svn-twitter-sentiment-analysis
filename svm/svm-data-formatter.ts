@@ -1,15 +1,15 @@
 import * as fs from 'fs';
 import * as _ from 'lodash';
 
-import {oneDay, formatDate, isWeekend, isSameDay, today} from '../shared/util/date-util';
-import {Distribution, calculateBuyPrice, calculateMeanVarianceAndDeviation} from '../shared/util/math-util';
-import {FileUtil} from '../shared/util/file-util';
-import {SvmData} from './svm-data.model';
-import {Prediction} from './prediction.model';
-import {debug} from '../shared/util/log-util';
-import {Variables} from '../shared/variables';
-import {Stock} from '../sentiment/model/stock.model';
-import {DaySentiment} from '../sentiment/model/day-sentiment.model';
+import { oneDay, formatDate, isWeekend, isSameDay, today, getPreviousWorkDay, getNextWorkDay } from '../shared/util/date-util';
+import { Distribution, calculateBuyPrice, calculateMeanVarianceAndDeviation } from '../shared/util/math-util';
+import { FileUtil } from '../shared/util/file-util';
+import { SvmData } from './svm-data.model';
+import { Prediction } from './prediction.model';
+import { debug } from '../shared/util/log-util';
+import { Variables } from '../shared/variables';
+import { Stock } from '../sentiment/model/stock.model';
+import { DaySentiment } from '../sentiment/model/day-sentiment.model';
 
 export async function getSvmData(): Promise<SvmData> {
 	let formattedSvmData = await formatSvmData();
@@ -90,7 +90,7 @@ async function formatSvmData(): Promise<SvmData> {
 	let stocks = FileUtil.getStocks();
 	let groupedStocks: string[][] = group<string>(stocks, 1500);
 	let i = 0;
-	
+
 	while (i < groupedStocks.length) {
 		let groupedStock: string[] = groupedStocks[i++];
 		let allPreviousDaySentiments: DaySentiment[] = await gatherPreviousDaySentiments(groupedStock);
@@ -171,65 +171,51 @@ function getNearbyDaySentiment(daySentiment: DaySentiment, allPreviousDaySentime
 	if (!daySentiment) {
 		return null;
 	}
-	let date = daySentiment.day;
-	let nearbyDaySentiment: DaySentiment = null;
+	const date = daySentiment.day;
+	const nearbyDaySentiment: DaySentiment = null;
 	if (!daySentiment.price || !date) {
 		return null;
 	}
-	let direction = isForward ? 1 : -1;
-	let i = 0;
-
-	while (!nearbyDaySentiment && i < 8) {
-		i++;
-
-		let candidateDate = new Date(+date + (i * oneDay * direction));
-		if (!isWeekend(candidateDate)) {
-			let candidate = DaySentiment.findDaySentimentForSymbolAndDate(daySentiment.stock.symbol, candidateDate, allPreviousDaySentiments);
-			const fullfillsFundamentalReq: boolean = candidate && Variables.includeFundamentals() ? !!candidate.fundamentals : true;
-			if (candidate && candidate.price && candidate.price !== daySentiment.price && fullfillsFundamentalReq) {
-				nearbyDaySentiment = candidate;
-			}
-		}
-
-	}
-	return nearbyDaySentiment;
+	const nextDate = isForward ? getNextWorkDay(date) : getPreviousWorkDay(date);
+	const candidate = DaySentiment.findDaySentimentForSymbolAndDate(daySentiment.stock.symbol, nextDate, allPreviousDaySentiments);
+	return candidate;
 }
 
 function getDaySentimentInNDays(n: number, daySentiment: DaySentiment, allPreviousDaySentiments: DaySentiment[]): DaySentiment {
 	if (!daySentiment || !daySentiment.price || !daySentiment.day) {
 		return null;
 	}
-	let weekDaySentiment: DaySentiment = null;
 
-	let i = 6;
-	let maxI = (n + i + 3) * 2;
-	while (!weekDaySentiment && i < maxI) {
+	let i = 0;
+	let candidateDate: Date = daySentiment.day;
+	while (i < n) {
 		i++;
-		let candidateDate = new Date(+daySentiment.day + (i * oneDay));
-		if (!isWeekend(candidateDate)) {
-			let candidate = DaySentiment.findDaySentimentForSymbolAndDate(daySentiment.stock.symbol, candidateDate, allPreviousDaySentiments);
-			const fullfillsFundamentalReq: boolean = candidate && Variables.includeFundamentals() ? !!candidate.fundamentals : true;
-			if (candidate && candidate.price && candidate.price !== daySentiment.price && fullfillsFundamentalReq) {
-				weekDaySentiment = candidate;
-			}
-		}
+		candidateDate = getNextWorkDay(candidateDate);
 	}
-	return weekDaySentiment;
+	const candidate = DaySentiment.findDaySentimentForSymbolAndDate(daySentiment.stock.symbol, candidateDate, allPreviousDaySentiments);
+	return candidate;
 }
 
 function createX(daySentiments: DaySentiment[]): number[] {
 	let x: number[] = [];
 	Variables.includeDayOfWeek && x.push(daySentiments[0].day.getDay());
-	for (let i = 0; i < daySentiments.length - (Variables.skipDaySentiments + 1); i+= Variables.skipDaySentiments) {
+	for (let i = 0; i < daySentiments.length - (Variables.skipDaySentiments + 1); i += Variables.skipDaySentiments) {
 		var d1 = daySentiments[i];
 		var d2 = daySentiments[i + Variables.skipDaySentiments];
-		
+
 		Variables.includeSentimentChange && x.push(change(d1.totalSentiment, d2.totalSentiment));
 		Variables.includePriceChange && x.push(Math.round(change(d1.price, d2.price)));
 		Variables.includeTimeChange && x.push(change(+d1.day, +d2.day));
 		Variables.includeVolumeChange && x.push(Math.round(change(d1.volume, d2.volume)));
 	}
-	for (let i = 0; i < daySentiments.length; i+= Variables.skipDaySentiments) {
+
+	// Least Squares
+	Variables.leastSquaresSentiment && x.push(getLeastSquares(daySentiments, 'totalSentiment'));
+	Variables.leastSquaresPrice && x.push(getLeastSquares(daySentiments, 'price'));
+	Variables.leastSquaresTime && x.push(getLeastSquares(daySentiments, 'day'));
+	Variables.leastSquaresVolume && x.push(getLeastSquares(daySentiments, 'volume'));
+
+	for (let i = 0; i < daySentiments.length; i += Variables.skipDaySentiments) {
 		let d = daySentiments[i];
 		Variables.includeSentiment && x.push(d.totalSentiment);
 		Variables.includePrice && x.push(d.price);
@@ -267,6 +253,11 @@ function getIncreaseOrDecrease(num1: number, num2: number): number {
 	return num1 === num2 ? 0 : num1 > num2 ? 1 : -1;
 }
 
-function round5(x: number): number {
-    return Math.ceil(x/5)*5;
+function getLeastSquares(daySentiments: DaySentiment[], propertyName: string): number {
+	const lsq = require('least-squares')
+	const ret: { m?: number } = {};
+	const x = daySentiments.map((val, i) => i);
+	const y = daySentiments.map(val => +(val[propertyName]));
+	lsq(x, y, false, ret);
+	return ret.m;
 }
