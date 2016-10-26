@@ -40,7 +40,6 @@ export async function getPredictions(todaysDaySentiments: DaySentiment[]): Promi
 				prevDaySentiment && collectedDaySentiments.push(prevDaySentiment);
 			}
 			isValid = isValid && collectedDaySentiments.length === Variables.numPreviousDaySentiments;
-			isValid = isValid && collectedDaySentiments.some(d => d.numTweets > 0);
 			if (isValid) {
 				let x = createX(collectedDaySentiments);
 				predictions.push(new Prediction(todaysDaySentiment.stock.symbol, x));
@@ -114,7 +113,6 @@ async function formatSvmData(): Promise<SvmData> {
 
 				let nextDaySentiment: DaySentiment = isValidSvmItem && getDaySentimentInNDays(Variables.numDays, daySentiment, stockPreviousDaySentiments);
 				isValidSvmItem = isValidSvmItem && !!nextDaySentiment && !!nextDaySentiment.price;
-				isValidSvmItem = isValidSvmItem && collectedDaySentiments.filter(d => d.numTweets > 0).length >= 2;
 				if (isValidSvmItem) {
 					const increasePercent = ((nextDaySentiment.price - daySentiment.price) / daySentiment.price) * 100;
 

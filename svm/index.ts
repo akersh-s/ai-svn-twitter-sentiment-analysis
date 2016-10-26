@@ -14,6 +14,8 @@ const svm = require('node-svm');
 const isWin = process.platform === 'win32';
 
 export async function formatSentiment(): Promise<any> {
+    //Add more data
+    FileUtil.lastResultsFiles = FileUtil.collectLastResultFiles(70);
     const svmParams = await collectSvmParams();
     fs.writeFileSync(FileUtil.svmData, JSON.stringify(svmParams), 'utf-8');
 }

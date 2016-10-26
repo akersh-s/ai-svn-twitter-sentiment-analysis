@@ -67,7 +67,7 @@ export class StockClosePercent {
     }
 
     toString() {
-        return `${this.symbol}: %${this.percent}`;
+        return `${this.symbol}: %${this.percent}, Current: ${this.currentQuote}, Future: ${this.futureQuote}`;
     }
 
     static findEarning(stockClosePercents: StockClosePercent[], symbol: string): number {

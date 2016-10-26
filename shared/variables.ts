@@ -1,19 +1,19 @@
 import {argv} from 'yargs';
-//Best Run: 13962 - Total: 683.481 Average: 85.4351 Options: --price-threshold=0 --num-days=2 --previous-day-sentiments=10 --skip-day-sentiments=1 --include-sentiment-change=true --include-price-change=false --include-num-tweets-change=false --include-sentiment=false --include-price=true --include-price-bracket=true --include-num-tweets=false --include-time-change=true --include-volume-change=false --include-day-of-week=false --max-svm-data=7000
-//This was shit. Second Run: 20408 - Total: 332.275 Average: 41.5343 Options: --price-threshold=1 --num-days=2 --previous-day-sentiments=15 --skip-day-sentiments=1 --include-sentiment-change=false --include-price-change=true --include-num-tweets-change=false --include-sentiment=true --include-price=true --include-price-bracket=true --include-num-tweets=true  --include-time-change=false --include-volume-change=false --include-day-of-week=false --max-svm-data=7000
+//Best = sentiment, volume Run:  - Total: 17.6232 Average: 2.9372 Options: 
+//Best = sentiment, numtweets, volume Run:  - Total: 9.49575 Average: 1.58263 Options: 
 
 export class Variables {
-    static priceThreshold: number = argInt('price-thresold', 5);
+    static priceThreshold: number = argInt('price-thresold', 2);
     static numDays: number = argInt('num-days', 2);
-    static numPreviousDaySentiments: number = argInt('previous-day-sentiments', 10);
+    static numPreviousDaySentiments: number = argInt('previous-day-sentiments', 5);
     static skipDaySentiments: number = argInt('skip-day-sentiments', 1);
     static rbfsigma: number = 0.5;
     static C: number = 1.0;
 
-    static includeSentimentChange: boolean = argBoolean('include-sentiment-change', false);
+    static includeSentimentChange: boolean = argBoolean('include-sentiment-change', true);
     static includePriceChange: boolean = argBoolean('include-price-change', false);
     static includeNumTweetsChange: boolean = argBoolean('include-num-tweets-change', false);
-    static includeSentiment: boolean = argBoolean('include-sentiment', true);
+    static includeSentiment: boolean = argBoolean('include-sentiment', false);
     static includePrice: boolean = argBoolean('include-price', false);
     static includePriceBracket: boolean = argBoolean('include-price-bracket', false);
     static includeNumTweets: boolean = argBoolean('include-num-tweets', false);
@@ -24,7 +24,6 @@ export class Variables {
 	static leastSquaresTime: boolean = false;
 	static leastSquaresVolume: boolean = false;
 
-
     //Time
     static includeTime: boolean = argBoolean('include-time', false);
     static includeTimeChange: boolean = argBoolean('include-time-change', false);
@@ -32,13 +31,13 @@ export class Variables {
     //Fundamentals
     static includeHighChange: boolean = false;
     static includeLowChange: boolean = false;
-    static includeVolumeChange: boolean = argBoolean('include-volume-change', false);
+    static includeVolumeChange: boolean = argBoolean('include-volume-change', true);
     static includeDayOfWeek: boolean = argBoolean('include-day-of-week', false);
 
     static kernelType: string = argString('kernel-type', 'RBF');
-    static svmType: string = argString('svm-type', 'C_SVC');
+    static svmType: string = argString('svm-type', 'NU_SVC');
 
-    static maxSvmData: number = argInt('max-svm-data', 7000);
+    static maxSvmData: number = argInt('max-svm-data', 25000);
 
     static includeFundamentals():boolean {
         return Variables.includeHighChange || Variables.includeLowChange || Variables.includeVolumeChange;

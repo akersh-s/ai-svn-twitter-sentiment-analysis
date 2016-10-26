@@ -21,13 +21,13 @@ export class FileUtil {
     static predictionData: string = path.join(userHome, 'prediction-data.json');
     static bestSearchFile: string = path.join(userHome, 'best-search.json');
     static earningsFileDate: string = path.join(userHome, `earnings-${formattedDate}.json`);
-    static lastResultsFiles: string[] = FileUtil.collectLast45ResultFiles();
-    static collectLast45ResultFiles(): string[] {
+    static lastResultsFiles: string[] = FileUtil.collectLastResultFiles(30);
+    static collectLastResultFiles(daysAgo: number): string[] {
         var resultsFileRegex = /^results-\d+-\d+-\d+\.json$/;
 
         var allResultFiles = [];
         fs.readdirSync(userHome).forEach(f => {
-            if (resultsFileRegex.test(f) && fileIsLast45Days(f)) {
+            if (resultsFileRegex.test(f) && fileIsLastDays(f, daysAgo)) {
                 allResultFiles.push(path.join(userHome, f));
             }
         });
@@ -71,13 +71,13 @@ function hashCode(s: string): number {
 }
 
 
-function fileIsLast45Days(f: string) {
-    const d45DaysAgo = oneDay * 30;
+function fileIsLastDays(f: string, daysAgo?: number) {
+    const dDaysAgo = oneDay * daysAgo;
 
     let fileStart = 'results-';
     let dateParsed = f.substring(f.indexOf(fileStart) + fileStart.length);
     dateParsed = dateParsed.substring(0, dateParsed.indexOf('.')).replace(/-/g, '/');
     let date = new Date(dateParsed);
     let msGoneBy = +today - +date;
-    return msGoneBy < d45DaysAgo && msGoneBy > 0 && formatDate(date) !== formattedDate;
+    return msGoneBy < dDaysAgo && msGoneBy > 0 && formatDate(date) !== formattedDate;
 }
