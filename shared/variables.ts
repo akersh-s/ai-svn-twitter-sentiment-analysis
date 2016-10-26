@@ -46,13 +46,11 @@ export class Variables {
 
 function argString(val: string, defValue: string): string {
     const result = argv[val] ? argv[val] : defValue;
-    console.log(val, result);
     return result;
 }
 
 function argInt(val: string, defValue: number): number {
     const result = argv[val] ? parseInt(argv[val]) : defValue;
-    console.log(val, result);
     return result;
 }
 
@@ -64,6 +62,5 @@ function argBoolean(val: string, defValue: boolean): boolean {
     else {
         result = defValue;
     }
-    console.log(val, result);
     return result;
 }
