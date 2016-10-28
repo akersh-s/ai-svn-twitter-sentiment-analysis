@@ -15,7 +15,7 @@ export function determineNumToBuy(buyPower: number, equity: number, buySymbols: 
     let currentPower = buyPower;
     buySymbols.forEach((buySymbol) => {
         const probabilityVal: number = (buySymbol.svmResult.probability - 0.5);
-        const moneyToSpend = Math.min(buyPower / 9, currentPower);
+        const moneyToSpend = Math.min(buyPower / 30, currentPower);
         let moneySpent = 0;
         while (currentPower > buySymbol.price && moneySpent < (moneyToSpend - buySymbol.price)) {
             buySymbol.numToBuy++;
