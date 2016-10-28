@@ -1,10 +1,9 @@
 'use strict';
 
-import { Robinhood, QuoteDataResult, Order, OrderResponseBody } from '../shared/robinhood.api';
+import { Robinhood, Order, OrderResponseBody } from '../shared/robinhood.api';
 import { validate, isNotWeekend } from '../shared/validate';
 import { SellSymbol, hasEnoughTimeElapsedFromDate } from './sell-symbol';
 import * as yargs from 'yargs';
-import * as async from 'async';
 
 isNotWeekend();
 let argv = yargs.argv;
@@ -23,7 +22,7 @@ async function run() {
     let num: number = 0;
     while ((next || num === 0) && num < 2) {
         console.log('Requesting orders page ' + num);
-        const orderResponseBody: OrderResponseBody = next ? await robinhood.getPromise(next) : await robinhood.orders();  
+        const orderResponseBody: OrderResponseBody = next ? await robinhood.getPromise(next) : await robinhood.orders();
         orders = orders.concat(orderResponseBody.results);
         next = orderResponseBody.next;
 
@@ -34,10 +33,10 @@ async function run() {
         const hasEnoughTimeElapsed = hasEnoughTimeElapsedFromDate(new Date(o.created_at));
         const currentlyOwned = !!results.find(r => r.instrument === o.instrument);
         return o.side === 'buy' && hasEnoughTimeElapsed && currentlyOwned;
-    }).map(async function (o) {
+    }).map(async function(o) {
         const instrument: InstrumentResult = await robinhood.getPromise(o.instrument);
         const position = results.find(r => r.instrument === o.instrument);
-        const quantity = Math.min(parseInt(o.quantity), parseInt(position.quantity));
+        const quantity = Math.min(parseInt(o.quantity, 10), parseInt(position.quantity, 10));
         return new SellSymbol(instrument.symbol, quantity, new Date(o.created_at));
     });
     const completed = Promise.all(sellSymbolPromises);
@@ -56,17 +55,14 @@ async function run() {
 }
 run();
 
-
 async function sellStocks(robinhood: Robinhood, sellSymbols: SellSymbol[]) {
-    let asyncFuncs = [];
-
-    sellSymbols.forEach(async function (sellSymbol) {
+    sellSymbols.forEach(async function(sellSymbol) {
         if (sellSymbol.isReadyToSell()) {
             console.log(`${sellSymbol.symbol} is ready to sell - ${sellSymbol.quantity} stocks`);
             const response = await robinhood.sell(sellSymbol.symbol, sellSymbol.quantity);
             console.log(response);
         }
-    })
+    });
     console.log('Completed selling.');
 }
 
@@ -84,7 +80,7 @@ interface PositionResult {
 }
 
 interface InstrumentResult {
-    splits: string, //url
+    splits: string; //url
     margin_initial_ratio: string;
     url: string;
     quote: string; //url

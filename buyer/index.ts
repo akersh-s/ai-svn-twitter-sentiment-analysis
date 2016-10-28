@@ -1,14 +1,10 @@
-import {Robinhood} from '../shared/robinhood.api';
-import {validate, isNotWeekend} from '../shared/validate';
-import {today, formatDate} from '../shared/util/date-util';
-import {BuySymbol, determineNumToBuy} from './buy-symbol';
-import {SvmResult} from '../svm/svm-result';
-import {FileUtil} from '../shared/util/file-util';
-import {Variables} from '../shared/variables';
+import { Robinhood } from '../shared/robinhood.api';
+import { validate } from '../shared/validate';
+import { BuySymbol, determineNumToBuy } from './buy-symbol';
+import { SvmResult } from '../svm/svm-result';
+import { FileUtil } from '../shared/util/file-util';
 import * as yargs from 'yargs';
 import * as fs from 'fs';
-import * as path from 'path';
-import * as async from 'async';
 
 let argv = yargs.argv;
 let username = validate('username', argv.username);
@@ -73,29 +69,11 @@ async function filterOutNonOwnedStocks(robinhood: Robinhood, stockList: SvmResul
 
     }
     const nonOwnedSymbols = stockList.filter(s => ownedSymbols.indexOf(s.prediction.symbol.replace(/\$/, '')) === -1);
-    console.log(`Stocks not owned: ${nonOwnedSymbols.map(n => n.prediction.symbol).join(', ')}`)
+    console.log(`Stocks not owned: ${nonOwnedSymbols.map(n => n.prediction.symbol).join(', ')}`);
     return nonOwnedSymbols;
 }
 
-async function getAmountOfMoneySpentToday(robinhood: Robinhood): Promise<number> {
-    const positionData = await robinhood.positionsPromise();
-    let positions = positionData.results;
-    let moneySpentToday = 0;
-    const formattedToday = formatDate(today);
-    positions.forEach(p => {
-        const formattedDate = formatDate(new Date(p.updated_at));
-        const quantity = parseFloat(p.quantity);
-        const averageBuyPrice = parseFloat(p.average_buy_price);
-        if (formattedDate === formattedToday && quantity > 0) {
-            moneySpentToday += (quantity * averageBuyPrice);
-        }
-    });
-    console.log(`Amount of money spent today: $${moneySpentToday}`);
-    return moneySpentToday;
-}
-
 async function buyStocks(robinhood: Robinhood, buySymbols: BuySymbol[]) {
-    let asyncFuncs = [];
     let body;
     buySymbols = buySymbols.filter(b => b.numToBuy !== 0);
 

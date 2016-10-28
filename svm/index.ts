@@ -1,17 +1,10 @@
 import * as fs from 'fs';
-import * as async from 'async';
 
-import {DaySentiment} from '../sentiment/model/day-sentiment.model';
 import {Variables} from '../shared/variables';
-import {today, formatDate} from '../shared/util/date-util';
 import {FileUtil} from '../shared/util/file-util';
-import {normalize} from './normalize';
-import {getSvmData, getPredictions} from './svm-data-formatter';
-import {Prediction} from './prediction.model';
-import {SvmResult} from './svm-result';
+import {getSvmData} from './svm-data-formatter';
 
 const svm = require('node-svm');
-const isWin = process.platform === 'win32';
 
 export async function formatSentiment(): Promise<any> {
     //Add more data
@@ -51,7 +44,6 @@ export function runSvm(): Promise<any> {
                 const hoursRemaining = totalTimeInHours - hoursGoneBy;
                 console.log(`Progress: ${rate} after ${hoursGoneBy}h, Time remaining: ${hoursRemaining}h, Total time: ${totalTimeInHours}h`);
             }).spread((trainedModel, trainingReport) => {
-                
                 fs.writeFileSync(FileUtil.svmModelFile, JSON.stringify(trainedModel), 'utf-8');
                 console.log('Completed!');
                 process.exit(0);
@@ -61,19 +53,6 @@ export function runSvm(): Promise<any> {
 }
 function getSvmDataFromFile(): any[] {
     return JSON.parse(fs.readFileSync(FileUtil.svmData, 'utf-8'));
-}
-
-function getPredictionsFromFile(): Prediction[] {
-    return JSON.parse(fs.readFileSync(FileUtil.predictionData, 'utf-8'));
-}
-
-function formatData(svmData, normalized): number[][] {
-    var i;
-    let formatted = [];
-    for (i = 0; i < svmData.y; i++) {
-        formatted.push(svmData.y[i], normalized.x[i]);
-    }
-    return formatted;
 }
 
 async function collectSvmParams(): Promise<any[]> {

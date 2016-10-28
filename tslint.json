@@ -1,0 +1,80 @@
+{
+    "rulesDirectory": ["node_modules/tslint-eslint-rules/dist/rules"],
+    "rules": {
+        "class-name": true,
+        "indent": [
+            true,
+            "spaces"
+        ], // this option sets a specific tab width for your code (off by default)
+        "curly": true, // specify curly brace conventions for all control statements
+        "eofline": true,
+        "semicolon": [true], // require or disallow use of semicolons instead of ASI
+        "no-eval": true, // disallow use of eval()
+        "no-inner-declarations": true, // disallow function or variable declarations in nested blocks
+        "no-extra-semi": true, // disallow unnecessary semicolons
+        "no-construct": true,
+        //Debugging
+        //"no-console": [true, "log", "error"], // In JavaScript that is designed to be executed in the browser, it's considered a best practice to avoid using methods on console.
+        "no-debugger": true, // The debugger statement is used to tell the executing JavaScript environment to stop execution and start up a debugger at the current point in the code.
+        //Duplicates
+        "no-duplicate-key": true, // Creating objects with duplicate keys in objects can cause unexpected behavior in your application.
+        "no-duplicate-case": true, // A switch statements with duplicate case labels is normally an indication of a programmer error.
+        "no-duplicate-variable": true,
+        //Regular Expressions
+        "no-empty-character-class": true, // Empty character classes in regular expressions do not match anything and can result in code that may not work as intended.
+        //Conditional Statements
+        "no-empty": true, // Empty statements usually occur due to refactoring that wasn't completed.
+        "no-var-keyword": true,
+        "use-isnan": true, // This rule is aimed at eliminating potential errors as the result of comparing against the special value NaN.
+        "valid-typeof": true, // This rule aims to prevent errors from likely typos by ensuring that when the result of a typeof operation is compared against a string, that the string is a valid value.
+        "no-constant-condition": true, // Comparing a literal expression in a condition is usually a typo or development trigger for a specific behavior.
+        //Whitespace
+        "no-irregular-whitespace": true, // Invalid or irregular whitespace causes issues with ECMAScript 5 parsers and also makes code harder to debug in a similar nature to mixed tabs and spaces.
+        //Best Practices
+        "triple-equals": [
+            true,
+            "allow-null-check"
+        ], // It is considered good practice to use the type-safe equality operators === and !== instead of their regular counterparts == and !=
+        "no-consecutive-blank-lines": true,
+        "no-shadowed-variable": true,
+        "no-trailing-whitespace": true,
+        "no-unused-variable": true, // This rule is aimed at eliminating unused variables, functions and variables in parameters of functions, as such, warns when one is found.
+        "quotemark": [
+            true,
+            "single"
+        ], // This rule is aimed at ensuring consistency of string quotes and as such will report a problem when an inconsistent style is found.
+        "radix": true, // This rule is aimed at preventing the unintended conversion of a string to a number of a different base than intended.
+        "trailing-comma": [
+            true, {
+                "multiline": "never",
+                "singleline": "never"
+            }
+        ], // This rule enforces consistent use of trailing commas in object and array literals.
+        "max-line-length": [
+            true,
+            600
+        ],
+        "member-ordering": [
+            true,
+            "public-before-private",
+            "instance-before-static",
+            "variables-before-functions"
+        ],
+        "variable-name": [
+            true,
+            "ban-keywords",
+            "check-format",
+            "allow-leading-underscore",
+            "allow-pascal-case"
+        ],
+        "whitespace": [
+            "check-branch",
+            "check-decl",
+            "check-module",
+            "check-operator",
+            "check-separator",
+            "check-type",
+            "check-typecast"
+        ]
+    }
+}

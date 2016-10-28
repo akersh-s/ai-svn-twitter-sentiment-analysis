@@ -1,14 +1,13 @@
 import * as fs from 'fs';
-import * as path from 'path';
 import * as async from 'async';
 
-import {Stock} from './model/stock.model';
-import {TwitterSearch} from './twitter';
-import {StockTwits} from './stocktwits';
-import {FileUtil} from '../shared/util/file-util';
-import {DaySentiment} from './model/day-sentiment.model';
-import {today} from '../shared/util/date-util';
-import {debug} from '../shared/util/log-util';
+import { Stock } from './model/stock.model';
+import { TwitterSearch } from './twitter';
+import { StockTwits } from './stocktwits';
+import { FileUtil } from '../shared/util/file-util';
+import { DaySentiment } from './model/day-sentiment.model';
+import { today } from '../shared/util/date-util';
+import { debug } from '../shared/util/log-util';
 
 const twitter = new TwitterSearch();
 let results: DaySentiment[] = [];
@@ -41,14 +40,16 @@ async function addTweets(daySentiments: DaySentiment[]): Promise<any> {
     for (let i = 0; i < daySentiments.length; i++) {
         const daySentiment = daySentiments[i];
         debug(`Running Twitter ${daySentiment.stock.symbol} (${i} / ${daySentiments.length})`);
-        try { await twitter.getTweetSentiment(daySentiment); } catch (e) { };
+        try { await twitter.getTweetSentiment(daySentiment); } catch (e) {
+            console.log('addTweets', e);
+        };
         processComplete(daySentiment, i);
     }
 }
 
 async function addTwits(daySentiments: DaySentiment[]): Promise<any> {
     return new Promise<any>((resolve, reject) => {
-        var q = async.queue((daySentiment: DaySentiment, cb) => {
+        const q = async.queue((daySentiment: DaySentiment, cb) => {
             const stocktwits = new StockTwits(daySentiment.stock);
             const i = findIndex(daySentiment, daySentiments);
             debug(`Running Stocktwits ${daySentiment.stock.symbol} (${i} / ${daySentiments.length})`);
@@ -71,7 +72,9 @@ async function addPrices(daySentiments: DaySentiment[]): Promise<any> {
     for (let i = 0; i < daySentiments.length; i++) {
         const daySentiment = daySentiments[i];
         debug(`Running Price ${daySentiment.stock.symbol} (${i} / ${daySentiments.length})`);
-        try { await daySentiment.addPrice(); } catch (e) { };
+        try { await daySentiment.addPrice(); } catch (e) {
+            console.log(e);
+        };
         processComplete(daySentiment, i);
     }
 }
@@ -82,7 +85,7 @@ function processComplete(daySentiment: DaySentiment, index: number): void {
     }
 
     if (index % 10 === 0) {
-        let daySentimentStingified = JSON.stringify(results, null, 4)
+        const daySentimentStingified = JSON.stringify(results, null, 4);
         fs.writeFileSync(FileUtil.resultsFileDate, daySentimentStingified, 'utf-8');
     }
 }

@@ -30,14 +30,14 @@ let endpoints = {
   portfolios: 'https://api.robinhood.com/portfolios/',
   fundamentals: 'https://api.robinhood.com/fundamentals/', // Need to concatenate symbol to end.
   cancel(orderId: string) {
-    return `https://api.robinhood.com/orders/${orderId}/cancel/`
+    return `https://api.robinhood.com/orders/${orderId}/cancel/`;
   }
 };
 
 export class Robinhood {
   request: RequestAPI<Request, CoreOptions, any>;
   account: string;
-  auth_token: string;
+  authToken: string;
   headers: any;
   constructor(private username: string, private password: string) {
     this.headers = {
@@ -64,13 +64,15 @@ export class Robinhood {
         password: this.password
       }
     }, (err, httpResponse, body) => {
-      if (err) throw err;
+      if (err) {
+        throw err;
+      }
 
-      this.auth_token = body.token;
-      this.headers.Authorization = 'Token ' + this.auth_token;
+      this.authToken = body.token;
+      this.headers.Authorization = 'Token ' + this.authToken;
 
-      this.accounts((err, response, body) => {
-        this.account = body.results[0].url;
+      this.accounts((err2, response, body2) => {
+        this.account = body2.results[0].url;
         cb();
       });
     });
@@ -85,7 +87,7 @@ export class Robinhood {
       catch (e) {
         reject();
       }
-    })
+    });
   }
 
   accounts(cb: (err, response, body) => any) {
@@ -95,7 +97,9 @@ export class Robinhood {
   accountsPromise(): Promise<any> {
     return new Promise<any>((resolve, reject) => {
       this.accounts((err, response, body) => {
-        if (err) return reject(err);
+        if (err) {
+          return reject(err);
+        }
 
         resolve(body);
       });
@@ -105,9 +109,11 @@ export class Robinhood {
   cancel(orderId: string): Promise<any> {
     return new Promise<any>((resolve, reject) => {
       this.request.post(endpoints.cancel(orderId), (err, response, body) => {
-        if (err) return reject(err);
+        if (err) {
+          return reject(err);
+        }
         resolve(body);
-      })
+      });
     });
   }
 
@@ -120,7 +126,9 @@ export class Robinhood {
   getPromise(uri: string): Promise<any> {
     return new Promise<any>((resolve, reject) => {
       this.get(uri, (err, response, body) => {
-        if (err) return reject(err);
+        if (err) {
+          return reject(err);
+        }
 
         resolve(body);
       });
@@ -148,7 +156,9 @@ export class Robinhood {
   quote_dataPromise(symbol: string): Promise<QuoteDataResultBody> {
     return new Promise<QuoteDataResultBody>((resolve, reject) => {
       this.quote_data(symbol, (err, response, body) => {
-        if (err) return reject(err);
+        if (err) {
+          return reject(err);
+        }
 
         return resolve(body);
       });
@@ -173,8 +183,10 @@ export class Robinhood {
   orders(): Promise<OrderResponseBody> {
     return new Promise<OrderResponseBody>((resolve, reject) => {
       this.get(endpoints.orders, (err, response, body) => {
-        if (err) return reject(err);
-        return resolve(body)
+        if (err) {
+          return reject(err);
+        }
+        return resolve(body);
       });
     });
   }
@@ -187,7 +199,9 @@ export class Robinhood {
     return new Promise<any>((resolve, reject) => {
       try {
         this.positions((err, response, body) => {
-          if (err) return reject(err);
+          if (err) {
+            return reject(err);
+          }
           resolve(body);
         });
       }
@@ -221,7 +235,7 @@ export class Robinhood {
     return this.get(`${endpoints.markets}${symbol}/`, cb);
   }
 
-  private placeOrder(symbol: string, quantity: number, transaction: string, cb: (err, response, body) => any) {
+  placeOrder(symbol: string, quantity: number, transaction: string, cb: (err, response, body) => any) {
     const form: OrderForm = {
       account: this.account,
       quantity: quantity,
@@ -234,17 +248,21 @@ export class Robinhood {
       price: undefined
     };
 
-    this.instruments(symbol, (err, response, body) => {
-      if (err) throw err;
+    this.instruments(symbol, (e1, resp, b1) => {
+      if (e1) {
+        throw e1;
+      }
 
-      var instrument = body.results[0];
+      const instrument = b1.results[0];
       form.instrument = instrument.url;
 
       this.quote_data(symbol, (err, response, body) => {
-        if (err) throw err;
+        if (err) {
+          throw err;
+        }
 
-        var quoteData = body.results[0];
-        
+        const quoteData = body.results[0];
+
         const bidPrice = parseFloat(quoteData.bid_price);
         const askPrice = parseFloat(quoteData.ask_price);
         const betweenPrice = parseFloat(((bidPrice * 0.75) + (askPrice * 0.25)).toFixed(2));
@@ -255,13 +273,13 @@ export class Robinhood {
         return this.request.post({
           uri: endpoints.orders,
           form
-        }, (err, response, body) => {
-          if (body && body.detail && body.detail.indexOf('You can only purchase ') !== -1) {
-            const newQuantity = parseFloat(body.detail.replace(/You can only purchase (\d+).*/, '$1'))
+        }, (e3, resp3, body3) => {
+          if (body3 && body3.detail && body3.detail.indexOf('You can only purchase ') !== -1) {
+            const newQuantity = parseFloat(body3.detail.replace(/You can only purchase (\d+).*/, '$1'));
             this.placeOrder(symbol, newQuantity, transaction, cb);
           }
           else {
-            cb(err, response, body);
+            cb(err, response, body3);
           }
         });
       });
@@ -275,7 +293,9 @@ export class Robinhood {
   buyPromise(symbol: string, quantity: number): Promise<any> {
     return new Promise<any>((resolve, reject) => {
       this.buy(symbol, quantity, (err, response, body) => {
-        if (err) return reject(err);
+        if (err) {
+          return reject(err);
+        }
 
         resolve(body);
       });
@@ -285,7 +305,9 @@ export class Robinhood {
   sell(symbol: string, quantity: number): Promise<any> {
     return new Promise<any>((resolve, reject) => {
       this.placeOrder(symbol, quantity, 'sell', (err, response, body) => {
-        if (err) return reject(err);
+        if (err) {
+          return reject(err);
+        }
 
         resolve(body);
       });

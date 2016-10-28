@@ -1,12 +1,12 @@
-import {FileUtil} from '../shared/util/file-util';
-import {formatDate, getDaysAgo, today} from '../shared/util/date-util';
-import {DaySentiment} from '../sentiment/model/day-sentiment.model';
+import { FileUtil } from '../shared/util/file-util';
+import { formatDate, getDaysAgo, today } from '../shared/util/date-util';
+import { DaySentiment } from '../sentiment/model/day-sentiment.model';
 
-import {readdirSync, readFileSync} from 'fs';
-import {join} from 'path';
+import { readdirSync, readFileSync } from 'fs';
+import { join } from 'path';
 
 class Result {
-    changePrice: number
+    changePrice: number;
     constructor(
         public symbol: string,
         public date: Date,
@@ -18,7 +18,7 @@ class Result {
     }
 
     toString() {
-        return `${this.symbol} - ${this.probability} - ${formatDate(this.date)} - ${this.changePrice}`
+        return `${this.symbol} - ${this.probability} - ${formatDate(this.date)} - ${this.changePrice}`;
     }
 }
 let results: Result[] = [];
@@ -31,7 +31,6 @@ tradeArtifactFiles.forEach(tradeArtifactFile => {
     if (endDate > today) {
         return;
     }
-    const formattedDate = formatDate(startDate);
     const absPath = join(FileUtil.tradeArtifacts, tradeArtifactFile);
     const predictions = JSON.parse(readFileSync(absPath, 'utf-8'));
     const symbols = predictions.map(p => p.prediction.symbol);
@@ -51,13 +50,13 @@ tradeArtifactFiles.forEach(tradeArtifactFile => {
                 results.push(result);
             }
             else if (!daySentimentStart && !daySentimentEnd) {
-                console.log("Didn't find a day sentiment for either start or end", formatDate(startDate), formatDate(endDate));
+                console.log('Didn\'t find a day sentiment for either start or end', formatDate(startDate), formatDate(endDate));
             }
             else if (!daySentimentStart) {
-                console.log("Didn't find a day sentiment for start", formatDate(startDate), formatDate(endDate));
+                console.log('Didn\'t find a day sentiment for start', formatDate(startDate), formatDate(endDate));
             }
             else if (!daySentimentEnd) {
-                console.log("Didn't find a day sentiment for end", formatDate(startDate), formatDate(endDate));
+                console.log('Didn\'t find a day sentiment for end', formatDate(startDate), formatDate(endDate));
             }
             else {
                 console.log('Well shit...');
@@ -69,19 +68,13 @@ tradeArtifactFiles.forEach(tradeArtifactFile => {
     }
 });
 
-function getStockPriceForDate(symbol: String, date: Date): number {
-    const resultsFile = FileUtil.getResultsFileForDate(date);
-    console.log(resultsFile);
-    return 0;
-}
-
 function getDaySentimentsForStocks(stocks: string[], date: Date): DaySentiment[] {
     let daySentiments: DaySentiment[] = DaySentiment.parseArray(JSON.parse(readFileSync(FileUtil.getResultsFileForDate(date), 'utf-8')));
     return daySentiments.filter(daySentiment => {
         return stocks.indexOf(daySentiment.stock.symbol) !== -1;
     });
 }
-results = results.filter(r => r.probability > 0 && r.probability < 0.3)
+results = results.filter(r => r.probability > 0 && r.probability < 0.3);
 results.forEach(r => console.log(r.toString()));
 const totalPrice = results.map(a => a.changePrice).reduce((a, b) => a + b);
-console.log(`Total: ${results.length}, Average Gain: ${totalPrice / results.length}`)
+console.log(`Total: ${results.length}, Average Gain: ${totalPrice / results.length}`);

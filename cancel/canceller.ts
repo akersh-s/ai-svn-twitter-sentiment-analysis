@@ -1,11 +1,9 @@
 'use strict';
 
-import { Robinhood, QuoteDataResult } from '../shared/robinhood.api';
+import { Robinhood } from '../shared/robinhood.api';
 import { validate } from '../shared/validate';
 
 import * as yargs from 'yargs';
-import * as async from 'async';
-
 let argv = yargs.argv;
 let username = validate('username', argv.username);
 let password = validate('password', argv.password);

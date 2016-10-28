@@ -1,14 +1,9 @@
 import * as fs from 'fs';
-import {DaySentiment} from '../sentiment/model/day-sentiment.model';
-import {Variables} from '../shared/variables';
-import {today, formatDate} from '../shared/util/date-util';
-import {FileUtil} from '../shared/util/file-util';
-import {normalize} from './normalize';
-import {getSvmData, getPredictions} from './svm-data-formatter';
-import {Prediction} from './prediction.model';
-import {SvmResult} from './svm-result';
-
-import * as async from 'async';
+import { DaySentiment } from '../sentiment/model/day-sentiment.model';
+import { FileUtil } from '../shared/util/file-util';
+import { getPredictions } from './svm-data-formatter';
+import { Prediction } from './prediction.model';
+import { SvmResult } from './svm-result';
 
 const svm = require('node-svm');
 
@@ -44,14 +39,4 @@ export async function predict(): Promise<SvmResult[]> {
     }
 
     return svmResults;
-}
-
-function calculatePredictedIncrease(probRes: any): number {
-    let predictedIncrease = 0;
-    for (let key in probRes) {
-        let possibleIncreasePercent = parseFloat(key);
-        let probabilityOf = probRes[key];
-        predictedIncrease += (possibleIncreasePercent * probabilityOf);
-    }
-    return predictedIncrease;
 }

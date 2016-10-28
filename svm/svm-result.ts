@@ -1,6 +1,6 @@
 import * as fs from 'fs';
 
-import {Prediction} from './prediction.model';
+import { Prediction } from './prediction.model';
 
 export class SvmResult {
     constructor(public prediction: Prediction, public value: number, public probability: number) { }

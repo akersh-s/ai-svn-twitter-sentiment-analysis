@@ -10,7 +10,8 @@
     "buy": "sh buy.sh",
     "buy-desperate": "sh buy-desperate.sh",
     "sell": "sh sell.sh",
-    "compile": "tsc --outDir generated sentiment-search/index.ts"
+    "compile": "tsc --outDir generated sentiment-search/index.ts",
+    "lint": "tslint **/*.ts"
   },
   "repository": {
     "type": "git",
@@ -37,6 +38,8 @@
     "sentiment": "^1.0.6",
     "stocktwits": "0.0.4",
     "svm": "^0.1.1",
+    "tslint": "3.14.0",
+    "tslint-eslint-rules": "^1.3.0",
     "twitter": "^1.2.5",
     "yargs": "^4.6.0"
   }

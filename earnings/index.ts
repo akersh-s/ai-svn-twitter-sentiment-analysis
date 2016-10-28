@@ -1,12 +1,9 @@
-let googleFinance = require('google-finance');
-
 import * as fs from 'fs';
-import * as path from 'path';
 
-import {FileUtil} from '../shared/util/file-util';
-import {formatDate, yesterday, today, getDaysAgo, isWeekend} from '../shared/util/date-util';
-import {DaySentiment} from '../sentiment/model/day-sentiment.model';
-import {Variables} from '../shared/variables';
+import { FileUtil } from '../shared/util/file-util';
+import { today, getDaysAgo, isWeekend } from '../shared/util/date-util';
+import { DaySentiment } from '../sentiment/model/day-sentiment.model';
+import { Variables } from '../shared/variables';
 
 export function determineHighestEarners(stocks: string[]): StockClosePercent[] {
     let i = 0;
@@ -76,7 +73,7 @@ export class StockClosePercent {
             if (stockClosePercent.symbol === symbol) {
                 earning = stockClosePercent.percent;
             }
-        })
+        });
         return earning;
     }
 

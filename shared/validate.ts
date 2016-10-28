@@ -7,8 +7,8 @@ export function validate(fieldname: string, value: string) {
 };
 
 export function isNotWeekend() {
-    var day = new Date().getDay();
-    var isWeekend = (day == 6) || (day == 0);
+    const day = new Date().getDay();
+    const isWeekend = (day === 6) || (day === 0);
 
     if (isWeekend) {
         console.log('No requests on the weekend.');

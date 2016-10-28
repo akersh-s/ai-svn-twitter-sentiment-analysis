@@ -1,2 +1,2 @@
-import {runSvm} from '../svm';
+import { runSvm } from '../svm';
 runSvm();

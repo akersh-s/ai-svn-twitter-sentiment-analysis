@@ -1,4 +1,4 @@
-import {argv} from 'yargs'; 
+import { argv } from 'yargs';
 //26622, 87.3275, 22, 11, %66, --include-stock-volatility=true --include-stock-momentum=false --include-volume-volatility=true --include-volume-momentum=true --include-sentiment-volatility=true --include-sentiment-momentum=false --num-days=10 --previous-day-sentiments=5 --include-price-change=false --include-volume-change=true
 //1492, 10.542, 25, 5, %83, --include-stock-volatility=false --include-stock-momentum=true --include-volume-volatility=false --include-volume-momentum=true --include-sentiment-volatility=false --include-sentiment-momentum=false --num-days=10 --previous-day-sentiments=10 --include-price-change=true --include-volume-change=false
 export class Variables {
@@ -19,9 +19,9 @@ export class Variables {
 
     // Least Squares
     static leastSquaresSentiment: boolean = false;
-	static leastSquaresPrice: boolean = false;
-	static leastSquaresTime: boolean = false;
-	static leastSquaresVolume: boolean = false;
+    static leastSquaresPrice: boolean = false;
+    static leastSquaresTime: boolean = false;
+    static leastSquaresVolume: boolean = false;
 
     //Time
     static includeTime: boolean = argBoolean('include-time', false);
@@ -48,7 +48,7 @@ export class Variables {
 
     static maxSvmData: number = argInt('max-svm-data', 20000);
 
-    static includeFundamentals():boolean {
+    static includeFundamentals(): boolean {
         return Variables.includeHighChange || Variables.includeLowChange || Variables.includeVolumeChange;
     }
 }
@@ -59,7 +59,7 @@ function argString(val: string, defValue: string): string {
 }
 
 function argInt(val: string, defValue: number): number {
-    const result = argv[val] ? parseInt(argv[val]) : defValue;
+    const result = argv[val] ? parseInt(argv[val], 10) : defValue;
     return result;
 }
 

@@ -1,3 +1,3 @@
-import {formatSentiment} from '../svm';
+import { formatSentiment } from '../svm';
 
 formatSentiment();

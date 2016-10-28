@@ -1,2 +1,2 @@
-import {processResults} from './process-results';
+import { processResults } from './process-results';
 processResults();
