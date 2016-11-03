@@ -30,7 +30,7 @@ async function runBuyer(): Promise<any> {
     results.forEach((result) => {
         if (result && result.symbol) {
             const svmResult: SvmResult = stockSymbolsToBuy.find(s => s.prediction.symbol.replace(/\$/, '') === result.symbol);
-            svmResult && buySymbols.push(new BuySymbol(result.symbol, parseFloat(result.bid_price), svmResult));
+            svmResult && buySymbols.push(new BuySymbol(result.symbol, parseFloat(result.last_trade_price), svmResult));
         }
     });
     const accounts = await robinhood.accountsPromise();
