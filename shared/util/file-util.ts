@@ -23,15 +23,14 @@ export class FileUtil {
     static earningsFileDate: string = path.join(userHome, `earnings-${formattedDate}.json`);
     static lastResultsFiles: string[] = FileUtil.collectLastResultFiles(30);
     static collectLastResultFiles(daysAgo: number): string[] {
-        var resultsFileRegex = /^results-\d+-\d+-\d+\.json$/;
+        const resultsFileRegex = /^results-\d+-\d+-\d+\.json$/;
 
-        var allResultFiles = [];
+        const allResultFiles = [];
         fs.readdirSync(userHome).forEach(f => {
             if (resultsFileRegex.test(f) && fileIsLastDays(f, daysAgo)) {
                 allResultFiles.push(path.join(userHome, f));
             }
         });
-
         return allResultFiles;
     }
     static getStocks(): string[] {

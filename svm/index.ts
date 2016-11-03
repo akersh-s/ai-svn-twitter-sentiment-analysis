@@ -52,6 +52,7 @@ export function runSvm(): Promise<any> {
     });
 }
 function getSvmDataFromFile(): any[] {
+    console.log(FileUtil.svmData, fs.existsSync(FileUtil.svmData));
     return JSON.parse(fs.readFileSync(FileUtil.svmData, 'utf-8'));
 }
 

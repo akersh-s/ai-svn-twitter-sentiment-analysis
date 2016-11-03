@@ -19,20 +19,18 @@ export async function getPredictions(todaysDaySentiments: DaySentiment[]): Promi
     debug(`Collecting Predictions from ${todaysDaySentiments.length} sentiments`);
     let predictions = [];
 
-    let groupedTodaysDaySentiments: DaySentiment[][] = group(todaysDaySentiments, 1500);
+    let groupedTodaysDaySentiments: DaySentiment[][] = _.chunk(todaysDaySentiments, 1500);
     let i = 0;
-
     while (i < groupedTodaysDaySentiments.length) {
         let groupedTDS: DaySentiment[] = groupedTodaysDaySentiments[i++];
         let allPreviousDaySentiments: DaySentiment[] = await gatherPreviousDaySentiments(groupedTDS.map(t => t.stock.symbol));
+        const previousSentimentDictionary: Dictionary<DaySentiment[]> = _.groupBy(allPreviousDaySentiments, (d) => d.stock.symbol);
         groupedTDS.forEach(todaysDaySentiment => {
             let price = todaysDaySentiment.price;
             let isValid: boolean = !!price;
             let prevDaySentiment = todaysDaySentiment;
             let collectedDaySentiments: DaySentiment[] = [prevDaySentiment];
-            let thisPreviousDaySentiments = allPreviousDaySentiments.filter(d => {
-                return d.stock.symbol === todaysDaySentiment.stock.symbol;
-            });
+            let thisPreviousDaySentiments = previousSentimentDictionary[todaysDaySentiment.stock.symbol];
             for (let j = 1; j < Variables.numPreviousDaySentiments; j++) {
                 prevDaySentiment = getPreviousDaySentiment(prevDaySentiment, thisPreviousDaySentiments);
                 prevDaySentiment && collectedDaySentiments.push(prevDaySentiment);
@@ -87,7 +85,7 @@ async function formatSvmData(): Promise<SvmData> {
     let svmData = new SvmData();
     let increases = [];
     let stocks = FileUtil.getStocks();
-    let groupedStocks: string[][] = group<string>(stocks, 1500);
+    let groupedStocks: string[][] = _.chunk(stocks, 1500);
     let i = 0;
 
     while (i < groupedStocks.length) {
@@ -141,23 +139,6 @@ async function formatSvmData(): Promise<SvmData> {
 
 function getPreviousDaySentiment(daySentiment: DaySentiment, allPreviousDaySentiments: DaySentiment[]): DaySentiment {
     return getNearbyDaySentiment(daySentiment, allPreviousDaySentiments, false);
-}
-
-function group<T>(arr: T[], size: number): T[][] {
-    const groupedArr: T[][] = [];
-    let sub = [];
-    for (let i = 0; i < arr.length; i++) {
-        sub.push(arr[i]);
-        if (sub.length % size === 0) {
-            groupedArr.push(sub);
-            sub = [];
-        }
-    }
-    if (sub.length) {
-        groupedArr.push(sub);
-    }
-
-    return groupedArr;
 }
 
 function getNearbyDaySentiment(daySentiment: DaySentiment, allPreviousDaySentiments: DaySentiment[], isForward: boolean): DaySentiment {
@@ -215,7 +196,7 @@ function createX(daySentiments: DaySentiment[]): number[] {
     Variables.includeVolumeMomentum && x.push(calculateMomentum(daySentiments.map(d => d.volume)));
 
     Variables.includeSentimentVolatility && x.push(calculateVolatility(daySentiments.map(d => d.totalSentiment)));
-    Variables.includeSentimentMomentum && x.push(calculateVolatility(daySentiments.map(d => d.totalSentiment)));
+    Variables.includeSentimentMomentum && x.push(calculateMomentum(daySentiments.map(d => d.totalSentiment)));
 
     Variables.includePriceChange && x.push(calculateStartEndDifference(daySentiments.map(d => d.price)));
     Variables.includeVolumeChange && x.push(calculateStartEndDifference(daySentiments.map(d => d.volume)));
@@ -228,7 +209,9 @@ function createX(daySentiments: DaySentiment[]): number[] {
         Variables.includeTime && x.push(+d.day);
         Variables.includePriceBracket && x.push(getPriceBracket(d.price));
     }*/
-
+    if (x.length === 0) {
+        throw new Error('x needs to be at least of length 1');
+    }
     return x;
 }
 
