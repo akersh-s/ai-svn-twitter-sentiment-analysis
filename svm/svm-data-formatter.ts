@@ -16,6 +16,8 @@ export async function getSvmData(): Promise<SvmData> {
 }
 
 export async function getPredictions(todaysDaySentiments: DaySentiment[]): Promise<Prediction[]> {
+    let stocks = FileUtil.getStocks();
+    todaysDaySentiments = todaysDaySentiments.filter(t => stocks.indexOf(t.stock.symbol) !== -1);
     debug(`Collecting Predictions from ${todaysDaySentiments.length} sentiments`);
     let predictions = [];
 
@@ -109,11 +111,12 @@ async function formatSvmData(): Promise<SvmData> {
                 isValidSvmItem = isValidSvmItem && collectedDaySentiments.length === Variables.numPreviousDaySentiments;
 
                 let nextDaySentiment: DaySentiment = isValidSvmItem && getDaySentimentInNDays(Variables.numDays, daySentiment, stockPreviousDaySentiments);
-                isValidSvmItem = isValidSvmItem && !!nextDaySentiment && !!nextDaySentiment.price;
+                const nextEoDaySentiment: DaySentiment = isValidSvmItem && getDaySentimentInNDays(1, daySentiment, stockPreviousDaySentiments);
+                isValidSvmItem = isValidSvmItem && !!nextDaySentiment && !!nextDaySentiment.price && !!nextEoDaySentiment && !!nextEoDaySentiment.price;
                 if (isValidSvmItem) {
-                    const increasePercent = ((nextDaySentiment.price - daySentiment.price) / daySentiment.price) * 100;
-
-                    const y = increasePercent > Variables.priceThreshold ? 1 : 0;
+                    const increasePercent = change(nextDaySentiment.price, daySentiment.price) * 100;
+                    const increasePercentEoD = change(nextDaySentiment.price, nextEoDaySentiment.price) * 100;
+                    const y = increasePercent > Variables.priceThreshold && increasePercentEoD > Variables.priceThreshold ? 1 : 0;
                     //const y = Math.floor(increasePercent);
                     increases.push(increasePercent);
                     //debug(`${daySentiment.stock.symbol}: ${nextDaySentiment.price} on ${formatDate(nextDaySentiment.day)}, ${daySentiment.price} on ${formatDate(date)} - Increase Percent: ${increasePercent}`)

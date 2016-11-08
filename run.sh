@@ -8,10 +8,10 @@ touch runs;
 out=out-$RANDOM
 echo "Out: $out"
 while [ 1 ]; do
-	previousDaySentiments=`ts-node shared/random-of --random=3,5,10`
+	#previousDaySentiments=7 #`ts-node shared/random-of --random=3,4,5,6,7,8,9,10`
     #skipDaySentiments=1
     
-	#includeDayOfWeek=`ts-node shared/random-of`
+	#includeDayOfWeek=false #`ts-node shared/random-of`
 	#includeNumTweetsChange=false #`ts-node shared/random-of`
     #includeNumTweets=`ts-node shared/random-of`
     #includePriceBracket=`ts-node shared/random-of`
@@ -22,24 +22,34 @@ while [ 1 ]; do
     #includeSentiment=`ts-node shared/random-of`
     #includePrice=`ts-node shared/random-of`
     #includeVolumeChange=false #`ts-node shared/random-of`
-    #priceThreshold=0 #`ts-node shared/random-of --random=0,1,3,5,6,8`
-    numDays=`ts-node shared/random-of --random=3,5,10`
+    #priceThreshold=`ts-node shared/random-of --random=0,0,0,0,0,1,3,5,6,8`
+    #numDays=`ts-node shared/random-of --random=2,3,5,10`
     #svmType=`ts-node shared/random-of --random=C_SVC,NU_SVC`
-    #kernelType=`ts-node shared/random-of --random=LINEAR,RBF,SIGMOID`
-    includeStockVolatility=`ts-node shared/random-of`
-    includeStockMomentum=`ts-node shared/random-of`
-    includeVolumeVolatility=`ts-node shared/random-of`
-    includeVolumeMomentum=`ts-node shared/random-of`
-    includeSentimentVolatility=`ts-node shared/random-of`
-    includeSentimentMomentum=`ts-node shared/random-of`
-    includePriceChange=`ts-node shared/random-of`
-    includeVolumeChange=`ts-node shared/random-of`
+    
+    #includeStockVolatility=`ts-node shared/random-of`
+    #includeStockMomentum=`ts-node shared/random-of`
+    #includeVolumeVolatility=`ts-node shared/random-of`
+    #includeVolumeMomentum=`ts-node shared/random-of`
+    #includeSentimentVolatility=`ts-node shared/random-of`
+    #includeSentimentMomentum=`ts-node shared/random-of`
+    #includePriceChange=`ts-node shared/random-of`
+    #includeVolumeChange=`ts-node shared/random-of`
     #flag=`ts-node shared/random-of --random=include-stock-volatility,include-stock-momentum,include-volume-volatility,include-volume-momentum,include-sentiment-volatility,include-sentiment-momentum,include-price-change,include-volume-change`
+
+    kernelType=`ts-node shared/random-of --random=LINEAR,RBF,SIGMOID`
+    svmType=`ts-node shared/random-of --random=C_SVC,NU_SVC`
+    normalize=`ts-node shared/random-of`
+    reduce=`ts-node shared/random-of`
+    kFold=`ts-node shared/random-of --random=1,2,3,4`
+    retainedVariance=`ts-node shared/random-of --random=0.99,0.95,0.85,0.75`
+    shrinking=`ts-node shared/random-of`
+
 
 	rm -rf $out
 
-	options="--include-stock-volatility=$includeStockVolatility --include-stock-momentum=$includeStockMomentum --include-volume-volatility=$includeVolumeVolatility --include-volume-momentum=$includeVolumeMomentum --include-sentiment-volatility=$includeSentimentVolatility --include-sentiment-momentum=$includeSentimentMomentum --num-days=$numDays --previous-day-sentiments=$previousDaySentiments --include-price-change=$includePriceChange --include-volume-change=$includeVolumeChange"
-    #options="--$flag=true --num-days=$numDays  --previous-day-sentiments=$previousDaySentiments"
+	#options="--include-stock-volatility=$includeStockVolatility --include-stock-momentum=$includeStockMomentum --include-volume-volatility=$includeVolumeVolatility --include-volume-momentum=$includeVolumeMomentum --include-sentiment-volatility=$includeSentimentVolatility --include-sentiment-momentum=$includeSentimentMomentum --num-days=$numDays --previous-day-sentiments=$previousDaySentiments --include-price-change=$includePriceChange --include-volume-change=$includeVolumeChange --price-threshold=$priceThreshold --include-day-of-week=$includeDayOfWeek"
+    
+    options="--kernel-type=$kernelType --svm-type=$svmType --normalize=$normalize --reduce=$reduce --k-fold=$kFold --retained-variance=$retainedVariance --shrinking=$shrinking"
     echo $options
     optionsEscaped=`echo "$options" | sed 's/-/\\\-/g'`
     ranAlready=`cat runs | grep "$optionsEscaped"`
@@ -70,11 +80,6 @@ while [ 1 ]; do
     ts-node process/run-process-results --today="09/14/2016" --debug --past --run-id=$out $options | tee -a $out &
     ts-node process/run-process-results --today="09/15/2016" --debug --past --run-id=$out $options | tee -a $out
 	ts-node process/run-process-results --today="09/16/2016" --debug --past --run-id=$out $options | tee -a $out
-
-    ts-node process/format --today="$today" --debug --run-id=$out $options
-	ts-node process/run-svm --today="$today" --debug --run-id=$out $options
-    echo "SVM Finished"
-
    	ts-node process/run-process-results --today="09/19/2016" --debug --past --run-id=$out $options | tee -a $out &
 	ts-node process/run-process-results --today="09/20/2016" --debug --past --run-id=$out $options | tee -a $out &
 	ts-node process/run-process-results --today="09/21/2016" --debug --past --run-id=$out $options | tee -a $out

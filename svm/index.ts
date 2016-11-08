@@ -16,20 +16,17 @@ export async function formatSentiment(): Promise<any> {
 export function runSvm(): Promise<any> {
     const clf = new svm.SVM({
         svmType: Variables.svmType,
-        c: [0.03125, 0.125, 0.5, 1, 2, 8],
 
         // kernels parameters 
         kernelType: Variables.kernelType,
-        gamma: [0.03125, 0.125, 0.5, 2, 8],
 
         // training options 
-        kFold: 4,
-        normalize: true,
-        reduce: true,
-        retainedVariance: 0.99,
-        eps: 1e-3,
+        kFold: Variables.kFold,
+        normalize: Variables.normalize,
+        reduce: Variables.reduce,
+        retainedVariance: Variables.retainedVariance,
         cacheSize: 10 * 1000, // 10 GB (WTF!!!)
-        shrinking: true,
+        shrinking: Variables.shrinking,
         probability: true
     });
 
