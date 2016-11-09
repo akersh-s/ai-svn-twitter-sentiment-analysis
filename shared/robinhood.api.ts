@@ -252,6 +252,9 @@ export class Robinhood {
       if (e1) {
         throw e1;
       }
+      else if (b1.results.length === 0) {
+        return cb(e1, resp, b1);
+      }
 
       const instrument = b1.results[0];
       form.instrument = instrument.url;
