@@ -2,6 +2,7 @@ import { argv } from 'yargs';
 //Run: 30315 - Total: 1103.16 Average: 42.4293, Above: 72, Below: 57, Success Rate: %55, Options: --include-stock-volatility=true --include-stock-momentum=true --include-volume-volatility=false --include-volume-momentum=true --include-sentiment-volatility=false --include-sentiment-momentum=true --num-days=2 --previous-day-sentiments=7 --include-price-change=false --include-volume-change=false --price-threshold=0 --include-day-of-week=false
 
 export class Variables {
+    static topNumToBuy: number = 10;
     static priceThreshold: number = argInt('price-thresold', 0);
     static numDays: number = argInt('num-days', 2);
     static numPreviousDaySentiments: number = argInt('previous-day-sentiments', 7);

@@ -1,4 +1,5 @@
 import { SvmResult } from '../svm/svm-result';
+import { Variables } from '../shared/variables';
 
 export class BuySymbol {
     numToBuy: number = 0;
@@ -12,7 +13,7 @@ export function determineNumToBuy(buyPower: number, equity: number, buySymbols: 
 
     let currentPower = buyPower;
     buySymbols.forEach((buySymbol) => {
-        const moneyToSpend = Math.min(buyPower / 20, currentPower);
+        const moneyToSpend = Math.min(buyPower / Variables.topNumToBuy, currentPower);
         let moneySpent = 0;
         while (currentPower > buySymbol.price && moneySpent < (moneyToSpend - buySymbol.price)) {
             buySymbol.numToBuy++;

@@ -4,6 +4,7 @@ import { FileUtil } from '../shared/util/file-util';
 import { getPredictions } from './svm-data-formatter';
 import { Prediction } from './prediction.model';
 import { SvmResult } from './svm-result';
+import { Variables } from '../shared/variables';
 
 const svm = require('node-svm');
 
@@ -30,7 +31,7 @@ export async function predict(): Promise<SvmResult[]> {
         svmResults = svmResults.sort((a: SvmResult, b: SvmResult) => {
             return b.probability - a.probability;
         }).filter((value: SvmResult, index: number) => {
-            return index < 5 && value.probability > 0;
+            return index < Variables.topNumToBuy && value.probability > 0;
         });
     }
     catch (e) {
