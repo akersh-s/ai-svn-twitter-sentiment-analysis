@@ -1,0 +1,158 @@
+{
+    "lastChangedIndex": 11,
+    "bestTotal": 974.758,
+    "version": 28,
+    "fields": [
+        {
+            "key": "--include-stock-volatility",
+            "value": "false",
+            "otherValues": [
+                "true",
+                "false"
+            ]
+        },
+        {
+            "key": "--include-stock-momentum",
+            "value": "false",
+            "otherValues": [
+                "true",
+                "false"
+            ]
+        },
+        {
+            "key": "--include-volume-volatility",
+            "value": "false",
+            "otherValues": [
+                "true",
+                "false"
+            ]
+        },
+        {
+            "key": "--include-volume-momentum",
+            "value": "true",
+            "otherValues": [
+                "true",
+                "false"
+            ]
+        },
+        {
+            "key": "--include-sentiment-volatility",
+            "value": "false",
+            "otherValues": [
+                "true",
+                "false"
+            ]
+        },
+        {
+            "key": "--include-sentiment-momentum",
+            "value": "false",
+            "otherValues": [
+                "true",
+                "false"
+            ]
+        },
+        {
+            "key": "--include-volume-change",
+            "value": "false",
+            "otherValues": [
+                "true",
+                "false"
+            ]
+        },
+        {
+            "key": "--include-sentiment-change",
+            "value": "false",
+            "otherValues": [
+                "true",
+                "false"
+            ]
+        },
+        {
+            "key": "--include-price-change",
+            "value": "true",
+            "otherValues": []
+        },
+        {
+            "key": "--include-sub",
+            "value": "true",
+            "otherValues": [
+                "true",
+                "false"
+            ]
+        },
+        {
+            "key": "--price-thresold",
+            "value": 1,
+            "otherValues": [
+                0.5,
+                1,
+                1.5,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8
+            ]
+        },
+        {
+            "key": "--kernel-type",
+            "value": "RBF",
+            "otherValues": []
+        },
+        {
+            "key": "--svm-type",
+            "value": "C_SVC",
+            "otherValues": []
+        },
+        {
+            "key": "--normalize",
+            "value": "true",
+            "otherValues": []
+        },
+        {
+            "key": "--k-fold",
+            "value": 1,
+            "otherValues": [
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8
+            ]
+        },
+        {
+            "key": "--retained-variance",
+            "value": 0.9,
+            "otherValues": [
+                0.8,
+                0.85,
+                0.88,
+                0.9,
+                0.92,
+                0.95
+            ]
+        },
+        {
+            "key": "--num-days",
+            "value": 7,
+            "otherValues": [
+                2,
+                3,
+                4,
+                5,
+                6,
+                7
+            ]
+        },
+        {
+            "key": "--eps",
+            "value": 0.001,
+            "otherValues": []
+        }
+    ]
+}
