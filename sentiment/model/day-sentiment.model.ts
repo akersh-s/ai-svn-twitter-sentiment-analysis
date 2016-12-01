@@ -1,4 +1,4 @@
-import {formatDate} from '../../shared/util/date-util'
+import {formatDate} from '../../shared/util/date-util';
 import {Stock} from './stock.model';
 import {Robinhood, QuoteDataResultBody, QuoteDataResult, FundamentalResponse} from '../../shared/robinhood.api';
 import * as fs from 'fs';
@@ -50,7 +50,7 @@ export class DaySentiment {
             let symbolFormatted = this.stock.symbol.replace(/\$/, '').toUpperCase();
             let robinhood = new Robinhood(null, null);
             robinhood.quote_data(symbolFormatted, (err, response, body: QuoteDataResultBody) => {
-                if (err) return reject(err);
+                if (err) { return reject(err); }
 
                 if (!body || !body.results || body.results.length < 1) {
                     return reject('No results');
@@ -58,14 +58,14 @@ export class DaySentiment {
                 this.quoteDataResult = body.results[0];
                 let price = parseFloat(this.quoteDataResult.bid_price);
                 setTimeout(() => {
-                    robinhood.fundamentals(symbolFormatted, (err, response, body: FundamentalResponse) => {
-                        if (err) return reject(err);
+                    robinhood.fundamentals(symbolFormatted, (err2, response2, body2: FundamentalResponse) => {
+                        if (err2) { return reject(err2); }
 
-                        if (!body) {
+                        if (!body2) {
                             return reject('No fundamental results');
                         }
 
-                        this.fundamentals = body;
+                        this.fundamentals = body2;
                         this.priceComplete = true;
                         resolve(price);
                     });
@@ -87,17 +87,17 @@ export class DaySentiment {
         delete this.twitsComplete;
         delete this.tweetsComplete;
 
-        for (var property in this.stock) {
+        for (let property in this.stock) {
             if (!this.stock[property]) {
                 delete this.stock[property];
             }
         }
-        for (var property in this.fundamentals) {
+        for (let property in this.fundamentals) {
             if (!this.fundamentals[property]) {
                 delete this.fundamentals[property];
             }
         }
-        for (var property in this.quoteDataResult) {
+        for (let property in this.quoteDataResult) {
             if (!this.quoteDataResult[property]) {
                 delete this.quoteDataResult[property];
             }

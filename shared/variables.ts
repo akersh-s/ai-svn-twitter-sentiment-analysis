@@ -1,15 +1,16 @@
 import { argv } from 'yargs';
-//Run: 30315 - Total: 1103.16 Average: 42.4293, Above: 72, Below: 57, Success Rate: %55, Options: --include-stock-volatility=true --include-stock-momentum=true --include-volume-volatility=false --include-volume-momentum=true --include-sentiment-volatility=false --include-sentiment-momentum=true --num-days=2 --previous-day-sentiments=7 --include-price-change=false --include-volume-change=false --price-threshold=0 --include-day-of-week=false
+//Run: 14691 - Total: 974.758 Average: 34.8128, Above: 67, Below: 20, Success Rate: %77, Options: --include-stock-volatility=false --include-stock-momentum=false --include-volume-volatility=false --include-volume-momentum=true --include-sentiment-volatility=false --include-sentiment-momentum=false --include-volume-change=false --include-sentiment-change=false --include-price-change=true --include-sub=true --price-thresold=1 --kernel-type=RBF --svm-type=C_SVC --normalize=true --k-fold=1 --retained-variance=0.9 --num-days=7 --eps=0.001
 
 export class Variables {
-    static topNumToBuy: number = 10;
-    static priceThreshold: number = argInt('price-thresold', 0);
-    static numDays: number = argInt('num-days', 2);
-    static numPreviousDaySentiments: number = argInt('previous-day-sentiments', 7);
+    static topNumToBuy: number = 1000;
+    static priceThreshold: number = argInt('price-thresold', 1);
+    static numDays: number = argInt('num-days', 7);
+    static numPreviousDaySentiments: number = 6; //Variables.numDays * 2; //argInt('previous-day-sentiments', 6);
+
+    static includeSub: boolean = argBoolean('include-sub', true);
+    static numPreviousDaySentimentsSub: number = Variables.numDays; //argInt('previous-day-sentiments-sub', 3);
     static skipDaySentiments: number = argInt('skip-day-sentiments', 1);
 
-    static includeSentimentChange: boolean = argBoolean('include-sentiment-change', false);
-    static includePriceChange: boolean = argBoolean('include-price-change', false);
     static includeNumTweetsChange: boolean = argBoolean('include-num-tweets-change', false);
     static includeSentiment: boolean = argBoolean('include-sentiment', false);
     static includePrice: boolean = argBoolean('include-price', false);
@@ -27,30 +28,34 @@ export class Variables {
     static includeTimeChange: boolean = argBoolean('include-time-change', false);
 
     // Volatility and Momentum
-    static includeStockVolatility: boolean = argBoolean('include-stock-volatility', true);
-    static includeStockMomentum: boolean = argBoolean('include-stock-momentum', true);
+    static includeStockVolatility: boolean = argBoolean('include-stock-volatility', false);
+    static includeStockMomentum: boolean = argBoolean('include-stock-momentum', false);
 
     static includeVolumeVolatility: boolean = argBoolean('include-volume-volatility', false);
     static includeVolumeMomentum: boolean = argBoolean('include-volume-momentum', true);
 
     static includeSentimentVolatility: boolean = argBoolean('include-sentiment-volatility', false);
-    static includeSentimentMomentum: boolean = argBoolean('include-sentiment-momentum', true);
+    static includeSentimentMomentum: boolean = argBoolean('include-sentiment-momentum', false);
+
+    static includeVolumeChange: boolean = argBoolean('include-volume-change', false);
+    static includeSentimentChange: boolean = argBoolean('include-sentiment-change', false);
+    static includePriceChange: boolean = argBoolean('include-price-change', true);
 
     //Fundamentals
     static includeHighChange: boolean = false;
     static includeLowChange: boolean = false;
-    static includeVolumeChange: boolean = argBoolean('include-volume-change', false);
     static includeDayOfWeek: boolean = argBoolean('include-day-of-week', false);
 
-    static kernelType: string = argString('kernel-type', 'SIGMOID');
+    static kernelType: string = argString('kernel-type', 'RBF');
     static svmType: string = argString('svm-type', 'C_SVC');
+    static eps: number = argFloat('eps', 1e-3);
     static normalize: boolean = argBoolean('normalize', true);
     static reduce: boolean = argBoolean('reduce', true);
-    static kFold: number = argInt('k-fold', 4);
-    static retainedVariance: number = argFloat('retained-variance', 0.85);
+    static kFold: number = argInt('k-fold', 1);
+    static retainedVariance: number = argFloat('retained-variance', 0.9);
     static shrinking: boolean = argBoolean('shrinking', true);
 
-    static maxSvmData: number = argInt('max-svm-data', 13000);
+    static maxSvmData: number = argInt('max-svm-data', 15000);
 
     static includeFundamentals(): boolean {
         return Variables.includeHighChange || Variables.includeLowChange || Variables.includeVolumeChange;
@@ -65,7 +70,7 @@ function argString(val: string, defValue: string): string {
 function argInt(val: string, defValue: number): number {
     const result = argv[val] ? parseInt(argv[val], 10) : defValue;
     if (argv[val]) {
-        console.log(val, result);
+        //console.log(val, result);
     }
     return result;
 }
@@ -73,7 +78,7 @@ function argInt(val: string, defValue: number): number {
 function argFloat(val: string, defValue: number): number {
     const result = argv[val] ? parseFloat(argv[val]) : defValue;
     if (argv[val]) {
-        console.log(val, result);
+        //console.log(val, result);
     }
     return result;
 }
@@ -82,7 +87,7 @@ function argBoolean(val: string, defValue: boolean): boolean {
     let result: boolean;
     if (argv[val] !== undefined && argv[val] !== null) {
         result = argv[val] === 'true' || argv[val] === true;
-        console.log(val, result);
+        //console.log(val, result);
     }
     else {
         result = defValue;

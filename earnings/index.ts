@@ -83,7 +83,9 @@ export class StockClosePercent {
         }
         let totalPercent = 0;
         stockClosePercents.forEach(buy => {
-            totalPercent += StockClosePercent.findEarning(stockClosePercents, buy.symbol);
+            const earning = StockClosePercent.findEarning(stockClosePercents, buy.symbol);
+            const boxedEarning = Math.max(-100, Math.min(100, earning));
+            totalPercent += boxedEarning;
         });
         return totalPercent / stockClosePercents.length;
     }

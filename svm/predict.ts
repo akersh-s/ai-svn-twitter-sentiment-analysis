@@ -27,10 +27,10 @@ export async function predict(): Promise<SvmResult[]> {
             let p = clf.predictSync(prediction.data);
             svmResults.push(new SvmResult(prediction, p, probRes['1']));
         });
-
+        console.log(`Svm Results Length: ${svmResults.length}`, `Svm Results with value 1: ${svmResults.filter(v => v.value === 1).length}` , `Svm Results with value 0: ${svmResults.filter(v => v.value === 0).length}`);
         svmResults = svmResults.sort((a: SvmResult, b: SvmResult) => {
             return b.probability - a.probability;
-        }).filter((value: SvmResult, index: number) => {
+        }).filter(v => v.value === 1).filter((value: SvmResult, index: number) => {
             return index < Variables.topNumToBuy && value.probability > 0;
         });
     }

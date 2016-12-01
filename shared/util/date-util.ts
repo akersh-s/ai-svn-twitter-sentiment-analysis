@@ -24,26 +24,26 @@ export function getLast3Days(): Date[] {
     for (i = 0; i < 3; i++) {
         dates.unshift(getPreviousWorkDay(dates[0]));
     }
-    
+
     return dates;
 }
 
 export function getPreviousWorkDay(date: Date): Date {
-    var prevDate = date;
-    var isWeekend = true;
+    let prevDate = date;
+    let isWeekend = true;
     while (isWeekend) {
         prevDate = new Date(+prevDate - oneDay);
-        isWeekend = (prevDate.getDay() == 6) || (prevDate.getDay() == 0);
+        isWeekend = (prevDate.getDay() === 6) || (prevDate.getDay() === 0);
     }
     return prevDate;
 }
 
 export function getNextWorkDay(date: Date): Date {
-    var nextDate = date;
-    var isWeekend = true;
+    let nextDate = date;
+    let isWeekend = true;
     while (isWeekend) {
         nextDate = new Date(+nextDate + oneDay);
-        isWeekend = (nextDate.getDay() == 6) || (nextDate.getDay() == 0);
+        isWeekend = (nextDate.getDay() === 6) || (nextDate.getDay() === 0);
     }
     return nextDate;
 }
@@ -64,8 +64,8 @@ export function getDaysAgo(n: number, refDate?: Date): Date {
 }
 
 export function getUntilDate(day: Date): string {
-    var tomorrow = new Date(+day + oneDay)
-    return formatDate(tomorrow);
+    const t = new Date(+day + oneDay);
+    return formatDate(t);
 }
 
 export function getOldestDate(dates: Date[]): Date {

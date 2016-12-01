@@ -26,6 +26,7 @@ export async function processResults(): Promise<number> {
 
             if (argv.past) {
                 const earnings: StockClosePercent[] = determineHighestEarners(buys);
+                updateStockSuccesses(earnings);
                 const earningPercent = StockClosePercent.findAverage(earnings);
                 console.log(`Average Earning Percent: ${earningPercent}`);
 
@@ -50,4 +51,75 @@ export async function processResults(): Promise<number> {
             resolve(0);
         }
     });
+}
+
+function updateStockSuccesses(earnings: StockClosePercent[]): void {
+    let stockSuccesses: StockSuccess[] = [];
+    if (fs.existsSync(FileUtil.stockSuccessesFile)) {
+        stockSuccesses = StockSuccess.read();
+    }
+    earnings.forEach(earning => {
+        const stockSuccess = StockSuccess.findForSymbol(stockSuccesses, earning.symbol);
+        stockSuccess.updateCount(earning);
+    });
+
+    fs.writeFileSync(FileUtil.stockSuccessesFile, JSON.stringify(stockSuccesses, null, 4), 'utf-8');
+}
+
+export class StockSuccess {
+    numPositive: number = 0;
+    numNegative: number = 0;
+    totalEarning: number = 0;
+
+    constructor(public symbol: string) { }
+
+    static findForSymbol(stockSuccesses: StockSuccess[], symbol: string): StockSuccess {
+        let stockSuccess: StockSuccess = stockSuccesses.find(s => s.symbol === symbol);
+        if (!stockSuccess) {
+            stockSuccess = new StockSuccess(symbol);
+            stockSuccesses.push(stockSuccess);
+        }
+        return stockSuccess;
+    }
+
+    updateCount(earning: StockClosePercent): void {
+        if (earning.percent >= 0) {
+            this.numPositive++;
+        }
+        else {
+            this.numNegative++;
+        }
+        this.totalEarning += earning.percent;
+    }
+
+    get fractionPositive(): number {
+        return this.numPositive / this.total;
+    }
+
+    get fractionNegative(): number {
+        return this.numNegative / this.total;
+    }
+    get averageEarning(): number {
+        return this.totalEarning / this.total;
+    }
+
+    get total(): number {
+        return this.numNegative + this.numPositive;
+    }
+
+    static parseArray(arr: any[]): StockSuccess[] {
+        const stockSuccesses: StockSuccess[] = [];
+        arr.forEach(a => {
+            const stockSuccess = new StockSuccess(a.symbol);
+            stockSuccess.numPositive = a.numPositive;
+            stockSuccess.numNegative = a.numNegative;
+            stockSuccess.totalEarning = a.totalEarning;
+            stockSuccesses.push(stockSuccess);
+        });
+        return stockSuccesses;
+    }
+
+    static read(loc?: string): StockSuccess[] {
+        return StockSuccess.parseArray(JSON.parse(fs.readFileSync(loc || FileUtil.stockSuccessesFile, 'utf-8')));
+    }
 }

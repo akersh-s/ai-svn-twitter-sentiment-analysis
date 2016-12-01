@@ -6,7 +6,7 @@ import {formatDate, today, yesterday, getDaysAgo, oneDay} from './date-util';
 let argv = yargs.argv;
 let runId = argv['run-id'] ? '-' + argv['run-id'] : '';
 let username = argv.username;
-let userHome = process.env[(process.platform == 'win32') ? 'USERPROFILE' : 'HOME'];
+let userHome = process.env[(process.platform === 'win32') ? 'USERPROFILE' : 'HOME'];
 let formattedDate = formatDate(today);
 export class FileUtil {
     static userHome: string = userHome;
@@ -15,6 +15,7 @@ export class FileUtil {
     static resultsFileDate: string = path.join(userHome, `results-${formattedDate}.json`);
     static buyFile: string = path.join(userHome, 'buy' + runId + '.json');
     static sellStatsFile: string = path.join(userHome, `sell-stats-${hashCode(username)}.json`);
+    static stockSuccessesFile: string = path.join(userHome, 'stock-successes.json');
     static svmFile: string = path.join(userHome, 'svm.json');
     static svmModelFile: string = path.join(userHome, 'svm-model' + runId + '.json');
     static svmData: string = path.join(userHome, 'svm-data' + runId + '.json');

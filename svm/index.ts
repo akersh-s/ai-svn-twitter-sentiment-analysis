@@ -20,7 +20,8 @@ export function runSvm(): Promise<any> {
         // kernels parameters 
         kernelType: Variables.kernelType,
 
-        // training options 
+        // training options
+        eps: Variables.eps, 
         kFold: Variables.kFold,
         normalize: Variables.normalize,
         reduce: Variables.reduce,

@@ -38,7 +38,7 @@ export class TwitterSearch {
     }
 
     private async downloadAllTweets(): Promise<SentimentCacheItem[]> {
-        let sentimentCache: SentimentCacheItem[] = []
+        let sentimentCache: SentimentCacheItem[] = [];
         let symbols = FileUtil.getStocks();
         let currentIndex = 0;
         while (currentIndex < symbols.length) {
