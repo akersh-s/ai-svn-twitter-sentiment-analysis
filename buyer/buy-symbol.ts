@@ -11,9 +11,11 @@ export function determineNumToBuy(buyPower: number, equity: number, buySymbols: 
         return;
     }
 
+    const numToBuy = Math.min(Variables.topNumToBuy, buySymbols.length);
+
     let currentPower = buyPower;
     buySymbols.forEach((buySymbol) => {
-        const moneyToSpend = Math.min(buyPower / Variables.topNumToBuy, currentPower);
+        const moneyToSpend = Math.min(buyPower / numToBuy, currentPower);
         let moneySpent = 0;
         while (currentPower > buySymbol.price && moneySpent < (moneyToSpend - buySymbol.price)) {
             buySymbol.numToBuy++;
