@@ -256,7 +256,15 @@ export class Robinhood {
         return cb(e1, resp, b1);
       }
 
-      const instrument = b1.results[0];
+      let instrument = b1.results[0];
+      if (b1.results.length > 1) {
+        let newResult = b1.results.find(result => result.symbol === symbol);
+
+        if (newResult) {
+          instrument = newResult;
+        }
+      }
+
       form.instrument = instrument.url;
 
       this.quote_data(symbol, (err, response, body) => {
