@@ -36,11 +36,16 @@ async function runBuyer(): Promise<any> {
     const accounts = await robinhood.accountsPromise();
     const account = accounts.results[0];
     const buyingPower: number = parseFloat(account.buying_power);
+    let buyingPowerWithGold = buyingPower;
+    if (account.margin_balances && account.margin_balances.unallocated_margin_cash) {
+        const unallocatedMarginCash = parseFloat(account.margin_balances.unallocated_margin_cash);
+        buyingPowerWithGold = Math.max(buyingPower, unallocatedMarginCash);
+    }
 
     const portfolioBody = await robinhood.getPromise(account.portfolio);
 
     const previousEquity = parseFloat(portfolioBody.last_core_equity);
-    const maxAmountOfMoneyToSpend = Math.max(0, Math.min(buyingPower * 0.95, previousEquity));
+    const maxAmountOfMoneyToSpend = Math.max(0, Math.min(buyingPowerWithGold, previousEquity));
     console.log(`Amount of money to spend: $${maxAmountOfMoneyToSpend}`);
     determineNumToBuy(maxAmountOfMoneyToSpend, previousEquity, buySymbols);
 
