@@ -3,12 +3,12 @@ import { argv } from 'yargs';
 
 export class Variables {
     static topNumToBuy: number = argInt('num-to-buy', 1000);
-    static priceThreshold: number = argInt('price-thresold', 1);
-    static numDays: number = argInt('num-days', 7);
-    static numPreviousDaySentiments: number = 6; //Variables.numDays * 2; //argInt('previous-day-sentiments', 6);
+    static priceThreshold: number = argInt('price-thresold', 2);
+    static numDays: number = argInt('num-days', 3);
+    static numPreviousDaySentiments: number = argInt('previous-day-sentiments', 6);
 
     static includeSub: boolean = argBoolean('include-sub', true);
-    static numPreviousDaySentimentsSub: number = Variables.numPreviousDaySentiments; //argInt('previous-day-sentiments-sub', 3);
+    static numPreviousDaySentimentsSub: number = argInt('previous-day-sentiments-sub', 2);
     static skipDaySentiments: number = argInt('skip-day-sentiments', 1);
 
     static includeNumTweetsChange: boolean = argBoolean('include-num-tweets-change', false);
@@ -55,7 +55,7 @@ export class Variables {
     static retainedVariance: number = argFloat('retained-variance', 0.9);
     static shrinking: boolean = argBoolean('shrinking', true);
 
-    static maxSvmData: number = argInt('max-svm-data', 35000);
+    static maxSvmData: number = argInt('max-svm-data', 1500000);
 
     static includeFundamentals(): boolean {
         return Variables.includeHighChange || Variables.includeLowChange || Variables.includeVolumeChange;

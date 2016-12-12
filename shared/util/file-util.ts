@@ -2,7 +2,7 @@ import * as path from 'path';
 import * as yargs from 'yargs';
 import * as fs from 'fs';
 
-import {formatDate, today, yesterday, getDaysAgo, oneDay} from './date-util'; 
+import {formatDate, today, yesterday, getDaysAgo, oneDay} from './date-util';
 let argv = yargs.argv;
 let runId = argv['run-id'] ? '-' + argv['run-id'] : '';
 let username = argv.username;

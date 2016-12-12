@@ -26,7 +26,7 @@ export async function processResults(): Promise<number> {
 
             if (argv.past) {
                 const earnings: StockClosePercent[] = determineHighestEarners(buys);
-                updateStockSuccesses(earnings);
+                //updateStockSuccesses(earnings);
                 const earningPercent = StockClosePercent.findAverage(earnings);
                 console.log(`Average Earning Percent: ${earningPercent}`);
 

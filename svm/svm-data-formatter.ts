@@ -170,7 +170,7 @@ function createX(allDaySentiments: DaySentiment[]): number[] {
     let x: number[] = [];
 
     const dsGroups = [allDaySentiments];
-    if (Variables.includeSub) {
+    if (Variables.includeSub && Variables.numPreviousDaySentimentsSub < Variables.numPreviousDaySentiments) {
         const subDaySentiments: DaySentiment[] = allDaySentiments.filter((v, i) => i < Variables.numPreviousDaySentimentsSub);
         dsGroups.push(subDaySentiments);
     }
