@@ -1,11 +1,11 @@
 {
-    "lastChangedIndex": 0,
-    "bestTotal": 104.14033333333333,
-    "version": 40,
+    "lastChangedIndex": 10,
+    "bestTotal": 0.2990948445493909,
+    "version": 44,
     "fields": [
         {
             "key": "--previous-day-sentiments-sub",
-            "value": 2,
+            "value": 3,
             "otherValues": [
                 2,
                 3,
@@ -15,19 +15,119 @@
         },
         {
             "key": "--previous-day-sentiments",
-            "value": 6,
-            "otherValues": []
+            "value": 8,
+            "otherValues": [
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8
+            ]
         },
         {
             "key": "--num-days",
-            "value": 3,
+            "value": 7,
             "otherValues": [
+                3,
+                4,
+                5,
+                6,
+                7
             ]
         },
         {
             "key": "--price-threshold",
-            "value": 2,
+            "value": 0.5,
             "otherValues": [
+                0,
+                0.5,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                15,
+                20,
+                25
+            ]
+        },
+        {
+            "key": "--include-stock-volatility",
+            "value": "false",
+            "otherValues": [
+                "true",
+                "false"
+            ]
+        },
+        {
+            "key": "--include-stock-momentum",
+            "value": "false",
+            "otherValues": [
+                "true",
+                "false"
+            ]
+        },
+        {
+            "key": "--include-price-change",
+            "value": "false",
+            "otherValues": [
+                "true",
+                "false"
+            ]
+        },
+        {
+            "key": "--include-volume-volatility",
+            "value": "false",
+            "otherValues": [
+                "true",
+                "false"
+            ]
+        },
+        {
+            "key": "--include-volume-momentum",
+            "value": "true",
+            "otherValues": [
+                "true",
+                "false"
+            ]
+        },
+        {
+            "key": "--include-volume-change",
+            "value": "false",
+            "otherValues": [
+                "true",
+                "false"
+            ]
+        },
+        {
+            "key": "--include-sentiment-volatility",
+            "value": "false",
+            "otherValues": [
+                "true",
+                "false"
+            ]
+        },
+        {
+            "key": "--include-sentiment-momentum",
+            "value": "false",
+            "otherValues": [
+                "true",
+                "false"
+            ]
+        },
+        {
+            "key": "--include-sentiment-change",
+            "value": "false",
+            "otherValues": [
+                "true",
+                "false"
             ]
         }
     ]

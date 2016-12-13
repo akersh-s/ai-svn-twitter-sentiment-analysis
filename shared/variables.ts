@@ -30,16 +30,16 @@ export class Variables {
     // Volatility and Momentum
     static includeStockVolatility: boolean = argBoolean('include-stock-volatility', false);
     static includeStockMomentum: boolean = argBoolean('include-stock-momentum', false);
+    static includePriceChange: boolean = argBoolean('include-price-change', true);
 
     static includeVolumeVolatility: boolean = argBoolean('include-volume-volatility', false);
     static includeVolumeMomentum: boolean = argBoolean('include-volume-momentum', true);
+    static includeVolumeChange: boolean = argBoolean('include-volume-change', false);
 
     static includeSentimentVolatility: boolean = argBoolean('include-sentiment-volatility', false);
     static includeSentimentMomentum: boolean = argBoolean('include-sentiment-momentum', false);
-
-    static includeVolumeChange: boolean = argBoolean('include-volume-change', false);
     static includeSentimentChange: boolean = argBoolean('include-sentiment-change', false);
-    static includePriceChange: boolean = argBoolean('include-price-change', true);
+
 
     //Fundamentals
     static includeHighChange: boolean = false;
@@ -55,7 +55,7 @@ export class Variables {
     static retainedVariance: number = argFloat('retained-variance', 0.9);
     static shrinking: boolean = argBoolean('shrinking', true);
 
-    static maxSvmData: number = argInt('max-svm-data', 1500000);
+    static maxSvmData: number = argInt('max-svm-data', 20000);
 
     static includeFundamentals(): boolean {
         return Variables.includeHighChange || Variables.includeLowChange || Variables.includeVolumeChange;
