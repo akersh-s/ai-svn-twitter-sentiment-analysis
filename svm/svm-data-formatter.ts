@@ -188,6 +188,9 @@ function createX(allDaySentiments: DaySentiment[]): number[] {
 
         Variables.includePriceChange && x.push(calculateStartEndDifference(daySentiments.map(d => d.price)));
         Variables.includeVolumeChange && x.push(calculateStartEndDifference(daySentiments.map(d => d.volume)));
+
+        Variables.includeRIndicator && x.push(calculateRIndicator(daySentiments));
+        Variables.includeOnBalanceVolume && x.push(calculateOnBalanceVolume(daySentiments));
     });
 
     if (x.length === 0) {
@@ -239,4 +242,37 @@ function calculateSentimentChange(sentiments: number[]): number {
         val = 0;
     }
     return val;
+}
+
+function calculateRIndicator(daySentiments: DaySentiment[]): number {
+    const highs = daySentiments.map(d => parseFloat(d.fundamentals.high));
+    const lows = daySentiments.map(d => parseFloat(d.fundamentals.low));
+    highs.sort((a, b) => b - a);
+    lows.sort((a, b) => a - b);
+    const highestHigh = highs[0];
+    const lowestLow = lows[0];
+    const close = daySentiments[0].price;
+    const denom = highestHigh - lowestLow;
+    return denom === 0 ? 0 : -100 * ((highestHigh - close) / denom);
+}
+
+function calculateOnBalanceVolume(daySentiments: DaySentiment[]): number {
+    let totalUp: number = 0;
+    let totalDown: number = 0;
+    for (let i = 0; i < daySentiments.length - 1; i++) {
+        const cur = daySentiments[i];
+        const last = daySentiments[i + 1];
+        if (!cur || !last) {
+            continue;
+        }
+        const curVolume = parseFloat(cur.fundamentals.volume);
+        const lastVolume = parseFloat(last.fundamentals.volume);
+        const change = curVolume - lastVolume;
+        if (change > 0) {
+            totalUp += change;
+        } else {
+            totalDown += change;
+        }
+    }
+    return totalUp - totalDown;
 }

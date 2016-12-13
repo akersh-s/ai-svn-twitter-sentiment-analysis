@@ -40,6 +40,8 @@ export class Variables {
     static includeSentimentMomentum: boolean = argBoolean('include-sentiment-momentum', false);
     static includeSentimentChange: boolean = argBoolean('include-sentiment-change', false);
 
+    static includeRIndicator: boolean = argBoolean('include-r-indicator', false);
+    static includeOnBalanceVolume: boolean = argBoolean('include-obv', false);
 
     //Fundamentals
     static includeHighChange: boolean = false;

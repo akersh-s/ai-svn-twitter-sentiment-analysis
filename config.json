@@ -1,7 +1,7 @@
 {
     "lastChangedIndex": 10,
-    "bestTotal": 0.2990948445493909,
-    "version": 44,
+    "bestTotal": 0.5246641062022,
+    "version": 45,
     "fields": [
         {
             "key": "--previous-day-sentiments-sub",
@@ -15,7 +15,7 @@
         },
         {
             "key": "--previous-day-sentiments",
-            "value": 8,
+            "value": 7,
             "otherValues": [
                 2,
                 3,
@@ -124,6 +124,22 @@
         },
         {
             "key": "--include-sentiment-change",
+            "value": "false",
+            "otherValues": [
+                "true",
+                "false"
+            ]
+        },
+        {
+            "key": "--include-r-indicator",
+            "value": "false",
+            "otherValues": [
+                "true",
+                "false"
+            ]
+        },
+        {
+            "key": "--include-obv",
             "value": "false",
             "otherValues": [
                 "true",
