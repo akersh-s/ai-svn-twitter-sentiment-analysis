@@ -1,7 +1,7 @@
 import * as fs from 'fs';
 import * as _ from 'lodash';
 
-import { isWeekend, getPreviousWorkDay, getNextWorkDay } from '../shared/util/date-util';
+import { isWeekend, getPreviousWorkDay, getNextWorkDay, getDaysAgo } from '../shared/util/date-util';
 import { FileUtil } from '../shared/util/file-util';
 import { calculateMeanVarianceAndDeviation } from '../shared/util/math-util';
 import { SvmData } from './svm-data.model';
@@ -9,6 +9,8 @@ import { Prediction } from './prediction.model';
 import { debug } from '../shared/util/log-util';
 import { Variables } from '../shared/variables';
 import { DaySentiment } from '../sentiment/model/day-sentiment.model';
+
+const stockHashCache: any = {};
 
 export async function getSvmData(): Promise<SvmData> {
     let formattedSvmData = await formatSvmData();
@@ -28,17 +30,21 @@ export async function getPredictions(todaysDaySentiments: DaySentiment[]): Promi
         let groupedTDS: DaySentiment[] = groupedTodaysDaySentiments[i++];
         let allPreviousDaySentiments: DaySentiment[] = await gatherPreviousDaySentiments(groupedTDS.map(t => t.stock.symbol));
         const previousSentimentDictionary: Dictionary<DaySentiment[]> = _.groupBy(allPreviousDaySentiments, (d) => d.stock.symbol);
-        groupedTDS = groupedTDS.filter(d => !!d.price);
+        groupedTDS = groupedTDS.filter(d => !!d.price).sort((a, b) => {
+            return +b.day - +a.day;
+        });
         groupedTDS.forEach(todaysDaySentiment => {
-            let prevDaySentiment = todaysDaySentiment;
-            let collectedDaySentiments: DaySentiment[] = [prevDaySentiment];
+            const symbol = todaysDaySentiment.stock.symbol;
+            let collectedDaySentiments: DaySentiment[] = [todaysDaySentiment];
             let thisPreviousDaySentiments = previousSentimentDictionary[todaysDaySentiment.stock.symbol];
             for (let j = 1; j < Variables.numPreviousDaySentiments; j++) {
-                prevDaySentiment = getPreviousDaySentiment(prevDaySentiment, thisPreviousDaySentiments);
-                if (!prevDaySentiment) { return; }
-                collectedDaySentiments.push(prevDaySentiment);
+                const date: Date = getDaysAgo(j, todaysDaySentiment.day);
+                const prevDaySentiment = getPreviousDaySentiment(symbol, date, thisPreviousDaySentiments);
+                prevDaySentiment && collectedDaySentiments.push(prevDaySentiment);
             }
-
+            if (collectedDaySentiments.length < (Variables.numPreviousDaySentiments / 2)) {
+                return;
+            }
             let x = createX(collectedDaySentiments);
             predictions.push(new Prediction(todaysDaySentiment.stock.symbol, x));
         });
@@ -97,22 +103,41 @@ async function formatSvmData(): Promise<SvmData> {
             //console.log(`SVM Data size: ${stockPreviousDaySentiments.length} for ${stock} (${allPreviousDaySentiments.length} in group)`);
             stockPreviousDaySentiments = stockPreviousDaySentiments.filter(d => !!d.price && !isWeekend(d.day));
             stockPreviousDaySentiments.forEach(daySentiment => {
-                let prevDaySentiment = daySentiment;
-                let collectedDaySentiments: DaySentiment[] = [prevDaySentiment];
+                const symbol = daySentiment.stock.symbol;
+                let collectedDaySentiments: DaySentiment[] = [daySentiment];
                 for (let j = 1; j < Variables.numPreviousDaySentiments; j++) {
-                    prevDaySentiment = getPreviousDaySentiment(prevDaySentiment, stockPreviousDaySentiments);
-                    if (!prevDaySentiment) { return; }
-                    collectedDaySentiments.push(prevDaySentiment);
+                    const date: Date = getDaysAgo(j, daySentiment.day);
+                    const prevDaySentiment = getPreviousDaySentiment(symbol, date, stockPreviousDaySentiments);
+                    prevDaySentiment && collectedDaySentiments.push(prevDaySentiment);
                 }
-
+            if (collectedDaySentiments.length < (Variables.numPreviousDaySentiments / 2)) {
+                    return;
+                }
                 let nextDaySentiment: DaySentiment = getDaySentimentInNDays(Variables.numDays, daySentiment, stockPreviousDaySentiments);
-                const nextEoDaySentiment: DaySentiment = getDaySentimentInNDays(1, daySentiment, stockPreviousDaySentiments);
 
-                if (!nextDaySentiment || !nextDaySentiment.price || !nextEoDaySentiment || !nextEoDaySentiment.price) { return; }
+                if (!nextDaySentiment || !nextDaySentiment.price) { return; }
                 const increasePercent = change(nextDaySentiment.price, daySentiment.price) * 100;
-                const increasePercentEoD = change(nextDaySentiment.price, nextEoDaySentiment.price) * 100;
-                const y = increasePercent > Variables.priceThreshold && (increasePercentEoD > Variables.priceThreshold || increasePercentEoD === 0) ? 1 : 0;
                 increases.push(increasePercent);
+                //const increasePercentEoD = change(nextDaySentiment.price, nextEoDaySentiment.price) * 100;
+                //console.log(`Today (${formatDate(daySentiment.day)}): ${daySentiment.price}, End (${formatDate(nextDaySentiment.day)}): ${nextDaySentiment.price}, Increase Percent: ${increasePercent}`,
+                //`Tomorrow (${formatDate(nextEoDaySentiment.day)}): ${nextEoDaySentiment.price}`, `Increase Percent: ${increasePercentEoD}`);
+                //const y = increasePercent > Variables.priceThreshold && (increasePercentEoD > Variables.priceThreshold || increasePercentEoD === 0) ? 1 : 0;
+                let y = Variables.negativeValue;
+                if (Variables.sellOnFirstIncrease) {
+                    for (let k = 1; k <= Variables.numDays; k++) {
+                        const nextEoDaySentiment: DaySentiment = getDaySentimentInNDays(k, daySentiment, stockPreviousDaySentiments);
+                        if (nextEoDaySentiment && nextEoDaySentiment.price) {
+                            let increasePercent = change(nextEoDaySentiment.price, daySentiment.price) * 100;
+                            if (increasePercent > Variables.priceThreshold) {
+                                y = 1;
+                                k = Variables.numDays + 1; // Break the loop
+                            }
+                        }
+                    }
+                }
+                else if (increasePercent > Variables.priceThreshold) {
+                    y = 1;
+                }
                 const xy = createX(collectedDaySentiments);
                 xy.push(y);
 
@@ -134,20 +159,13 @@ async function formatSvmData(): Promise<SvmData> {
     return svmData;
 }
 
-function getPreviousDaySentiment(daySentiment: DaySentiment, allPreviousDaySentiments: DaySentiment[]): DaySentiment {
-    return getNearbyDaySentiment(daySentiment, allPreviousDaySentiments, false);
+function getPreviousDaySentiment(symbol: string, day: Date, allPreviousDaySentiments: DaySentiment[]): DaySentiment {
+    return getNearbyDaySentiment(symbol, day, allPreviousDaySentiments, false);
 }
 
-function getNearbyDaySentiment(daySentiment: DaySentiment, allPreviousDaySentiments: DaySentiment[], isForward: boolean): DaySentiment {
-    if (!daySentiment) {
-        return null;
-    }
-    const date = daySentiment.day;
-    if (!daySentiment.price || !date) {
-        return null;
-    }
+function getNearbyDaySentiment(symbol: string, date: Date, allPreviousDaySentiments: DaySentiment[], isForward: boolean): DaySentiment {
     const nextDate = isForward ? getNextWorkDay(date) : getPreviousWorkDay(date);
-    const candidate = DaySentiment.findDaySentimentForSymbolAndDate(daySentiment.stock.symbol, nextDate, allPreviousDaySentiments);
+    const candidate = DaySentiment.findDaySentimentForSymbolAndDate(symbol, nextDate, allPreviousDaySentiments);
     return candidate;
 }
 
@@ -170,27 +188,37 @@ function createX(allDaySentiments: DaySentiment[]): number[] {
     let x: number[] = [];
 
     const dsGroups = [allDaySentiments];
-    if (Variables.includeSub && Variables.numPreviousDaySentimentsSub < Variables.numPreviousDaySentiments) {
-        const subDaySentiments: DaySentiment[] = allDaySentiments.filter((v, i) => i < Variables.numPreviousDaySentimentsSub);
+    if (Variables.includeSub) {
+        const half = allDaySentiments.length / 2;
+        const subDaySentiments: DaySentiment[] = allDaySentiments.filter((v, i) => i < half);
         dsGroups.push(subDaySentiments);
     }
+    Variables.includeStockHash && x.push(createStockHash(allDaySentiments[0].stock.symbol));
     dsGroups.forEach(daySentiments => {
         // Volatility, Momentum, and Change
         Variables.includeStockVolatility && x.push(calculateVolatility(daySentiments.map(d => d.price)));
         Variables.includeStockMomentum && x.push(calculateMomentum(daySentiments.map(d => d.price)));
+        Variables.includePriceChange && x.push(calculateStartEndDifference(daySentiments.map(d => d.price)));
 
         Variables.includeVolumeVolatility && x.push(calculateVolatility(daySentiments.map(d => d.volume)));
         Variables.includeVolumeMomentum && x.push(calculateMomentum(daySentiments.map(d => d.volume)));
+        Variables.includeVolumeChange && x.push(calculateStartEndDifference(daySentiments.map(d => d.volume)));
 
         Variables.includeSentimentVolatility && x.push(calculateVolatility(daySentiments.map(d => d.totalSentiment)));
         Variables.includeSentimentMomentum && x.push(calculateMomentum(daySentiments.map(d => d.totalSentiment)));
         Variables.includeSentimentChange && x.push(calculateSentimentChange(daySentiments.map(d => d.totalSentiment)));
 
-        Variables.includePriceChange && x.push(calculateStartEndDifference(daySentiments.map(d => d.price)));
-        Variables.includeVolumeChange && x.push(calculateStartEndDifference(daySentiments.map(d => d.volume)));
+        Variables.includePeRatioVolatility && x.push(calculateVolatility(daySentiments.map(d => d.calcPeRatio)));
+        Variables.includePeRatioMomentum && x.push(calculateMomentum(daySentiments.map(d => d.calcPeRatio)));
+        Variables.includePeRatioChange && x.push(calculateStartEndDifference(daySentiments.map(d => d.calcPeRatio)));
+
+        Variables.includeNumTweetsVolatility && x.push(calculateVolatility(daySentiments.map(d => d.numTweets)));
+        Variables.includeNumTweetsMomentum && x.push(calculateMomentum(daySentiments.map(d => d.numTweets)));
+        Variables.includeNumTweetsChange && x.push(calculateStartEndDifference(daySentiments.map(d => d.numTweets)));
 
         Variables.includeRIndicator && x.push(calculateRIndicator(daySentiments));
         Variables.includeOnBalanceVolume && x.push(calculateOnBalanceVolume(daySentiments));
+
     });
 
     if (x.length === 0) {
@@ -245,8 +273,12 @@ function calculateSentimentChange(sentiments: number[]): number {
 }
 
 function calculateRIndicator(daySentiments: DaySentiment[]): number {
-    const highs = daySentiments.map(d => parseFloat(d.fundamentals.high));
-    const lows = daySentiments.map(d => parseFloat(d.fundamentals.low));
+    const filtered = daySentiments.filter(d => !!d && !!d.fundamentals && !!d.fundamentals.high && !!d.fundamentals.low);
+    if (filtered.length < 2) {
+        return 0;
+    }
+    const highs = filtered.map(d => parseFloat(d.fundamentals.high));
+    const lows = filtered.map(d => parseFloat(d.fundamentals.low));
     highs.sort((a, b) => b - a);
     lows.sort((a, b) => a - b);
     const highestHigh = highs[0];
@@ -257,9 +289,10 @@ function calculateRIndicator(daySentiments: DaySentiment[]): number {
 }
 
 function calculateOnBalanceVolume(daySentiments: DaySentiment[]): number {
+    const filtered = daySentiments.filter(d => !!d && !!d.fundamentals && !!d.fundamentals.volume);
     let totalUp: number = 0;
     let totalDown: number = 0;
-    for (let i = 0; i < daySentiments.length - 1; i++) {
+    for (let i = 0; i < filtered.length - 1; i++) {
         const cur = daySentiments[i];
         const last = daySentiments[i + 1];
         if (!cur || !last) {
@@ -275,4 +308,20 @@ function calculateOnBalanceVolume(daySentiments: DaySentiment[]): number {
         }
     }
     return totalUp - totalDown;
+}
+
+function createStockHash(symbol: string): number {
+    if (stockHashCache[symbol]) {
+        return stockHashCache[symbol];
+    }
+    let value = 0;
+
+    for (let i = 0; i < symbol.length; i++) {
+        const charCode = symbol.charCodeAt(i);
+        const multiplier = Math.pow(i + 1, 10) + 13;
+        value += (charCode * multiplier);
+    }
+
+    stockHashCache[symbol] = value;
+    return value;
 }

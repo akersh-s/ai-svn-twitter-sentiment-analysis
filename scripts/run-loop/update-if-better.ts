@@ -1,6 +1,7 @@
 import { argv } from 'yargs';
 import { LoopConfig } from './loop-config.model';
 import { Variables } from '../../shared/variables';
+import { updateAverages } from './update-averages';
 
 function readMedian(): number {
     try {
@@ -25,4 +26,4 @@ else {
     console.log('New median was less!', `${median} <= ${loopConfig.bestTotal}`);
     loopConfig.lastChangedIndex = loopConfig.incrementIndex(loopConfig.lastChangedIndex);
 }
-
+updateAverages(median);

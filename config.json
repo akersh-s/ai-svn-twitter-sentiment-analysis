@@ -1,66 +1,113 @@
 {
-    "lastChangedIndex": 10,
-    "bestTotal": 0.5246641062022,
-    "version": 45,
+    "lastChangedIndex": 12,
+    "bestTotal": 0.42982523911071385,
+    "version": 22,
     "fields": [
         {
-            "key": "--previous-day-sentiments-sub",
-            "value": 3,
+            "key": "--num-to-buy",
+            "value": 20,
+            "otherValues": []
+        },
+        {
+            "key": "--price-threshold",
+            "value": 0,
             "otherValues": [
-                2,
-                3,
-                4,
-                5
+                0
             ]
         },
         {
             "key": "--previous-day-sentiments",
-            "value": 7,
+            "value": 42,
             "otherValues": [
-                2,
-                3,
-                4,
-                5,
-                6,
-                7,
-                8
-            ]
-        },
-        {
-            "key": "--num-days",
-            "value": 7,
-            "otherValues": [
-                3,
-                4,
-                5,
-                6,
-                7
-            ]
-        },
-        {
-            "key": "--price-threshold",
-            "value": 0.5,
-            "otherValues": [
-                0,
-                0.5,
-                1,
-                2,
-                3,
-                4,
-                5,
-                6,
-                7,
                 8,
                 9,
                 10,
+                11,
+                12,
+                13,
+                14,
                 15,
+                16,
+                17,
+                18,
+                19,
                 20,
-                25
+                21,
+                22,
+                23,
+                24,
+                25,
+                26,
+                27,
+                28,
+                29,
+                30,
+                32,
+                34,
+                36,
+                38,
+                40,
+                42,
+                44,
+                46
+            ]
+        },
+        {
+            "key": "--include-sub",
+            "value": "false",
+            "otherValues": []
+        },
+        {
+            "key": "--num-days",
+            "value": 18,
+            "otherValues": [
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15,
+                16,
+                17,
+                18,
+                19,
+                20,
+                21,
+                22,
+                23,
+                24,
+                25,
+                26,
+                27,
+                28,
+                29,
+                30,
+                31,
+                32,
+                33,
+                34,
+                35,
+                36,
+                37,
+                38,
+                39,
+                40,
+                41,
+                42,
+                43,
+                44,
+                45,
+                46,
+                47,
+                48,
+                49,
+                50
             ]
         },
         {
             "key": "--include-stock-volatility",
-            "value": "false",
+            "value": "true",
             "otherValues": [
                 "true",
                 "false"
@@ -69,22 +116,16 @@
         {
             "key": "--include-stock-momentum",
             "value": "false",
-            "otherValues": [
-                "true",
-                "false"
-            ]
+            "otherValues": []
         },
         {
             "key": "--include-price-change",
             "value": "false",
-            "otherValues": [
-                "true",
-                "false"
-            ]
+            "otherValues": []
         },
         {
             "key": "--include-volume-volatility",
-            "value": "false",
+            "value": "true",
             "otherValues": [
                 "true",
                 "false"
@@ -92,7 +133,7 @@
         },
         {
             "key": "--include-volume-momentum",
-            "value": "true",
+            "value": "false",
             "otherValues": [
                 "true",
                 "false"
@@ -109,10 +150,7 @@
         {
             "key": "--include-sentiment-volatility",
             "value": "false",
-            "otherValues": [
-                "true",
-                "false"
-            ]
+            "otherValues": []
         },
         {
             "key": "--include-sentiment-momentum",
@@ -124,7 +162,7 @@
         },
         {
             "key": "--include-sentiment-change",
-            "value": "false",
+            "value": "true",
             "otherValues": [
                 "true",
                 "false"
@@ -140,11 +178,50 @@
         },
         {
             "key": "--include-obv",
-            "value": "false",
+            "value": "true",
             "otherValues": [
                 "true",
                 "false"
             ]
+        },
+        {
+            "key": "--include-pe-ratio-volatility",
+            "value": "false",
+            "otherValues": []
+        },
+        {
+            "key": "--include-pe-ratio-momentum",
+            "value": "true",
+            "otherValues": [
+                "true",
+                "false"
+            ]
+        },
+        {
+            "key": "--include-pe-ratio-change",
+            "value": "true",
+            "otherValues": [
+                "true",
+                "false"
+            ]
+        },
+        {
+            "key": "--include-num-tweets-volatility",
+            "value": "false",
+            "otherValues": []
+        },
+        {
+            "key": "--include-num-tweets-momentum",
+            "value": "true",
+            "otherValues": [
+                "true",
+                "false"
+            ]
+        },
+        {
+            "key": "--include-num-tweets-change",
+            "value": "false",
+            "otherValues": []
         }
     ]
 }

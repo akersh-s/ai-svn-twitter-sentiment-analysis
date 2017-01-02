@@ -1,0 +1,417 @@
+[
+    {
+        "name": "num-to-buy=20",
+        "value": 1.0962366154989318,
+        "count": 112
+    },
+    {
+        "name": "price-threshold=0",
+        "value": 1.0962366154989318,
+        "count": 112
+    },
+    {
+        "name": "previous-day-sentiments=8",
+        "value": -0.04762569816552698,
+        "count": 7
+    },
+    {
+        "name": "include-sub=false",
+        "value": 1.0962366154989318,
+        "count": 112
+    },
+    {
+        "name": "num-days=24",
+        "value": -0.05463032376302411,
+        "count": 4
+    },
+    {
+        "name": "include-stock-volatility=true",
+        "value": 0.8122007777690478,
+        "count": 74
+    },
+    {
+        "name": "include-stock-momentum=false",
+        "value": 1.0962366154989318,
+        "count": 112
+    },
+    {
+        "name": "include-price-change=false",
+        "value": 1.0962366154989318,
+        "count": 112
+    },
+    {
+        "name": "include-volume-volatility=true",
+        "value": 0.9634165951623058,
+        "count": 75
+    },
+    {
+        "name": "include-volume-momentum=true",
+        "value": 0.563439345189069,
+        "count": 74
+    },
+    {
+        "name": "include-volume-change=true",
+        "value": 0.29560888938624397,
+        "count": 64
+    },
+    {
+        "name": "include-sentiment-volatility=false",
+        "value": 1.0962366154989318,
+        "count": 112
+    },
+    {
+        "name": "include-sentiment-momentum=true",
+        "value": 0.30899048842331245,
+        "count": 65
+    },
+    {
+        "name": "include-sentiment-change=true",
+        "value": 0.6302951676995144,
+        "count": 41
+    },
+    {
+        "name": "include-r-indicator=true",
+        "value": 0.6689646124240244,
+        "count": 76
+    },
+    {
+        "name": "include-obv=true",
+        "value": 1.2671770815463645,
+        "count": 71
+    },
+    {
+        "name": "include-pe-ratio-volatility=false",
+        "value": 1.0962366154989318,
+        "count": 112
+    },
+    {
+        "name": "include-pe-ratio-momentum=true",
+        "value": 1.4892307764496782,
+        "count": 61
+    },
+    {
+        "name": "include-pe-ratio-change=false",
+        "value": 0.6812510538399822,
+        "count": 56
+    },
+    {
+        "name": "include-num-tweets-volatility=false",
+        "value": 1.0962366154989318,
+        "count": 112
+    },
+    {
+        "name": "include-num-tweets-momentum=true",
+        "value": 0.4923128154646936,
+        "count": 73
+    },
+    {
+        "name": "include-num-tweets-change=false",
+        "value": 1.0962366154989318,
+        "count": 112
+    },
+    {
+        "name": "previous-day-sentiments=9",
+        "value": -0.02443678533866359,
+        "count": 4
+    },
+    {
+        "name": "num-days=21",
+        "value": -0.055160859677917035,
+        "count": 5
+    },
+    {
+        "name": "include-pe-ratio-change=true",
+        "value": 0.41498556165894945,
+        "count": 56
+    },
+    {
+        "name": "previous-day-sentiments=23",
+        "value": -0.053801956329897205,
+        "count": 4
+    },
+    {
+        "name": "num-days=22",
+        "value": -0.2011854186219956,
+        "count": 6
+    },
+    {
+        "name": "previous-day-sentiments=24",
+        "value": -0.11542028983109767,
+        "count": 14
+    },
+    {
+        "name": "num-days=18",
+        "value": 0.386620963849302,
+        "count": 13
+    },
+    {
+        "name": "include-volume-volatility=false",
+        "value": 0.1328200203366263,
+        "count": 37
+    },
+    {
+        "name": "include-volume-change=false",
+        "value": 0.8006277261126878,
+        "count": 48
+    },
+    {
+        "name": "previous-day-sentiments=10",
+        "value": 0.11206665144462996,
+        "count": 6
+    },
+    {
+        "name": "include-stock-volatility=false",
+        "value": 0.28403583772988394,
+        "count": 38
+    },
+    {
+        "name": "include-sentiment-momentum=false",
+        "value": 0.7872461270756195,
+        "count": 47
+    },
+    {
+        "name": "include-obv=false",
+        "value": -0.17094046604743274,
+        "count": 41
+    },
+    {
+        "name": "num-days=12",
+        "value": 0.12763986138706263,
+        "count": 10
+    },
+    {
+        "name": "num-days=15",
+        "value": -0.03123680794906772,
+        "count": 4
+    },
+    {
+        "name": "include-volume-momentum=false",
+        "value": 0.5327972703098627,
+        "count": 38
+    },
+    {
+        "name": "include-r-indicator=false",
+        "value": 0.4272720030749075,
+        "count": 36
+    },
+    {
+        "name": "num-days=10",
+        "value": 0.05649920596546665,
+        "count": 4
+    },
+    {
+        "name": "include-sentiment-change=false",
+        "value": 0.46594144779941726,
+        "count": 71
+    },
+    {
+        "name": "previous-day-sentiments=14",
+        "value": -0.057593352223936994,
+        "count": 4
+    },
+    {
+        "name": "include-num-tweets-momentum=false",
+        "value": 0.6039238000342381,
+        "count": 39
+    },
+    {
+        "name": "previous-day-sentiments=30",
+        "value": 0.03357380598323746,
+        "count": 9
+    },
+    {
+        "name": "num-days=30",
+        "value": 0.33448526904075115,
+        "count": 23
+    },
+    {
+        "name": "previous-day-sentiments=29",
+        "value": 0,
+        "count": 1
+    },
+    {
+        "name": "include-pe-ratio-momentum=false",
+        "value": -0.39299416095074624,
+        "count": 51
+    },
+    {
+        "name": "num-days=26",
+        "value": 0.02283892112610683,
+        "count": 3
+    },
+    {
+        "name": "previous-day-sentiments=11",
+        "value": 0.41297558740966295,
+        "count": 26
+    },
+    {
+        "name": "num-days=17",
+        "value": -0.05227497917830377,
+        "count": 3
+    },
+    {
+        "name": "previous-day-sentiments=18",
+        "value": 0.008316606303295906,
+        "count": 2
+    },
+    {
+        "name": "num-days=13",
+        "value": 0.04482246224575814,
+        "count": 5
+    },
+    {
+        "name": "previous-day-sentiments=13",
+        "value": -0.015391745004756935,
+        "count": 3
+    },
+    {
+        "name": "num-days=23",
+        "value": -0.019001385383291082,
+        "count": 3
+    },
+    {
+        "name": "previous-day-sentiments=27",
+        "value": -0.04762787916466937,
+        "count": 2
+    },
+    {
+        "name": "num-days=11",
+        "value": 0.1585914082211219,
+        "count": 3
+    },
+    {
+        "name": "previous-day-sentiments=26",
+        "value": 0.02539401434074801,
+        "count": 2
+    },
+    {
+        "name": "previous-day-sentiments=32",
+        "value": -0.018477457501847355,
+        "count": 1
+    },
+    {
+        "name": "num-days=34",
+        "value": 0.07238354050069848,
+        "count": 3
+    },
+    {
+        "name": "previous-day-sentiments=34",
+        "value": -0.07023447909364877,
+        "count": 1
+    },
+    {
+        "name": "previous-day-sentiments=25",
+        "value": 0.004917779315937072,
+        "count": 6
+    },
+    {
+        "name": "num-days=16",
+        "value": -0.06379145374565236,
+        "count": 3
+    },
+    {
+        "name": "num-days=33",
+        "value": 0.1264916767140759,
+        "count": 3
+    },
+    {
+        "name": "previous-day-sentiments=17",
+        "value": 0.09534157910258903,
+        "count": 2
+    },
+    {
+        "name": "num-days=36",
+        "value": 0.09534157910258903,
+        "count": 2
+    },
+    {
+        "name": "num-days=20",
+        "value": -0.012524377447330832,
+        "count": 2
+    },
+    {
+        "name": "num-days=28",
+        "value": -0.00985584740296101,
+        "count": 2
+    },
+    {
+        "name": "previous-day-sentiments=22",
+        "value": 0.04689903581073182,
+        "count": 2
+    },
+    {
+        "name": "previous-day-sentiments=28",
+        "value": -0.014091446118166446,
+        "count": 1
+    },
+    {
+        "name": "previous-day-sentiments=16",
+        "value": -0.052616386718739125,
+        "count": 2
+    },
+    {
+        "name": "previous-day-sentiments=36",
+        "value": -0.019113149847095074,
+        "count": 2
+    },
+    {
+        "name": "num-days=9",
+        "value": -0.10205127239952227,
+        "count": 2
+    },
+    {
+        "name": "previous-day-sentiments=46",
+        "value": 0,
+        "count": 2
+    },
+    {
+        "name": "previous-day-sentiments=19",
+        "value": 0.015098044053602138,
+        "count": 3
+    },
+    {
+        "name": "num-days=25",
+        "value": 0.0048858886525829995,
+        "count": 2
+    },
+    {
+        "name": "num-days=27",
+        "value": 0.016899303189614776,
+        "count": 1
+    },
+    {
+        "name": "previous-day-sentiments=40",
+        "value": 0.25131672642261216,
+        "count": 2
+    },
+    {
+        "name": "num-days=14",
+        "value": 0.16752109151091937,
+        "count": 2
+    },
+    {
+        "name": "previous-day-sentiments=42",
+        "value": 0.6186662754590124,
+        "count": 2
+    },
+    {
+        "name": "num-days=29",
+        "value": 0.029622428270653763,
+        "count": 2
+    },
+    {
+        "name": "previous-day-sentiments=44",
+        "value": 0,
+        "count": 1
+    },
+    {
+        "name": "num-days=40",
+        "value": 0.053305741291293944,
+        "count": 2
+    },
+    {
+        "name": "previous-day-sentiments=15",
+        "value": 0.00810113519091838,
+        "count": 1
+    }
+]

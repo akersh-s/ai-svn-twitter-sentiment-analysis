@@ -26,7 +26,7 @@ function findMedian(data: number[]): number {
         return -1.11 * data.length;
     }
     data.sort((a, b) => a - b);
-
+    //console.log(JSON.stringify(data), data.length);
     const middle = Math.floor((data.length - 1) / 2);
     if (data.length % 2) {
         return data[middle];

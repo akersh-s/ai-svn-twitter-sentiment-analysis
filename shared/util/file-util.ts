@@ -43,8 +43,8 @@ export class FileUtil {
         FileUtil.earningsFileDate = path.join(userHome, `earnings-${formattedDate}.json`);
     }
     static getResultsFileForDate(date: Date) {
-        const formattedDate = formatDate(date);
-        return path.join(userHome, `results-${formattedDate}.json`);
+        const f = formatDate(date);
+        return path.join(userHome, `results-${f}.json`);
     }
     static getArtifactBuyFileForDate(date: Date) {
         const formattedDate = formatDate(date);

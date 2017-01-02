@@ -2,6 +2,7 @@
 
 import { Robinhood, Order, OrderResponseBody } from '../shared/robinhood.api';
 import { validate, isNotWeekend } from '../shared/validate';
+import { Variables } from '../shared/variables';
 import { SellSymbol, hasEnoughTimeElapsedFromDate } from './sell-symbol';
 import * as yargs from 'yargs';
 
@@ -20,7 +21,7 @@ async function run() {
     let orders: Order[] = [];
     let next: string;
     let num: number = 0;
-    while ((next || num === 0) && num < 2) {
+    while ((next || num === 0) && num < Variables.numDays) {
         console.log('Requesting orders page ' + num);
         const orderResponseBody: OrderResponseBody = next ? await robinhood.getPromise(next) : await robinhood.orders();
         orders = orders.concat(orderResponseBody.results);
