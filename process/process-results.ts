@@ -13,6 +13,7 @@ export async function processResults(): Promise<number> {
         console.log(`${FileUtil.resultsFileDate} does not exist! please run ts-node sentiment first.`);
         process.exit(-1);
     }
+    FileUtil.lastResultsFiles = FileUtil.collectLastResultFiles(100);
 
     let svmResults: SvmResult[] = await predict();
     console.log(`Results: ${svmResults.length}`);
