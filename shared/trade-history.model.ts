@@ -5,6 +5,7 @@ import { FileUtil } from './util/file-util';
 const tradeHistoryPath = path.join(FileUtil.userHome, 'trade-history.json');
 
 export class TradeHistory {
+    public date: Date = new Date();
     constructor(
         public action: 'buy' | 'sell',
         public stock: string,
