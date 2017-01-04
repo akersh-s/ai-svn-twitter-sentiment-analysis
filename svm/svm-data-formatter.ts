@@ -122,7 +122,7 @@ async function formatSvmData(): Promise<SvmData> {
                 //console.log(`Today (${formatDate(daySentiment.day)}): ${daySentiment.price}, End (${formatDate(nextDaySentiment.day)}): ${nextDaySentiment.price}, Increase Percent: ${increasePercent}`,
                 //`Tomorrow (${formatDate(nextEoDaySentiment.day)}): ${nextEoDaySentiment.price}`, `Increase Percent: ${increasePercentEoD}`);
                 //const y = increasePercent > Variables.priceThreshold && (increasePercentEoD > Variables.priceThreshold || increasePercentEoD === 0) ? 1 : 0;
-                let y = Variables.negativeValue;
+                let y = 0;
                 if (Variables.sellOnFirstIncrease) {
                     for (let k = 1; k <= Variables.numDays; k++) {
                         const nextEoDaySentiment: DaySentiment = getDaySentimentInNDays(k, daySentiment, stockPreviousDaySentiments);

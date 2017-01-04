@@ -5,7 +5,8 @@ export class Variables {
     static topNumToBuy: number = argInt('num-to-buy', 20);
     static priceThreshold: number = argInt('price-thresold', 0);
     static numDays: number = argInt('num-days', 18);
-    static negativeValue: number = argInt('negative-value', 0);
+    static sellOnIncrease: boolean = argBoolean('sell-on-increase', true);
+    static sellOnIncreaseAmount: number = argInt('sell-on-increase-amount', 1);
     static numPreviousDaySentiments: number = argInt('previous-day-sentiments', 42);
 
     static includeSub: boolean = argBoolean('include-sub', true);

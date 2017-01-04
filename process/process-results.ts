@@ -2,9 +2,13 @@ import * as fs from 'fs';
 import * as yargs from 'yargs';
 
 import { FileUtil } from '../shared/util/file-util';
+import { Variables } from '../shared/variables';
 import { SvmResult } from '../svm/svm-result';
 import { today } from '../shared/util/date-util';
-import { determineHighestEarners, StockClosePercent } from '../earnings';
+import { determineHighestEarners } from '../earnings';
+import { findMedian } from '../scripts/run-loop/median';
+import { StockClosePercent } from '../earnings/stock-close-percent.model';
+import { sellOnIncrease } from '../earnings/sell-on-increase';
 import { predict } from '../svm/predict';
 
 let argv = yargs.argv;
@@ -26,10 +30,17 @@ export async function processResults(): Promise<number> {
             fs.writeFileSync(FileUtil.buyFile, JSON.stringify(svmResults, null, 4), 'utf-8');
 
             if (argv.past) {
-                const earnings: StockClosePercent[] = determineHighestEarners(buys);
+                let earnings: StockClosePercent[];
+                if (Variables.sellOnIncrease) {
+                    earnings = sellOnIncrease(buys);
+                }
+                else {
+                    earnings = determineHighestEarners(buys);
+                }
+                 
                 //updateStockSuccesses(earnings);
                 const earningPercent = StockClosePercent.findAverage(earnings);
-                console.log(`Average Earning Percent: ${earningPercent}`);
+                console.log(`Average Earning Percent: ${earningPercent}`, `Median Percent: ${findMedian(earnings.map(e => e.percent))}`);
 
                 //Record the results in a results file.
                 const artifactBuyFile = FileUtil.getArtifactBuyFileForDate(today);

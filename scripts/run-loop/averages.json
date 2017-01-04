@@ -413,5 +413,105 @@
         "name": "previous-day-sentiments=15",
         "value": 0.00810113519091838,
         "count": 1
+    },
+    {
+        "name": "sell-on-increase-amount=50",
+        "value": 0.0647757996910969,
+        "count": 1
+    },
+    {
+        "name": "sell-on-increase-amount=1",
+        "value": 0.6719757584142276,
+        "count": 1
+    },
+    {
+        "name": "sell-on-increase-amount=2",
+        "value": 0.6026747603034271,
+        "count": 6
+    },
+    {
+        "name": "sell-on-increase-amount=0",
+        "value": 0.48507462686566793,
+        "count": 3
+    },
+    {
+        "name": "sell-on-increase-amount=0.25",
+        "value": 0.48507462686566793,
+        "count": 7
+    },
+    {
+        "name": "sell-on-increase-amount=0.75",
+        "value": 0.4524068041983351,
+        "count": 2
+    },
+    {
+        "name": "sell-on-increase-amount=0.5",
+        "value": 0.4524068041983351,
+        "count": 5
+    },
+    {
+        "name": "sell-on-increase-amount=1.5",
+        "value": 0.5425522374674889,
+        "count": 4
+    },
+    {
+        "name": "sell-on-increase-amount=1.25",
+        "value": 0.5425522374674889,
+        "count": 2
+    },
+    {
+        "name": "sell-on-increase-amount=3",
+        "value": 0.5068153655514254,
+        "count": 4
+    },
+    {
+        "name": "sell-on-increase-amount=4",
+        "value": 0.45205045867739163,
+        "count": 6
+    },
+    {
+        "name": "sell-on-increase-amount=10",
+        "value": 0.09803921568627459,
+        "count": 3
+    },
+    {
+        "name": "sell-on-increase-amount=5",
+        "value": 0.3377040017289922,
+        "count": 4
+    },
+    {
+        "name": "sell-on-increase-amount=20",
+        "value": 0,
+        "count": 4
+    },
+    {
+        "name": "sell-on-increase-amount=1.1",
+        "value": 0,
+        "count": 1
+    },
+    {
+        "name": "sell-on-increase-amount=0.9",
+        "value": 0,
+        "count": 7
+    },
+    {
+        "name": "sell-on-increase-amount=2.5",
+        "value": 0,
+        "count": 2
+    },
+    {
+        "name": "sell-on-increase-amount=0.85",
+        "value": 0,
+        "count": 1
+    },
+    {
+        "name": "sell-on-increase-amount=0.45",
+        "value": 0,
+        "count": 3
+    },
+    {
+        "name": "sell-on-increase-amount=0.65",
+        "value": 0,
+        "count": 1
     }
 ]

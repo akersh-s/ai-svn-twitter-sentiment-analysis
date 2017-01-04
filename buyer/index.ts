@@ -3,6 +3,8 @@ import { validate } from '../shared/validate';
 import { BuySymbol, determineNumToBuy } from './buy-symbol';
 import { SvmResult } from '../svm/svm-result';
 import { FileUtil } from '../shared/util/file-util';
+import { TradeHistory } from '../shared/trade-history.model';
+
 import * as yargs from 'yargs';
 import * as fs from 'fs';
 
@@ -79,17 +81,18 @@ async function filterOutNonOwnedStocks(robinhood: Robinhood, stockList: SvmResul
 }
 
 async function buyStocks(robinhood: Robinhood, buySymbols: BuySymbol[]) {
-    let body;
+    let price: number;
     buySymbols = buySymbols.filter(b => b.numToBuy !== 0);
-
+    const history = TradeHistory.readHistory();
     for (let i = 0; i < buySymbols.length; i++) {
         let buySymbol = buySymbols[i];
         console.log(`Requesting ${buySymbol.numToBuy} shares of ${buySymbol.symbol} at price $${buySymbol.price}...`);
-        body = await robinhood.buyPromise(buySymbol.symbol, buySymbol.numToBuy);
-        console.log(`Completed purchase request for ${buySymbol.numToBuy} shares of ${buySymbol.symbol}!`, body);
+        price = await robinhood.buyPromise(buySymbol.symbol, buySymbol.numToBuy);
+        history.push(new TradeHistory('buy', buySymbol.symbol, buySymbol.numToBuy, price));
+        console.log(`Completed purchase request for ${buySymbol.numToBuy} shares of ${buySymbol.symbol}!`, price);
         await sleep(Math.floor(Math.random() * 10000));
     }
-
+    TradeHistory.writeHistory(history);
     console.log('Completed purchases.');
 }
 
