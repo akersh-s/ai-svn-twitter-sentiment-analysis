@@ -4,14 +4,13 @@ import { argv } from 'yargs';
 export class Variables {
     static topNumToBuy: number = argInt('num-to-buy', 20);
     static priceThreshold: number = argInt('price-thresold', 0);
-    static numDays: number = argInt('num-days', 18);
+    static numDays: number = argInt('num-days', 5);
     static sellOnIncrease: boolean = argBoolean('sell-on-increase', true);
     static sellOnIncreaseAmount: number = argInt('sell-on-increase-amount', 1);
-    static numPreviousDaySentiments: number = argInt('previous-day-sentiments', 42);
+    static numPreviousDaySentiments: number = argInt('previous-day-sentiments', 35);
 
     static includeSub: boolean = argBoolean('include-sub', true);
     static skipDaySentiments: number = argInt('skip-day-sentiments', 1);
-    static sellOnFirstIncrease: boolean = argBoolean('sell-on-first-increase', false);
 
     static includeStockHash: boolean = argBoolean('include-stock-hash', false);
 
@@ -47,7 +46,7 @@ export class Variables {
     static retainedVariance: number = argFloat('retained-variance', 0.9);
     static shrinking: boolean = argBoolean('shrinking', true);
 
-    static maxSvmData: number = argInt('max-svm-data', 50000);
+    static maxSvmData: number = argInt('max-svm-data', 40000);
 }
 
 function argString(val: string, defValue: string): string {

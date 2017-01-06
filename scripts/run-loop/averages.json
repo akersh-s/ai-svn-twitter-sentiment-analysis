@@ -21,8 +21,8 @@
     },
     {
         "name": "num-days=24",
-        "value": -0.05463032376302411,
-        "count": 4
+        "value": 0.025932573255569136,
+        "count": 5
     },
     {
         "name": "include-stock-volatility=true",
@@ -116,8 +116,8 @@
     },
     {
         "name": "num-days=21",
-        "value": -0.055160859677917035,
-        "count": 5
+        "value": 0.09930849999037658,
+        "count": 7
     },
     {
         "name": "include-pe-ratio-change=true",
@@ -131,8 +131,8 @@
     },
     {
         "name": "num-days=22",
-        "value": -0.2011854186219956,
-        "count": 6
+        "value": -0.05253428520690445,
+        "count": 8
     },
     {
         "name": "previous-day-sentiments=24",
@@ -141,8 +141,8 @@
     },
     {
         "name": "num-days=18",
-        "value": 0.386620963849302,
-        "count": 13
+        "value": 0.485928440109529,
+        "count": 14
     },
     {
         "name": "include-volume-volatility=false",
@@ -176,13 +176,13 @@
     },
     {
         "name": "num-days=12",
-        "value": 0.12763986138706263,
-        "count": 10
+        "value": 0.2644223532281065,
+        "count": 11
     },
     {
         "name": "num-days=15",
-        "value": -0.03123680794906772,
-        "count": 4
+        "value": 0.3801827353422171,
+        "count": 6
     },
     {
         "name": "include-volume-momentum=false",
@@ -196,8 +196,8 @@
     },
     {
         "name": "num-days=10",
-        "value": 0.05649920596546665,
-        "count": 4
+        "value": 0.22503118961721158,
+        "count": 5
     },
     {
         "name": "include-sentiment-change=false",
@@ -221,8 +221,8 @@
     },
     {
         "name": "num-days=30",
-        "value": 0.33448526904075115,
-        "count": 23
+        "value": 0.692521647498177,
+        "count": 24
     },
     {
         "name": "previous-day-sentiments=29",
@@ -236,8 +236,8 @@
     },
     {
         "name": "num-days=26",
-        "value": 0.02283892112610683,
-        "count": 3
+        "value": 0.08201051875924306,
+        "count": 4
     },
     {
         "name": "previous-day-sentiments=11",
@@ -246,8 +246,8 @@
     },
     {
         "name": "num-days=17",
-        "value": -0.05227497917830377,
-        "count": 3
+        "value": 0.0407463438316668,
+        "count": 4
     },
     {
         "name": "previous-day-sentiments=18",
@@ -256,8 +256,8 @@
     },
     {
         "name": "num-days=13",
-        "value": 0.04482246224575814,
-        "count": 5
+        "value": 0.17174381318068638,
+        "count": 6
     },
     {
         "name": "previous-day-sentiments=13",
@@ -266,8 +266,8 @@
     },
     {
         "name": "num-days=23",
-        "value": -0.019001385383291082,
-        "count": 3
+        "value": 0.07620648513400438,
+        "count": 4
     },
     {
         "name": "previous-day-sentiments=27",
@@ -276,8 +276,8 @@
     },
     {
         "name": "num-days=11",
-        "value": 0.1585914082211219,
-        "count": 3
+        "value": 0.2924328235751421,
+        "count": 4
     },
     {
         "name": "previous-day-sentiments=26",
@@ -306,8 +306,8 @@
     },
     {
         "name": "num-days=16",
-        "value": -0.06379145374565236,
-        "count": 3
+        "value": 0.5243359504807373,
+        "count": 7
     },
     {
         "name": "num-days=33",
@@ -326,8 +326,8 @@
     },
     {
         "name": "num-days=20",
-        "value": -0.012524377447330832,
-        "count": 2
+        "value": 0.05900758877703631,
+        "count": 3
     },
     {
         "name": "num-days=28",
@@ -356,8 +356,8 @@
     },
     {
         "name": "num-days=9",
-        "value": -0.10205127239952227,
-        "count": 2
+        "value": 0.054902008237968286,
+        "count": 3
     },
     {
         "name": "previous-day-sentiments=46",
@@ -371,13 +371,13 @@
     },
     {
         "name": "num-days=25",
-        "value": 0.0048858886525829995,
-        "count": 2
+        "value": 0.06750329994545637,
+        "count": 3
     },
     {
         "name": "num-days=27",
-        "value": 0.016899303189614776,
-        "count": 1
+        "value": 0.07607449317238921,
+        "count": 2
     },
     {
         "name": "previous-day-sentiments=40",
@@ -386,8 +386,8 @@
     },
     {
         "name": "num-days=14",
-        "value": 0.16752109151091937,
-        "count": 2
+        "value": 0.6288778013724636,
+        "count": 4
     },
     {
         "name": "previous-day-sentiments=42",
@@ -512,6 +512,51 @@
     {
         "name": "sell-on-increase-amount=0.65",
         "value": 0,
+        "count": 1
+    },
+    {
+        "name": "num-days=8",
+        "value": 0.46534079256914235,
+        "count": 2
+    },
+    {
+        "name": "num-days=3",
+        "value": 0.06501099202143382,
+        "count": 2
+    },
+    {
+        "name": "num-days=6",
+        "value": 0.4014900617482188,
+        "count": 2
+    },
+    {
+        "name": "num-days=7",
+        "value": 0.35879669742446074,
+        "count": 2
+    },
+    {
+        "name": "num-days=1",
+        "value": 0,
+        "count": 1
+    },
+    {
+        "name": "num-days=2",
+        "value": 0,
+        "count": 1
+    },
+    {
+        "name": "num-days=4",
+        "value": 0.11582723060828064,
+        "count": 1
+    },
+    {
+        "name": "num-days=5",
+        "value": 0.2466725820763067,
+        "count": 1
+    },
+    {
+        "name": "num-days=19",
+        "value": 0.10483670350758731,
         "count": 1
     }
 ]

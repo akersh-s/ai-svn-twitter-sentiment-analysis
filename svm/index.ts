@@ -8,7 +8,7 @@ const svm = require('node-svm');
 
 export async function formatSentiment(): Promise<any> {
     //Add more data
-    FileUtil.lastResultsFiles = FileUtil.collectLastResultFiles(100);
+    FileUtil.lastResultsFiles = FileUtil.collectLastResultFiles(Math.min(90, Math.max(30, Math.max(Variables.numDays, Variables.numPreviousDaySentiments) * 3)));
     const svmParams = await collectSvmParams();
     fs.writeFileSync(FileUtil.svmData, JSON.stringify(svmParams), 'utf-8');
 }

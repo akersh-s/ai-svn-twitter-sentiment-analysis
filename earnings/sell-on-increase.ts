@@ -23,9 +23,9 @@ export function sellOnIncrease(stocks: string[]): StockClosePercent[] {
                     const increase = fromDateSentiment.price ? 100 * ((toDateSentiment.price - fromDateSentiment.price) / fromDateSentiment.price) : 0;
                     const isLastIteration = i === Variables.numDays - 1;
                     if (increase >= Variables.sellOnIncreaseAmount || isLastIteration) {
-                        const fractionDaysUsed = i / Variables.numDays;
-                        const multiplier = 1 / fractionDaysUsed;
-                        stockClosePercents.push(new StockClosePercent(stock, toDateSentiment, fromDateSentiment, multiplier));
+                        //const fractionDaysUsed = i / Variables.numDays;
+                        //const multiplier = 0.5 / fractionDaysUsed;
+                        stockClosePercents.push(new StockClosePercent(stock, toDateSentiment, fromDateSentiment));
                     }
                 }
             });
