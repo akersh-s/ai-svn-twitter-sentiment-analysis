@@ -318,6 +318,9 @@ export class Robinhood {
         //const askPrice = parseFloat(quoteData.ask_price);
         //const price = transaction === 'buy' ? bidPrice : askPrice;
         form.price = parseFloat(quoteData.last_trade_price);
+        if (form.price > 0.5) {
+          form.price = parseFloat(form.price.toFixed(2));
+        }
         console.log(`Requesting ${quantity} ${symbol} stocks at $${form.price}`);
         return this.request.post({
           uri: endpoints.orders,
