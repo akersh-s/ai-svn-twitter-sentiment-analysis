@@ -67,9 +67,9 @@ async function sellStocks(robinhood: Robinhood, sellSymbols: SellSymbol[]) {
             console.log(currentPrice, buyPrice);
             if (sellSymbol.isReadyToSell(currentPrice, buyPrice)) {
                 console.log(`${sellSymbol.symbol} is ready to sell - ${sellSymbol.quantity} stocks`);
-                //const price = await robinhood.sell(sellSymbol.symbol, sellSymbol.quantity);
-                //history.push(new TradeHistory('sell', sellSymbol.symbol, sellSymbol.quantity, price));
-                //console.log(price);
+                const price = await robinhood.sell(sellSymbol.symbol, sellSymbol.quantity);
+                history.push(new TradeHistory('sell', sellSymbol.symbol, sellSymbol.quantity, price));
+                console.log(price);
             }
         } catch (e) {
             console.log(e);

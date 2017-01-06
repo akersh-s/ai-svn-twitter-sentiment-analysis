@@ -5,7 +5,7 @@ export class SellSymbol {
     constructor(public symbol: string, public quantity: number, public lastUpdate: Date) { }
 
     isReadyToSell(currentPrice: number, buyPrice: number): boolean {
-        return this.hasEnoughTimeElapsed() || (Variables.sellOnFirstIncrease && this.hasMinimumTimeElapsed() && this.hasPriceIncreasedMinimum(currentPrice, buyPrice));
+        return this.hasEnoughTimeElapsed() || (Variables.sellOnIncrease && this.hasMinimumTimeElapsed() && this.hasPriceIncreasedMinimum(currentPrice, buyPrice));
     }
 
     hasEnoughTimeElapsed(): boolean {
