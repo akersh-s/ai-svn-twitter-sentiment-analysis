@@ -20,8 +20,9 @@ export class SellSymbol {
         if (!currentPrice || !buyPrice) {
             return false;
         }
+        const daysPast = Math.floor((Date.now() - +this.lastUpdate) / 86400000);
         const increasedPrice = 100 * ((currentPrice - buyPrice) / buyPrice);
-        return increasedPrice > Variables.sellOnIncreaseAmount;
+        return increasedPrice > Variables.calculateSellAmountForDayIndex(daysPast);
     }
 }
 

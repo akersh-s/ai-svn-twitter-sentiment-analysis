@@ -22,7 +22,7 @@ export async function processResults(): Promise<number> {
     let svmResults: SvmResult[] = await predict();
     console.log(`Results: ${svmResults.length}`);
     let buys = svmResults.map(s => {
-        console.log(`Buy ${s.prediction.symbol} with Probability ${s.probability}`);
+        console.log(`Buy ${s.prediction.symbol} with Probability ${s.probability.toFixed(3)}`);
         return s.prediction.symbol.replace(/\$/, '');
     });
     return new Promise<number>((resolve, reject) => {

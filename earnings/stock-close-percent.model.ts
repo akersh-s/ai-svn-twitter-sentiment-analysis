@@ -20,7 +20,7 @@ export class StockClosePercent {
     }
 
     toString() {
-        return `${this.symbol}: %${this.percent}, Current: ${this.currentQuote}, Future: ${this.futureQuote}, Current Day: ${formatDate(this.current.day)}, Future Day: ${formatDate(this.future.day)}`;
+        return `${this.symbol}: %${this.percent.toFixed(2)}, Current: ${this.currentQuote}, Future: ${this.futureQuote}, Current Day: ${formatDate(this.current.day)}, Future Day: ${formatDate(this.future.day)}`;
     }
 
     static findAverage(stockClosePercents: StockClosePercent[]): number {

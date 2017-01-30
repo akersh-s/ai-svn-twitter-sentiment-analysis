@@ -11,24 +11,27 @@ export function sellOnIncrease(stocks: string[]): StockClosePercent[] {
     let fromDate: Date = today;
     const fromDateSentiments: DaySentiment[] = getDaySentimentsForStocks(remainingStocks, fromDate);
     let toDate: Date;
+    let lastToDateSentiments: DaySentiment[];
     let toDateSentiments: DaySentiment[];
-    for (let i = 1; i < Variables.numDays && remainingStocks.length > 0; i++) {
+    for (let i = 1; i <= Variables.numDays && remainingStocks.length > 0; i++) {
         try {
             toDate = getDaysAgo((i * -1));
             toDateSentiments = getDaySentimentsForStocks(remainingStocks, toDate);
             remainingStocks.forEach(stock => {
                 const fromDateSentiment = getSingle(fromDateSentiments.filter(s => s.stock.symbol === stock));
+                const lastToDateSentiment = lastToDateSentiments && getSingle(lastToDateSentiments.filter(s => s.stock.symbol === stock));
                 const toDateSentiment = getSingle(toDateSentiments.filter(s => s.stock.symbol === stock));
                 if (fromDateSentiment && toDateSentiment) {
-                    const increase = fromDateSentiment.price ? 100 * ((toDateSentiment.price - fromDateSentiment.price) / fromDateSentiment.price) : 0;
+                    const increase = fromDateSentiment.price ? 100 * change(toDateSentiment.price, fromDateSentiment.price) : 0;
+                    const increaseFromYesterday = lastToDateSentiment && lastToDateSentiment.price ? 100 * change(toDateSentiment.price, lastToDateSentiment.price) : 0;
                     const isLastIteration = i === Variables.numDays - 1;
-                    if (increase >= Variables.sellOnIncreaseAmount || isLastIteration) {
-                        //const fractionDaysUsed = i / Variables.numDays;
-                        //const multiplier = 0.5 / fractionDaysUsed;
-                        stockClosePercents.push(new StockClosePercent(stock, toDateSentiment, fromDateSentiment));
+                    if (increase >= Variables.calculateSellAmountForDayIndex(i) || isLastIteration) {
+                        const multiplier = i < 2.2 ? 2.2 / i : 1;
+                        stockClosePercents.push(new StockClosePercent(stock, toDateSentiment, fromDateSentiment, multiplier));
                     }
                 }
             });
+            lastToDateSentiments = toDateSentiments;
         }
         catch (e) { }
         const finished = stockClosePercents.map(s => s.symbol);
@@ -60,3 +63,6 @@ export function sellOnIncrease(stocks: string[]): StockClosePercent[] {
   '$BOOM',
   '$BIS' ]);
 */
+function change(one: number, two: number) {
+    return two === 0 ? 0 : (one - two) / two;
+}

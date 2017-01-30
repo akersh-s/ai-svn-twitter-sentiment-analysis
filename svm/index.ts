@@ -77,7 +77,7 @@ async function collectSvmParams(): Promise<any[]> {
 function formatTimeFromHours(hours: number): string {
     if (hours < 1) {
         const min = hours * 60;
-        return `${min}min`;
+        return `${min.toFixed(2)}min`;
     }
-    return `${hours}h`;
+    return `${hours.toFixed(2)}h`;
 }

@@ -2,12 +2,12 @@ test() {
     rm -rf "~/svm-model-$out.json"
 
     rm -rf $outfile
-    ts-node process/format --fast --today="$today" --debug --run-id=$out $options | tee $outfile
+    ts-node process/format --fast --max-svm-data=15000 --today="$today" --debug --run-id=$out $options | tee $outfile
     data=`cat "$outfile" | grep formattedSvmData | awk -F ': ' '{print $2}'`
     if [ "$data" -lt 8000 ]; then
         return;
     fi
-	ts-node process/run-svm --fast --today="$today" --debug --run-id=$out $options
+	ts-node process/run-svm --fast --max-svm-data=15000 --today="$today" --debug --run-id=$out $options
 
     rm -rf $outfile
     ts-node scripts/run-loop/test-dates.ts --options="$options" --run-id=$out | tee -a $outfile
@@ -45,7 +45,7 @@ test() {
 #Start
 
 mkdir .tmp || true
-today='09/19/2016'
+today='11/30/2016'
 out=out-$RANDOM
 outfile=".tmp/$out"
 file="`pwd`/$outfile"

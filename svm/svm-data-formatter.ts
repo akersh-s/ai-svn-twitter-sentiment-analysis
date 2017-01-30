@@ -127,10 +127,11 @@ async function formatSvmData(): Promise<SvmData> {
                     for (let k = 1; k <= Variables.numDays; k++) {
                         const nextEoDaySentiment: DaySentiment = getDaySentimentInNDays(k, daySentiment, stockPreviousDaySentiments);
                         if (nextEoDaySentiment && nextEoDaySentiment.price) {
+                            // Overall increase
                             let increasePercent = change(nextEoDaySentiment.price, daySentiment.price) * 100;
-                            if (increasePercent > Variables.sellOnIncreaseAmount) {
+                            if (increasePercent > Variables.calculateSellAmountForDayIndex(k)) {
                                 y = 1;
-                                k = Variables.numDays + 1; // Break the loop
+                                k = Variables.numDays + 1;
                             }
                         }
                     }

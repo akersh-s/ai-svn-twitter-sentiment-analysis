@@ -1,7 +1,7 @@
 test() {
 
     rm -rf $outfile
-    ts-node scripts/run-loop/test-dates.ts --options="$options" --run-id='' | tee -a $outfile
+    ts-node scripts/run-loop/test-dates.ts --run-id='' | tee -a $outfile
     #while read date; do
     #    ts-node process/run-process-results --fast --today="$date" --debug --past --run-id=$out $options | tee -a $outfile
     #done < ./scripts/dates
@@ -58,7 +58,9 @@ echo "Out: $out"
 #exit 0
 
 while [ 1 ]; do
-    options=`ts-node ./scripts/run-loop/read-config.ts`
+    #options=`ts-node ./scripts/run-loop/read-config.ts`
+    options=''
     echo "Testing Options: $options"
     test
+    exit 0
 done

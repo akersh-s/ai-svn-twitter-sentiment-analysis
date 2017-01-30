@@ -1,41 +1,140 @@
 {
-    "lastChangedIndex": 0,
-    "bestTotal": 0.2466725820763067,
-    "version": 9,
+    "lastChangedIndex": 1,
+    "bestTotal": 0.6900000000000001,
+    "version": 21,
     "fields": [
         {
-            "key": "--num-days",
-            "value": 5,
+            "key": "--sell-on-increase-amount",
+            "value": 1,
             "otherValues": [
+                0,
+                0.5,
+                1,
+                1.5,
+                2,
+                2.5,
+                3
+            ]
+        },
+        {
+            "key": "--decrease-amount",
+            "value": 0.5,
+            "otherValues": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0.5,
+                0.75,
+                1,
+                1.25,
+                1.5,
+                1.75,
                 2,
                 3,
                 4,
-                5,
-                6,
-                7,
-                8,
-                9,
-                10,
-                11,
-                12,
-                13,
-                14,
+                5
+            ]
+        },
+        {
+            "key": "--previous-day-sentiments",
+            "value": 15,
+            "otherValues": [
                 15,
-                16,
-                17,
-                18,
-                19,
                 20,
-                21,
-                22,
-                23,
-                24,
                 25,
-                26,
-                27,
-                28,
-                29,
-                30
+                30,
+                35
+            ]
+        },
+        {
+            "key": "--include-sub",
+            "value": "false",
+            "otherValues": [
+                true,
+                false
+            ]
+        },
+        {
+            "key": "--include-stock-volatility",
+            "value": "true",
+            "otherValues": [
+                true,
+                false
+            ]
+        },
+        {
+            "key": "--include-volume-volatility",
+            "value": "false",
+            "otherValues": [
+                true,
+                false
+            ]
+        },
+        {
+            "key": "--include-stock-momentum",
+            "value": "false",
+            "otherValues": [
+                true,
+                false
+            ]
+        },
+        {
+            "key": "--include-volume-momentum",
+            "value": "false",
+            "otherValues": [
+                true,
+                false
+            ]
+        },
+        {
+            "key": "--include-sentiment-change",
+            "value": "true",
+            "otherValues": [
+                true,
+                false
+            ]
+        },
+        {
+            "key": "--include-pe-ratio-momentum",
+            "value": "false",
+            "otherValues": [
+                true,
+                false
+            ]
+        },
+        {
+            "key": "--include-pe-ratio-change",
+            "value": "false",
+            "otherValues": [
+                true,
+                false
+            ]
+        },
+        {
+            "key": "--include-num-tweets-momentum",
+            "value": "false",
+            "otherValues": [
+                true,
+                false
+            ]
+        },
+        {
+            "key": "--include-r-indicator",
+            "value": "false",
+            "otherValues": [
+                true,
+                false
+            ]
+        },
+        {
+            "key": "--include-obv",
+            "value": "false",
+            "otherValues": [
+                true,
+                false
             ]
         }
     ]
