@@ -5,7 +5,7 @@ export class StockClosePercent {
     public percent: number;
     public futureQuote: number;
     public currentQuote: number;
-    constructor(public symbol: string, public future: DaySentiment, public current: DaySentiment, multiplier?: number) {
+    constructor(public symbol: string, public future: DaySentiment, public current: DaySentiment) {
         this.futureQuote = this.future.price;
         this.currentQuote = this.current.price;
         if (!this.futureQuote || !this.currentQuote) {
@@ -13,9 +13,6 @@ export class StockClosePercent {
         }
         else {
             this.percent = ((this.futureQuote - this.currentQuote) / this.currentQuote) * 100;
-        }
-        if (multiplier) {
-            this.percent = this.percent * multiplier;
         }
     }
 

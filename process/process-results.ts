@@ -18,6 +18,7 @@ export async function processResults(): Promise<number> {
         process.exit(-1);
     }
     FileUtil.lastResultsFiles = FileUtil.collectLastResultFiles(Math.min(90, Math.max(30, Math.ceil(Variables.numPreviousDaySentiments * 1.3))));
+    //FileUtil.lastResultsFiles = FileUtil.collectLastResultFiles(90);
 
     let svmResults: SvmResult[] = await predict();
     console.log(`Results: ${svmResults.length}`);

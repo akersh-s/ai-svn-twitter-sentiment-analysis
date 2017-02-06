@@ -5,6 +5,7 @@ export class SellSymbol {
     constructor(public symbol: string, public quantity: number, public lastUpdate: Date) { }
 
     isReadyToSell(currentPrice: number, buyPrice: number): boolean {
+        //return this.hasMinimumTimeElapsed();
         return this.hasEnoughTimeElapsed() || (Variables.sellOnIncrease && this.hasMinimumTimeElapsed() && this.hasPriceIncreasedMinimum(currentPrice, buyPrice));
     }
 
@@ -22,7 +23,7 @@ export class SellSymbol {
         }
         const daysPast = Math.floor((Date.now() - +this.lastUpdate) / 86400000);
         const increasedPrice = 100 * ((currentPrice - buyPrice) / buyPrice);
-        return increasedPrice > Variables.calculateSellAmountForDayIndex(daysPast);
+        return increasedPrice >= Variables.calculateSellAmountForDayIndex(daysPast) || increasedPrice <= Variables.calculateSellWallForDayIndex(daysPast);
     }
 }
 

@@ -3,9 +3,10 @@ import { argv } from 'yargs';
 export class Variables {
     static topNumToBuy: number = argInt('num-to-buy', 20);
     static priceThreshold: number = argInt('price-thresold', 0);
-    static numDays: number = argInt('num-days', 5);
+    static numDays: number = argInt('num-days', 13);
     static sellOnIncrease: boolean = argBoolean('sell-on-increase', true);
-    static sellOnIncreaseAmount: number = argInt('sell-on-increase-amount', 1);
+    static sellOnIncreaseAmount: number = argInt('sell-on-increase-amount', 2);
+    static sellWall: number = argInt('sell-wall', -35);
     static decreaseAmount: number = argInt('decrease-amount', 0.5);
     static numPreviousDaySentiments: number = argInt('previous-day-sentiments', 15);
 
@@ -19,12 +20,12 @@ export class Variables {
     static includePriceChange: boolean = argBoolean('include-price-change', false);
 
     static includeVolumeVolatility: boolean = argBoolean('include-volume-volatility', false);
-    static includeVolumeMomentum: boolean = argBoolean('include-volume-momentum', false);
+    static includeVolumeMomentum: boolean = argBoolean('include-volume-momentum', true);
     static includeVolumeChange: boolean = argBoolean('include-volume-change', false);
 
     static includeSentimentVolatility: boolean = argBoolean('include-sentiment-volatility', false);
     static includeSentimentMomentum: boolean = argBoolean('include-sentiment-momentum', false);
-    static includeSentimentChange: boolean = argBoolean('include-sentiment-change', true);
+    static includeSentimentChange: boolean = argBoolean('include-sentiment-change', false);
 
     static includePeRatioVolatility: boolean = argBoolean('include-pe-ratio-volatility', false);
     static includePeRatioMomentum: boolean = argBoolean('include-pe-ratio-momentum', false);
@@ -46,10 +47,20 @@ export class Variables {
     static retainedVariance: number = argFloat('retained-variance', 0.9);
     static shrinking: boolean = argBoolean('shrinking', true);
 
-    static maxSvmData: number = argInt('max-svm-data', 40000);
+    static maxSvmData: number = argInt('max-svm-data', 20000);
 
     static calculateSellAmountForDayIndex(i: number): number {
-        return (Variables.sellOnIncreaseAmount - (Math.max(i - 1, 0) * Variables.decreaseAmount));
+        const x = i - 1;
+        const m = (Variables.priceThreshold - Variables.sellOnIncreaseAmount) / Variables.numDays;
+        const b = Variables.sellOnIncreaseAmount;
+        return (m * x) + b;
+    }
+
+    static calculateSellWallForDayIndex(i: number): number {
+        const x = i - 1;
+        const m = (Variables.priceThreshold - Variables.sellWall) / Variables.numDays;
+        const b = Variables.sellWall;
+        return (m * x) + b;
     }
 }
 

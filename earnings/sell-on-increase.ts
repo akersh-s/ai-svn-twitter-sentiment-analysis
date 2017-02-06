@@ -25,9 +25,8 @@ export function sellOnIncrease(stocks: string[]): StockClosePercent[] {
                     const increase = fromDateSentiment.price ? 100 * change(toDateSentiment.price, fromDateSentiment.price) : 0;
                     const increaseFromYesterday = lastToDateSentiment && lastToDateSentiment.price ? 100 * change(toDateSentiment.price, lastToDateSentiment.price) : 0;
                     const isLastIteration = i === Variables.numDays - 1;
-                    if (increase >= Variables.calculateSellAmountForDayIndex(i) || isLastIteration) {
-                        const multiplier = i < 2.2 ? 2.2 / i : 1;
-                        stockClosePercents.push(new StockClosePercent(stock, toDateSentiment, fromDateSentiment, multiplier));
+                    if (increase >= Variables.calculateSellAmountForDayIndex(i) || isLastIteration || increase <= Variables.calculateSellWallForDayIndex(i)) {
+                        stockClosePercents.push(new StockClosePercent(stock, toDateSentiment, fromDateSentiment));
                     }
                 }
             });

@@ -1,13 +1,17 @@
 test() {
+    out=out-$RANDOM
+    outfile=".tmp/$out"
+    file="`pwd`/$outfile"
+    echo "Out: $out"
     rm -rf "~/svm-model-$out.json"
 
     rm -rf $outfile
-    ts-node process/format --fast --max-svm-data=15000 --today="$today" --debug --run-id=$out $options | tee $outfile
+    ts-node process/format --fast --max-svm-data=30000 --today="$today" --debug --run-id=$out $options | tee $outfile
     data=`cat "$outfile" | grep formattedSvmData | awk -F ': ' '{print $2}'`
     if [ "$data" -lt 8000 ]; then
         return;
     fi
-	ts-node process/run-svm --fast --max-svm-data=15000 --today="$today" --debug --run-id=$out $options
+	ts-node process/run-svm --fast --max-svm-data=30000 --today="$today" --debug --run-id=$out $options
 
     rm -rf $outfile
     ts-node scripts/run-loop/test-dates.ts --options="$options" --run-id=$out | tee -a $outfile
@@ -29,7 +33,7 @@ test() {
     median=`ts-node ./scripts/run-loop/find-median.ts --file="$file"`
     now=`date`
     if [ -n "$totalNum" ]; then
-        echo "Date: $now - $total, Median: $median, Above: $numAbove, Below: $numBelow, Success Rate: %$percentAbove, Options: $options"
+        echo "Date: $now - $total, Median: $median, Above: $numAbove, Below: $numBelow, Success Rate: %$percentAbove, Out: $out, Options: $options"
     else
         totalNum=0
     fi
@@ -43,14 +47,7 @@ test() {
 }
 
 #Start
-
-mkdir .tmp || true
-today='11/30/2016'
-out=out-$RANDOM
-outfile=".tmp/$out"
-file="`pwd`/$outfile"
-echo "Out: $out"
-
+today='10/13/2016'
 
 #cat ./shared/all-stocks | while read stock; do
 #    echo "$stock" > ./shared/stocks

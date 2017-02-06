@@ -14,7 +14,7 @@ function readMedian(): number {
 
 const loopConfig = LoopConfig.read();
 
-const median = readMedian() / Variables.numDays;
+const median = readMedian();
 
 loopConfig.lastChangedIndex = loopConfig.incrementIndex(loopConfig.lastChangedIndex);
 if (median > loopConfig.bestTotal) {
