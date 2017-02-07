@@ -5,6 +5,7 @@ const threshold = +today - (oneDay * 10);
 const th = TradeHistory.readHistory();
 
 const todaysSells = th.filter(t => t.action === 'sell' && +t.date > threshold);
+
 todaysSells.forEach((todaySell) => {
     const equivBuy = findRelatedBuy(th.filter(t => t.stock === todaySell.stock && todaySell.date > t.date));
     if (equivBuy) {

@@ -34,7 +34,7 @@ async function run() {
     let sellSymbolPromises: Promise<SellSymbol>[] = orders.filter(o => {
         const currentlyOwned = !!results.find(r => r.instrument === o.instrument);
         return o.side === 'buy' && currentlyOwned;
-    }).map(async function(o) {
+    }).map(async function (o) {
         const instrument: InstrumentResult = await robinhood.getPromise(o.instrument);
         const position = results.find(r => r.instrument === o.instrument);
         const quantity = Math.min(parseInt(o.quantity, 10), parseInt(position.quantity, 10));
@@ -59,7 +59,8 @@ run();
 async function sellStocks(robinhood: Robinhood, sellSymbols: SellSymbol[]) {
     const history = TradeHistory.readHistory();
     console.log(sellSymbols);
-    sellSymbols.forEach(async function(sellSymbol) {
+    for (let i = 0; i < sellSymbols.length; i++) {
+        const sellSymbol = sellSymbols[i];
         try {
             const currentPrice = await robinhood.getPriceBySymbol(sellSymbol.symbol);
             const buyHistoryForSymbol = history.filter(h => h.action === 'buy' && h.stock === sellSymbol.symbol);
@@ -74,8 +75,7 @@ async function sellStocks(robinhood: Robinhood, sellSymbols: SellSymbol[]) {
         } catch (e) {
             console.log(e);
         }
-
-    });
+    }
     TradeHistory.writeHistory(history);
     console.log('Completed selling.');
 }
