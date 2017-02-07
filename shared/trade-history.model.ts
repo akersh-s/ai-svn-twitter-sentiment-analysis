@@ -21,7 +21,7 @@ export class TradeHistory {
         if (!date) {
             return path.join(FileUtil.userHome, `trade-history.json`);;
         }
-        const fDate = typeof date === 'string' ? date : formatDate(date);
+        const fDate = date instanceof Date ? formatDate(date) : date;
         return path.join(FileUtil.userHome, `trade-history-${fDate}.json`);
     }
 
@@ -39,7 +39,7 @@ export class TradeHistory {
         const path = TradeHistory.tradeHistoryPathForDate(date);
         if (fs.existsSync(path)) {
             const json = JSON.parse(fs.readFileSync(path, 'utf-8'));
-            return json.map(i => new TradeHistory(i.action, i.stock, i.quantity, i.price, i.date));
+            return json.map(i => new TradeHistory(i.action, i.stock, i.quantity, i.price, new Date(i.date)));
         }
         else {
             return [];

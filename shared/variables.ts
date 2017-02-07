@@ -47,7 +47,7 @@ export class Variables {
     static retainedVariance: number = argFloat('retained-variance', 0.9);
     static shrinking: boolean = argBoolean('shrinking', true);
 
-    static maxSvmData: number = argInt('max-svm-data', 20000);
+    static maxSvmData: number = argInt('max-svm-data', 30000);
 
     static calculateSellAmountForDayIndex(i: number): number {
         const x = i - 1;
