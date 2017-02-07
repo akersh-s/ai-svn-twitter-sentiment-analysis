@@ -25,3 +25,11 @@ export function calculateBuyPrice(distribution: Distribution): number {
 export function calculateSellPrice(distribution: Distribution): number {
     return distribution.mean - distribution.deviation;
 };
+
+export function change(one: number, two: number) {
+    return two === 0 ? 0 : (one - two) / two;
+};
+
+export function changePercent(one: number, two: number) {
+    return (change(one, two)) * 100;
+};
