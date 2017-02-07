@@ -10,7 +10,7 @@ todaysSells.forEach((todaySell) => {
     const equivBuy = findRelatedBuy(th.filter(t => t.stock === todaySell.stock && todaySell.date > t.date));
     if (equivBuy && !reported[todaySell.stock + formatDate(todaySell.date)]) {
         const increaseAmount = changePercent(todaySell.price, equivBuy.price);
-        console.log(`Sold ${todaySell.quantity} shares of ${todaySell.stock} at $${todaySell.price.toFixed(2)} on ${formatDate(todaySell.date)}, likely purchased at $${equivBuy.price.toFixed(2)} on ${formatDate(equivBuy.date)}, Percent Changed: %${increaseAmount.toFixed(2)}`);
+        console.log(`Attempted to sell ${todaySell.quantity} shares of ${todaySell.stock} at $${todaySell.price.toFixed(2)} on ${formatDate(todaySell.date)}, likely purchased at $${equivBuy.price.toFixed(2)} on ${formatDate(equivBuy.date)}, Percent Changed: %${increaseAmount.toFixed(2)}`);
         reported[todaySell.stock + formatDate(todaySell.date)] = true;
     }
 });
