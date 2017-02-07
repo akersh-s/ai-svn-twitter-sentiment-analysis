@@ -1,6 +1,6 @@
-import {formatDate} from '../../shared/util/date-util';
-import {Stock} from './stock.model';
-import {Robinhood, QuoteDataResultBody, QuoteDataResult, FundamentalResponse} from '../../shared/robinhood.api';
+import { formatDate } from '../../shared/util/date-util';
+import { Stock } from './stock.model';
+import { Robinhood, QuoteDataResultBody, QuoteDataResult, FundamentalResponse } from '../../shared/robinhood.api';
 import * as fs from 'fs';
 
 export class DaySentiment {
@@ -42,6 +42,21 @@ export class DaySentiment {
             return 0;
         }
         return parseFloat(this.fundamentals.volume);
+    }
+
+    get calcPeRatio(): number {
+        if (!this.fundamentals) {
+            return 0;
+        }
+        if (this.fundamentals.pe_ratio) {
+            return parseFloat(this.fundamentals.pe_ratio);
+        }
+        else if (this.fundamentals.market_cap && this.volume) {
+            return parseFloat(this.fundamentals.market_cap) / this.volume;
+        }
+        else {
+            return 0;
+        }
     }
 
     //Adds price and fundamental information

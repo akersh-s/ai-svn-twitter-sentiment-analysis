@@ -1,3 +1,4 @@
-today=`date`
+#today=`date`
+today='2017/1/20'
 ts-node process/format --today="$today" --debug
-ts-node process/run-svm --today="$today" --debug --max-svm-data=30000
+ts-node process/run-svm --today="$today" --debug

@@ -8,7 +8,8 @@ const svm = require('node-svm');
 
 export async function formatSentiment(): Promise<any> {
     //Add more data
-    FileUtil.lastResultsFiles = FileUtil.collectLastResultFiles(70);
+    FileUtil.lastResultsFiles = FileUtil.collectLastResultFiles(Math.min(90, Math.max(30, Math.max(Variables.numDays, Variables.numPreviousDaySentiments) * 3)));
+    //FileUtil.lastResultsFiles = FileUtil.collectLastResultFiles(90);
     const svmParams = await collectSvmParams();
     fs.writeFileSync(FileUtil.svmData, JSON.stringify(svmParams), 'utf-8');
 }
@@ -21,7 +22,7 @@ export function runSvm(): Promise<any> {
         kernelType: Variables.kernelType,
 
         // training options
-        eps: Variables.eps, 
+        eps: Variables.eps,
         kFold: Variables.kFold,
         normalize: Variables.normalize,
         reduce: Variables.reduce,
@@ -40,7 +41,7 @@ export function runSvm(): Promise<any> {
                 const hoursGoneBy = (Date.now() - +startDate) / (1000 * 60 * 60);
                 const totalTimeInHours = (1 / rate) * hoursGoneBy;
                 const hoursRemaining = totalTimeInHours - hoursGoneBy;
-                console.log(`Progress: ${rate} after ${hoursGoneBy}h, Time remaining: ${hoursRemaining}h, Total time: ${totalTimeInHours}h`);
+                console.log(`Progress: ${rate.toFixed(3)} after ${formatTimeFromHours(hoursGoneBy)}, Time remaining: ${formatTimeFromHours(hoursRemaining)}, Total time: ${formatTimeFromHours(totalTimeInHours)}`);
             }).spread((trainedModel, trainingReport) => {
                 fs.writeFileSync(FileUtil.svmModelFile, JSON.stringify(trainedModel), 'utf-8');
                 console.log('Completed!');
@@ -72,4 +73,12 @@ async function collectSvmParams(): Promise<any[]> {
         formatted.push([svmData.x[i], svmData.y[i]]);
     }
     return formatted;
+}
+
+function formatTimeFromHours(hours: number): string {
+    if (hours < 1) {
+        const min = hours * 60;
+        return `${min.toFixed(2)}min`;
+    }
+    return `${hours.toFixed(2)}h`;
 }

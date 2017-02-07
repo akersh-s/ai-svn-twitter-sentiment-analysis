@@ -235,7 +235,47 @@ export class Robinhood {
     return this.get(`${endpoints.markets}${symbol}/`, cb);
   }
 
-  placeOrder(symbol: string, quantity: number, transaction: string, cb: (err, response, body) => any) {
+  getPriceBySymbol(symbol: string): Promise<number> {
+    return new Promise((resolve, reject) => {
+
+      this.instruments(symbol, (e1, resp, b1) => {
+        if (e1) {
+          return reject(e1);
+        }
+        else if (b1.results.length === 0) {
+          return reject(`No results from instruments for symbol: ${symbol}`);
+        }
+        this.quote_data(symbol, (err, response, body) => {
+          if (err) {
+            return reject(err);
+          }
+
+          const quoteData = this.getCorrectForSymbol(symbol, body.results);
+          resolve(parseFloat(quoteData.last_trade_price));
+        });
+      });
+    });
+  }
+
+  getCorrectForSymbol<T>(symbol: string, arr: T[]): T {
+    if (!arr || arr.length === 0) {
+      return undefined;
+    }
+    else if (arr.length === 1) {
+      return arr[0];
+    }
+    else {
+      const res = arr.filter(a => (a as any).symbol === symbol);
+      if (res.length > 0) {
+        return res[0];
+      }
+      else {
+        return arr[0];
+      }
+    }
+  }
+
+  placeOrder(symbol: string, quantity: number, transaction: string, cb: (err, response, body, price) => any) {
     const form: OrderForm = {
       account: this.account,
       quantity: quantity,
@@ -253,7 +293,7 @@ export class Robinhood {
         throw e1;
       }
       else if (b1.results.length === 0) {
-        return cb(e1, resp, b1);
+        return cb(e1, resp, b1, undefined);
       }
 
       let instrument = b1.results[0];
@@ -274,13 +314,14 @@ export class Robinhood {
 
         const quoteData = body.results[0];
 
-        const bidPrice = parseFloat(quoteData.bid_price);
-        const askPrice = parseFloat(quoteData.ask_price);
-        const betweenPrice = parseFloat(((bidPrice * 0.75) + (askPrice * 0.25)).toFixed(2));
-        console.log(`${symbol} - Bid Price: ${bidPrice}, Ask Price: ${askPrice}, Between: ${betweenPrice}`);
-        const price = argv.desperate ? betweenPrice : transaction === 'buy' ? bidPrice : askPrice;
+        //const bidPrice = parseFloat(quoteData.bid_price);
+        //const askPrice = parseFloat(quoteData.ask_price);
+        //const price = transaction === 'buy' ? bidPrice : askPrice;
         form.price = parseFloat(quoteData.last_trade_price);
-        console.log(`Requesting ${quantity} ${symbol} stocks at $${price}`);
+        if (form.price > 0.5) {
+          form.price = parseFloat(form.price.toFixed(2));
+        }
+        console.log(`Requesting ${quantity} ${symbol} stocks at $${form.price}`);
         return this.request.post({
           uri: endpoints.orders,
           form
@@ -290,37 +331,37 @@ export class Robinhood {
             this.placeOrder(symbol, newQuantity, transaction, cb);
           }
           else {
-            cb(err, response, body3);
+            cb(err, response, body3, form.price);
           }
         });
       });
     });
   }
 
-  buy(symbol: string, quantity: number, callback: (err, response, body) => any) {
+  buy(symbol: string, quantity: number, callback: (err, response, body, price) => any) {
     return this.placeOrder(symbol, quantity, 'buy', callback);
   }
 
-  buyPromise(symbol: string, quantity: number): Promise<any> {
-    return new Promise<any>((resolve, reject) => {
-      this.buy(symbol, quantity, (err, response, body) => {
+  buyPromise(symbol: string, quantity: number): Promise<number> {
+    return new Promise<number>((resolve, reject) => {
+      this.buy(symbol, quantity, (err, response, body, price) => {
         if (err) {
           return reject(err);
         }
 
-        resolve(body);
+        resolve(price);
       });
     });
   }
 
   sell(symbol: string, quantity: number): Promise<any> {
     return new Promise<any>((resolve, reject) => {
-      this.placeOrder(symbol, quantity, 'sell', (err, response, body) => {
+      this.placeOrder(symbol, quantity, 'sell', (err, response, body, price) => {
         if (err) {
           return reject(err);
         }
 
-        resolve(body);
+        resolve(price);
       });
     });
   }

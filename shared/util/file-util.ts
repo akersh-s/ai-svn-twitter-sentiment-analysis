@@ -2,7 +2,7 @@ import * as path from 'path';
 import * as yargs from 'yargs';
 import * as fs from 'fs';
 
-import {formatDate, today, yesterday, getDaysAgo, oneDay} from './date-util'; 
+import { formatDate, today, oneDay } from './date-util';
 let argv = yargs.argv;
 let runId = argv['run-id'] ? '-' + argv['run-id'] : '';
 let username = argv.username;
@@ -22,7 +22,7 @@ export class FileUtil {
     static predictionData: string = path.join(userHome, 'prediction-data.json');
     static bestSearchFile: string = path.join(userHome, 'best-search.json');
     static earningsFileDate: string = path.join(userHome, `earnings-${formattedDate}.json`);
-    static lastResultsFiles: string[] = FileUtil.collectLastResultFiles(30);
+    static lastResultsFiles: string[] = [];
     static collectLastResultFiles(daysAgo: number): string[] {
         const resultsFileRegex = /^results-\d+-\d+-\d+\.json$/;
 
@@ -43,16 +43,16 @@ export class FileUtil {
         FileUtil.earningsFileDate = path.join(userHome, `earnings-${formattedDate}.json`);
     }
     static getResultsFileForDate(date: Date) {
-        const formattedDate = formatDate(date);
-        return path.join(userHome, `results-${formattedDate}.json`);
+        const f = formatDate(date);
+        return path.join(userHome, `results-${f}.json`);
     }
     static getArtifactBuyFileForDate(date: Date) {
-        const formattedDate = formatDate(date);
+        const f = formatDate(date);
         const artifactBuyFolder = path.join(userHome, 'trade-artifacts');
         if (!fs.existsSync(artifactBuyFolder)) {
             fs.mkdirSync(artifactBuyFolder);
         }
-        return path.join(artifactBuyFolder, `buy-${formattedDate}.json`);
+        return path.join(artifactBuyFolder, `buy-${f}.json`);
     }
 }
 
@@ -60,8 +60,10 @@ function hashCode(s: string): number {
     if (!s) {
         return 0;
     }
-    var hash = 0, i, chr, len;
-    if (s.length === 0) return hash;
+    let hash = 0, i, chr, len;
+    if (s.length === 0) {
+        return hash;
+    }
     for (i = 0, len = s.length; i < len; i++) {
         chr = s.charCodeAt(i);
         hash = ((hash << 5) - hash) + chr;

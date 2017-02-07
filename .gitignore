@@ -11,4 +11,7 @@ svm/data*.json
 .cache
 build/
 npm-debug.log
-run-*
+.tmp/
+messages
+oot-
+custom-options

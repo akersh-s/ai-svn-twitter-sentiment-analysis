@@ -2,6 +2,8 @@
 
 import { Robinhood, Order, OrderResponseBody } from '../shared/robinhood.api';
 import { validate, isNotWeekend } from '../shared/validate';
+import { TradeHistory } from '../shared/trade-history.model';
+import { Variables } from '../shared/variables';
 import { SellSymbol, hasEnoughTimeElapsedFromDate } from './sell-symbol';
 import * as yargs from 'yargs';
 
@@ -20,7 +22,7 @@ async function run() {
     let orders: Order[] = [];
     let next: string;
     let num: number = 0;
-    while ((next || num === 0) && num < 2) {
+    while ((next || num === 0) && num < 5) {
         console.log('Requesting orders page ' + num);
         const orderResponseBody: OrderResponseBody = next ? await robinhood.getPromise(next) : await robinhood.orders();
         orders = orders.concat(orderResponseBody.results);
@@ -30,9 +32,8 @@ async function run() {
     }
 
     let sellSymbolPromises: Promise<SellSymbol>[] = orders.filter(o => {
-        const hasEnoughTimeElapsed = hasEnoughTimeElapsedFromDate(new Date(o.created_at));
         const currentlyOwned = !!results.find(r => r.instrument === o.instrument);
-        return o.side === 'buy' && hasEnoughTimeElapsed && currentlyOwned;
+        return o.side === 'buy' && currentlyOwned;
     }).map(async function(o) {
         const instrument: InstrumentResult = await robinhood.getPromise(o.instrument);
         const position = results.find(r => r.instrument === o.instrument);
@@ -56,13 +57,26 @@ async function run() {
 run();
 
 async function sellStocks(robinhood: Robinhood, sellSymbols: SellSymbol[]) {
+    const history = TradeHistory.readHistory();
+    console.log(sellSymbols);
     sellSymbols.forEach(async function(sellSymbol) {
-        if (sellSymbol.isReadyToSell()) {
-            console.log(`${sellSymbol.symbol} is ready to sell - ${sellSymbol.quantity} stocks`);
-            const response = await robinhood.sell(sellSymbol.symbol, sellSymbol.quantity);
-            console.log(response);
+        try {
+            const currentPrice = await robinhood.getPriceBySymbol(sellSymbol.symbol);
+            const buyHistoryForSymbol = history.filter(h => h.action === 'buy' && h.stock === sellSymbol.symbol);
+            const buyPrice = buyHistoryForSymbol.length > 0 ? buyHistoryForSymbol[0].price : Infinity;
+            console.log(currentPrice, buyPrice);
+            if (sellSymbol.isReadyToSell(currentPrice, buyPrice)) {
+                console.log(`${sellSymbol.symbol} is ready to sell - ${sellSymbol.quantity} stocks`);
+                const price = await robinhood.sell(sellSymbol.symbol, sellSymbol.quantity);
+                history.push(new TradeHistory('sell', sellSymbol.symbol, sellSymbol.quantity, price));
+                console.log(price);
+            }
+        } catch (e) {
+            console.log(e);
         }
+
     });
+    TradeHistory.writeHistory(history);
     console.log('Completed selling.');
 }
 
