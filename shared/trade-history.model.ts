@@ -49,6 +49,7 @@ export class TradeHistory {
     static writeHistory(th: TradeHistory[]): void {
         const uniqueDates = TradeHistory.findUniqueFormattedDates(th);
         uniqueDates.forEach(date => {
+            console.log('Writing history for Date: ' + date);
             const path = TradeHistory.tradeHistoryPathForDate(date);
             const ths = th.filter(t => formatDate(t.date) === date);
             fs.writeFileSync(path, JSON.stringify(ths, null, 4), 'utf-8');
