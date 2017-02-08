@@ -25,6 +25,6 @@ function findRelatedBuy(th: TradeHistory[]): TradeHistory {
     return th.sort((a, b) => +b.date - +a.date).find(a => true);
 }
 
-const word = fullBuy > fullSell ? 'gained' : 'lost';
+const word = fullBuy < fullSell ? 'gained' : 'lost';
 const change = Math.abs(changePercent(fullSell, fullBuy));
 console.log(`You overall ${word} %${change}. Total Buy: $${fullBuy.toFixed(2)} Total Sell: $${fullSell.toFixed(2)}`);
