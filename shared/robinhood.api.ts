@@ -5,7 +5,7 @@ import { RequestAPI, Request, CoreOptions } from 'request';
 
 import * as yargs from 'yargs';
 const argv = yargs.argv;
-
+const getCache: any = {};
 let endpoints = {
   login: 'https://api.robinhood.com/api-token-auth/',
   investment_profile: 'https://api.robinhood.com/user/investment_profile/',
@@ -125,11 +125,14 @@ export class Robinhood {
 
   getPromise(uri: string): Promise<any> {
     return new Promise<any>((resolve, reject) => {
+      if (getCache[uri]) {
+        return resolve(getCache[uri]);
+      }
       this.get(uri, (err, response, body) => {
         if (err) {
           return reject(err);
         }
-
+        getCache[uri] = body;
         resolve(body);
       });
     });
@@ -444,3 +447,33 @@ type OrderForm = {
   quantity: number,
   side: string
 };
+
+export interface PositionResult {
+    account: string; //url
+    intraday_quantity: string;
+    shares_held_for_sells: string;
+    url: string;
+    created_at: string;
+    updated_at: string;
+    shares_held_for_buys: string;
+    average_buy_prices: string;
+    instrument: string;
+    quantity: string;
+}
+
+export interface InstrumentResult {
+    splits: string; //url
+    margin_initial_ratio: string;
+    url: string;
+    quote: string; //url
+    symbol: string;
+    bloomberg_unique: string;
+    list_date: string;
+    fundamentals: string; //url
+    state: string;
+    tradeable: boolean;
+    maintenance_ratio: string;
+    id: string;
+    market: string; //url
+    name: string;
+}

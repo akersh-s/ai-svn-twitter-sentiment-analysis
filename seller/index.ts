@@ -1,6 +1,6 @@
 'use strict';
 
-import { Robinhood, Order, OrderResponseBody } from '../shared/robinhood.api';
+import { Robinhood, Order, OrderResponseBody, PositionResult, InstrumentResult } from '../shared/robinhood.api';
 import { validate, isNotWeekend } from '../shared/validate';
 import { TradeHistory } from '../shared/trade-history.model';
 import { Variables } from '../shared/variables';
@@ -78,34 +78,4 @@ async function sellStocks(robinhood: Robinhood, sellSymbols: SellSymbol[]) {
     }
     TradeHistory.writeHistory(history);
     console.log('Completed selling.');
-}
-
-interface PositionResult {
-    account: string; //url
-    intraday_quantity: string;
-    shares_held_for_sells: string;
-    url: string;
-    created_at: string;
-    updated_at: string;
-    shares_held_for_buys: string;
-    average_buy_prices: string;
-    instrument: string;
-    quantity: string;
-}
-
-interface InstrumentResult {
-    splits: string; //url
-    margin_initial_ratio: string;
-    url: string;
-    quote: string; //url
-    symbol: string;
-    bloomberg_unique: string;
-    list_date: string;
-    fundamentals: string; //url
-    state: string;
-    tradeable: boolean;
-    maintenance_ratio: string;
-    id: string;
-    market: string; //url
-    name: string;
 }
