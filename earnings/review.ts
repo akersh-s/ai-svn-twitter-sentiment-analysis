@@ -76,21 +76,30 @@ function findGainLoss(orderItems: OrderItem[]) {
     const todaysSells = orderItems.filter(o => o.side === 'sell');
     todaysSells.forEach((todaySell) => {
         const equivBuy = findRelatedBuy(orderItems.filter(t => t.symbol === todaySell.symbol && todaySell.date > t.date));
-        if (equivBuy) {
+        if (equivBuy && !isNaN(todaySell.price) && !isNaN(equivBuy.price)) {
             const increaseAmount = changePercent(todaySell.price, equivBuy.price);
             const totalBuy = equivBuy.price * equivBuy.quantity;
             const totalSell = todaySell.price * equivBuy.quantity;
 
             fullBuy += totalBuy;
             fullSell += totalSell;
-            console.log(`Attempted to sell ${todaySell.quantity} shares of ${todaySell.symbol} at $${todaySell.price.toFixed(2)} on ${formatDate(todaySell.date)}, likely purchased at $${equivBuy.price.toFixed(2)} on ${formatDate(equivBuy.date)}, Percent Changed: %${increaseAmount.toFixed(2)}`);
+            console.log(`Sold ${todaySell.quantity} shares of ${todaySell.symbol} at $${formatPrice(todaySell.price)} on ${formatDate(todaySell.date)}, purchased at $${formatPrice(equivBuy.price)} on ${formatDate(equivBuy.date)}, Percent Changed: %${increaseAmount.toFixed(2)}`);
         }
     });
     const word = fullBuy < fullSell ? 'gained' : 'lost';
     const change = Math.abs(changePercent(fullSell, fullBuy));
-    console.log(`You overall ${word} %${change}. Total Buy: $${fullBuy.toFixed(2)} Total Sell: $${fullSell.toFixed(2)}`);
+    console.log(`You overall ${word} %${change.toFixed(3)}. Total Buy: $${fullBuy.toFixed(2)} Total Sell: $${fullSell.toFixed(2)}`);
 }
 
 function findRelatedBuy(oi: OrderItem[]): OrderItem {
     return oi.sort((a, b) => +b.date - +a.date).find(a => true);
+}
+
+function formatPrice(price: number): string {
+    if (price < 0.9) {
+        return price + '';
+    }
+    else {
+        return price.toFixed(2);
+    }
 }
