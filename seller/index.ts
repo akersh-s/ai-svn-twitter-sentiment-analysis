@@ -49,8 +49,6 @@ async function run() {
     let curSellSymbol: SellSymbol;
     while (curSellSymbol = sellSymbols.pop()) {
         const greaterSellSymbols = sellSymbols.filter(s => s.symbol === curSellSymbol.symbol && s.quantity >= curSellSymbol.quantity);
-        console.log('Current', curSellSymbol.symbol, curSellSymbol.quantity);
-        console.log('Greater ones', greaterSellSymbols);
         if (greaterSellSymbols.length === 0) {
             sellSymbolsFiltered.push(curSellSymbol);
         }
