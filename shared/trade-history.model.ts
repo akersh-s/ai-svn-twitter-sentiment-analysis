@@ -1,5 +1,6 @@
 import * as path from 'path';
 import * as fs from 'fs';
+import * as _ from 'lodash';
 import { formatDate, getDaysAgo, today } from './util/date-util';
 import { FileUtil } from './util/file-util';
 import { Variables } from './variables';
@@ -28,7 +29,7 @@ export class TradeHistory {
     static readHistory(): TradeHistory[] {
         let day: Date = today;
         const history: TradeHistory[] = TradeHistory.readHistoryForDate();
-        for (let i = 0; i < (Variables.numDays + 5); i++) {
+        for (let i = 0; i < (Variables.numDays * 2); i++) {
             TradeHistory.readHistoryForDate(day).forEach(t => history.push(t));
             day = getDaysAgo(i, today);
         }
@@ -51,7 +52,8 @@ export class TradeHistory {
         uniqueDates.forEach(date => {
             console.log('Writing history for Date: ' + date);
             const path = TradeHistory.tradeHistoryPathForDate(date);
-            const ths = th.filter(t => formatDate(t.date) === date);
+            let ths = th.filter(t => formatDate(t.date) === date);
+            ths = _.uniqBy(ths, th => th.date.toString() + th.stock);
             fs.writeFileSync(path, JSON.stringify(ths, null, 4), 'utf-8');
         });
 

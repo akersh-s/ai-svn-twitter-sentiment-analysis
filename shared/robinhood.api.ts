@@ -6,7 +6,7 @@ import { RequestAPI, Request, CoreOptions } from 'request';
 import * as yargs from 'yargs';
 const argv = yargs.argv;
 const getCache: any = {};
-let endpoints = {
+export let endpoints = {
   login: 'https://api.robinhood.com/api-token-auth/',
   investment_profile: 'https://api.robinhood.com/user/investment_profile/',
   accounts: 'https://api.robinhood.com/accounts/',
@@ -29,6 +29,9 @@ let endpoints = {
   positions: 'https://api.robinhood.com/positions/',
   portfolios: 'https://api.robinhood.com/portfolios/',
   fundamentals: 'https://api.robinhood.com/fundamentals/', // Need to concatenate symbol to end.
+  historicals(symbol: string, interval: 'week' | 'day' | '10minute' | '5minute' | 'null', span: 'day' | 'week' | 'year' | '5year' | 'all') {
+    return `https://api.robinhood.com/quotes/historicals/${symbol}/?interval=${interval}&span=${span}&bounds=regular`;
+  },
   cancel(orderId: string) {
     return `https://api.robinhood.com/orders/${orderId}/cancel/`;
   }
@@ -456,7 +459,7 @@ export interface PositionResult {
     created_at: string;
     updated_at: string;
     shares_held_for_buys: string;
-    average_buy_prices: string;
+    average_buy_price: string;
     instrument: string;
     quantity: string;
 }

@@ -1,6 +1,7 @@
 import { Robinhood, Order, OrderResponseBody, InstrumentResult } from '../shared/robinhood.api';
 import { formatDate } from '../shared/util/date-util';
 import { changePercent } from '../shared/util/math-util';
+import { findMedian, findMean } from '../scripts/run-loop/median';
 
 import * as yargs from 'yargs';
 import * as fs from 'fs';
@@ -73,6 +74,7 @@ async function collectOrderItems(robinhood: Robinhood): Promise<OrderItem[]> {
 function findGainLoss(orderItems: OrderItem[]) {
     let fullBuy = 0;
     let fullSell = 0;
+    const percents: number[] = [];
     const todaysSells = orderItems.filter(o => o.side === 'sell');
     todaysSells.forEach((todaySell) => {
         const equivBuy = findRelatedBuy(orderItems.filter(t => t.symbol === todaySell.symbol && todaySell.date > t.date));
@@ -84,11 +86,20 @@ function findGainLoss(orderItems: OrderItem[]) {
             fullBuy += totalBuy;
             fullSell += totalSell;
             console.log(`Sold ${todaySell.quantity} shares of ${todaySell.symbol} at $${formatPrice(todaySell.price)} on ${formatDate(todaySell.date)}, purchased at $${formatPrice(equivBuy.price)} on ${formatDate(equivBuy.date)}, Percent Changed: %${increaseAmount.toFixed(2)}`);
+            percents.push(increaseAmount);
         }
     });
     const word = fullBuy < fullSell ? 'gained' : 'lost';
     const change = Math.abs(changePercent(fullSell, fullBuy));
     console.log(`You overall ${word} %${change.toFixed(3)}. Total Buy: $${fullBuy.toFixed(2)} Total Sell: $${fullSell.toFixed(2)}`);
+
+    const mean = findMean(percents)
+    const median = findMedian(percents);
+    const numAbove0 = percents.filter(n => n > 0).length;
+    const numBelow0 = percents.filter(n => n < 0).length;
+    const num0 = percents.filter(n => n === 0).length;
+    const percentAbove = (numAbove0 / percents.length) * 100;
+    console.log(`Mean: %${mean.toFixed(2)}, Median: %${median.toFixed(2)}, Above 0: ${numAbove0}, Below 0: ${numBelow0}, Num 0: ${num0}, Percent Above: %${percentAbove.toFixed(2)}`);
 }
 
 function findRelatedBuy(oi: OrderItem[]): OrderItem {

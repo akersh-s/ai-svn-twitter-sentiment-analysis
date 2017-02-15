@@ -2,9 +2,12 @@ import { oneDay, getDaysAgo } from '../shared/util/date-util';
 import { Variables } from '../shared/variables';
 
 export class SellSymbol {
-    constructor(public symbol: string, public quantity: number, public lastUpdate: Date) { }
+    constructor(public symbol: string, public quantity: number, public lastUpdate: Date, public averageBuyPrice?: number) { }
 
     isReadyToSell(currentPrice: number, buyPrice: number): boolean {
+        if (this.averageBuyPrice) {
+            buyPrice = this.averageBuyPrice;
+        }
         //return this.hasMinimumTimeElapsed();
         return this.hasEnoughTimeElapsed() || (Variables.sellOnIncrease && this.hasMinimumTimeElapsed() && this.hasPriceIncreasedMinimum(currentPrice, buyPrice));
     }
@@ -21,7 +24,7 @@ export class SellSymbol {
         if (!currentPrice || !buyPrice) {
             return false;
         }
-        const daysPast = Math.floor((Date.now() - +this.lastUpdate) / 86400000);
+        const daysPast = Math.floor((Date.now() - +this.lastUpdate) / oneDay);
         const increasedPrice = 100 * ((currentPrice - buyPrice) / buyPrice);
         return increasedPrice >= Variables.calculateSellAmountForDayIndex(daysPast) || increasedPrice <= Variables.calculateSellWallForDayIndex(daysPast);
     }
