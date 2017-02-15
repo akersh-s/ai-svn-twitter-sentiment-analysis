@@ -18,7 +18,7 @@ async function run() {
             return await robinhood.cancel(activeOrder.id);
         });
         const results = await Promise.all(res);
-        console.log(results);
+        console.log(`Cancelled ${results.length} items`);
     }
     console.log('Completed cancelling');
 }

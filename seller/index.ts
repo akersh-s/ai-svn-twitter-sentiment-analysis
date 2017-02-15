@@ -61,7 +61,6 @@ run();
 
 async function sellStocks(robinhood: Robinhood, sellSymbols: SellSymbol[]) {
     const history = TradeHistory.readHistory();
-    console.log(sellSymbols);
     for (let i = 0; i < sellSymbols.length; i++) {
         const sellSymbol = sellSymbols[i];
         try {
@@ -76,7 +75,6 @@ async function sellStocks(robinhood: Robinhood, sellSymbols: SellSymbol[]) {
                 console.log(`${sellSymbol.symbol} is ready to sell - ${sellSymbol.quantity} stocks`);
                 const price = await robinhood.sell(sellSymbol.symbol, sellSymbol.quantity);
                 history.push(new TradeHistory('sell', sellSymbol.symbol, sellSymbol.quantity, price));
-                console.log(price);
             }
         } catch (e) {
             console.log(e);

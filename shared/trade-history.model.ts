@@ -48,9 +48,10 @@ export class TradeHistory {
     }
 
     static writeHistory(th: TradeHistory[]): void {
+        console.log('Writing history.');
         const uniqueDates = TradeHistory.findUniqueFormattedDates(th);
         uniqueDates.forEach(date => {
-            console.log('Writing history for Date: ' + date);
+            
             const path = TradeHistory.tradeHistoryPathForDate(date);
             let ths = th.filter(t => formatDate(t.date) === date);
             ths = _.uniqBy(ths, th => th.date.toString() + th.stock);
