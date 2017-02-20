@@ -2,6 +2,7 @@ import { Robinhood, Order, OrderResponseBody, InstrumentResult } from '../shared
 import { formatDate } from '../shared/util/date-util';
 import { changePercent } from '../shared/util/math-util';
 import { findMedian, findMean } from '../scripts/run-loop/median';
+import { Transaction } from './transaction.model';
 
 import * as yargs from 'yargs';
 import * as fs from 'fs';
@@ -38,7 +39,7 @@ async function collectOrderItems(robinhood: Robinhood): Promise<OrderItem[]> {
     while ((next || num === 0) && num < maxIterations) {
         console.log('Requesting orders page ' + num);
         const orderResponseBody: OrderResponseBody = next ? await robinhood.getPromise(next) : await robinhood.orders();
-        orders = orders.concat(orderResponseBody.results);
+        orders = orders.concat(orderResponseBody.results.filter(r => r.state === 'filled'));
         next = orderResponseBody.next;
         num++;
         const oldest = orderResponseBody.results[0];
@@ -72,6 +73,8 @@ async function collectOrderItems(robinhood: Robinhood): Promise<OrderItem[]> {
 }
 
 function findGainLoss(orderItems: OrderItem[]) {
+    const transactions = Transaction.readTransactions();
+    
     let fullBuy = 0;
     let fullSell = 0;
     const percents: number[] = [];
@@ -82,10 +85,12 @@ function findGainLoss(orderItems: OrderItem[]) {
             const increaseAmount = changePercent(todaySell.price, equivBuy.price);
             const totalBuy = equivBuy.price * equivBuy.quantity;
             const totalSell = todaySell.price * equivBuy.quantity;
+            const earning = totalSell - totalBuy;
 
             fullBuy += totalBuy;
             fullSell += totalSell;
-            console.log(`Sold ${todaySell.quantity} shares of ${todaySell.symbol} at $${formatPrice(todaySell.price)} on ${formatDate(todaySell.date)}, purchased at $${formatPrice(equivBuy.price)} on ${formatDate(equivBuy.date)}, Percent Changed: %${increaseAmount.toFixed(2)}`);
+            console.log(`Sold ${todaySell.quantity} shares of ${todaySell.symbol} at $${formatPrice(todaySell.price)} on ${formatDate(todaySell.date)}, purchased at $${formatPrice(equivBuy.price)} on ${formatDate(equivBuy.date)}, Percent Changed: %${increaseAmount.toFixed(2)}, Total Earning: $${earning.toFixed(2)}`);
+            transactions.push(new Transaction(equivBuy.date, equivBuy.price, todaySell.date, todaySell.price, todaySell.symbol, todaySell.quantity));
             percents.push(increaseAmount);
         }
     });
@@ -100,6 +105,9 @@ function findGainLoss(orderItems: OrderItem[]) {
     const num0 = percents.filter(n => n === 0).length;
     const percentAbove = (numAbove0 / percents.length) * 100;
     console.log(`Mean: %${mean.toFixed(2)}, Median: %${median.toFixed(2)}, Above 0: ${numAbove0}, Below 0: ${numBelow0}, Num 0: ${num0}, Percent Above: %${percentAbove.toFixed(2)}`);
+
+    
+    Transaction.writeTransactions(transactions);
 }
 
 function findRelatedBuy(oi: OrderItem[]): OrderItem {
