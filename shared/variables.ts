@@ -6,7 +6,7 @@ export class Variables {
     static numDays: number = argInt('num-days', 13);
     static sellOnIncrease: boolean = argBoolean('sell-on-increase', true);
     static sellOnIncreaseAmount: number = argInt('sell-on-increase-amount', 2);
-    static sellWall: number = argInt('sell-wall', -35);
+    static sellWall: number = argInt('sell-wall', -10);
     static decreaseAmount: number = argInt('decrease-amount', 0.5);
     static numPreviousDaySentiments: number = argInt('previous-day-sentiments', 15);
 
