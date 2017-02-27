@@ -27,10 +27,11 @@ export class Transaction {
         return path.join(transactionHome, `transactions-${fDate}.json`);
     }
 
-    static readTransactions(): Transaction[] {
+    static readTransactions(prevNumber?: number): Transaction[] {
         let day: Date = today;
+        let maxPrev: number = prevNumber || Variables.numDays * 2;
         const history: Transaction[] = [];
-        for (let i = 0; i < (Variables.numDays * 2); i++) {
+        for (let i = 0; i < maxPrev; i++) {
             Transaction.readTransactionsForDate(day).forEach(t => history.push(t));
             day = getDaysAgo(i, today);
         }

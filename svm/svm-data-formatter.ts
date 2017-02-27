@@ -1,7 +1,7 @@
 import * as fs from 'fs';
 import * as _ from 'lodash';
 
-import { isWeekend, getPreviousWorkDay, getNextWorkDay, getDaysAgo } from '../shared/util/date-util';
+import { isWeekend, getPreviousWorkDay, getNextWorkDay, getDaysAgo, formatDate } from '../shared/util/date-util';
 import { FileUtil } from '../shared/util/file-util';
 import { calculateMeanVarianceAndDeviation } from '../shared/util/math-util';
 import { SvmData } from './svm-data.model';
@@ -11,6 +11,10 @@ import { Variables } from '../shared/variables';
 import { DaySentiment } from '../sentiment/model/day-sentiment.model';
 
 const stockHashCache: any = {};
+const counts = {
+    '0': 0,
+    '1': 0
+};
 
 export async function getSvmData(): Promise<SvmData> {
     let formattedSvmData = await formatSvmData();
@@ -108,9 +112,9 @@ async function formatSvmData(): Promise<SvmData> {
                 for (let j = 1; j < Variables.numPreviousDaySentiments; j++) {
                     const date: Date = getDaysAgo(j, daySentiment.day);
                     const prevDaySentiment = getPreviousDaySentiment(symbol, date, stockPreviousDaySentiments);
-                    prevDaySentiment && collectedDaySentiments.push(prevDaySentiment);
+                    prevDaySentiment && prevDaySentiment.price && collectedDaySentiments.push(prevDaySentiment);
                 }
-            if (collectedDaySentiments.length < (Variables.numPreviousDaySentiments / 2)) {
+                if (collectedDaySentiments.length < (Variables.numPreviousDaySentiments / 2)) {
                     return;
                 }
                 let nextDaySentiment: DaySentiment = getDaySentimentInNDays(Variables.numDays, daySentiment, stockPreviousDaySentiments);
@@ -123,6 +127,7 @@ async function formatSvmData(): Promise<SvmData> {
                 //`Tomorrow (${formatDate(nextEoDaySentiment.day)}): ${nextEoDaySentiment.price}`, `Increase Percent: ${increasePercentEoD}`);
                 //const y = increasePercent > Variables.priceThreshold && (increasePercentEoD > Variables.priceThreshold || increasePercentEoD === 0) ? 1 : 0;
                 let y = 0;
+                const isLog = Math.random() > 0.99;
                 let force0 = false;
                 if (Variables.sellOnIncrease) {
                     for (let k = 1; k <= Variables.numDays; k++) {
@@ -131,10 +136,12 @@ async function formatSvmData(): Promise<SvmData> {
                             // Overall increase
                             let increasePercent = change(nextEoDaySentiment.price, daySentiment.price) * 100;
                             if (increasePercent >= Variables.calculateSellAmountForDayIndex(k)) {
+                                isLog && console.log('y = 1, k = ' + k, `${increasePercent} > ${Variables.calculateSellAmountForDayIndex(k)}`, formatDate(daySentiment.day), daySentiment.price, formatDate(nextEoDaySentiment.day), nextEoDaySentiment.price)
                                 y = 1;
                                 k = Variables.numDays + 1;
                             }
                             if (increasePercent <= Variables.calculateSellWallForDayIndex(k)) {
+                                isLog && console.log('y = 0, k = ' + k, `${increasePercent} <= ${Variables.calculateSellWallForDayIndex(k)}`, formatDate(daySentiment.day), daySentiment.price, formatDate(nextEoDaySentiment.day), nextEoDaySentiment.price)
                                 y = 0;
                                 k = Variables.numDays + 1;
                                 force0 = true;
@@ -144,7 +151,10 @@ async function formatSvmData(): Promise<SvmData> {
                 }
                 if (increasePercent > Variables.priceThreshold && !force0) {
                     y = 1;
+                    isLog && console.log('y = 1', `${increasePercent} > ${Variables.priceThreshold}`)
                 }
+                counts[y]++;
+                isLog && console.log(counts, (counts[1] / (counts[0] + counts[1])).toFixed(2));
                 const xy = createX(collectedDaySentiments);
                 xy.push(y);
 
@@ -191,8 +201,8 @@ function getDaySentimentInNDays(n: number, daySentiment: DaySentiment, allPrevio
     return candidate;
 }
 
-function createX(allDaySentiments: DaySentiment[]): number[] {
-    let x: number[] = [];
+function createX(allDaySentiments: DaySentiment[]): any[] {
+    let x: any[] = [];
 
     const dsGroups = [allDaySentiments];
     if (Variables.includeSub) {
@@ -200,7 +210,7 @@ function createX(allDaySentiments: DaySentiment[]): number[] {
         const subDaySentiments: DaySentiment[] = allDaySentiments.filter((v, i) => i < half);
         dsGroups.push(subDaySentiments);
     }
-    Variables.includeStockHash && x.push(createStockHash(allDaySentiments[0].stock.symbol));
+    Variables.includeStockHash && x.push(allDaySentiments[0].stock.symbol);
     dsGroups.forEach(daySentiments => {
         // Volatility, Momentum, and Change
         Variables.includeStockVolatility && x.push(calculateVolatility(daySentiments.map(d => d.price)));

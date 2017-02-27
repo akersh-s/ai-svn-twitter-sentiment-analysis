@@ -2,24 +2,23 @@ import { argv } from 'yargs';
 
 export class Variables {
     static topNumToBuy: number = argInt('num-to-buy', 20);
-    static priceThreshold: number = argInt('price-thresold', 0);
-    static numDays: number = argInt('num-days', 13);
+    static priceThreshold: number = argInt('price-thresold', 0.75);
+    static numDays: number = argInt('num-days', 6);
     static sellOnIncrease: boolean = argBoolean('sell-on-increase', true);
-    static sellOnIncreaseAmount: number = argInt('sell-on-increase-amount', 2);
+    static sellOnIncreaseAmount: number = argInt('sell-on-increase-amount', 3);
     static sellWall: number = argInt('sell-wall', -10);
-    static decreaseAmount: number = argInt('decrease-amount', 0.5);
     static numPreviousDaySentiments: number = argInt('previous-day-sentiments', 15);
 
     static includeSub: boolean = argBoolean('include-sub', false);
     static skipDaySentiments: number = argInt('skip-day-sentiments', 1);
 
-    static includeStockHash: boolean = argBoolean('include-stock-hash', false);
+    static includeStockHash: boolean = argBoolean('include-stock-hash', true);
 
     static includeStockVolatility: boolean = argBoolean('include-stock-volatility', true);
-    static includeStockMomentum: boolean = argBoolean('include-stock-momentum', false);
+    static includeStockMomentum: boolean = argBoolean('include-stock-momentum', true);
     static includePriceChange: boolean = argBoolean('include-price-change', false);
 
-    static includeVolumeVolatility: boolean = argBoolean('include-volume-volatility', false);
+    static includeVolumeVolatility: boolean = argBoolean('include-volume-volatility', true);
     static includeVolumeMomentum: boolean = argBoolean('include-volume-momentum', true);
     static includeVolumeChange: boolean = argBoolean('include-volume-change', false);
 
@@ -47,7 +46,7 @@ export class Variables {
     static retainedVariance: number = argFloat('retained-variance', 0.9);
     static shrinking: boolean = argBoolean('shrinking', true);
 
-    static maxSvmData: number = argInt('max-svm-data', 30000);
+    static maxSvmData: number = argInt('max-svm-data', 200000);
 
     static calculateSellAmountForDayIndex(i: number): number {
         const x = i - 1;
