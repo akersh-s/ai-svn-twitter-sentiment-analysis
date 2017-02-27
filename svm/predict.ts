@@ -7,13 +7,13 @@ import { SvmResult } from './svm-result';
 import { Variables } from '../shared/variables';
 
 import { AppMachineLearning } from '../aws/app-machine-learning';
-const svm = require('node-svm');
+//const svm = require('node-svm');
 
 export async function predict(): Promise<SvmResult[]> {
     const ml = new AppMachineLearning();
     let svmResults: SvmResult[] = [];
-    let svmData = JSON.parse(fs.readFileSync(FileUtil.svmModelFile, 'utf-8'));
-    let clf = svm.restore(svmData);
+    //let svmData = JSON.parse(fs.readFileSync(FileUtil.svmModelFile, 'utf-8'));
+    //let clf = svm.restore(svmData);
     let daySentiments: DaySentiment[] = DaySentiment.parseArrayFromFile(FileUtil.resultsFileDate);
     let startTime = Date.now();
     let predictions: Prediction[] = await getPredictions(daySentiments);
@@ -21,7 +21,7 @@ export async function predict(): Promise<SvmResult[]> {
     if (predictions.length === 0) {
         throw new Error('There is nothing to predict.');
     }
-    await ml.createRealtimeEndpoint();
+    await ml.waitForRealtimeEndpoint();
     // Make predictions
     try {
         for (let i = 0; i < predictions.length; i++) {
@@ -33,6 +33,7 @@ export async function predict(): Promise<SvmResult[]> {
             });
             try {
                 const res = await ml.predict(record);
+                console.log(res);
                 const probability = res.Prediction.predictedScores[1] ? res.Prediction.predictedScores['1'] : 1 - res.Prediction.predictedScores['0'];
                 svmResults.push(new SvmResult(prediction, parseFloat(res.Prediction.predictedLabel), probability));
             }
