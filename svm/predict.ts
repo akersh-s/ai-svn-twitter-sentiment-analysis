@@ -21,9 +21,10 @@ export async function predict(): Promise<SvmResult[]> {
     if (predictions.length === 0) {
         throw new Error('There is nothing to predict.');
     }
-    await ml.waitForRealtimeEndpoint();
+    
     // Make predictions
     try {
+        await ml.waitForRealtimeEndpoint();
         for (let i = 0; i < predictions.length; i++) {
             const prediction = predictions[i];
             const record: any = {};
