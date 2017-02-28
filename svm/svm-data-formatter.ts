@@ -41,7 +41,6 @@ export async function getPredictions(todaysDaySentiments: DaySentiment[]): Promi
             const isNano = marketCap < 50000000;
             return isSmall || isNano;
         });
-    console.log('here', todaysDaySentiments.length);
     if (todaysDaySentiments.length === 0) {
         return [];
     }
@@ -79,7 +78,6 @@ function gatherPreviousDaySentiments(stocks?: string[]): Promise<DaySentiment[]>
     let daySentiments: DaySentiment[] = [];
     let promiseFuncs = [];
     FileUtil.lastResultsFiles.forEach(f => {
-        console.log(f);
         promiseFuncs.push(readDaySentiments(f));
     });
     return new Promise<DaySentiment[]>((resolve, reject) => {
