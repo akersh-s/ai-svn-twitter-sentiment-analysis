@@ -14,17 +14,17 @@ export class Variables {
 
     static includeStockHash: boolean = argBoolean('include-stock-hash', true);
 
-    static includeStockVolatility: boolean = argBoolean('include-stock-volatility', true);
-    static includeStockMomentum: boolean = argBoolean('include-stock-momentum', true);
-    static includePriceChange: boolean = argBoolean('include-price-change', false);
+    static includeStockVolatility: boolean = argBoolean('include-stock-volatility', false);
+    static includeStockMomentum: boolean = argBoolean('include-stock-momentum', false);
+    static includePriceChange: boolean = argBoolean('include-price-change', true);
 
-    static includeVolumeVolatility: boolean = argBoolean('include-volume-volatility', true);
-    static includeVolumeMomentum: boolean = argBoolean('include-volume-momentum', true);
-    static includeVolumeChange: boolean = argBoolean('include-volume-change', false);
+    static includeVolumeVolatility: boolean = argBoolean('include-volume-volatility', false);
+    static includeVolumeMomentum: boolean = argBoolean('include-volume-momentum', false);
+    static includeVolumeChange: boolean = argBoolean('include-volume-change', true);
 
     static includeSentimentVolatility: boolean = argBoolean('include-sentiment-volatility', false);
     static includeSentimentMomentum: boolean = argBoolean('include-sentiment-momentum', false);
-    static includeSentimentChange: boolean = argBoolean('include-sentiment-change', false);
+    static includeSentimentChange: boolean = argBoolean('include-sentiment-change', true);
 
     static includePeRatioVolatility: boolean = argBoolean('include-pe-ratio-volatility', false);
     static includePeRatioMomentum: boolean = argBoolean('include-pe-ratio-momentum', false);
@@ -34,7 +34,7 @@ export class Variables {
     static includeNumTweetsMomentum: boolean = argBoolean('include-num-tweets-momentum', false);
     static includeNumTweetsChange: boolean = argBoolean('include-num-tweets-change', false);
 
-    static includeRIndicator: boolean = argBoolean('include-r-indicator', false);
+    static includeRIndicator: boolean = argBoolean('include-r-indicator', true);
     static includeOnBalanceVolume: boolean = argBoolean('include-obv', false);
 
     static kernelType: string = argString('kernel-type', 'RBF');
