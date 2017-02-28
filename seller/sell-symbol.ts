@@ -8,8 +8,8 @@ export class SellSymbol {
         if (this.averageBuyPrice) {
             buyPrice = this.averageBuyPrice;
         }
-        //return this.hasMinimumTimeElapsed();
-        return this.hasEnoughTimeElapsed() || (Variables.sellOnIncrease && this.hasMinimumTimeElapsed() && this.hasPriceIncreasedMinimum(currentPrice, buyPrice));
+        return this.hasMinimumTimeElapsed();
+        //return this.hasEnoughTimeElapsed() || (Variables.sellOnIncrease && this.hasMinimumTimeElapsed() && this.hasPriceIncreasedMinimum(currentPrice, buyPrice));
     }
 
     hasEnoughTimeElapsed(): boolean {

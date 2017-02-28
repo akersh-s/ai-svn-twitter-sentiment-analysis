@@ -3,7 +3,7 @@ import { argv } from 'yargs';
 export class Variables {
     static topNumToBuy: number = argInt('num-to-buy', 20);
     static priceThreshold: number = argInt('price-thresold', 0.75);
-    static numDays: number = argInt('num-days', 6);
+    static numDays: number = argInt('num-days', 3);
     static sellOnIncrease: boolean = argBoolean('sell-on-increase', true);
     static sellOnIncreaseAmount: number = argInt('sell-on-increase-amount', 1000);
     static sellWall: number = argInt('sell-wall', -10);
