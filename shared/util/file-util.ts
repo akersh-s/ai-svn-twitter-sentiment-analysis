@@ -6,13 +6,18 @@ import { formatDate, today, oneDay } from './date-util';
 let argv = yargs.argv;
 let runId = argv['run-id'] ? '-' + argv['run-id'] : '';
 let username = argv.username;
-let userHome = process.env[(process.platform === 'win32') ? 'USERPROFILE' : 'HOME'];
+const realHome = process.env[(process.platform === 'win32') ? 'USERPROFILE' : 'HOME'];
+const subdir = yargs.argv.subdir || 'tempest';
+let userHome = path.join(realHome, subdir);
+if (!fs.existsSync(userHome)) {
+    fs.mkdirSync(userHome);
+}
 let formattedDate = formatDate(today);
 export class FileUtil {
     static userHome: string = userHome;
     static tradeArtifacts: string = path.join(userHome, 'trade-artifacts');
     static resultsFile: string = path.join(userHome, 'results.json');
-    static resultsFileDate: string = path.join(userHome, `results-${formattedDate}.json`);
+    static resultsFileDate: string = path.join(realHome, `results-${formattedDate}.json`);
     static buyFile: string = path.join(userHome, 'buy' + runId + '.json');
     static sellStatsFile: string = path.join(userHome, `sell-stats-${hashCode(username)}.json`);
     static stockSuccessesFile: string = path.join(userHome, 'stock-successes.json');
@@ -27,9 +32,9 @@ export class FileUtil {
         const resultsFileRegex = /^results-\d+-\d+-\d+\.json$/;
 
         const allResultFiles = [];
-        fs.readdirSync(userHome).forEach(f => {
+        fs.readdirSync(realHome).forEach(f => {
             if (resultsFileRegex.test(f) && fileIsLastDays(f, daysAgo)) {
-                allResultFiles.push(path.join(userHome, f));
+                allResultFiles.push(path.join(realHome, f));
             }
         });
         return allResultFiles;
@@ -44,7 +49,7 @@ export class FileUtil {
     }
     static getResultsFileForDate(date: Date) {
         const f = formatDate(date);
-        return path.join(userHome, `results-${f}.json`);
+        return path.join(realHome, `results-${f}.json`);
     }
     static getArtifactBuyFileForDate(date: Date) {
         const f = formatDate(date);

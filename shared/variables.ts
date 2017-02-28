@@ -5,7 +5,7 @@ export class Variables {
     static priceThreshold: number = argInt('price-thresold', 0.75);
     static numDays: number = argInt('num-days', 6);
     static sellOnIncrease: boolean = argBoolean('sell-on-increase', true);
-    static sellOnIncreaseAmount: number = argInt('sell-on-increase-amount', 3);
+    static sellOnIncreaseAmount: number = argInt('sell-on-increase-amount', 1000);
     static sellWall: number = argInt('sell-wall', -10);
     static numPreviousDaySentiments: number = argInt('previous-day-sentiments', 15);
 
@@ -34,7 +34,7 @@ export class Variables {
     static includeNumTweetsMomentum: boolean = argBoolean('include-num-tweets-momentum', false);
     static includeNumTweetsChange: boolean = argBoolean('include-num-tweets-change', false);
 
-    static includeRIndicator: boolean = argBoolean('include-r-indicator', true);
+    static includeRIndicator: boolean = argBoolean('include-r-indicator', false);
     static includeOnBalanceVolume: boolean = argBoolean('include-obv', false);
 
     static kernelType: string = argString('kernel-type', 'RBF');

@@ -21,9 +21,9 @@ export async function processResults(): Promise<number> {
     //FileUtil.lastResultsFiles = FileUtil.collectLastResultFiles(90);
 
     let svmResults: SvmResult[] = await predict();
-    console.log(`Results: ${svmResults.length}`);
+
     let buys = svmResults.map(s => {
-        console.log(`Buy ${s.prediction.symbol} with Probability ${s.probability.toFixed(3)}`);
+        console.log(`Buy ${s.prediction.symbol}`);
         return s.prediction.symbol.replace(/\$/, '');
     });
     return new Promise<number>((resolve, reject) => {
