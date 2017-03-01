@@ -17,7 +17,7 @@ export class SellSymbol {
     }
 
     hasMinimumTimeElapsed(): boolean {
-        return hasEnoughTimeElapsedFromDate(this.lastUpdate, 1);
+        return hasEnoughTimeElapsedFromDate(this.lastUpdate, 3);
     }
 
     hasPriceIncreasedMinimum(currentPrice: number, buyPrice: number): boolean {
